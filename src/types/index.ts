@@ -2444,6 +2444,40 @@ export interface AIPopulationForecast {
   };
 }
 
+export interface MedicineStockLevel {
+  drugName: string;
+  unit: string;
+  currentStock: number;
+  reorderThreshold: number;
+  daysOfSupply: number;
+  status: 'AMAN' | 'MENIPIS' | 'KRITIS';
+}
+
+export interface FacilityLogisticsSnapshot {
+  id: string;
+  facilityId: string;
+  facilityName: string;
+  labCapacityMonthly: number;
+  labTestsThisMonth: number;
+  staffRecommended: number;
+  staffActive: number;
+  medicineStock: MedicineStockLevel[];
+  updatedAt: string;
+}
+
+export interface RegionalPtmForecast {
+  id: string;
+  kecamatanId: string;
+  kecamatanName: string;
+  months: {
+    month: string;
+    hipertensiProjected: number;
+    diabetesProjected: number;
+    trend: 'NAIK' | 'STABIL' | 'TURUN';
+  }[];
+  topRiskDrivers: string[];
+}
+
 export interface AIDropoutPrediction {
   citizenId: string;
   citizenName: string;

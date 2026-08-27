@@ -151,19 +151,21 @@ export const permissionService = {
   getAllowedNavIds(roleId: RoleId): string[] {
     switch (roleId) {
       case 'ADMIN_DINKES':
+        // Scoped to platform administration only (master data, accounts/roles, rule
+        // governance, system config) — matches this role's own description ("Akses penuh
+        // administrasi sistem, master data, wilayah, faskes, akun pengguna, peran, dan tata
+        // kelola platform"). Clinical/operational/analytical work belongs to the specialized
+        // Dinkes/Puskesmas/clinical roles, not the system administrator account.
         return [
           'dashboard',
-          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'kader-app', 'citizen-app', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja', 'outreach-config',
-          'ai-tata-kelola', 'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-scenario-lab', 'ai-klaster-populasi', 'ai-kepatuhan-obat', 'ai-kinerja-model', 'ai-prioritas-pencegahan', 'ai-clinical-copilot', 'ai-nudge-budaya', 'ai-rute-maritim',
-          'dinkes-command-center', 'dinkes-ringkasan', 'dinkes-impact-index', 'dinkes-kaskade', 'dinkes-wilayah', 'dinkes-gap', 'dinkes-kinerja-pkm', 'dinkes-penyebab-kendala', 'dinkes-intervensi-populasi', 'dinkes-perbandingan-periode', 'dinkes-kualitas-data', 'dinkes-kepala-daerah', 'dinkes-laporan', 'dinkes-audit-drilldown',
-          'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
-          'registry', 'data-quality', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history', 'source-mapping',
-          'stratifikasi',
           'wilayah', 'faskes', 'layanan',
           'pengguna', 'peran', 'cakupan',
           'persetujuan', 'versi-aturan', 'audit-log',
           'sinkronisasi', 'integrasi', 'pengaturan',
-          'future-facility', 'future-monitoring', 'future-ai',
+          'ai-tata-kelola', 'ai-kinerja-model',
+          'stratifikasi',
+          'data-quality', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history', 'source-mapping',
+          'future-facility', 'future-ai',
         ];
 
       case 'KEPALA_DINAS':
@@ -173,7 +175,7 @@ export const permissionService = {
           'pemantauan-aktif', 'integritas-monitoring', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
           'stratifikasi',
           'wilayah', 'faskes', 'layanan',
-          'future-monitoring',
+          'future-facility', 'future-ai',
         ];
 
       case 'ANALYST_DINKES':
@@ -185,9 +187,9 @@ export const permissionService = {
           'data-quality', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history', 'source-mapping',
           'stratifikasi',
           'wilayah', 'faskes', 'layanan',
-          'persetujuan', 'versi-aturan', 'audit-log',
+          'versi-aturan', 'audit-log',
           'integrasi',
-          'future-monitoring', 'future-ai',
+          'future-ai',
         ];
 
       case 'BUPATI':
@@ -214,7 +216,7 @@ export const permissionService = {
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
           'registry', 'data-quality',
           'stratifikasi',
-          'faskes', 'layanan',
+          'faskes', 'future-facility', 'layanan',
           'pengguna', 'cakupan',
           'persetujuan', 'audit-log',
           'sinkronisasi',
@@ -227,19 +229,20 @@ export const permissionService = {
           'integritas-monitoring',
           'dinkes-ringkasan', 'dinkes-audit-drilldown',
           'registry', 'data-quality', 'duplicate-review',
-          'persetujuan', 'versi-aturan', 'audit-log',
-          'future-monitoring', 'future-ai',
+          'versi-aturan', 'audit-log',
+          'future-ai',
         ];
 
       case 'PJ_CKG':
         return [
           'dashboard',
-          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'kader-app', 'citizen-app', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja', 'outreach-config',
+          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'kader-app', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja', 'outreach-config',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-nudge-budaya', 'ai-rute-maritim',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
           'registry', 'data-quality', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history',
           'stratifikasi',
           'persetujuan',
+          'future-facility',
           'sinkronisasi',
         ];
 
@@ -271,15 +274,19 @@ export const permissionService = {
           'care-task', 'clinical-followup', 'jadwal-kuota',
           'ai-kepatuhan-obat', 'ai-proyeksi-beban',
           'pemantauan-aktif', 'kontrol-harian',
+          'future-facility',
           'sinkronisasi',
         ];
 
       case 'KADER':
+        // 'prioritas-harian' (Plafon S4) and 'outreach' were removed: KaderAppShell is fully
+        // self-contained and never references these nav ids internally, but a Kader can reach
+        // the desktop Sidebar via the "Portal" switch button — where these would render the
+        // unscoped, facility-wide DailyPriorityQueuePage/OutreachQueuePage (no per-kader
+        // filtering), violating the hard S2 ceiling enforced elsewhere in this file.
         return [
           'kader-app',
-          'prioritas-harian',
           'penugasan-lapangan',
-          'outreach',
           'citizen-app',
           'ai-nudge-budaya',
           'ai-rute-maritim',
@@ -304,21 +311,6 @@ export const permissionService = {
       case 'CITIZEN':
         return [
           'citizen-app',
-        ];
-
-      case 'AUDITOR':
-        return [
-          'dashboard',
-          'audit-log',
-          'dinkes-audit-drilldown',
-          'dinkes-ringkasan',
-          'dinkes-kualitas-data',
-          'dinkes-laporan',
-          'integritas-monitoring',
-          'ai-tata-kelola',
-          'versi-aturan',
-          'persetujuan',
-          'peran',
         ];
 
       default:

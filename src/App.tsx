@@ -14,6 +14,7 @@ import { permissionService } from './services/permissionService';
 import { DashboardPage } from './features/dashboard/DashboardPage';
 import { WilayahPage } from './features/organization/WilayahPage';
 import { FacilityPage } from './features/organization/FacilityPage';
+import { FacilityLogisticsPage } from './features/organization/pages/FacilityLogisticsPage';
 import { ServicePage } from './features/organization/ServicePage';
 import { UsersPage } from './features/users/UsersPage';
 import { RolesPage } from './features/roles/RolesPage';
@@ -95,6 +96,7 @@ import { LearnedClusterPage } from './features/ai-intelligence/pages/LearnedClus
 import { AdherenceIntelligencePage } from './features/ai-intelligence/pages/AdherenceIntelligencePage';
 import { ModelPerformanceFairnessPage } from './features/ai-intelligence/pages/ModelPerformanceFairnessPage';
 import { PreventionPriorityPage } from './features/ai-intelligence/pages/PreventionPriorityPage';
+import { RegionalPtmForecastPage } from './features/ai-intelligence/pages/RegionalPtmForecastPage';
 
 const MainAppContent: React.FC = () => {
   const { currentUser, isLoading } = useAuth();
@@ -200,6 +202,7 @@ const MainAppContent: React.FC = () => {
     'ai-clinical-copilot': { title: 'Clinical Decision Copilot & Keamanan Resep', breadcrumbs: ['Advanced AI Layer', 'Clinical Copilot'] },
     'ai-nudge-budaya': { title: 'Generator Edukasi & Nudge Budaya Warga', breadcrumbs: ['Advanced AI Layer', 'Nudge Budaya'] },
     'ai-rute-maritim': { title: 'Optimasi Rute Maritim & Beban Kerja Kader', breadcrumbs: ['Advanced AI Layer', 'Optimasi Rute Maritim'] },
+    'future-ai': { title: 'Advanced AI Assistant — Tren PTM Wilayah', breadcrumbs: ['Advanced AI Layer', 'Tren PTM Wilayah'] },
     'jadwal-kuota': { title: 'Jadwal Janji Temu & Kuota Layanan', breadcrumbs: ['Care Orchestration', 'Jadwal & Kuota'] },
     'kandidat-putus': { title: 'Telaah Kandidat Putus Perawatan', breadcrumbs: ['Care Orchestration', 'Kandidat Putus'] },
     'beban-kerja': { title: 'Distribusi Beban Kerja Petugas & Kader', breadcrumbs: ['Care Orchestration', 'Beban Kerja Tim'] },
@@ -214,6 +217,7 @@ const MainAppContent: React.FC = () => {
     stratifikasi: { title: 'Stratifikasi Risiko & Prioritas Triage', breadcrumbs: ['Stratifikasi & Prioritas', 'Stratifikasi & Triage'] },
     wilayah: { title: 'Master Wilayah (Kecamatan & Desa)', breadcrumbs: ['Organization', 'Wilayah'] },
     faskes: { title: 'Fasilitas Kesehatan', breadcrumbs: ['Organization', 'Fasilitas Kesehatan'] },
+    'future-facility': { title: 'Alokasi Logistik Faskes', breadcrumbs: ['Organization', 'Alokasi Logistik Faskes'] },
     layanan: { title: 'Katalog Layanan & Intervensi', breadcrumbs: ['Organization', 'Layanan'] },
     pengguna: { title: 'Manajemen Pengguna', breadcrumbs: ['Access Management', 'Pengguna'] },
     peran: { title: 'Peran & Hak Akses Pengguna', breadcrumbs: ['Access Management', 'Peran & Hak Akses'] },
@@ -340,6 +344,8 @@ const MainAppContent: React.FC = () => {
         return <AdaptiveNudgePage />;
       case 'ai-rute-maritim':
         return <RouteOptimizerPage />;
+      case 'future-ai':
+        return <RegionalPtmForecastPage />;
 
       case 'jadwal-kuota':
         return <AppointmentSchedulePage />;
@@ -369,6 +375,8 @@ const MainAppContent: React.FC = () => {
         return <WilayahPage />;
       case 'faskes':
         return <FacilityPage />;
+      case 'future-facility':
+        return <FacilityLogisticsPage />;
       case 'layanan':
         return <ServicePage />;
       case 'pengguna':

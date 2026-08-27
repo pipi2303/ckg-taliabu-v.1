@@ -14,7 +14,6 @@ import {
   Share2,
   Settings,
   HeartHandshake,
-  Lock,
   ChevronRight,
   ClipboardList,
   AlertCircle,
@@ -36,7 +35,6 @@ import {
   Shield,
   Pill,
 } from 'lucide-react';
-import { useModal } from '../../context/ModalContext';
 import { useTour } from '../../context/TourContext';
 import { useAuth } from '../../context/AuthContext';
 import { permissionService } from '../../services/permissionService';
@@ -48,9 +46,6 @@ export interface NavItem {
   badge?: string; // Standard documentation code (e.g. SCR-DNK-F07)
   docSpec?: string; // Specification details for tooltip
   badgeColor?: string;
-  isFuture?: boolean;
-  futureMvp?: string;
-  futureDescription?: string;
 }
 
 export interface NavSection {
@@ -71,7 +66,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isOpenMobile,
   onCloseMobile,
 }) => {
-  const { openModal } = useModal();
   const { startTour } = useTour();
   const { currentUser } = useAuth();
   const roleId = currentUser?.roleId || 'ADMIN_DINKES';
@@ -121,6 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'ai-clinical-copilot', label: 'Clinical Decision Copilot', icon: <Stethoscope className="w-4 h-4 text-emerald-400" />, badge: 'SCR-AI-07', docSpec: 'Asisten Pendukung Keputusan Klinis Dokter FKTP', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'ai-nudge-budaya', label: 'Edukasi & Nudge Budaya', icon: <MessageSquare className="w-4 h-4 text-amber-300" />, badge: 'SCR-AI-08', docSpec: 'Nudge Komunikasi & Edukasi Kontekstual Budaya Lokal', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
         { id: 'ai-rute-maritim', label: 'Optimasi Rute Maritim', icon: <Navigation className="w-4 h-4 text-sky-400" />, badge: 'SCR-AI-09', docSpec: 'Optimasi Rute Pusling Laut & Akses Maritim Antar-Pulau', badgeColor: 'bg-sky-950/90 text-sky-300 border-sky-700/60' },
+        { id: 'future-ai', label: 'Advanced AI Assistant', icon: <Sparkles className="w-4 h-4 text-sky-400" />, badge: 'SCR-AI-10', docSpec: 'Analisis Prediktif Tren PTM per Wilayah (Hipertensi/Diabetes)', badgeColor: 'bg-indigo-950/90 text-indigo-300 border-indigo-700/60' },
       ],
     },
     {
@@ -178,6 +173,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { id: 'wilayah', label: 'Wilayah Binaan', icon: <MapPin className="w-4 h-4" />, badge: 'SCR-DNK-F01', docSpec: 'Master Data Wilayah & Desa Binaan · F1 · Plafon S1 · UC DNK-11', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'faskes', label: 'Fasilitas & Rujukan', icon: <Building2 className="w-4 h-4" />, badge: 'SCR-PKM-E04', docSpec: 'Daftar Jejaring Fasilitas Rujukan FKTP · F2 · Plafon S0 · UC PKM-17, DNK-11', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'future-facility', label: 'Alokasi Logistik Faskes', icon: <Building2 className="w-4 h-4" />, badge: 'SCR-PKM-E05', docSpec: 'Kapasitas Lab, Stok Obat PTM & Kecukupan Tenaga per Faskes · F3', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
         { id: 'layanan', label: 'Layanan', icon: <Stethoscope className="w-4 h-4" />, badge: 'SCR-ADM-03', docSpec: 'Katalog Layanan & Prosedur FKTP/FKRTL', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
       ],
     },
@@ -205,35 +201,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'pengaturan', label: 'Pengaturan', icon: <Settings className="w-4 h-4" />, badge: 'SCR-SYS-04', docSpec: 'Pengaturan Konfigurasi Parameter Sistem', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
       ],
     },
-    {
-      title: 'ROADMAP TAHAP LANJUT',
-      items: [
-        {
-          id: 'future-facility',
-          label: 'Alokasi Logistik Faskes',
-          icon: <Building2 className="w-4 h-4" />,
-          isFuture: true,
-          futureMvp: 'Tahap Lanjut',
-          futureDescription: 'Optimasi kapasitas laboratorium, perbekalan obat antihipertensi/diabetes, dan penjadwalan tenaga medis faskes.',
-        },
-        {
-          id: 'future-monitoring',
-          label: 'Outcome & Command Center',
-          icon: <Activity className="w-4 h-4" />,
-          isFuture: true,
-          futureMvp: 'Tahap Lanjut',
-          futureDescription: 'Pemantauan kohort tekanan darah/gula darah longitudinal dan Population Health Command Center Dinkes Pulau Taliabu.',
-        },
-        {
-          id: 'future-ai',
-          label: 'Advanced AI Assistant',
-          icon: <Sparkles className="w-4 h-4" />,
-          isFuture: true,
-          futureMvp: 'Tahap Lanjut',
-          futureDescription: 'Analisis prediktif tren penyakit tidak menular (PTM) wilayah berbasis kecerdasan buatan.',
-        },
-      ],
-    },
   ];
 
   // Filter sections and items based on role access
@@ -258,44 +225,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   }, [roleId]);
 
   const handleItemClick = (item: NavItem) => {
-    if (item.isFuture) {
-      openModal({
-        title: `${item.label}`,
-        subtitle: 'Fitur Tahap Berikutnya (Roadmap Terencana)',
-        size: 'md',
-        content: ({ closeModal }) => (
-          <div className="space-y-4">
-            <div className="p-4 bg-[#E1F5FE] border border-[#BDE3F5] rounded-xl text-black flex items-start gap-3">
-              <Lock className="w-5 h-5 text-[#397B94] shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-sm font-bold">Akan tersedia pada rilis modul berikutnya</h4>
-                <p className="text-xs text-[#334643] mt-1 leading-relaxed">{item.futureDescription}</p>
-              </div>
-            </div>
-
-            <div className="text-xs text-[#60716D] space-y-2 border-l-2 border-[#00201C] pl-3 py-1">
-              <p>
-                <strong>Prinsip Arsitektur:</strong> Platform terintegrasi permanen (Authentication, Tata Kelola Hak Akses, Master Data, Governance, dan Sync Infrastructure).
-              </p>
-              <p>
-                Modul klinis & operasional di atas akan ditambahkan sebagai lapisan modular tanpa mengubah fondasi yang ada saat ini.
-              </p>
-            </div>
-
-            <div className="flex justify-end pt-2">
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-[#00201C] text-white text-xs font-semibold rounded-lg hover:bg-[#00332D]"
-              >
-                Saya Mengerti
-              </button>
-            </div>
-          </div>
-        ),
-      });
-      return;
-    }
-
     onNavigate(item.id);
     onCloseMobile();
   };
@@ -355,8 +284,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     className={`w-full flex items-center justify-between px-2.5 py-2 text-xs font-medium rounded-lg transition-all group cursor-pointer relative ${
                       isActive
                         ? 'bg-[#2E7D5B] text-white shadow-xs'
-                        : item.isFuture
-                        ? 'text-slate-400 hover:text-slate-200 hover:bg-[#002B26]/60 opacity-70'
                         : 'text-slate-300 hover:text-white hover:bg-[#002D27]'
                     }`}
                   >
@@ -367,14 +294,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <span className="truncate">{item.label}</span>
                     </div>
 
-                    {item.isFuture ? (
-                      <span 
-                        title={item.futureDescription || item.futureMvp}
-                        className="text-[9px] font-bold px-1.5 py-0.5 bg-[#001714] text-slate-400 rounded group-hover:text-emerald-300 border border-[#003B33] shrink-0"
-                      >
-                        {item.futureMvp}
-                      </span>
-                    ) : item.badge ? (
+                    {item.badge ? (
                       <span
                         title={tooltipText}
                         className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded border shrink-0 font-mono tracking-tight transition-transform ${

@@ -27,6 +27,7 @@ import { DocBadge } from '../../components/common/DocBadge';
 import { rawStorage, subscribeToStorage } from '../../repositories/storage';
 import { useAuth } from '../../context/AuthContext';
 import { useNetwork } from '../../context/NetworkContext';
+import { permissionService } from '../../services/permissionService';
 import { AuditEvent } from '../../types';
 import { ExecutiveDinkesDashboardView } from './components/ExecutiveDinkesDashboardView';
 
@@ -37,9 +38,23 @@ interface DashboardPageProps {
 export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
   const { currentUser } = useAuth();
   const { isOffline, networkMode } = useNetwork();
-  const [dinkesViewMode, setDinkesViewMode] = useState<'EXECUTIVE' | 'OPERATIONAL'>(
-    currentUser?.roleId === 'KEPALA_DINAS' ? 'EXECUTIVE' : 'OPERATIONAL'
-  );
+  const roleId = currentUser?.roleId || 'ADMIN_DINKES';
+  const can = (navId: string) => permissionService.isNavAllowed(roleId, navId);
+  // Shared props for dashboard stat-cards: only clickable/navigable when the
+  // current role actually has that menu — otherwise it's a plain info card,
+  // not a dead link masquerading as one.
+  const cardProps = (navId: string) => ({
+    onClick: can(navId) ? () => onNavigate(navId) : undefined,
+    className: `bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs transition-all group ${
+      can(navId) ? 'hover:border-[#00201C] cursor-pointer' : ''
+    }`,
+  });
+  const rowProps = (navId: string) => ({
+    onClick: can(navId) ? () => onNavigate(navId) : undefined,
+    className: `p-3 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] flex items-center justify-between ${
+      can(navId) ? 'hover:bg-[#F0F5F4] cursor-pointer' : ''
+    }`,
+  });
 
   const [stats, setStats] = useState({
     activeUsers: 0,
@@ -120,24 +135,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
   }, []);
 
   // For Kepala Dinas Kesehatan, render the dedicated Executive Management Dashboard
-  if (currentUser?.roleId === 'KEPALA_DINAS' || dinkesViewMode === 'EXECUTIVE') {
+  if (currentUser?.roleId === 'KEPALA_DINAS') {
     return (
       <div data-tour="dashboard-overview-area" className="space-y-6">
-        {currentUser?.roleId === 'ADMIN_DINKES' && (
-          <div className="bg-teal-50 border border-teal-200 rounded-xl p-3 flex items-center justify-between">
-            <span className="text-xs text-teal-900 font-medium">
-              Mode Pratinjau: <strong>Dashboard Eksekutif Kepala Dinas Kesehatan (Dinkes)</strong>
-            </span>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setDinkesViewMode('OPERATIONAL')}
-              className="text-xs h-7"
-            >
-              Kembali ke Ringkasan Operasional
-            </Button>
-          </div>
-        )}
         <ExecutiveDinkesDashboardView onNavigate={onNavigate} />
       </div>
     );
@@ -145,19 +145,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
   return (
     <div data-tour="dashboard-overview-area" className="space-y-6">
-      {currentUser?.roleId === 'ADMIN_DINKES' && (
-        <div className="flex justify-end">
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => setDinkesViewMode('EXECUTIVE')}
-            className="text-xs bg-white text-teal-800 border-teal-300 hover:bg-teal-50"
-            leftIcon={<Sparkles className="w-3.5 h-3.5 text-teal-600" />}
-          >
-            Beralih ke Dashboard Eksekutif Kadinkes
-          </Button>
-        </div>
-      )}
       {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-[#00201C] to-[#003B33] rounded-2xl p-6 text-white shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
@@ -179,32 +166,38 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         </div>
 
         <div className="flex flex-wrap gap-2 shrink-0">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => onNavigate('prioritas-harian')}
-            leftIcon={<Activity className="w-4 h-4" />}
-          >
-            Prioritas Hari Ini
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onNavigate('clinical-followup')}
-            className="text-white bg-white/10 hover:bg-white/20 border-white/20"
-            leftIcon={<ClipboardList className="w-4 h-4" />}
-          >
-            Layanan Klinis
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onNavigate('dinkes-command-center')}
-            className="text-teal-200 bg-teal-500/20 hover:bg-teal-500/30 border-teal-400/40 font-bold"
-            leftIcon={<Sparkles className="w-4 h-4 text-teal-300" />}
-          >
-            Command Center
-          </Button>
+          {can('prioritas-harian') && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => onNavigate('prioritas-harian')}
+              leftIcon={<Activity className="w-4 h-4" />}
+            >
+              Prioritas Hari Ini
+            </Button>
+          )}
+          {can('clinical-followup') && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onNavigate('clinical-followup')}
+              className="text-white bg-white/10 hover:bg-white/20 border-white/20"
+              leftIcon={<ClipboardList className="w-4 h-4" />}
+            >
+              Layanan Klinis
+            </Button>
+          )}
+          {can('dinkes-command-center') && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onNavigate('dinkes-command-center')}
+              className="text-teal-200 bg-teal-500/20 hover:bg-teal-500/30 border-teal-400/40 font-bold"
+              leftIcon={<Sparkles className="w-4 h-4 text-teal-300" />}
+            >
+              Command Center
+            </Button>
+          )}
         </div>
       </div>
 
@@ -221,8 +214,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           <div
-            onClick={() => onNavigate('prioritas-harian')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('prioritas-harian')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Tugas Aktif</span>
@@ -235,8 +227,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('prioritas-harian')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('prioritas-harian')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Tugas Kritis Terbuka</span>
@@ -249,8 +240,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('jadwal-kuota')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('jadwal-kuota')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Janji Temu Hari Ini</span>
@@ -263,8 +253,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('kandidat-putus')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('kandidat-putus')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Kandidat Putus</span>
@@ -291,8 +280,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           <div
-            onClick={() => onNavigate('stratifikasi')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Terkategori Risiko</span>
@@ -305,8 +293,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('stratifikasi')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Temuan Kritis</span>
@@ -319,8 +306,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('stratifikasi')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Risiko Merah / Tinggi</span>
@@ -333,8 +319,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('stratifikasi')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Tata Kelola Aturan</span>
@@ -361,8 +346,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           <div
-            onClick={() => onNavigate('registry')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('registry')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Warga Terdaftar</span>
@@ -375,8 +359,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('registry')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('registry')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Sesi Skrining CKG</span>
@@ -391,8 +374,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('data-quality')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('data-quality')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Antrean Masalah Data</span>
@@ -405,8 +387,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div
-            onClick={() => onNavigate('ingestion-monitor')}
-            className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
+            {...cardProps('ingestion-monitor')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
               <span className="text-xs font-semibold">Ingestion & Watermark</span>
@@ -433,10 +414,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-            <div
-              onClick={() => onNavigate('pengguna')}
-              className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-            >
+            <div {...cardProps('pengguna')}>
               <div className="flex items-center justify-between text-[#60716D] mb-2">
                 <span className="text-xs font-semibold">Pengguna Aktif</span>
                 <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
@@ -449,10 +427,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               </p>
             </div>
 
-            <div
-              onClick={() => onNavigate('faskes')}
-              className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-            >
+            <div {...cardProps('faskes')}>
               <div className="flex items-center justify-between text-[#60716D] mb-2">
                 <span className="text-xs font-semibold">Fasilitas Kesehatan</span>
                 <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
@@ -463,10 +438,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               <p className="text-[11px] text-[#60716D] mt-1">{stats.puskesmasCount} Puskesmas + Pustu & Posyandu</p>
             </div>
 
-            <div
-              onClick={() => onNavigate('wilayah')}
-              className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-            >
+            <div {...cardProps('wilayah')}>
               <div className="flex items-center justify-between text-[#60716D] mb-2">
                 <span className="text-xs font-semibold">Kecamatan</span>
                 <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
@@ -477,10 +449,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               <p className="text-[11px] text-[#60716D] mt-1">Kecamatan se-Kabupaten</p>
             </div>
 
-            <div
-              onClick={() => onNavigate('wilayah')}
-              className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-            >
+            <div {...cardProps('wilayah')}>
               <div className="flex items-center justify-between text-[#60716D] mb-2">
                 <span className="text-xs font-semibold">Desa / Kelurahan</span>
                 <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
@@ -491,10 +460,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               <p className="text-[11px] text-[#60716D] mt-1">Desa Binaan & Posyandu</p>
             </div>
 
-            <div
-              onClick={() => onNavigate('pengguna')}
-              className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group col-span-2 sm:col-span-1"
-            >
+            <div {...cardProps('pengguna')} className={`${cardProps('pengguna').className} col-span-2 sm:col-span-1`}>
               <div className="flex items-center justify-between text-[#60716D] mb-2">
                 <span className="text-xs font-semibold">Kader Lapangan</span>
                 <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
@@ -524,10 +490,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="space-y-3 text-xs">
-              <div
-                onClick={() => onNavigate('versi-aturan')}
-                className="p-3 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] flex items-center justify-between hover:bg-[#F0F5F4] cursor-pointer"
-              >
+              <div {...rowProps('versi-aturan')}>
                 <div>
                   <p className="font-semibold text-black">Versi Aturan Klinis Aktif</p>
                   <p className="text-[11px] text-[#60716D] mt-0.5">{stats.activeRuleVersion}</p>
@@ -537,10 +500,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 </Badge>
               </div>
 
-              <div
-                onClick={() => onNavigate('persetujuan')}
-                className="p-3 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] flex items-center justify-between hover:bg-[#F0F5F4] cursor-pointer"
-              >
+              <div {...rowProps('persetujuan')}>
                 <div>
                   <p className="font-semibold text-black">Rekaman Persetujuan Warga</p>
                   <p className="text-[11px] text-[#60716D] mt-0.5">Consent foundation aktif</p>
@@ -557,17 +517,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          <div className="pt-4 mt-2 border-t border-[#D8E5E2]">
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full justify-between"
-              onClick={() => onNavigate('versi-aturan')}
-              rightIcon={<ArrowRight className="w-4 h-4" />}
-            >
-              Kelola Versi Aturan Klinis
-            </Button>
-          </div>
+          {can('versi-aturan') && (
+            <div className="pt-4 mt-2 border-t border-[#D8E5E2]">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full justify-between"
+                onClick={() => onNavigate('versi-aturan')}
+                rightIcon={<ArrowRight className="w-4 h-4" />}
+              >
+                Kelola Versi Aturan Klinis
+              </Button>
+            </div>
+          )}
         </Card>
 
         {/* System & Sync Infrastructure Panel */}
@@ -594,10 +556,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 </Badge>
               </div>
 
-              <div
-                onClick={() => onNavigate('sinkronisasi')}
-                className="p-3 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] flex items-center justify-between hover:bg-[#F0F5F4] cursor-pointer"
-              >
+              <div {...rowProps('sinkronisasi')}>
                 <div>
                   <p className="font-semibold text-black">Antrian Luring Idempotency</p>
                   <p className="text-[11px] text-[#60716D] mt-0.5">Menunggu sinkronisasi</p>
@@ -614,78 +573,90 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          <div className="pt-4 mt-2 border-t border-[#D8E5E2]">
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full justify-between"
-              onClick={() => onNavigate('sinkronisasi')}
-              rightIcon={<ArrowRight className="w-4 h-4" />}
-            >
-              Pusat Sinkronisasi
-            </Button>
-          </div>
+          {can('sinkronisasi') && (
+            <div className="pt-4 mt-2 border-t border-[#D8E5E2]">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full justify-between"
+                onClick={() => onNavigate('sinkronisasi')}
+                rightIcon={<ArrowRight className="w-4 h-4" />}
+              >
+                Pusat Sinkronisasi
+              </Button>
+            </div>
+          )}
         </Card>
 
-        {/* Quick Actions Panel */}
-        <Card className="flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <PlusCircle className="w-5 h-5 text-black" />
-              <h4 className="text-sm font-bold text-black">Aksi Cepat Administrator</h4>
+        {/* Quick Actions Panel — only rendered if at least one action is actually reachable */}
+        {(can('registry') || can('data-quality') || can('pengguna') || can('faskes')) && (
+          <Card className="flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <PlusCircle className="w-5 h-5 text-black" />
+                <h4 className="text-sm font-bold text-black">Aksi Cepat</h4>
+              </div>
+
+              <div className="space-y-2">
+                {can('registry') && (
+                  <button
+                    onClick={() => onNavigate('registry')}
+                    className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <ClipboardList className="w-4 h-4 text-[#2E7D5B]" />
+                      <span>Cari & Lihat Kartu Warga (Registry)</span>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
+                  </button>
+                )}
+
+                {can('data-quality') && (
+                  <button
+                    onClick={() => onNavigate('data-quality')}
+                    className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <AlertCircle className="w-4 h-4 text-[#C99720]" />
+                      <span>Tinjau Antrean Masalah ({stats.openDqIssues})</span>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
+                  </button>
+                )}
+
+                {can('pengguna') && (
+                  <button
+                    onClick={() => onNavigate('pengguna')}
+                    className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <UserPlus className="w-4 h-4 text-[#397B94]" />
+                      <span>Tambah Akun Pengguna / Kader</span>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
+                  </button>
+                )}
+
+                {can('faskes') && (
+                  <button
+                    onClick={() => onNavigate('faskes')}
+                    className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Building2 className="w-4 h-4 text-black" />
+                      <span>Kelola Fasilitas Kesehatan</span>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
+                  </button>
+                )}
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <button
-                onClick={() => onNavigate('registry')}
-                className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
-              >
-                <div className="flex items-center gap-2.5">
-                  <ClipboardList className="w-4 h-4 text-[#2E7D5B]" />
-                  <span>Cari & Lihat Kartu Warga (Registry)</span>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
-              </button>
-
-              <button
-                onClick={() => onNavigate('data-quality')}
-                className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
-              >
-                <div className="flex items-center gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-[#C99720]" />
-                  <span>Tinjau Antrean Masalah ({stats.openDqIssues})</span>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
-              </button>
-
-              <button
-                onClick={() => onNavigate('pengguna')}
-                className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
-              >
-                <div className="flex items-center gap-2.5">
-                  <UserPlus className="w-4 h-4 text-[#397B94]" />
-                  <span>Tambah Akun Pengguna / Kader</span>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
-              </button>
-
-              <button
-                onClick={() => onNavigate('faskes')}
-                className="w-full text-left p-3 rounded-lg border border-[#D8E5E2] hover:border-[#00201C] hover:bg-[#F8FBFA] transition-all flex items-center justify-between text-xs font-semibold text-black group cursor-pointer"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Building2 className="w-4 h-4 text-black" />
-                  <span>Kelola Fasilitas Kesehatan</span>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
-              </button>
+            <div className="p-3 mt-4 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] text-[11px] text-[#60716D]">
+              Setiap aksi modifikasi master data dan pengguna secara otomatis dicatat dalam Jejak Audit permanen.
             </div>
-          </div>
-
-          <div className="p-3 mt-4 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] text-[11px] text-[#60716D]">
-            Setiap aksi modifikasi master data dan pengguna secara otomatis dicatat dalam Jejak Audit permanen.
-          </div>
-        </Card>
+          </Card>
+        )}
       </div>
 
       {/* Section 3: Recent Audit Trail Feed */}
@@ -698,14 +669,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               <p className="text-xs text-[#60716D]">Rekaman peristiwa append-only sistem secara waktu-nyata</p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onNavigate('audit-log')}
-            rightIcon={<ArrowRight className="w-4 h-4" />}
-          >
-            Lihat Semua Audit
-          </Button>
+          {can('audit-log') && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onNavigate('audit-log')}
+              rightIcon={<ArrowRight className="w-4 h-4" />}
+            >
+              Lihat Semua Audit
+            </Button>
+          )}
         </div>
 
         <div className="divide-y divide-[#E8EFEB]">
