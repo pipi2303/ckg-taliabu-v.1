@@ -1,0 +1,371 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Stethoscope,
+  ShieldCheck,
+  AlertOctagon,
+  CheckCircle2,
+  XCircle,
+  Edit3,
+  FileText,
+  Sparkles,
+  BookOpen,
+  Pill,
+  HeartPulse,
+} from 'lucide-react';
+import { aiClinicalCopilotService } from '../../../services/aiClinicalCopilotService';
+import { AIClinicalRecommendation, AIApprovalStatus } from '../../../types';
+import { useAuth } from '../../../context/AuthContext';
+
+export const ClinicalCopilotPage: React.FC = () => {
+  const { user } = useAuth();
+  const [recommendations, setRecommendations] = useState<AIClinicalRecommendation[]>([]);
+  const [selectedRec, setSelectedRec] = useState<AIClinicalRecommendation | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [reviewNotes, setReviewNotes] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      const data = await aiClinicalCopilotService.getAllRecommendations();
+      setRecommendations(data);
+      if (data.length > 0 && !selectedRec) {
+        setSelectedRec(data[0]);
+      }
+    } catch (err) {
+      console.error('Failed to load recommendations:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const handleReview = async (status: AIApprovalStatus) => {
+    if (!selectedRec || !user) return;
+    setIsSubmitting(true);
+    try {
+      const updated = await aiClinicalCopilotService.reviewRecommendation({
+        id: selectedRec.id,
+        newStatus: status,
+        doctorUserId: user.id,
+        doctorName: user.name,
+        doctorRole: user.roleName || user.roleId,
+        notes: reviewNotes,
+      });
+
+      setSelectedRec(updated);
+      setRecommendations((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
+      setSuccessMessage(
+        status === 'APPROVED_BY_CLINICIAN'
+          ? 'Rekomendasi terapi AI berhasil disetujui oleh dokter pemeriksa.'
+          : status === 'MODIFIED_BY_CLINICIAN'
+          ? 'Rekomendasi AI disetujui dengan penyesuaian catatan klinisi.'
+          : 'Rekomendasi AI ditolak. Silakan gunakan protokol terapi manual.'
+      );
+      setTimeout(() => setSuccessMessage(null), 4000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="p-8 text-center text-gray-600 space-y-3">
+        <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-xs">Menyiapkan Asisten Klinis AI & Analisis Protokol Kemenkes...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      {/* Human-In-The-Loop Disclaimer Banner */}
+      <div className="p-4 bg-emerald-950/40 border border-emerald-800/60 rounded-2xl flex items-start gap-3">
+        <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+        <div className="text-xs space-y-1">
+          <div className="font-bold text-emerald-200 uppercase tracking-wider">
+            HUMAN-IN-THE-LOOP CLINICAL DECISION SUPPORT (PRINSIP KESELAMATAN PASIEN)
+          </div>
+          <p className="text-slate-300 leading-relaxed">
+            Sistem AI ini bertindak sebagai alat bantu penapis klinis berbasis <em>Pedoman Praktik Klinis Dokter di FKTP (PMK No. 5/2014)</em> dan Protokol CKG 2026. Seluruh saran kerja harus ditinjau dan divalidasi oleh dokter pemeriksa sebelum diresepkan ke pasien.
+          </p>
+        </div>
+      </div>
+
+      {/* Header */}
+      <div>
+        <div className="flex items-center gap-2 text-xs text-teal-400 font-semibold uppercase tracking-wider mb-1">
+          <Stethoscope className="w-4 h-4" />
+          CLINICAL COPILOT & PRESCRIPTION SAFETY
+        </div>
+        <h1 className="text-2xl font-bold text-black tracking-tight">Asisten Keputusan Klinis & Keamanan Resep</h1>
+        <p className="text-xs text-gray-600 mt-1">
+          Penapisan interaksi obat (DDI), penyesuaian fungsi ginjal/usia, dan rekomendasi terapi lini pertama terstandar FKTP.
+        </p>
+      </div>
+
+      {successMessage && (
+        <div className="p-3 bg-teal-900/60 border border-teal-500/60 rounded-xl text-teal-200 text-xs font-semibold flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-teal-300" />
+          {successMessage}
+        </div>
+      )}
+
+      {/* Main Two-Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left: Patient Recommendation Queue (4 Cols) */}
+        <div className="lg:col-span-4 space-y-3">
+          <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider px-1">
+            Antrian Pasien Perlu Telaah Klinisi ({recommendations.length})
+          </h3>
+
+          <div className="space-y-2">
+            {recommendations.map((rec) => {
+              const isSelected = selectedRec?.id === rec.id;
+              return (
+                <div
+                  key={rec.id}
+                  onClick={() => {
+                    setSelectedRec(rec);
+                    setReviewNotes(rec.clinicianNotes || '');
+                  }}
+                  className={`p-4 rounded-xl border cursor-pointer transition ${
+                    isSelected
+                      ? 'bg-slate-800 border-teal-500 shadow-md ring-1 ring-teal-500'
+                      : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="font-bold text-white text-xs">{rec.patientName}</span>
+                    <span
+                      className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                        rec.humanReviewStatus === 'APPROVED_BY_CLINICIAN'
+                          ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
+                          : rec.humanReviewStatus === 'MODIFIED_BY_CLINICIAN'
+                          ? 'bg-amber-950 text-amber-300 border border-amber-800'
+                          : rec.humanReviewStatus === 'REJECTED_BY_CLINICIAN'
+                          ? 'bg-rose-950 text-rose-300 border border-rose-800'
+                          : 'bg-slate-800 text-slate-300 border border-slate-700'
+                      }`}
+                    >
+                      {rec.humanReviewStatus === 'APPROVED_BY_CLINICIAN'
+                        ? 'DISETUJUI DOKTER'
+                        : rec.humanReviewStatus === 'MODIFIED_BY_CLINICIAN'
+                        ? 'DISESUAIKAN'
+                        : rec.humanReviewStatus === 'REJECTED_BY_CLINICIAN'
+                        ? 'DITOLAK'
+                        : 'MENUNGGU TELAAH'}
+                    </span>
+                  </div>
+
+                  <div className="text-[11px] text-slate-400 space-y-0.5">
+                    <div>Usia: {rec.age} th ({rec.gender})</div>
+                    <div className="text-teal-300 font-medium">TD: {rec.observedFindings.systolic}/{rec.observedFindings.diastolic} mmHg</div>
+                    <div className="text-slate-300 truncate">{rec.suggestedWorkingDiagnosis.diagnosisName}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right: Detailed Recommendation Panel & Clinical Validation (8 Cols) */}
+        {selectedRec && (
+          <div className="lg:col-span-8 space-y-5">
+            {/* Top Patient Summary */}
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                <div>
+                  <h2 className="text-lg font-bold text-white">{selectedRec.patientName}</h2>
+                  <p className="text-xs text-slate-400">
+                    ID Warga: {selectedRec.citizenId} • Usia: {selectedRec.age} Tahun ({selectedRec.gender})
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Derajat Kepastian AI</div>
+                    <div className="text-xs font-bold text-teal-400 flex items-center justify-end gap-1">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      {selectedRec.suggestedWorkingDiagnosis.confidencePercent}% Confidence
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Observed Findings Chips */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
+                  <div className="text-slate-400 text-[11px]">Tekanan Darah:</div>
+                  <div className="font-bold text-white text-sm">
+                    {selectedRec.observedFindings.systolic}/{selectedRec.observedFindings.diastolic} <span className="text-[10px] font-normal text-slate-400">mmHg</span>
+                  </div>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
+                  <div className="text-slate-400 text-[11px]">Gula Darah:</div>
+                  <div className="font-bold text-white text-sm">
+                    {selectedRec.observedFindings.randomBloodSugar || selectedRec.observedFindings.fastingBloodSugar || '-'}{' '}
+                    <span className="text-[10px] font-normal text-slate-400">mg/dL</span>
+                  </div>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
+                  <div className="text-slate-400 text-[11px]">HbA1c:</div>
+                  <div className="font-bold text-white text-sm">
+                    {selectedRec.observedFindings.hba1c ? `${selectedRec.observedFindings.hba1c}%` : 'Belum Ada'}
+                  </div>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
+                  <div className="text-slate-400 text-[11px]">IMT / Merokok:</div>
+                  <div className="font-bold text-white text-xs">
+                    {selectedRec.observedFindings.bmi || 24.0} • {selectedRec.observedFindings.smokingStatus ? 'Merokok' : 'Non-Perokok'}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Suggested Diagnosis & Guideline Grounding */}
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-white border-b border-slate-800 pb-2">
+                <BookOpen className="w-4 h-4 text-teal-400" />
+                Saran Diagnosis Kerja & Dasar Pedoman Klinis (Clinical Guideline Grounding)
+              </div>
+
+              <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700 space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded bg-teal-950 text-teal-300 border border-teal-800 font-mono text-xs font-bold">
+                    ICD-10: {selectedRec.suggestedWorkingDiagnosis.icd10Code}
+                  </span>
+                  <span className="font-semibold text-white text-xs">
+                    {selectedRec.suggestedWorkingDiagnosis.diagnosisName}
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-400 pl-1">
+                  Klasifikasi: {selectedRec.suggestedWorkingDiagnosis.stageOrGrade}
+                </div>
+              </div>
+
+              <div className="text-xs text-slate-300 space-y-1 bg-slate-800/30 p-3 rounded-xl border border-slate-800">
+                <div className="text-teal-400 font-semibold flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5" />
+                  Rasionalisasi Klinis:
+                </div>
+                <p className="leading-relaxed text-slate-300">{selectedRec.guidelineEvidence.rationaleExplanation}</p>
+                <div className="text-[10px] text-slate-400 italic pt-1">
+                  Sumber: {selectedRec.guidelineEvidence.sourceGuideline} ({selectedRec.guidelineEvidence.referenceSection})
+                </div>
+              </div>
+            </div>
+
+            {/* Recommended Pharmacotherapy & Safety Alerts */}
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+              <div className="flex items-center gap-2 text-sm font-bold text-white border-b border-slate-800 pb-2">
+                <Pill className="w-4 h-4 text-teal-400" />
+                Rekomendasi Terapi Obat Lini Pertama & Peringatan Keamanan Resep
+              </div>
+
+              {/* Safety Alerts */}
+              {selectedRec.safetyAlerts.map((alert, idx) => (
+                <div
+                  key={idx}
+                  className={`p-3 rounded-xl border flex items-start gap-2.5 text-xs ${
+                    alert.severity === 'CRITICAL'
+                      ? 'bg-rose-950/40 border-rose-800/80 text-rose-200'
+                      : alert.severity === 'WARNING'
+                      ? 'bg-amber-950/40 border-amber-800/80 text-amber-200'
+                      : 'bg-teal-950/40 border-teal-800/80 text-teal-200'
+                  }`}
+                >
+                  <AlertOctagon className="w-4 h-4 shrink-0 mt-0.5" />
+                  <div className="leading-relaxed">
+                    <strong className="font-semibold uppercase tracking-wider mr-1">
+                      [{alert.type}]:
+                    </strong>
+                    {alert.message}
+                  </div>
+                </div>
+              ))}
+
+              {/* Drug Prescriptions */}
+              <div className="space-y-2.5">
+                {selectedRec.recommendedTherapy.map((rx, idx) => (
+                  <div key={idx} className="p-3 bg-slate-800/70 rounded-xl border border-slate-700 text-xs space-y-1">
+                    <div className="flex items-center justify-between text-white font-semibold">
+                      <span>{rx.firstLineDrug}</span>
+                      <span className="text-teal-400 font-mono text-[11px]">{rx.frequency}</span>
+                    </div>
+                    <div className="text-slate-300 text-[11px]">Dosis Awal: {rx.initialDose}</div>
+                    <div className="text-slate-400 text-[10px] italic">Catatan: {rx.specialInstructions}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Clinician Action & Review Section */}
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <Edit3 className="w-4 h-4 text-teal-400" />
+                  Keputusan & Catatan Dokter Pemeriksa
+                </h3>
+                {selectedRec.reviewedByDoctorName && (
+                  <span className="text-xs text-slate-400">
+                    Terakhir ditelaah oleh: <strong className="text-slate-200">{selectedRec.reviewedByDoctorName}</strong>
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs text-slate-300 mb-1.5">
+                  Catatan Klinis / Penyesuaian Resep Dokter:
+                </label>
+                <textarea
+                  value={reviewNotes}
+                  onChange={(e) => setReviewNotes(e.target.value)}
+                  placeholder="Tambahkan catatan khusus atau alasan modifikasi terapi..."
+                  rows={2}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-500"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  onClick={() => handleReview('APPROVED_BY_CLINICIAN')}
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  Setujui Rekomendasi Terapi
+                </button>
+
+                <button
+                  onClick={() => handleReview('MODIFIED_BY_CLINICIAN')}
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50"
+                >
+                  <Edit3 className="w-4 h-4" />
+                  Setujui dengan Penyesuaian
+                </button>
+
+                <button
+                  onClick={() => handleReview('REJECTED_BY_CLINICIAN')}
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50"
+                >
+                  <XCircle className="w-4 h-4" />
+                  Tolak Rekomendasi AI
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
