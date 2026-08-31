@@ -163,33 +163,33 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
   return (
     <div
       id={`trend-chart-${facilityId}`}
-      className={`rounded-2xl bg-slate-900/95 border border-slate-800 shadow-xl overflow-hidden backdrop-blur-md ${
+      className={`rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs overflow-hidden ${
         compact ? 'p-3 sm:p-4' : 'p-4 sm:p-5 md:p-6'
       } space-y-4`}
     >
       {/* 1. Header Bar: Faskes Identity & Action Controls */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-stone-200">
         <div className="flex items-start gap-3">
-          <div className="p-2.5 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20 shadow-inner">
+          <div className="p-2.5 rounded-xl bg-teal-50 text-teal-700 border border-teal-200 shadow-xs">
             <LineChartIcon className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h4 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+              <h4 className="text-base sm:text-lg font-bold text-black tracking-tight flex items-center gap-2">
                 <span>Tren Kinerja Bulanan:</span>
-                <span className="text-teal-300">{facilityName}</span>
+                <span className="text-teal-700">{facilityName}</span>
               </h4>
               <span
                 className={`text-[10px] px-2 py-0.5 rounded-md font-bold uppercase ${
                   isRemoteIsland
-                    ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
-                    : 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+                    ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                    : 'bg-teal-50 text-teal-700 border border-teal-200'
                 }`}
               >
                 {isRemoteIsland ? 'Pesisir / Kepulauan' : 'Daratan Utama'}
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-stone-500 mt-0.5">
               Kecamatan {kecamatanName} · Rekam jejak fluktuasi kontinuitas, volume penanganan & efisiensi SLA bulanan (Tahun 2026).
             </p>
           </div>
@@ -198,14 +198,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
         {/* Action Controls: View Tabs, Period Filter & Export */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Main View Tabs (Chart / Table / Notes) */}
-          <div className="flex items-center gap-0.5 bg-slate-800/90 p-1 rounded-xl border border-slate-700">
+          <div className="flex items-center gap-0.5 bg-stone-100 p-1 rounded-xl border border-stone-200">
             <button
               type="button"
               onClick={() => setActiveTab('CHART')}
               className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer ${
                 activeTab === 'CHART'
-                  ? 'bg-teal-600 text-white shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                  ? 'bg-teal-700 text-white shadow-xs'
+                  : 'text-stone-600 hover:text-black hover:bg-stone-200/60'
               }`}
             >
               <LineChartIcon className="w-3.5 h-3.5" />
@@ -216,8 +216,8 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
               onClick={() => setActiveTab('TABLE')}
               className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer ${
                 activeTab === 'TABLE'
-                  ? 'bg-teal-600 text-white shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                  ? 'bg-teal-700 text-white shadow-xs'
+                  : 'text-stone-600 hover:text-black hover:bg-stone-200/60'
               }`}
             >
               <TableIcon className="w-3.5 h-3.5" />
@@ -228,8 +228,8 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
               onClick={() => setActiveTab('NOTES')}
               className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer ${
                 activeTab === 'NOTES'
-                  ? 'bg-teal-600 text-white shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                  ? 'bg-teal-700 text-white shadow-xs'
+                  : 'text-stone-600 hover:text-black hover:bg-stone-200/60'
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -241,10 +241,10 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
           <button
             type="button"
             onClick={handleExportCsv}
-            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
+            className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
             title="Unduh Data Riwayat Bulanan (.CSV)"
           >
-            <Download className="w-3.5 h-3.5 text-teal-400" />
+            <Download className="w-3.5 h-3.5 text-teal-700" />
             <span className="hidden sm:inline">Ekspor CSV</span>
           </button>
         </div>
@@ -253,20 +253,20 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
       {/* 2. Key Insights & Fluctuation Metrics Summary */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         {/* Capaian Terkini */}
-        <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/80">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+        <div className="p-3 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center justify-between">
             <span>Capaian Terkini ({latestMonth?.monthShort})</span>
             {latestMonth && latestMonth.momGrowth > 0 ? (
-              <span className="text-[10px] font-bold text-emerald-400 flex items-center">
+              <span className="text-[10px] font-bold text-emerald-700 flex items-center">
                 <ArrowUpRight className="w-3 h-3" />+{latestMonth.momGrowth}% MoM
               </span>
             ) : latestMonth && latestMonth.momGrowth < 0 ? (
-              <span className="text-[10px] font-bold text-rose-400 flex items-center">
+              <span className="text-[10px] font-bold text-rose-600 flex items-center">
                 <ArrowDownRight className="w-3 h-3" />
                 {latestMonth.momGrowth}% MoM
               </span>
             ) : (
-              <span className="text-[10px] font-bold text-slate-400 flex items-center">
+              <span className="text-[10px] font-bold text-stone-400 flex items-center">
                 <Minus className="w-3 h-3" /> 0% MoM
               </span>
             )}
@@ -274,70 +274,70 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
           <div className="flex items-baseline gap-2 mt-1">
             <span
               className={`text-xl font-extrabold font-mono ${
-                isMeetingSPM ? 'text-emerald-400' : 'text-amber-400'
+                isMeetingSPM ? 'text-emerald-700' : 'text-amber-700'
               }`}
             >
               {latestMonth ? `${latestMonth.continuityRate}%` : '—'}
             </span>
-            <span className="text-xs text-slate-400 font-medium">
+            <span className="text-xs text-stone-500 font-medium">
               ({latestMonth?.attendedCount} / {latestMonth?.screenedCount} jiwa)
             </span>
           </div>
         </div>
 
         {/* Rata-rata Semester */}
-        <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/80">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-teal-400">
+        <div className="p-3 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-teal-800">
             Rata-rata Semester
           </p>
-          <p className="text-xl font-extrabold text-teal-300 font-mono mt-1">
+          <p className="text-xl font-extrabold text-teal-700 font-mono mt-1">
             {trendProfile.summary.avgContinuityRate}%
-            <span className="text-xs font-normal text-slate-400 ml-1.5">
+            <span className="text-xs font-normal text-stone-500 ml-1.5">
               {trendProfile.summary.avgContinuityRate >= 50 ? 'Memenuhi SPM' : 'Di Bawah SPM'}
             </span>
           </p>
         </div>
 
         {/* Rekor Puncak & Terendah */}
-        <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/80">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-sky-400">
+        <div className="p-3 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-sky-800">
             Bulan Puncak (Peak)
           </p>
-          <p className="text-sm font-bold text-white mt-1">
+          <p className="text-sm font-bold text-black mt-1">
             {trendProfile.summary.highestMonth.month.split(' ')[0]} :{' '}
-            <span className="text-emerald-400 font-mono font-bold">
+            <span className="text-emerald-700 font-mono font-bold">
               {trendProfile.summary.highestMonth.rate}%
             </span>
           </p>
-          <p className="text-[10px] text-slate-400">
+          <p className="text-[10px] text-stone-500">
             Terendah: {trendProfile.summary.lowestMonth.month.split(' ')[0]} ({trendProfile.summary.lowestMonth.rate}%)
           </p>
         </div>
 
         {/* Waktu Tanggap / SLA Rata-rata */}
-        <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/80">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-indigo-400">
+        <div className="p-3 rounded-xl bg-white border border-stone-200 shadow-2xs">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-indigo-800">
             Rata-rata Waktu Tanggap
           </p>
-          <p className="text-xl font-extrabold text-indigo-300 font-mono mt-1">
+          <p className="text-xl font-extrabold text-indigo-700 font-mono mt-1">
             {latestMonth?.avgSlaDays}
-            <span className="text-xs font-normal text-slate-400 ml-1">Hari Kerja</span>
+            <span className="text-xs font-normal text-stone-500 ml-1">Hari Kerja</span>
           </p>
         </div>
       </div>
 
       {/* 3. Secondary Controls: Metric Selector, Period Range & Interactive Series Legend */}
       {activeTab === 'CHART' && (
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-2.5 rounded-xl bg-white border border-stone-200 text-xs shadow-2xs">
           {/* Left: Metric Focus & Period Range Filter */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Metric Mode */}
             <div className="flex items-center gap-1 text-[11px]">
-              <span className="text-slate-400 font-medium">Fokus Metrik:</span>
+              <span className="text-stone-500 font-medium">Fokus Metrik:</span>
               <select
                 value={metricFocus}
                 onChange={(e) => setMetricFocus(e.target.value as TrendMetricFocus)}
-                className="bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
+                className="bg-[#faf9f6] border border-stone-300 text-stone-800 rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
               >
                 <option value="CONTINUITY_SPM">Capaian % vs Target SPM (50%)</option>
                 <option value="WORKLOAD_VS_ATTENDED">Beban Skrining vs Realisasi Ditangani</option>
@@ -348,11 +348,11 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
 
             {/* Range Filter */}
             <div className="flex items-center gap-1 text-[11px]">
-              <span className="text-slate-400 font-medium">Periode:</span>
+              <span className="text-stone-500 font-medium">Periode:</span>
               <select
                 value={rangeFilter}
                 onChange={(e) => setRangeFilter(e.target.value as MonthRangeFilter)}
-                className="bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
+                className="bg-[#faf9f6] border border-stone-300 text-stone-800 rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
               >
                 <option value="ALL_YTD">Tahun 2026 Berjalan (8 Bulan)</option>
                 <option value="LAST_6M">6 Bulan Terakhir</option>
@@ -363,8 +363,8 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
 
           {/* Right: Interactive Legend Series Toggles */}
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] text-slate-400 font-medium mr-1 flex items-center gap-1">
-              <Filter className="w-3 h-3 text-slate-400" />
+            <span className="text-[11px] text-stone-500 font-medium mr-1 flex items-center gap-1">
+              <Filter className="w-3 h-3 text-stone-500" />
               Legenda:
             </span>
 
@@ -375,14 +375,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('continuity')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.continuity
-                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
-                    : 'bg-slate-900 text-slate-500 border-slate-800 line-through opacity-60'
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
                 }`}
                 title="Toggle Garis Capaian Kontinuitas %"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.continuity ? 'bg-emerald-400' : 'bg-slate-600'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.continuity ? 'bg-emerald-600' : 'bg-stone-400'}`} />
                 <span>Capaian %</span>
-                {activeLines.continuity ? <Eye className="w-3 h-3 text-emerald-400" /> : <EyeOff className="w-3 h-3 text-slate-600" />}
+                {activeLines.continuity ? <Eye className="w-3 h-3 text-emerald-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
               </button>
             )}
 
@@ -393,14 +393,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('screened')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.screened
-                    ? 'bg-sky-500/15 text-sky-300 border-sky-500/40'
-                    : 'bg-slate-900 text-slate-500 border-slate-800 line-through opacity-60'
+                    ? 'bg-sky-50 text-sky-800 border-sky-300'
+                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
                 }`}
                 title="Toggle Garis Beban Skrining Sasaran"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.screened ? 'bg-sky-400' : 'bg-slate-600'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.screened ? 'bg-sky-600' : 'bg-stone-400'}`} />
                 <span>Beban Sasaran</span>
-                {activeLines.screened ? <Eye className="w-3 h-3 text-sky-400" /> : <EyeOff className="w-3 h-3 text-slate-600" />}
+                {activeLines.screened ? <Eye className="w-3 h-3 text-sky-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
               </button>
             )}
 
@@ -411,14 +411,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('attended')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.attended
-                    ? 'bg-teal-500/15 text-teal-300 border-teal-500/40'
-                    : 'bg-slate-900 text-slate-500 border-slate-800 line-through opacity-60'
+                    ? 'bg-teal-50 text-teal-800 border-teal-300'
+                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
                 }`}
                 title="Toggle Garis Realisasi Warga Ditangani"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.attended ? 'bg-teal-400' : 'bg-slate-600'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.attended ? 'bg-teal-600' : 'bg-stone-400'}`} />
                 <span>Ditangani</span>
-                {activeLines.attended ? <Eye className="w-3 h-3 text-teal-400" /> : <EyeOff className="w-3 h-3 text-slate-600" />}
+                {activeLines.attended ? <Eye className="w-3 h-3 text-teal-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
               </button>
             )}
 
@@ -429,14 +429,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('gap')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.gap
-                    ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
-                    : 'bg-slate-900 text-slate-500 border-slate-800 line-through opacity-60'
+                    ? 'bg-amber-50 text-amber-800 border-amber-300'
+                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
                 }`}
                 title="Toggle Garis Kesenjangan Kasus (Gap)"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.gap ? 'bg-amber-400' : 'bg-slate-600'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.gap ? 'bg-amber-600' : 'bg-stone-400'}`} />
                 <span>Gap Kasus</span>
-                {activeLines.gap ? <Eye className="w-3 h-3 text-amber-400" /> : <EyeOff className="w-3 h-3 text-slate-600" />}
+                {activeLines.gap ? <Eye className="w-3 h-3 text-amber-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
               </button>
             )}
 
@@ -447,14 +447,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('sla')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.sla
-                    ? 'bg-indigo-500/15 text-indigo-300 border-indigo-500/40'
-                    : 'bg-slate-900 text-slate-500 border-slate-800 line-through opacity-60'
+                    ? 'bg-indigo-50 text-indigo-800 border-indigo-300'
+                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
                 }`}
                 title="Toggle Garis Waktu Tanggap / SLA (Hari)"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.sla ? 'bg-indigo-400' : 'bg-slate-600'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.sla ? 'bg-indigo-600' : 'bg-stone-400'}`} />
                 <span>SLA (Hari)</span>
-                {activeLines.sla ? <Eye className="w-3 h-3 text-indigo-400" /> : <EyeOff className="w-3 h-3 text-slate-600" />}
+                {activeLines.sla ? <Eye className="w-3 h-3 text-indigo-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
               </button>
             )}
           </div>
@@ -706,9 +706,9 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
         </div>
       ) : activeTab === 'TABLE' ? (
         /* Table View */
-        <div className="overflow-x-auto rounded-xl border border-slate-800">
+        <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950 text-slate-400 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-800">
+            <thead className="bg-stone-50 text-stone-600 uppercase font-semibold text-[10px] tracking-wider border-b border-stone-200">
               <tr>
                 <th className="py-2.5 px-3">Bulan</th>
                 <th className="py-2.5 px-3 text-right">Sasaran</th>
@@ -720,30 +720,30 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 <th className="py-2.5 px-3 text-center">Status SPM</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 font-mono text-slate-200">
+            <tbody className="divide-y divide-stone-100 font-mono text-stone-800">
               {displayData.map((d) => (
-                <tr key={d.monthKey} className="hover:bg-slate-800/40 transition">
-                  <td className="py-2 px-3 font-sans font-medium text-white">{d.monthName}</td>
-                  <td className="py-2 px-3 text-right text-sky-300">{d.screenedCount}</td>
-                  <td className="py-2 px-3 text-right text-emerald-300 font-bold">{d.attendedCount}</td>
-                  <td className="py-2 px-3 text-right text-amber-300">{d.gapCount}</td>
-                  <td className="py-2 px-3 text-right text-teal-300 font-bold">{d.continuityRate}%</td>
+                <tr key={d.monthKey} className="hover:bg-stone-50 transition">
+                  <td className="py-2 px-3 font-sans font-medium text-black">{d.monthName}</td>
+                  <td className="py-2 px-3 text-right text-sky-700">{d.screenedCount}</td>
+                  <td className="py-2 px-3 text-right text-emerald-700 font-bold">{d.attendedCount}</td>
+                  <td className="py-2 px-3 text-right text-amber-700">{d.gapCount}</td>
+                  <td className="py-2 px-3 text-right text-teal-700 font-bold">{d.continuityRate}%</td>
                   <td className="py-2 px-3 text-right">
                     {d.momGrowth > 0 ? (
-                      <span className="text-emerald-400">+{d.momGrowth}%</span>
+                      <span className="text-emerald-700">+{d.momGrowth}%</span>
                     ) : d.momGrowth < 0 ? (
-                      <span className="text-rose-400">{d.momGrowth}%</span>
+                      <span className="text-rose-600">{d.momGrowth}%</span>
                     ) : (
-                      <span className="text-slate-500">0%</span>
+                      <span className="text-stone-400">0%</span>
                     )}
                   </td>
-                  <td className="py-2 px-3 text-right text-indigo-300">{d.avgSlaDays} hr</td>
+                  <td className="py-2 px-3 text-right text-indigo-700">{d.avgSlaDays} hr</td>
                   <td className="py-2 px-3 text-center">
                     <span
                       className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase ${
                         d.continuityRate >= 50
-                          ? 'bg-emerald-500/20 text-emerald-300'
-                          : 'bg-amber-500/20 text-amber-300'
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-300'
+                          : 'bg-amber-50 text-amber-800 border border-amber-300'
                       }`}
                     >
                       {d.continuityRate >= 50 ? 'SPM' : 'Defisit'}
@@ -760,22 +760,22 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
           {displayData.map((d) => (
             <div
               key={d.monthKey}
-              className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs flex items-start justify-between gap-3"
+              className="p-3 rounded-xl bg-white border border-stone-200 text-xs flex items-start justify-between gap-3 shadow-2xs"
             >
               <div className="space-y-0.5">
-                <p className="font-bold text-white flex items-center gap-2">
+                <p className="font-bold text-black flex items-center gap-2">
                   <span>{d.monthName}</span>
-                  <span className="text-[10px] text-teal-400 font-mono">
+                  <span className="text-[10px] text-teal-700 font-mono">
                     ({d.continuityRate}% Capaian · SLA {d.avgSlaDays} hari)
                   </span>
                 </p>
-                <p className="text-slate-300 text-[11px] leading-relaxed">{d.notes}</p>
+                <p className="text-stone-600 text-[11px] leading-relaxed">{d.notes}</p>
               </div>
               <span
                 className={`text-[9px] px-2 py-0.5 rounded-md font-bold shrink-0 ${
                   d.continuityRate >= 50
-                    ? 'bg-emerald-500/20 text-emerald-300'
-                    : 'bg-amber-500/20 text-amber-300'
+                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-300'
+                    : 'bg-amber-50 text-amber-800 border border-amber-300'
                 }`}
               >
                 {d.continuityRate >= 50 ? 'Memenuhi Standar' : 'Perlu Pendampingan'}
@@ -786,18 +786,18 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
       )}
 
       {/* 5. Executive Strategic Summary Box */}
-      <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-        <div className="flex items-center gap-2 text-slate-300">
-          <Sparkles className="w-4 h-4 text-teal-400 shrink-0" />
+      <div className="p-3 rounded-xl bg-white border border-stone-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-2xs">
+        <div className="flex items-center gap-2 text-stone-700">
+          <Sparkles className="w-4 h-4 text-teal-700 shrink-0" />
           <span>
-            <strong className="text-white font-semibold">Analisis Fluktuasi Eksekutif:</strong>{' '}
+            <strong className="text-black font-semibold">Analisis Fluktuasi Eksekutif:</strong>{' '}
             {trendProfile.summary.fluctuationSummary}
           </span>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[10px] text-slate-400">Target SPM Dinkes:</span>
-          <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono font-bold text-[10px] border border-emerald-500/30">
+          <span className="text-[10px] text-stone-500">Target SPM Dinkes:</span>
+          <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 font-mono font-bold text-[10px] border border-emerald-300">
             &ge;50% Selesai
           </span>
         </div>

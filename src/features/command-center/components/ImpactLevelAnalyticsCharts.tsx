@@ -465,66 +465,6 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
         </div>
 
-        {/* Level 1, 2, 3 Quick Summary Indicators */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          {/* Level 1 Summary Pill */}
-          <div className="p-3.5 rounded-xl bg-teal-50/90 border border-teal-200/90 flex items-center justify-between shadow-xs">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-teal-800 uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-teal-600 animate-pulse" />
-                Level 1: Cakupan Skrining
-              </div>
-              <div className="text-lg font-extrabold text-teal-950">
-                {impact.level1Coverage.percentage}%{' '}
-                <span className="text-xs font-medium text-stone-600">
-                  ({impact.level1Coverage.numerator?.toLocaleString('id-ID')} / {impact.level1Coverage.denominator?.toLocaleString('id-ID')} jiwa)
-                </span>
-              </div>
-            </div>
-            <div className="p-2 rounded-lg bg-teal-100 text-teal-800">
-              <Activity className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Level 2 Summary Pill */}
-          <div className="p-3.5 rounded-xl bg-sky-50/90 border border-sky-200/90 flex items-center justify-between shadow-xs">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-sky-800 uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-sky-600 animate-pulse" />
-                Level 2: Kontinuitas Layanan
-              </div>
-              <div className="text-lg font-extrabold text-sky-950">
-                {impact.level2Continuity.percentage}%{' '}
-                <span className="text-xs font-medium text-stone-600">
-                  ({impact.level2Continuity.numerator?.toLocaleString('id-ID')} / {impact.level2Continuity.denominator?.toLocaleString('id-ID')} berisiko)
-                </span>
-              </div>
-            </div>
-            <div className="p-2 rounded-lg bg-sky-100 text-sky-800">
-              <TrendingUp className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Level 3 Summary Pill */}
-          <div className="p-3.5 rounded-xl bg-amber-50/90 border border-amber-200/90 flex items-center justify-between shadow-xs">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-800 uppercase tracking-wider">
-                <ShieldAlert className="w-3.5 h-3.5 text-amber-700" />
-                Level 3: Pengendalian Klinis
-              </div>
-              <div className="text-sm font-bold text-amber-900 flex items-center gap-1.5 mt-1">
-                <span className="px-2 py-0.5 rounded-md bg-amber-200/80 text-amber-900 border border-amber-300 text-xs font-semibold">
-                  LOCK OI-08 (Validasi CR-OC)
-                </span>
-              </div>
-              <p className="text-[10px] text-stone-600 font-medium">290 pasien aktif dalam kohort pemantauan</p>
-            </div>
-            <div className="p-2 rounded-lg bg-amber-100 text-amber-800">
-              <Clock className="w-4 h-4" />
-            </div>
-          </div>
-        </div>
-
         {/* Tab Navigation Controls */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-2 border-t border-stone-200">
           <button

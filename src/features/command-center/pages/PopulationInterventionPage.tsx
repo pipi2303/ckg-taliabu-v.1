@@ -161,8 +161,8 @@ export const PopulationInterventionPage: React.FC = () => {
           return (
             <div
               key={item.id}
-              className={`p-6 rounded-2xl bg-slate-900/90 border transition shadow-lg space-y-4 ${
-                isCompleted ? 'border-emerald-500/30' : 'border-slate-800'
+              className={`p-6 rounded-2xl bg-[#faf9f6] border transition shadow-xs space-y-4 ${
+                isCompleted ? 'border-emerald-300' : 'border-stone-200'
               }`}
             >
               {/* Top Row */}
@@ -172,47 +172,47 @@ export const PopulationInterventionPage: React.FC = () => {
                     <span
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                         isCompleted
-                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                          : 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-teal-100 text-teal-800 border border-teal-300'
                       }`}
                     >
                       {isCompleted ? 'SELESAI (EVALUASI SUKSES)' : 'SEDANG BERJALAN'}
                     </span>
-                    <h3 className="text-base font-bold text-white">{item.title}</h3>
+                    <h3 className="text-base font-bold text-black">{item.title}</h3>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">{item.description}</p>
+                  <p className="text-xs text-stone-600 leading-relaxed">{item.description}</p>
                 </div>
 
                 {/* Region & PIC */}
-                <div className="text-right text-xs text-slate-400 shrink-0 space-y-1">
-                  <div className="flex items-center md:justify-end gap-1.5 text-slate-300 font-medium">
-                    <MapPin className="w-3.5 h-3.5 text-teal-400" />
+                <div className="text-right text-xs text-stone-500 shrink-0 space-y-1">
+                  <div className="flex items-center md:justify-end gap-1.5 text-stone-700 font-medium">
+                    <MapPin className="w-3.5 h-3.5 text-teal-600" />
                     <span>{item.targetRegionName}</span>
                   </div>
-                  <div className="flex items-center md:justify-end gap-1.5 text-slate-400">
-                    <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                  <div className="flex items-center md:justify-end gap-1.5 text-stone-500">
+                    <Calendar className="w-3.5 h-3.5 text-stone-400" />
                     <span>Target: {item.dueDate}</span>
                   </div>
-                  <div className="text-[11px] text-slate-500">Penanggung Jawab: {item.ownerUserName}</div>
+                  <div className="text-[11px] text-stone-500">Penanggung Jawab: {item.ownerUserName}</div>
                 </div>
               </div>
 
               {/* Baseline vs Current Metric */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3.5 rounded-xl bg-slate-800/50 border border-slate-800 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3.5 rounded-xl bg-white border border-stone-200 text-xs">
                 <div className="space-y-1">
-                  <div className="text-slate-400 flex items-center gap-1.5 text-[11px] font-semibold">
-                    <Target className="w-3.5 h-3.5 text-rose-400" />
+                  <div className="text-stone-500 flex items-center gap-1.5 text-[11px] font-semibold">
+                    <Target className="w-3.5 h-3.5 text-rose-500" />
                     <span>Metrik Masalah Dasar (Baseline):</span>
                   </div>
-                  <div className="text-slate-200 font-mono text-[11px]">{item.baselineValueSummary}</div>
+                  <div className="text-stone-800 font-mono text-[11px]">{item.baselineValueSummary}</div>
                 </div>
 
                 <div className="space-y-1">
-                  <div className="text-slate-400 flex items-center gap-1.5 text-[11px] font-semibold">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <div className="text-stone-500 flex items-center gap-1.5 text-[11px] font-semibold">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                     <span>Metrik Sasaran Keberhasilan:</span>
                   </div>
-                  <div className="text-emerald-300 font-mono text-[11px]">
+                  <div className="text-emerald-700 font-mono text-[11px]">
                     {item.currentValueSummary || 'Dalam pemantauan siklus berjalan'}
                   </div>
                 </div>
@@ -220,16 +220,16 @@ export const PopulationInterventionPage: React.FC = () => {
 
               {/* Progress Notes Timeline */}
               {item.progressNotes.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-slate-800">
-                  <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <MessageSquare className="w-3.5 h-3.5 text-teal-400" />
+                <div className="space-y-2 pt-2 border-t border-stone-200">
+                  <div className="text-[11px] font-semibold text-stone-600 uppercase tracking-wider flex items-center gap-1.5">
+                    <MessageSquare className="w-3.5 h-3.5 text-teal-600" />
                     <span>Catatan Perkembangan Lapangan ({item.progressNotes.length})</span>
                   </div>
                   <div className="space-y-1.5">
                     {item.progressNotes.map((note) => (
-                      <div key={note.id} className="p-2.5 rounded-lg bg-slate-800/30 text-xs text-slate-300 space-y-1">
+                      <div key={note.id} className="p-2.5 rounded-lg bg-stone-100 text-xs text-stone-700 space-y-1">
                         <p className="leading-relaxed">{note.note}</p>
-                        <div className="text-[10px] text-slate-500 flex items-center gap-2">
+                        <div className="text-[10px] text-stone-500 flex items-center gap-2">
                           <span>{note.authorName}</span>
                           <span>•</span>
                           <span>{new Date(note.timestamp).toLocaleDateString('id-ID')}</span>
@@ -248,13 +248,13 @@ export const PopulationInterventionPage: React.FC = () => {
                       setSelectedInterventionId(item.id);
                       setIsNoteOpen(true);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"
+                    className="px-3 py-1.5 rounded-lg bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 transition shadow-2xs cursor-pointer"
                   >
                     + Tambah Catatan Lapangan
                   </button>
                   <button
                     onClick={() => handleComplete(item.id)}
-                    className="px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 transition"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-2xs cursor-pointer"
                   >
                     Tandai Selesai & Evaluasi Akhir
                   </button>
@@ -267,16 +267,16 @@ export const PopulationInterventionPage: React.FC = () => {
 
       {/* New Intervention Modal */}
       {isNewOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white">Rancang Intervensi Populasi Baru</h3>
-              <button onClick={() => setIsNewOpen(false)} className="text-slate-400 hover:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="bg-[#faf9f6] border border-stone-300 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+              <h3 className="text-base font-bold text-black">Rancang Intervensi Populasi Baru</h3>
+              <button onClick={() => setIsNewOpen(false)} className="text-stone-400 hover:text-stone-700">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateIntervention} className="space-y-4 text-xs text-slate-300">
+            <form onSubmit={handleCreateIntervention} className="space-y-4 text-xs text-stone-700">
               <div>
                 <label className="block font-medium mb-1">Judul Intervensi:</label>
                 <input
@@ -285,7 +285,7 @@ export const PopulationInterventionPage: React.FC = () => {
                   placeholder="Contoh: Subsidi BBM Perahu Pasien Desa Wayo"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-black focus:outline-none focus:ring-1 focus:ring-teal-500"
                 />
               </div>
 
@@ -297,7 +297,7 @@ export const PopulationInterventionPage: React.FC = () => {
                   placeholder="Jelaskan mekanisme intervensi, jadwal operasional, dan pihak terkait..."
                   value={newDesc}
                   onChange={(e) => setNewDesc(e.target.value)}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-teal-500 resize-none"
+                  className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-black focus:outline-none focus:ring-1 focus:ring-teal-500 resize-none"
                 />
               </div>
 
@@ -307,7 +307,7 @@ export const PopulationInterventionPage: React.FC = () => {
                   <select
                     value={newRegionId}
                     onChange={(e) => setNewRegionId(e.target.value)}
-                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-black focus:outline-none focus:ring-1 focus:ring-teal-500"
                   >
                     {INITIAL_KECAMATAN.map((k) => (
                       <option key={k.id} value={k.id}>
@@ -323,7 +323,7 @@ export const PopulationInterventionPage: React.FC = () => {
                     type="date"
                     value={newDueDate}
                     onChange={(e) => setNewDueDate(e.target.value)}
-                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-black focus:outline-none focus:ring-1 focus:ring-teal-500"
                   />
                 </div>
               </div>
@@ -335,7 +335,7 @@ export const PopulationInterventionPage: React.FC = () => {
                   placeholder="Contoh: Baseline: 34.2% (41/120 warga hadir kontrol)"
                   value={newBaseline}
                   onChange={(e) => setNewBaseline(e.target.value)}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-black focus:outline-none focus:ring-1 focus:ring-teal-500"
                 />
               </div>
 
@@ -343,7 +343,7 @@ export const PopulationInterventionPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsNewOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition"
+                  className="px-4 py-2 rounded-xl bg-white border border-stone-300 text-stone-700 hover:bg-stone-50 transition"
                 >
                   Batal
                 </button>
@@ -361,16 +361,16 @@ export const PopulationInterventionPage: React.FC = () => {
 
       {/* Add Note Modal */}
       {isNoteOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-sm font-bold text-white">Tambah Catatan Lapangan</h3>
-              <button onClick={() => setIsNoteOpen(false)} className="text-slate-400 hover:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="bg-[#faf9f6] border border-stone-300 rounded-2xl w-full max-w-md p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+              <h3 className="text-sm font-bold text-black">Tambah Catatan Lapangan</h3>
+              <button onClick={() => setIsNoteOpen(false)} className="text-stone-400 hover:text-stone-700">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleAddNote} className="space-y-4 text-xs text-slate-300">
+            <form onSubmit={handleAddNote} className="space-y-4 text-xs text-stone-700">
               <div>
                 <label className="block font-medium mb-1">Perkembangan Terkini:</label>
                 <textarea
@@ -379,7 +379,7 @@ export const PopulationInterventionPage: React.FC = () => {
                   placeholder="Tuliskan hasil koordinasi, kunjungan lapangan, atau capaian sementara..."
                   value={noteText}
                   onChange={(e) => setNoteText(e.target.value)}
-                  className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-teal-500 resize-none"
+                  className="w-full p-3 bg-white border border-stone-300 rounded-xl text-black focus:outline-none focus:ring-1 focus:ring-teal-500 resize-none"
                 />
               </div>
 
@@ -387,7 +387,7 @@ export const PopulationInterventionPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsNoteOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition"
+                  className="px-4 py-2 rounded-xl bg-white border border-stone-300 text-stone-700 hover:bg-stone-50 transition"
                 >
                   Batal
                 </button>

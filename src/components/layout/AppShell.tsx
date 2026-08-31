@@ -21,7 +21,7 @@ export const AppShell: React.FC<AppShellProps> = ({
   const [isOpenMobile, setIsOpenMobile] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F8FBFA] flex flex-col text-black antialiased">
+    <div className="min-h-screen bg-[#FAF9F6] flex flex-col text-black antialiased">
       <OfflineBanner />
 
       <div className="flex flex-1 min-h-0">

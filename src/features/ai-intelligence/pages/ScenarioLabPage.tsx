@@ -52,17 +52,17 @@ export const ScenarioLabPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#00201C] to-[#00332D] text-white p-6 rounded-2xl border border-amber-900/50 shadow-sm relative overflow-hidden">
+      <div className="bg-[#00201C] text-white p-6 rounded-2xl border border-teal-900 shadow-sm relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold text-amber-400 uppercase tracking-wider mb-1">
+            <div className="flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-wider mb-1">
               <Sliders className="w-4 h-4" />
               POPULATION SCENARIO SIMULATION LAB ("WHAT IF?")
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-white">
               Laboratorium Simulasi Skenario Kebijakan Dinkes
             </h1>
-            <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
+            <p className="text-xs text-stone-300 mt-1 max-w-3xl leading-relaxed">
               Eksplorasi hipotetis dampak berbagai opsi intervensi kesehatan masyarakat (logistik obat, transportasi maritim,
               kader keliling) terhadap kontinuitas perawatan di Kabupaten Pulau Taliabu.
             </p>
@@ -70,7 +70,7 @@ export const ScenarioLabPage: React.FC = () => {
 
           <button
             onClick={() => setShowNewSimulationModal(true)}
-            className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 transition cursor-pointer shadow-xs shrink-0"
+            className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl flex items-center gap-2 transition cursor-pointer shadow-xs shrink-0"
           >
             <Play className="w-4 h-4 fill-white" />
             Jalankan Simulasi Baru
@@ -79,19 +79,19 @@ export const ScenarioLabPage: React.FC = () => {
       </div>
 
       {toastMessage && (
-        <div className="p-3 bg-amber-950 border border-amber-500/60 rounded-xl text-amber-100 text-xs font-semibold flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+        <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs font-bold flex items-center gap-2 shadow-2xs">
+          <CheckCircle2 className="w-4 h-4 text-amber-700 shrink-0" />
           {toastMessage}
         </div>
       )}
 
       {/* Governed Counterfactual Warning */}
-      <div className="p-4 bg-slate-900/90 border border-amber-900/60 rounded-xl text-xs space-y-1.5">
-        <div className="flex items-center gap-2 font-bold text-amber-300">
-          <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+      <div className="p-4 bg-[#faf9f6] border border-amber-200 rounded-xl text-xs space-y-1.5 shadow-xs">
+        <div className="flex items-center gap-2 font-bold text-amber-900">
+          <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0" />
           Batasan Tata Kelola Model Counterfactual AI
         </div>
-        <p className="text-slate-400 leading-relaxed">
+        <p className="text-stone-600 leading-relaxed">
           <strong>Perhatian:</strong> Simulasi ini bukan prediksi pasti dan tidak membuktikan bahwa suatu intervensi akan
           menyebabkan hasil tertentu. Angka proyeksi merupakan model matematis probabilistik dengan asumsi eksplisit untuk
           membantu perbandingan alternatif kebijakan Dinas Kesehatan.
@@ -102,33 +102,33 @@ export const ScenarioLabPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: List of Scenarios */}
         <div className="space-y-3">
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <div className="text-xs font-bold text-stone-700 uppercase tracking-wider">
             Daftar Skenario Teruji ({scenarios.length})
           </div>
           {scenarios.map((scen) => (
             <div
               key={scen.id}
               onClick={() => setSelectedScenarioId(scen.id)}
-              className={`p-4 rounded-xl border text-xs space-y-2 cursor-pointer transition ${
+              className={`p-4 rounded-xl border text-xs space-y-2 cursor-pointer transition shadow-2xs ${
                 selectedScenarioId === scen.id
-                  ? 'bg-slate-800/90 border-amber-500 shadow-md text-white'
-                  : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700'
+                  ? 'bg-amber-50/80 border-amber-400 text-black shadow-xs font-medium'
+                  : 'bg-[#faf9f6] border-stone-200/90 text-stone-700 hover:border-stone-300'
               }`}
             >
               <div className="flex items-center justify-between">
                 <span className="font-bold">{scen.name}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                  className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold ${
                     scen.estimatedDirection === 'MEMBAIK'
-                      ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
-                      : 'bg-rose-950 text-rose-300 border border-rose-800'
+                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                      : 'bg-rose-50 text-rose-800 border border-rose-200'
                   }`}
                 >
                   {scen.estimatedDirection === 'MEMBAIK' ? '▲ Positif' : '▼ Menurun'}
                 </span>
               </div>
-              <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
-                <MapPin className="w-3 h-3 text-amber-400" />
+              <div className="text-[11px] text-stone-500 flex items-center gap-1.5 font-medium">
+                <MapPin className="w-3 h-3 text-amber-700" />
                 {scen.regionName}
               </div>
             </div>
@@ -136,56 +136,56 @@ export const ScenarioLabPage: React.FC = () => {
         </div>
 
         {/* Right Columns (2-Span): Active Scenario Deep-Dive */}
-        <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-6">
-          <div className="border-b border-slate-800 pb-4">
+        <div className="lg:col-span-2 bg-[#faf9f6] border border-stone-200/90 rounded-2xl p-6 space-y-6 shadow-xs">
+          <div className="border-b border-stone-200 pb-4">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-amber-400">ID: {activeScenario.id}</span>
-              <span className="text-[10px] px-2 py-0.5 bg-slate-800 text-slate-300 rounded font-semibold">
+              <span className="text-[11px] font-mono font-bold text-amber-800">ID: {activeScenario.id}</span>
+              <span className="text-[10px] px-2 py-0.5 bg-stone-100 text-stone-700 rounded font-bold border border-stone-200">
                 Mode: {activeScenario.mode}
               </span>
             </div>
-            <h2 className="text-lg font-bold text-white mt-1">{activeScenario.name}</h2>
-            <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+            <h2 className="text-lg font-bold text-black mt-1">{activeScenario.name}</h2>
+            <p className="text-xs text-stone-600 mt-2 leading-relaxed">
               {activeScenario.hypotheticalDescription}
             </p>
           </div>
 
           {/* Metric Comparison Card: Baseline vs Projected */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700 space-y-1">
-              <div className="text-[11px] text-slate-400 uppercase font-semibold">
+            <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-1 shadow-2xs">
+              <div className="text-[11px] text-stone-500 uppercase font-bold">
                 Kondisi Baseline Saat Ini:
               </div>
-              <div className="text-3xl font-extrabold text-slate-200">
+              <div className="text-3xl font-extrabold text-black">
                 {activeScenario.expectedRange.baselineRate}%
               </div>
-              <div className="text-[11px] text-slate-400">
+              <div className="text-[11px] text-stone-500 font-medium">
                 {activeScenario.expectedRange.metricLabel}
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-amber-950/40 border border-amber-700/60 space-y-1">
-              <div className="text-[11px] text-amber-300 uppercase font-semibold">
+            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 space-y-1 shadow-2xs">
+              <div className="text-[11px] text-amber-900 uppercase font-bold">
                 Rentang Proyeksi Intervensi:
               </div>
-              <div className="text-3xl font-extrabold text-amber-400">
+              <div className="text-3xl font-extrabold text-amber-950">
                 {activeScenario.expectedRange.projectedRateMin}% – {activeScenario.expectedRange.projectedRateMax}%
               </div>
-              <div className="text-[11px] text-amber-200/80">
-                Arah: <strong>{activeScenario.estimatedDirection}</strong> (Ketidakpastian: {activeScenario.uncertaintyRating})
+              <div className="text-[11px] text-amber-900 font-medium">
+                Arah: <strong className="text-amber-950 font-bold">{activeScenario.estimatedDirection}</strong> (Ketidakpastian: {activeScenario.uncertaintyRating})
               </div>
             </div>
           </div>
 
           {/* Assumptions Box */}
           <div className="space-y-2 text-xs">
-            <h3 className="font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-teal-400" />
+            <h3 className="font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-teal-700" />
               Asumsi Eksplisit Model:
             </h3>
             <div className="space-y-1.5">
               {activeScenario.assumptions.map((assump, idx) => (
-                <div key={idx} className="p-2.5 bg-slate-800/80 rounded-lg text-slate-300 border border-slate-700/60">
+                <div key={idx} className="p-2.5 bg-white rounded-lg text-stone-700 border border-stone-200 shadow-2xs font-medium">
                   • {assump}
                 </div>
               ))}
@@ -194,13 +194,13 @@ export const ScenarioLabPage: React.FC = () => {
 
           {/* Limitations Box */}
           <div className="space-y-2 text-xs">
-            <h3 className="font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+            <h3 className="font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+              <AlertTriangle className="w-4 h-4 text-amber-700" />
               Batasan Data & Konteks Lapangan:
             </h3>
             <div className="space-y-1.5">
               {activeScenario.dataLimitations.map((limit, idx) => (
-                <div key={idx} className="p-2.5 bg-slate-800/80 rounded-lg text-slate-400 border border-slate-700/60">
+                <div key={idx} className="p-2.5 bg-white rounded-lg text-stone-600 border border-stone-200 shadow-2xs font-medium">
                   • {limit}
                 </div>
               ))}
@@ -211,16 +211,16 @@ export const ScenarioLabPage: React.FC = () => {
 
       {/* New Simulation Modal */}
       {showNewSimulationModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div className="flex items-center gap-2 text-sm font-bold text-white">
-                <Play className="w-4 h-4 text-amber-400" />
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[#faf9f6] border border-stone-200 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-black">
+                <Play className="w-4 h-4 text-amber-700" />
                 Jalankan Simulasi Skenario Baru
               </div>
               <button
                 onClick={() => setShowNewSimulationModal(false)}
-                className="text-slate-400 hover:text-white text-xs cursor-pointer"
+                className="text-stone-400 hover:text-black text-xs font-bold cursor-pointer"
               >
                 Tutup
               </button>
@@ -228,24 +228,24 @@ export const ScenarioLabPage: React.FC = () => {
 
             <form onSubmit={handleRunCustomSimulation} className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="text-slate-300 font-semibold">Nama / Judul Skenario:</label>
+                <label className="text-stone-800 font-bold">Nama / Judul Skenario:</label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: Skenario Distribusi Perahu Posyandu Keliling"
                   value={customName}
                   onChange={(e) => setCustomName(e.target.value)}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-amber-500"
+                  className="w-full p-2.5 bg-white border border-stone-300 rounded-lg text-black text-xs font-medium focus:outline-none focus:border-amber-600"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-slate-300 font-semibold">Wilayah Kecamatan:</label>
+                  <label className="text-stone-800 font-bold">Wilayah Kecamatan:</label>
                   <select
                     value={customRegion}
                     onChange={(e) => setCustomRegion(e.target.value)}
-                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full p-2.5 bg-white border border-stone-300 rounded-lg text-black text-xs font-semibold focus:outline-none focus:border-amber-600 cursor-pointer"
                   >
                     <option value="Taliabu Barat">Taliabu Barat</option>
                     <option value="Taliabu Barat Daya">Taliabu Barat Daya</option>
@@ -259,11 +259,11 @@ export const ScenarioLabPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-slate-300 font-semibold">Tipe Intervensi:</label>
+                  <label className="text-stone-800 font-bold">Tipe Intervensi:</label>
                   <select
                     value={customIntervention}
                     onChange={(e) => setCustomIntervention(e.target.value as any)}
-                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full p-2.5 bg-white border border-stone-300 rounded-lg text-black text-xs font-semibold focus:outline-none focus:border-amber-600 cursor-pointer"
                   >
                     <option value="BUFFER_STOCK">Buffer Stock Obat 3 Bulan</option>
                     <option value="TRANSPORT">Bantuan Transportasi Maritim</option>
@@ -274,13 +274,13 @@ export const ScenarioLabPage: React.FC = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-slate-300 font-semibold">Deskripsi Hipotetis:</label>
+                <label className="text-stone-800 font-bold">Deskripsi Hipotetis:</label>
                 <textarea
                   rows={3}
                   value={customDesc}
                   onChange={(e) => setCustomDesc(e.target.value)}
                   placeholder="Jelaskan asumsi operasional intervensi..."
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-amber-500"
+                  className="w-full p-2.5 bg-white border border-stone-300 rounded-lg text-black text-xs font-medium focus:outline-none focus:border-amber-600"
                 />
               </div>
 
@@ -288,13 +288,13 @@ export const ScenarioLabPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowNewSimulationModal(false)}
-                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg cursor-pointer font-semibold"
+                  className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg cursor-pointer font-bold border border-stone-300"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg cursor-pointer font-semibold"
+                  className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg cursor-pointer font-bold shadow-xs"
                 >
                   Simulasikan
                 </button>

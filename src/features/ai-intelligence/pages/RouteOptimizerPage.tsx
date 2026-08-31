@@ -66,12 +66,12 @@ export const RouteOptimizerPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs text-teal-400 font-semibold uppercase tracking-wider mb-1">
-            <Navigation className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-xs text-teal-800 font-bold uppercase tracking-wider mb-1">
+            <Navigation className="w-4 h-4 text-teal-700" />
             MARITIME-AWARE ROUTE OPTIMIZER
           </div>
           <h1 className="text-2xl font-bold text-black tracking-tight">Optimasi Rute Maritim & Beban Kerja Kader</h1>
-          <p className="text-xs text-gray-600 mt-1">
+          <p className="text-xs text-stone-600 mt-1">
             Penjadwalan urutan kunjungan rumah cerdas dengan memperhitungkan kondisi gelombang laut, jarak tempuh perahu tempel, dan kegawatan klinis pasien.
           </p>
         </div>
@@ -79,7 +79,7 @@ export const RouteOptimizerPage: React.FC = () => {
         <button
           onClick={handleRecompute}
           disabled={isRefreshing}
-          className="flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white rounded-xl text-xs font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
           Hitung Ulang Rute Berdasarkan Cuaca Terkini
@@ -90,33 +90,33 @@ export const RouteOptimizerPage: React.FC = () => {
       {routes.map((route) => (
         <div key={route.id} className="space-y-4">
           {/* Top Route Overview Card */}
-          <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-stone-200 pb-3">
               <div>
-                <div className="text-xs text-teal-400 font-semibold">{route.desaCoverage}</div>
-                <h2 className="text-base font-bold text-white">Rencana Kunjungan Lapangan: {route.kaderName}</h2>
-                <div className="text-xs text-slate-400">Tanggal: {route.planDate}</div>
+                <div className="text-xs text-teal-800 font-bold">{route.desaCoverage}</div>
+                <h2 className="text-base font-bold text-black">Rencana Kunjungan Lapangan: {route.kaderName}</h2>
+                <div className="text-xs text-stone-500 font-medium">Tanggal: {route.planDate}</div>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700 text-right">
-                  <div className="text-[10px] text-slate-400 uppercase tracking-wider">Estimasi Waktu Total</div>
-                  <div className="text-sm font-bold text-teal-400 flex items-center justify-end gap-1">
+                <div className="p-3 rounded-xl bg-white border border-stone-200 text-right shadow-2xs">
+                  <div className="text-[10px] text-stone-500 uppercase tracking-wider font-semibold">Estimasi Waktu Total</div>
+                  <div className="text-sm font-bold text-teal-800 flex items-center justify-end gap-1">
                     <Clock className="w-3.5 h-3.5" />
                     {route.totalEstimatedHours} Jam
                   </div>
                 </div>
 
                 <div
-                  className={`p-3 rounded-xl border text-right ${
+                  className={`p-3 rounded-xl border text-right shadow-2xs ${
                     route.seaWaveCondition === 'GELOMBANG_TINGGI_WASPADA'
-                      ? 'bg-rose-950/50 border-rose-800 text-rose-200'
+                      ? 'bg-rose-50 border-rose-200 text-rose-900'
                       : route.seaWaveCondition === 'GELOMBANG_SEDANG'
-                      ? 'bg-amber-950/50 border-amber-800 text-amber-200'
-                      : 'bg-emerald-950/50 border-emerald-800 text-emerald-200'
+                      ? 'bg-amber-50 border-amber-200 text-amber-900'
+                      : 'bg-emerald-50 border-emerald-200 text-emerald-900'
                   }`}
                 >
-                  <div className="text-[10px] uppercase tracking-wider opacity-80">Prakiraan Laut BMKG</div>
+                  <div className="text-[10px] uppercase tracking-wider font-semibold opacity-80">Prakiraan Laut BMKG</div>
                   <div className="text-xs font-bold flex items-center justify-end gap-1">
                     <Ship className="w-3.5 h-3.5" />
                     {route.seaWaveCondition.replace(/_/g, ' ')}
@@ -126,19 +126,19 @@ export const RouteOptimizerPage: React.FC = () => {
             </div>
 
             {/* Safety Advisory */}
-            <div className="p-3 bg-amber-950/30 border border-amber-800/60 rounded-xl text-xs text-amber-200 flex items-start gap-2.5">
-              <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-2.5 shadow-2xs">
+              <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
               <div>
-                <strong className="font-semibold text-amber-300">Peringatan Keselamatan Maritim:</strong> {route.safetyAdvisory}
-                {route.weatherAlert && <div className="mt-1 text-[11px] text-amber-400/90">{route.weatherAlert}</div>}
+                <strong className="font-bold text-amber-950">Peringatan Keselamatan Maritim:</strong> {route.safetyAdvisory}
+                {route.weatherAlert && <div className="mt-1 text-[11px] text-amber-900">{route.weatherAlert}</div>}
               </div>
             </div>
           </div>
 
           {/* Sequence Waypoint Stepper */}
-          <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-teal-400" />
+          <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-black flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-teal-700" />
               Urutan Kunjungan yang Dioptimalkan (Rekomendasi AI)
             </h3>
 
@@ -146,48 +146,48 @@ export const RouteOptimizerPage: React.FC = () => {
               {route.optimizedWaypoints.map((wp) => (
                 <div
                   key={wp.order}
-                  className="p-4 rounded-xl bg-slate-800/70 border border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-slate-600 transition"
+                  className="p-4 rounded-xl bg-white border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-stone-300 transition shadow-2xs"
                 >
                   <div className="flex items-start gap-3.5">
-                    <div className="w-8 h-8 rounded-full bg-teal-500/20 border border-teal-500/40 text-teal-300 flex items-center justify-center font-bold text-xs shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-teal-50 border border-teal-200 text-teal-800 flex items-center justify-center font-bold text-xs shrink-0">
                       #{wp.order}
                     </div>
 
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-white text-xs">{wp.citizenName}</span>
+                        <span className="font-bold text-black text-xs">{wp.citizenName}</span>
                         {wp.isUrgentCase && (
-                          <span className="px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800 text-[10px] font-bold">
+                          <span className="px-1.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200 text-[10px] font-bold">
                             PRIORITAS TINGGI
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-slate-400 flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-teal-400" />
+                      <div className="text-[11px] text-stone-500 flex items-center gap-1 font-medium">
+                        <MapPin className="w-3 h-3 text-teal-700" />
                         {wp.dusunOrRt}
                       </div>
-                      <div className="text-[11px] text-teal-300">
+                      <div className="text-[11px] text-teal-800 font-semibold">
                         <strong>Alasan Kunjungan:</strong> {wp.priorityReason}
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 text-xs text-slate-300 border-t md:border-t-0 border-slate-700 pt-2 md:pt-0">
+                  <div className="flex items-center gap-4 text-xs text-stone-700 border-t md:border-t-0 border-stone-200 pt-2 md:pt-0">
                     <div className="text-right">
-                      <div className="text-[10px] text-slate-400">Moda Transportasi</div>
-                      <div className="font-semibold text-white flex items-center gap-1 justify-end">
+                      <div className="text-[10px] text-stone-500 uppercase font-semibold">Moda Transportasi</div>
+                      <div className="font-bold text-black flex items-center gap-1 justify-end">
                         {wp.recommendedTransport === 'PERAHU_MOTOR_TEMPEL' ? (
-                          <Ship className="w-3.5 h-3.5 text-blue-400" />
+                          <Ship className="w-3.5 h-3.5 text-blue-700" />
                         ) : (
-                          <Footprints className="w-3.5 h-3.5 text-emerald-400" />
+                          <Footprints className="w-3.5 h-3.5 text-emerald-700" />
                         )}
                         {wp.recommendedTransport.replace(/_/g, ' ')}
                       </div>
                     </div>
 
-                    <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-center min-w-[70px]">
-                      <div className="text-[10px] text-slate-400">Perjalanan</div>
-                      <div className="font-bold text-teal-400 font-mono text-xs">{wp.estimatedTravelMinutes} mnt</div>
+                    <div className="p-2 rounded-lg bg-stone-50 border border-stone-200 text-center min-w-[70px]">
+                      <div className="text-[10px] text-stone-500 uppercase font-semibold">Perjalanan</div>
+                      <div className="font-bold text-teal-800 font-mono text-xs">{wp.estimatedTravelMinutes} mnt</div>
                     </div>
                   </div>
                 </div>

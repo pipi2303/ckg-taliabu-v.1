@@ -6,7 +6,7 @@
   --color-brand-dark-active: #001714;
   --color-brand-lightblue: #E1F5FE;
   --color-brand-lemon: #FFFACD;
-  --color-surface-soft: #F8FBFA;
+  --color-surface-soft: #FAF9F6;
   --color-border-main: #D8E5E2;
   --color-text-primary: #102521;
   --color-text-secondary: #60716D;
@@ -23,7 +23,7 @@
 
 body {
   font-family: var(--font-inter);
-  background-color: #F8FBFA;
+  background-color: #FAF9F6;
   color: #102521;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

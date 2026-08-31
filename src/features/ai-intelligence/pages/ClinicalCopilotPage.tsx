@@ -84,13 +84,13 @@ export const ClinicalCopilotPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Human-In-The-Loop Disclaimer Banner */}
-      <div className="p-4 bg-emerald-950/40 border border-emerald-800/60 rounded-2xl flex items-start gap-3">
-        <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+      <div className="p-4 bg-[#faf9f6] border border-emerald-300 rounded-2xl flex items-start gap-3 shadow-xs">
+        <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
         <div className="text-xs space-y-1">
-          <div className="font-bold text-emerald-200 uppercase tracking-wider">
+          <div className="font-bold text-emerald-900 uppercase tracking-wider">
             HUMAN-IN-THE-LOOP CLINICAL DECISION SUPPORT (PRINSIP KESELAMATAN PASIEN)
           </div>
-          <p className="text-slate-300 leading-relaxed">
+          <p className="text-stone-600 leading-relaxed">
             Sistem AI ini bertindak sebagai alat bantu penapis klinis berbasis <em>Pedoman Praktik Klinis Dokter di FKTP (PMK No. 5/2014)</em> dan Protokol CKG 2026. Seluruh saran kerja harus ditinjau dan divalidasi oleh dokter pemeriksa sebelum diresepkan ke pasien.
           </p>
         </div>
@@ -98,19 +98,19 @@ export const ClinicalCopilotPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-xs text-teal-400 font-semibold uppercase tracking-wider mb-1">
-          <Stethoscope className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-xs text-teal-800 font-bold uppercase tracking-wider mb-1">
+          <Stethoscope className="w-4 h-4 text-teal-700" />
           CLINICAL COPILOT & PRESCRIPTION SAFETY
         </div>
         <h1 className="text-2xl font-bold text-black tracking-tight">Asisten Keputusan Klinis & Keamanan Resep</h1>
-        <p className="text-xs text-gray-600 mt-1">
+        <p className="text-xs text-stone-600 mt-1">
           Penapisan interaksi obat (DDI), penyesuaian fungsi ginjal/usia, dan rekomendasi terapi lini pertama terstandar FKTP.
         </p>
       </div>
 
       {successMessage && (
-        <div className="p-3 bg-teal-900/60 border border-teal-500/60 rounded-xl text-teal-200 text-xs font-semibold flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-teal-300" />
+        <div className="p-3 bg-teal-50 border border-teal-300 rounded-xl text-teal-900 text-xs font-semibold flex items-center gap-2 shadow-xs">
+          <CheckCircle2 className="w-4 h-4 text-teal-700" />
           {successMessage}
         </div>
       )}
@@ -119,7 +119,7 @@ export const ClinicalCopilotPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Patient Recommendation Queue (4 Cols) */}
         <div className="lg:col-span-4 space-y-3">
-          <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider px-1">
+          <h3 className="text-xs font-bold text-stone-700 uppercase tracking-wider px-1">
             Antrian Pasien Perlu Telaah Klinisi ({recommendations.length})
           </h3>
 
@@ -135,21 +135,21 @@ export const ClinicalCopilotPage: React.FC = () => {
                   }}
                   className={`p-4 rounded-xl border cursor-pointer transition ${
                     isSelected
-                      ? 'bg-slate-800 border-teal-500 shadow-md ring-1 ring-teal-500'
-                      : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
+                      ? 'bg-white border-teal-700 shadow-sm ring-1 ring-teal-700'
+                      : 'bg-[#faf9f6] border-stone-200/90 hover:border-stone-300'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-bold text-white text-xs">{rec.patientName}</span>
+                    <span className="font-bold text-black text-xs">{rec.patientName}</span>
                     <span
                       className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
                         rec.humanReviewStatus === 'APPROVED_BY_CLINICIAN'
-                          ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                           : rec.humanReviewStatus === 'MODIFIED_BY_CLINICIAN'
-                          ? 'bg-amber-950 text-amber-300 border border-amber-800'
+                          ? 'bg-amber-50 text-amber-800 border border-amber-200'
                           : rec.humanReviewStatus === 'REJECTED_BY_CLINICIAN'
-                          ? 'bg-rose-950 text-rose-300 border border-rose-800'
-                          : 'bg-slate-800 text-slate-300 border border-slate-700'
+                          ? 'bg-rose-50 text-rose-800 border border-rose-200'
+                          : 'bg-stone-100 text-stone-700 border border-stone-200'
                       }`}
                     >
                       {rec.humanReviewStatus === 'APPROVED_BY_CLINICIAN'
@@ -162,10 +162,10 @@ export const ClinicalCopilotPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <div className="text-[11px] text-slate-400 space-y-0.5">
+                  <div className="text-[11px] text-stone-500 space-y-0.5">
                     <div>Usia: {rec.age} th ({rec.gender})</div>
-                    <div className="text-teal-300 font-medium">TD: {rec.observedFindings.systolic}/{rec.observedFindings.diastolic} mmHg</div>
-                    <div className="text-slate-300 truncate">{rec.suggestedWorkingDiagnosis.diagnosisName}</div>
+                    <div className="text-teal-800 font-semibold">TD: {rec.observedFindings.systolic}/{rec.observedFindings.diastolic} mmHg</div>
+                    <div className="text-stone-700 truncate">{rec.suggestedWorkingDiagnosis.diagnosisName}</div>
                   </div>
                 </div>
               );
@@ -177,20 +177,20 @@ export const ClinicalCopilotPage: React.FC = () => {
         {selectedRec && (
           <div className="lg:col-span-8 space-y-5">
             {/* Top Patient Summary */}
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-stone-200 pb-3">
                 <div>
-                  <h2 className="text-lg font-bold text-white">{selectedRec.patientName}</h2>
-                  <p className="text-xs text-slate-400">
+                  <h2 className="text-lg font-bold text-black">{selectedRec.patientName}</h2>
+                  <p className="text-xs text-stone-500">
                     ID Warga: {selectedRec.citizenId} • Usia: {selectedRec.age} Tahun ({selectedRec.gender})
                   </p>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <div className="text-right">
-                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Derajat Kepastian AI</div>
-                    <div className="text-xs font-bold text-teal-400 flex items-center justify-end gap-1">
-                      <Sparkles className="w-3.5 h-3.5" />
+                    <div className="text-[10px] text-stone-500 uppercase tracking-wider font-semibold">Derajat Kepastian AI</div>
+                    <div className="text-xs font-bold text-teal-800 flex items-center justify-end gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-teal-700" />
                       {selectedRec.suggestedWorkingDiagnosis.confidencePercent}% Confidence
                     </div>
                   </div>
@@ -199,31 +199,31 @@ export const ClinicalCopilotPage: React.FC = () => {
 
               {/* Observed Findings Chips */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-                  <div className="text-slate-400 text-[11px]">Tekanan Darah:</div>
-                  <div className="font-bold text-white text-sm">
-                    {selectedRec.observedFindings.systolic}/{selectedRec.observedFindings.diastolic} <span className="text-[10px] font-normal text-slate-400">mmHg</span>
+                <div className="p-2.5 rounded-lg bg-white border border-stone-200 shadow-2xs">
+                  <div className="text-stone-500 text-[11px]">Tekanan Darah:</div>
+                  <div className="font-bold text-black text-sm">
+                    {selectedRec.observedFindings.systolic}/{selectedRec.observedFindings.diastolic} <span className="text-[10px] font-normal text-stone-500">mmHg</span>
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-                  <div className="text-slate-400 text-[11px]">Gula Darah:</div>
-                  <div className="font-bold text-white text-sm">
+                <div className="p-2.5 rounded-lg bg-white border border-stone-200 shadow-2xs">
+                  <div className="text-stone-500 text-[11px]">Gula Darah:</div>
+                  <div className="font-bold text-black text-sm">
                     {selectedRec.observedFindings.randomBloodSugar || selectedRec.observedFindings.fastingBloodSugar || '-'}{' '}
-                    <span className="text-[10px] font-normal text-slate-400">mg/dL</span>
+                    <span className="text-[10px] font-normal text-stone-500">mg/dL</span>
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-                  <div className="text-slate-400 text-[11px]">HbA1c:</div>
-                  <div className="font-bold text-white text-sm">
+                <div className="p-2.5 rounded-lg bg-white border border-stone-200 shadow-2xs">
+                  <div className="text-stone-500 text-[11px]">HbA1c:</div>
+                  <div className="font-bold text-black text-sm">
                     {selectedRec.observedFindings.hba1c ? `${selectedRec.observedFindings.hba1c}%` : 'Belum Ada'}
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-                  <div className="text-slate-400 text-[11px]">IMT / Merokok:</div>
-                  <div className="font-bold text-white text-xs">
+                <div className="p-2.5 rounded-lg bg-white border border-stone-200 shadow-2xs">
+                  <div className="text-stone-500 text-[11px]">IMT / Merokok:</div>
+                  <div className="font-bold text-black text-xs">
                     {selectedRec.observedFindings.bmi || 24.0} • {selectedRec.observedFindings.smokingStatus ? 'Merokok' : 'Non-Perokok'}
                   </div>
                 </div>
@@ -231,42 +231,42 @@ export const ClinicalCopilotPage: React.FC = () => {
             </div>
 
             {/* Suggested Diagnosis & Guideline Grounding */}
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
-              <div className="flex items-center gap-2 text-sm font-bold text-white border-b border-slate-800 pb-2">
-                <BookOpen className="w-4 h-4 text-teal-400" />
+            <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-black border-b border-stone-200 pb-2">
+                <BookOpen className="w-4 h-4 text-teal-700" />
                 Saran Diagnosis Kerja & Dasar Pedoman Klinis (Clinical Guideline Grounding)
               </div>
 
-              <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700 space-y-1">
+              <div className="p-3 bg-white rounded-xl border border-stone-200 space-y-1 shadow-2xs">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-teal-950 text-teal-300 border border-teal-800 font-mono text-xs font-bold">
+                  <span className="px-2 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200 font-mono text-xs font-bold">
                     ICD-10: {selectedRec.suggestedWorkingDiagnosis.icd10Code}
                   </span>
-                  <span className="font-semibold text-white text-xs">
+                  <span className="font-bold text-black text-xs">
                     {selectedRec.suggestedWorkingDiagnosis.diagnosisName}
                   </span>
                 </div>
-                <div className="text-[11px] text-slate-400 pl-1">
+                <div className="text-[11px] text-stone-600 pl-1">
                   Klasifikasi: {selectedRec.suggestedWorkingDiagnosis.stageOrGrade}
                 </div>
               </div>
 
-              <div className="text-xs text-slate-300 space-y-1 bg-slate-800/30 p-3 rounded-xl border border-slate-800">
-                <div className="text-teal-400 font-semibold flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5" />
+              <div className="text-xs text-stone-700 space-y-1 bg-white p-3 rounded-xl border border-stone-200 shadow-2xs">
+                <div className="text-teal-800 font-bold flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-teal-700" />
                   Rasionalisasi Klinis:
                 </div>
-                <p className="leading-relaxed text-slate-300">{selectedRec.guidelineEvidence.rationaleExplanation}</p>
-                <div className="text-[10px] text-slate-400 italic pt-1">
+                <p className="leading-relaxed text-stone-700">{selectedRec.guidelineEvidence.rationaleExplanation}</p>
+                <div className="text-[10px] text-stone-500 italic pt-1">
                   Sumber: {selectedRec.guidelineEvidence.sourceGuideline} ({selectedRec.guidelineEvidence.referenceSection})
                 </div>
               </div>
             </div>
 
             {/* Recommended Pharmacotherapy & Safety Alerts */}
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-              <div className="flex items-center gap-2 text-sm font-bold text-white border-b border-slate-800 pb-2">
-                <Pill className="w-4 h-4 text-teal-400" />
+            <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
+              <div className="flex items-center gap-2 text-sm font-bold text-black border-b border-stone-200 pb-2">
+                <Pill className="w-4 h-4 text-teal-700" />
                 Rekomendasi Terapi Obat Lini Pertama & Peringatan Keamanan Resep
               </div>
 
@@ -276,15 +276,15 @@ export const ClinicalCopilotPage: React.FC = () => {
                   key={idx}
                   className={`p-3 rounded-xl border flex items-start gap-2.5 text-xs ${
                     alert.severity === 'CRITICAL'
-                      ? 'bg-rose-950/40 border-rose-800/80 text-rose-200'
+                      ? 'bg-rose-50 border-rose-200 text-rose-900'
                       : alert.severity === 'WARNING'
-                      ? 'bg-amber-950/40 border-amber-800/80 text-amber-200'
-                      : 'bg-teal-950/40 border-teal-800/80 text-teal-200'
+                      ? 'bg-amber-50 border-amber-200 text-amber-900'
+                      : 'bg-teal-50 border-teal-200 text-teal-900'
                   }`}
                 >
                   <AlertOctagon className="w-4 h-4 shrink-0 mt-0.5" />
                   <div className="leading-relaxed">
-                    <strong className="font-semibold uppercase tracking-wider mr-1">
+                    <strong className="font-bold uppercase tracking-wider mr-1">
                       [{alert.type}]:
                     </strong>
                     {alert.message}
@@ -295,34 +295,34 @@ export const ClinicalCopilotPage: React.FC = () => {
               {/* Drug Prescriptions */}
               <div className="space-y-2.5">
                 {selectedRec.recommendedTherapy.map((rx, idx) => (
-                  <div key={idx} className="p-3 bg-slate-800/70 rounded-xl border border-slate-700 text-xs space-y-1">
-                    <div className="flex items-center justify-between text-white font-semibold">
+                  <div key={idx} className="p-3 bg-white rounded-xl border border-stone-200 text-xs space-y-1 shadow-2xs">
+                    <div className="flex items-center justify-between text-black font-semibold">
                       <span>{rx.firstLineDrug}</span>
-                      <span className="text-teal-400 font-mono text-[11px]">{rx.frequency}</span>
+                      <span className="text-teal-800 font-mono text-[11px] font-bold">{rx.frequency}</span>
                     </div>
-                    <div className="text-slate-300 text-[11px]">Dosis Awal: {rx.initialDose}</div>
-                    <div className="text-slate-400 text-[10px] italic">Catatan: {rx.specialInstructions}</div>
+                    <div className="text-stone-700 text-[11px]">Dosis Awal: {rx.initialDose}</div>
+                    <div className="text-stone-500 text-[10px] italic">Catatan: {rx.specialInstructions}</div>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Clinician Action & Review Section */}
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <Edit3 className="w-4 h-4 text-teal-400" />
+            <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-stone-200 pb-2">
+                <h3 className="text-sm font-bold text-black flex items-center gap-2">
+                  <Edit3 className="w-4 h-4 text-teal-700" />
                   Keputusan & Catatan Dokter Pemeriksa
                 </h3>
                 {selectedRec.reviewedByDoctorName && (
-                  <span className="text-xs text-slate-400">
-                    Terakhir ditelaah oleh: <strong className="text-slate-200">{selectedRec.reviewedByDoctorName}</strong>
+                  <span className="text-xs text-stone-500">
+                    Terakhir ditelaah oleh: <strong className="text-stone-800">{selectedRec.reviewedByDoctorName}</strong>
                   </span>
                 )}
               </div>
 
               <div>
-                <label className="block text-xs text-slate-300 mb-1.5">
+                <label className="block text-xs text-stone-700 font-semibold mb-1.5">
                   Catatan Klinis / Penyesuaian Resep Dokter:
                 </label>
                 <textarea
@@ -330,7 +330,7 @@ export const ClinicalCopilotPage: React.FC = () => {
                   onChange={(e) => setReviewNotes(e.target.value)}
                   placeholder="Tambahkan catatan khusus atau alasan modifikasi terapi..."
                   rows={2}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-black placeholder-stone-400 focus:outline-none focus:border-teal-700"
                 />
               </div>
 
@@ -338,7 +338,7 @@ export const ClinicalCopilotPage: React.FC = () => {
                 <button
                   onClick={() => handleReview('APPROVED_BY_CLINICIAN')}
                   disabled={isSubmitting}
-                  className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   Setujui Rekomendasi Terapi
@@ -347,7 +347,7 @@ export const ClinicalCopilotPage: React.FC = () => {
                 <button
                   onClick={() => handleReview('MODIFIED_BY_CLINICIAN')}
                   disabled={isSubmitting}
-                  className="flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
                 >
                   <Edit3 className="w-4 h-4" />
                   Setujui dengan Penyesuaian
@@ -356,7 +356,7 @@ export const ClinicalCopilotPage: React.FC = () => {
                 <button
                   onClick={() => handleReview('REJECTED_BY_CLINICIAN')}
                   disabled={isSubmitting}
-                  className="flex items-center gap-2 px-4 py-2 bg-rose-700 hover:bg-rose-600 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2 bg-rose-700 hover:bg-rose-800 text-white rounded-xl text-xs font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
                 >
                   <XCircle className="w-4 h-4" />
                   Tolak Rekomendasi AI
