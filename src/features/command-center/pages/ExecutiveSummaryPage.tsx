@@ -18,7 +18,6 @@ import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { CompletenessBanner } from '../components/CompletenessBanner';
-import { QualifiedMetricCard } from '../components/QualifiedMetricCard';
 import {
   populationQualificationService,
   CountyCompletenessSummary,
@@ -168,13 +167,6 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
       </div>
 
       <CompletenessBanner completeness={completeness} onRefresh={loadData} />
-
-      {/* 3 Executive Metric Pillars */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <QualifiedMetricCard metric={impact.level1Coverage} levelBadge="Pilar 1: Cakupan" />
-        <QualifiedMetricCard metric={impact.level2Continuity} levelBadge="Pilar 2: Kontinuitas" />
-        <QualifiedMetricCard metric={impact.level3Outcome} levelBadge="Pilar 3: Pengendalian" />
-      </div>
 
       {/* Key Executive Insights Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

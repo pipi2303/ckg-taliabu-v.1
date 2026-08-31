@@ -17,7 +17,6 @@ import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { CompletenessBanner } from '../components/CompletenessBanner';
-import { QualifiedMetricCard } from '../components/QualifiedMetricCard';
 import { ImpactLevelAnalyticsCharts } from '../components/ImpactLevelAnalyticsCharts';
 import {
   populationQualificationService,
@@ -181,23 +180,7 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <QualifiedMetricCard
-            metric={impact.level1Coverage}
-            levelBadge="Level 1"
-            canDrilldown={user?.roleId !== 'BUPATI'}
-            onDrilldown={() => onNavigate?.('dinkes-wilayah')}
-          />
-          <QualifiedMetricCard
-            metric={impact.level2Continuity}
-            levelBadge="Level 2"
-            canDrilldown={user?.roleId !== 'BUPATI'}
-            onDrilldown={() => onNavigate?.('dinkes-gap')}
-          />
-          <QualifiedMetricCard metric={impact.level3Outcome} levelBadge="Level 3" />
-        </div>
-
-        {/* Recharts Analytics Charts for Level 1, 2, and 3 (Bar, Area, Composed, Radar, Cohort) */}
+        {/* Recharts Analytics Charts for Level 1, 2, and 3 (Bar, Area, Composed, Cohort) */}
         <ImpactLevelAnalyticsCharts impact={impact} onNavigate={onNavigate} />
       </div>
 

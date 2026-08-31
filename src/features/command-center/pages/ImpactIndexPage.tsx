@@ -12,7 +12,6 @@ import {
 import { useAuth } from '../../../context/AuthContext';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { CompletenessBanner } from '../components/CompletenessBanner';
-import { QualifiedMetricCard } from '../components/QualifiedMetricCard';
 import { MetricDefinitionModal } from '../components/MetricDefinitionModal';
 import { ImpactLevelAnalyticsCharts } from '../components/ImpactLevelAnalyticsCharts';
 import {
@@ -84,21 +83,6 @@ export const ImpactIndexPage: React.FC = () => {
       </div>
 
       <CompletenessBanner completeness={completeness} onRefresh={loadData} />
-
-      {/* 3 Metric Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <QualifiedMetricCard
-          metric={impact.level1Coverage}
-          levelBadge="Tingkat 1"
-          canDrilldown={user?.roleId !== 'BUPATI'}
-        />
-        <QualifiedMetricCard
-          metric={impact.level2Continuity}
-          levelBadge="Tingkat 2"
-          canDrilldown={user?.roleId !== 'BUPATI'}
-        />
-        <QualifiedMetricCard metric={impact.level3Outcome} levelBadge="Tingkat 3" />
-      </div>
 
       {/* Recharts Analytics Charts for Level 1, 2, and 3 */}
       <ImpactLevelAnalyticsCharts impact={impact} />
