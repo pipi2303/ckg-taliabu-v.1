@@ -21,7 +21,7 @@ export const OutcomeTrendsPage: React.FC<OutcomeTrendsPageProps> = ({ currentUse
       try {
         const list = await citizenRepo.getAll();
         setCitizens(list);
-        if (list.length > 0) {
+        if (list.length > 0 && list[0]?.id) {
           setSelectedCitizenId(list[0].id);
         }
       } catch (err) {

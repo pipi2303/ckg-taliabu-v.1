@@ -23,7 +23,6 @@ import {
   BarChart3,
   AreaChart as AreaChartIcon,
   Calendar,
-  Layers,
   Sparkles,
   Info,
   Filter,
@@ -94,8 +93,6 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
   docBadgeCode,
 }) => {
   const isDark = theme === 'dark';
-  // State for Visualization Type: 'COMBINED' | 'BAR_CHART' | 'AREA_CHART'
-  const [chartType, setChartType] = useState<'COMBINED' | 'BAR_CHART' | 'AREA_CHART'>('COMBINED');
 
   // State for Bar Sub-View: 'VOLUME' (Warga Diperiksa vs Ditangani vs Gap) | 'RATES' (% Terkontrol vs % Penurunan Risiko)
   const [barMetricMode, setBarMetricMode] = useState<'VOLUME' | 'RATES'>('VOLUME');
@@ -710,68 +707,22 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
           </p>
         </div>
 
-        {/* Global Controls & Chart Switcher */}
+        {/* Global Controls & Action */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* Main Chart View Switcher */}
           <div
-            className={`flex rounded-xl p-1 border text-xs font-semibold ${
-              isDark ? 'bg-slate-800/80 border-slate-700' : 'bg-[#F0F5F4] border-[#D8E5E2]'
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold ${
+              isDark ? 'bg-slate-800/80 border-slate-700 text-slate-300' : 'bg-[#F0F5F4] border-[#D8E5E2] text-[#00201C]'
             }`}
           >
-            <UiTooltip content="Tampilkan Grafik Batang (Komparasi 8 Puskesmas) & Grafik Area (Tren Waktu) Berdampingan" position="bottom">
-              <button
-                type="button"
-                onClick={() => setChartType('COMBINED')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
-                  chartType === 'COMBINED'
-                    ? isDark
-                      ? 'bg-teal-600 text-white shadow-2xs'
-                      : 'bg-[#00201C] text-white shadow-2xs'
-                    : isDark
-                    ? 'text-slate-400 hover:text-white'
-                    : 'text-[#60716D] hover:text-black'
-                }`}
-              >
-                <Layers className="w-3.5 h-3.5" />
-                <span>Semua Grafik</span>
-              </button>
-            </UiTooltip>
-            <UiTooltip content="Fokus Tampilan Grafik Batang: Komparasi Kinerja & Target 8 Puskesmas" position="bottom">
-              <button
-                type="button"
-                onClick={() => setChartType('BAR_CHART')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
-                  chartType === 'BAR_CHART'
-                    ? isDark
-                      ? 'bg-teal-600 text-white shadow-2xs'
-                      : 'bg-[#00201C] text-white shadow-2xs'
-                    : isDark
-                    ? 'text-slate-400 hover:text-white'
-                    : 'text-[#60716D] hover:text-black'
-                }`}
-              >
-                <BarChart3 className="w-3.5 h-3.5" />
-                <span>Grafik Batang</span>
-              </button>
-            </UiTooltip>
-            <UiTooltip content="Fokus Tampilan Grafik Area: Tren Pertumbuhan Longitudinal 6 KPI" position="bottom">
-              <button
-                type="button"
-                onClick={() => setChartType('AREA_CHART')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
-                  chartType === 'AREA_CHART'
-                    ? isDark
-                      ? 'bg-teal-600 text-white shadow-2xs'
-                      : 'bg-[#00201C] text-white shadow-2xs'
-                    : isDark
-                    ? 'text-slate-400 hover:text-white'
-                    : 'text-[#60716D] hover:text-black'
-                }`}
-              >
-                <AreaChartIcon className="w-3.5 h-3.5" />
-                <span>Grafik Area</span>
-              </button>
-            </UiTooltip>
+            <span className="flex items-center gap-1.5">
+              <BarChart3 className="w-3.5 h-3.5 text-teal-600" />
+              <span>Komparasi Faskes</span>
+            </span>
+            <span className={isDark ? 'text-slate-600' : 'text-slate-300'}>•</span>
+            <span className="flex items-center gap-1.5">
+              <AreaChartIcon className="w-3.5 h-3.5 text-teal-600" />
+              <span>Tren Waktu</span>
+            </span>
           </div>
 
           <ActionIconButton
@@ -957,17 +908,16 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         </div>
       </div>
 
-      {/* 3. Charts Area Grid (Responsive Layout) */}
-      <div className={`grid gap-6 ${chartType === 'COMBINED' ? 'grid-cols-1 xl:grid-cols-2' : 'grid-cols-1'}`}>
+      {/* 3. Charts Area Grid (Optimal Responsive Layout: Bar Chart for Faskes & Area Chart for Trends) */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* ========================================================================= */}
         {/* A. GRAFIK BATANG (BAR CHART RECHARTS) — KOMPARASI 8 PUSKESMAS & TARGET   */}
         {/* ========================================================================= */}
-        {(chartType === 'COMBINED' || chartType === 'BAR_CHART') && (
-          <div
-            className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
-              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
-            }`}
-          >
+        <div
+          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
+            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
+          }`}
+        >
             {/* Bar Chart Header Controls */}
             <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b ${isDark ? 'border-slate-800' : 'border-[#D8E5E2]'}`}>
               <div>
@@ -1194,17 +1144,15 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
               )}
             </div>
           </div>
-        )}
 
         {/* ========================================================================= */}
         {/* B. GRAFIK AREA (AREA CHART RECHARTS) — TREN LONGITUDINAL 6 BULAN (6 KPI) */}
         {/* ========================================================================= */}
-        {(chartType === 'COMBINED' || chartType === 'AREA_CHART') && (
-          <div
-            className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
-              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
-            }`}
-          >
+        <div
+          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
+            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
+          }`}
+        >
             {/* Area Chart Header Controls */}
             <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b ${isDark ? 'border-slate-800' : 'border-[#D8E5E2]'}`}>
               <div>
@@ -1479,7 +1427,6 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
               )}
             </div>
           </div>
-        )}
       </div>
     </div>
   );

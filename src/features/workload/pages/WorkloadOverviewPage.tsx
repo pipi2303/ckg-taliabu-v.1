@@ -110,12 +110,12 @@ export const WorkloadOverviewPage: React.FC = () => {
 
           <div className="divide-y divide-[#D8E5E2]">
             {overview.staffWorkloads.map((sw) => (
-              <div key={sw.user.id} className="p-4 space-y-2 text-xs">
+              <div key={sw.user?.id || Math.random().toString()} className="p-4 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="font-bold text-sm text-black">{sw.user.name}</span>
+                    <span className="font-bold text-sm text-black">{sw.user?.name || 'Petugas Faskes'}</span>
                     <span className="text-[11px] text-[#60716D] block">
-                      {sw.user.roleId} · {sw.user.facilityName}
+                      {sw.user?.roleId || '-'} · {sw.user?.facilityName || '-'}
                     </span>
                   </div>
 
@@ -170,12 +170,12 @@ export const WorkloadOverviewPage: React.FC = () => {
 
           <div className="divide-y divide-[#D8E5E2]">
             {overview.kaderWorkloads.map((kw) => (
-              <div key={kw.user.id} className="p-4 space-y-2 text-xs">
+              <div key={kw.user?.id || Math.random().toString()} className="p-4 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="font-bold text-sm text-black">{kw.user.name}</span>
+                    <span className="font-bold text-sm text-black">{kw.user?.name || 'Kader Lapangan'}</span>
                     <span className="text-[11px] text-[#60716D] block">
-                      {kw.user.roleId} · {kw.user.facilityName}
+                      {kw.user?.roleId || '-'} · {kw.user?.facilityName || '-'}
                     </span>
                   </div>
 

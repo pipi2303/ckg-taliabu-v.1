@@ -56,15 +56,15 @@ export const PopulationInterventionPage: React.FC = () => {
     e.preventDefault();
     if (!user || !newTitle) return;
 
-    const kec = INITIAL_KECAMATAN.find((k) => k.id === newRegionId) || INITIAL_KECAMATAN[0];
+    const kec = INITIAL_KECAMATAN.find((k) => k.id === newRegionId) || INITIAL_KECAMATAN[0] || { id: 'kec-1', name: 'Taliabu Barat' };
 
     try {
       await populationInterventionService.createIntervention(
         {
           title: newTitle,
           description: newDesc,
-          targetRegionId: kec.id,
-          targetRegionName: `Kecamatan ${kec.name}`,
+          targetRegionId: kec?.id || 'kec-1',
+          targetRegionName: `Kecamatan ${kec?.name || 'Taliabu Barat'}`,
           ownerUserId: user.id,
           ownerUserName: `${user.name} (${user.roleName})`,
           startDate: new Date().toISOString().slice(0, 10),

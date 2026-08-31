@@ -33,8 +33,8 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
 
   if (!isOpen) return null;
 
-  const puskesmasList = facilities.filter((f) => f.type === 'PUSKESMAS');
-  const selectedFacility = puskesmasList.find((f) => f.id === targetFacilityId) || puskesmasList[0];
+  const puskesmasList = (facilities || []).filter((f) => f && f.type === 'PUSKESMAS');
+  const selectedFacility = puskesmasList.find((f) => f && f.id === targetFacilityId) || puskesmasList[0] || null;
 
   const isKadis = currentUser?.roleId === 'KEPALA_DINAS';
   const isAnalyst = currentUser?.roleId === 'ANALYST_DINKES';

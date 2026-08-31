@@ -1,0 +1,869 @@
+src/components/common/Tabs.tsx:22 -> const isActive = tab.id === activeTab;
+src/components/common/Tabs.tsx:25 -> key={tab.id}
+src/components/common/Tabs.tsx:26 -> onClick={() => !tab.disabled && onChange(tab.id)}
+src/components/layout/Header.tsx:82 -> const isCurrent = currentUser?.id === p.id;
+src/components/layout/Header.tsx:85 -> key={p.id}
+src/components/layout/Header.tsx:88 -> await switchDemoUser(p.id);
+src/components/layout/Sidebar.tsx:208 -> items: section.items.filter((item) => permissionService.isNavAllowed(roleId, item.id)),
+src/components/layout/Sidebar.tsx:233 -> onNavigate(item.id);
+src/components/layout/Sidebar.tsx:276 -> const isActive = activeNav === item.id;
+src/components/layout/Sidebar.tsx:285 -> key={item.id}
+src/components/layout/Sidebar.tsx:286 -> data-tour={`nav-${item.id}`}
+src/components/tour/OnboardingTour.tsx:352 -> key={s.id}
+src/context/ToastContext.tsx:30 -> setToasts((prev) => prev.filter((t) => t.id !== id));
+src/context/ToastContext.tsx:73 -> key={toast.id}
+src/context/ToastContext.tsx:83 -> onClick={() => dismissToast(toast.id)}
+src/features/adherence/AdherenceManagementPage.tsx:209 -> const cycle = cycles.find((c) => c.id === a.cycleId);
+src/features/adherence/AdherenceManagementPage.tsx:212 -> <tr key={a.id} className="hover:bg-stone-50 transition-colors">
+src/features/ai-intelligence/pages/AIGovernanceAuditPage.tsx:85 -> showKillSwitchModal.id,
+src/features/ai-intelligence/pages/AIGovernanceAuditPage.tsx:87 -> { userId: user.id, userName: user.name },
+src/features/ai-intelligence/pages/AIGovernanceAuditPage.tsx:235 -> <tr key={m.id} className="hover:bg-slate-800/40">
+src/features/ai-intelligence/pages/AdaptiveNudgePage.tsx:56 -> actor: { id: user.id, name: user.name, role: user.roleName || user.roleId },
+src/features/ai-intelligence/pages/AdaptiveNudgePage.tsx:175 -> key={nudge.id}
+src/features/ai-intelligence/pages/ClinicalCopilotPage.tsx:52 -> id: selectedRec.id,
+src/features/ai-intelligence/pages/ClinicalCopilotPage.tsx:54 -> doctorUserId: user.id,
+src/features/ai-intelligence/pages/ClinicalCopilotPage.tsx:61 -> setRecommendations((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
+src/features/ai-intelligence/pages/ClinicalCopilotPage.tsx:61 -> setRecommendations((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
+src/features/ai-intelligence/pages/ClinicalCopilotPage.tsx:128 -> const isSelected = selectedRec?.id === rec.id;
+src/features/ai-intelligence/pages/ClinicalCopilotPage.tsx:131 -> key={rec.id}
+src/features/ai-intelligence/pages/DigitalTwinPage.tsx:313 -> <div key={intv.id} className="p-3 bg-slate-800/50 rounded-xl border border-slate-700/60 space-y-1">
+src/features/ai-intelligence/pages/LearnedClusterPage.tsx:61 -> key={cluster.id}
+src/features/ai-intelligence/pages/ModelPerformanceFairnessPage.tsx:32 -> { userId: user.id, userName: user.name },
+src/features/ai-intelligence/pages/ModelPerformanceFairnessPage.tsx:80 -> <div key={snap.id} className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+src/features/ai-intelligence/pages/ModelPerformanceFairnessPage.tsx:186 -> <div key={f.id} className="p-4 bg-slate-800/70 rounded-xl border border-slate-700 space-y-2">
+src/features/ai-intelligence/pages/ModelPerformanceFairnessPage.tsx:190 -> <span className="text-[10px] font-mono text-slate-400">({f.id})</span>
+src/features/ai-intelligence/pages/ModelPerformanceFairnessPage.tsx:205 -> onClick={() => handleResolveFinding(f.id)}
+src/features/ai-intelligence/pages/PopulationForecastPage.tsx:51 -> id: user.id,
+src/features/ai-intelligence/pages/PredictiveDropoutPage.tsx:44 -> p.id.toLowerCase().includes(searchQuery.toLowerCase());
+src/features/ai-intelligence/pages/PredictiveDropoutPage.tsx:61 -> predictionId: selectedPrediction.id,
+src/features/ai-intelligence/pages/PredictiveDropoutPage.tsx:63 -> userId: user.id,
+src/features/ai-intelligence/pages/PredictiveDropoutPage.tsx:176 -> key={pred.id}
+src/features/ai-intelligence/pages/PredictiveDropoutPage.tsx:183 -> <span className="text-[10px] text-slate-500">({pred.id})</span>
+src/features/ai-intelligence/pages/PreventionPriorityPage.tsx:138 -> key={item.id}
+src/features/ai-intelligence/pages/RegionalPtmForecastPage.tsx:55 -> <div key={r.id} className="p-3.5 bg-slate-800/60 border border-slate-700 rounded-xl space-y-2">
+src/features/ai-intelligence/pages/RegionalPtmForecastPage.tsx:91 -> <tr key={f.id} className="hover:bg-slate-800/40 transition">
+src/features/ai-intelligence/pages/RegionalPtmForecastPage.tsx:114 -> <div key={f.id} className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+src/features/ai-intelligence/pages/RouteOptimizerPage.tsx:47 -> { id: user.id, name: user.name, role: user.roleName || user.roleId }
+src/features/ai-intelligence/pages/RouteOptimizerPage.tsx:91 -> <div key={route.id} className="space-y-4">
+src/features/ai-intelligence/pages/ScenarioLabPage.tsx:46 -> setSelectedScenarioId(created.id);
+src/features/ai-intelligence/pages/ScenarioLabPage.tsx:110 -> key={scen.id}
+src/features/ai-intelligence/pages/ScenarioLabPage.tsx:111 -> onClick={() => setSelectedScenarioId(scen.id)}
+src/features/ai-intelligence/pages/ScenarioLabPage.tsx:113 -> selectedScenarioId === scen.id
+src/features/ai-intelligence/pages/ScenarioLabPage.tsx:142 -> <span className="text-[11px] font-mono text-amber-400">ID: {activeScenario.id}</span>
+src/features/appointments/components/CreateAppointmentModal.tsx:147 -> facilityName: facilities.find((f) => f.id === selectedFacilityId)?.name || 'Puskesmas',
+src/features/appointments/components/CreateAppointmentModal.tsx:154 -> { id: currentUser.id, name: currentUser.name }
+src/features/appointments/components/CreateAppointmentModal.tsx:183 -> { id: currentUser.id, name: currentUser.name }
+src/features/appointments/components/CreateAppointmentModal.tsx:244 -> <option key={f.id} value={f.id}>
+src/features/appointments/components/CreateAppointmentModal.tsx:244 -> <option key={f.id} value={f.id}>
+src/features/appointments/components/CreateAppointmentModal.tsx:339 -> key={alt.id}
+src/features/appointments/components/RescheduleAppointmentModal.tsx:68 -> await appointmentRepo.reschedule(appointment.id, newDate, newTime, reason, {
+src/features/appointments/components/RescheduleAppointmentModal.tsx:69 -> id: currentUser.id,
+src/features/appointments/components/ServiceQuotaModal.tsx:86 -> const res = await serviceQuotaRepo.updateCapacity(quota.id, capacity, {
+src/features/appointments/components/ServiceQuotaModal.tsx:87 -> id: currentUser.id,
+src/features/appointments/components/ServiceQuotaModal.tsx:94 -> const fac = facilities.find((f) => f.id === selectedFacilityId);
+src/features/appointments/components/ServiceQuotaModal.tsx:104 -> { id: currentUser.id, name: currentUser.name }
+src/features/appointments/components/ServiceQuotaModal.tsx:167 -> <option key={f.id} value={f.id}>
+src/features/appointments/components/ServiceQuotaModal.tsx:167 -> <option key={f.id} value={f.id}>
+src/features/appointments/pages/AppointmentSchedulePage.tsx:60 -> setSelectedFacilityId(facs[0].id);
+src/features/appointments/pages/AppointmentSchedulePage.tsx:91 -> await appointmentRepo.cancel(apt.id, reason, {
+src/features/appointments/pages/AppointmentSchedulePage.tsx:92 -> id: currentUser.id,
+src/features/appointments/pages/AppointmentSchedulePage.tsx:159 -> <option key={f.id} value={f.id}>
+src/features/appointments/pages/AppointmentSchedulePage.tsx:159 -> <option key={f.id} value={f.id}>
+src/features/appointments/pages/AppointmentSchedulePage.tsx:220 -> key={apt.id}
+src/features/appointments/pages/AppointmentSchedulePage.tsx:227 -> {apt.id}
+src/features/appointments/pages/AppointmentSchedulePage.tsx:304 -> <div key={wl.id} className="p-3.5 space-y-1.5 text-xs">
+src/features/assignment/pages/FieldAssignmentPage.tsx:62 -> const vTasks = tasks.filter((t) => t.villageId === v.id);
+src/features/assignment/pages/FieldAssignmentPage.tsx:119 -> key={village.id}
+src/features/assignment/pages/FieldAssignmentPage.tsx:120 -> onClick={() => setSelectedVillageId(village.id)}
+src/features/assignment/pages/FieldAssignmentPage.tsx:122 -> selectedVillageId === village.id
+src/features/assignment/pages/FieldAssignmentPage.tsx:135 -> selectedVillageId === village.id ? 'bg-amber-400 text-amber-950' : 'bg-amber-100 text-amber-900'
+src/features/assignment/pages/FieldAssignmentPage.tsx:165 -> key={task.id}
+src/features/assignment/pages/FieldAssignmentPage.tsx:173 -> {task.id}
+src/features/audit/AuditLogPage.tsx:50 -> subtitle: `ID: ${event.id} • Waktu: ${new Date(event.occurredAt).toLocaleString('id-ID')}`,
+src/features/audit/AuditLogPage.tsx:207 -> keyExtractor={(l) => l.id}
+src/features/auth/LoginPage.tsx:140 -> const isSystemAdmin = user.id === 'usr-1' || user.name === label;
+src/features/auth/LoginPage.tsx:143 -> key={user.id}
+src/features/auth/LoginPage.tsx:145 -> onClick={() => switchDemoUser(user.id)}
+src/features/care-task/components/CareTaskDetailDrawer.tsx:73 -> setAssignments(allAssignments.filter((a) => a.taskId === task.id));
+src/features/care-task/components/CareTaskDetailDrawer.tsx:75 -> const attempts = await contactAttemptRepo.getByTaskId(task.id);
+src/features/care-task/components/CareTaskDetailDrawer.tsx:80 -> setAppointment(apts.find((a) => a.id === task.appointmentId) || null);
+src/features/care-task/components/CareTaskDetailDrawer.tsx:87 -> setClosure(closures.find((c) => c.taskId === task.id) || null);
+src/features/care-task/components/CareTaskDetailDrawer.tsx:116 -> {task.id}
+src/features/care-task/components/CareTaskDetailDrawer.tsx:319 -> Janji Temu Terjadwal ({appointment.id})
+src/features/care-task/components/CareTaskDetailDrawer.tsx:398 -> key={att.id}
+src/features/care-task/components/CareTaskDetailDrawer.tsx:469 -> key={asg.id}
+src/features/care-task/components/TaskAssignmentModal.tsx:56 -> const list = await taskAssignmentService.getCandidateAssignees(task.id);
+src/features/care-task/components/TaskAssignmentModal.tsx:85 -> task.id,
+src/features/care-task/components/TaskAssignmentModal.tsx:87 -> userId: selectedOption.user.id,
+src/features/care-task/components/TaskAssignmentModal.tsx:94 -> { id: currentUser.id, name: currentUser.name }
+src/features/care-task/components/TaskAssignmentModal.tsx:98 -> task.id,
+src/features/care-task/components/TaskAssignmentModal.tsx:100 -> userId: selectedOption.user.id,
+src/features/care-task/components/TaskAssignmentModal.tsx:106 -> { id: currentUser.id, name: currentUser.name }
+src/features/care-task/components/TaskAssignmentModal.tsx:164 -> <span className="text-[#60716D] font-mono">{task.id}</span>
+src/features/care-task/components/TaskClosureModal.tsx:71 -> task.id,
+src/features/care-task/components/TaskClosureModal.tsx:78 -> { id: currentUser.id, name: currentUser.name }
+src/features/care-task/components/TaskClosureModal.tsx:107 -> <p className="text-xs text-slate-300">{task.id} · {task.citizenName}</p>
+src/features/care-task/pages/CareTaskListPage.tsx:127 -> id: currentUser.id,
+src/features/care-task/pages/CareTaskListPage.tsx:257 -> <option key={f.id} value={f.id}>
+src/features/care-task/pages/CareTaskListPage.tsx:257 -> <option key={f.id} value={f.id}>
+src/features/care-task/pages/CareTaskListPage.tsx:273 -> <option key={v.id} value={v.id}>
+src/features/care-task/pages/CareTaskListPage.tsx:273 -> <option key={v.id} value={v.id}>
+src/features/care-task/pages/CareTaskListPage.tsx:372 -> key={task.id}
+src/features/care-task/pages/CareTaskListPage.tsx:381 -> <span>{task.id}</span>
+src/features/care-task/pages/DailyPriorityQueuePage.tsx:171 -> key={task.id}
+src/features/care-task/pages/DailyPriorityQueuePage.tsx:203 -> {task.id}
+src/features/care-task/pages/DailyPriorityQueuePage.tsx:316 -> <p className="text-[11px] text-[#60716D] font-mono">Tugas #{activeWhyItem.task.id}</p>
+src/features/citizen/components/BloodPressureTrendChart.tsx:156 -> const selectedPoint = displayedData.find((p) => p.id === selectedPointId) || displayedData[displayedData.length - 1] || data[0] || {
+src/features/citizen/components/BloodPressureTrendChart.tsx:442 -> const isSelected = d.id === selectedPointId;
+src/features/citizen/components/BloodPressureTrendChart.tsx:445 -> <g key={`time-${d.id}`}>
+src/features/citizen/components/BloodPressureTrendChart.tsx:483 -> x1={getX(displayedData.findIndex((p) => p.id === selectedPoint.id))}
+src/features/citizen/components/BloodPressureTrendChart.tsx:483 -> x1={getX(displayedData.findIndex((p) => p.id === selectedPoint.id))}
+src/features/citizen/components/BloodPressureTrendChart.tsx:485 -> x2={getX(displayedData.findIndex((p) => p.id === selectedPoint.id))}
+src/features/citizen/components/BloodPressureTrendChart.tsx:485 -> x2={getX(displayedData.findIndex((p) => p.id === selectedPoint.id))}
+src/features/citizen/components/BloodPressureTrendChart.tsx:515 -> const isSelected = d.id === selectedPointId;
+src/features/citizen/components/BloodPressureTrendChart.tsx:519 -> key={`dia-node-${d.id}`}
+src/features/citizen/components/BloodPressureTrendChart.tsx:520 -> onClick={() => setSelectedPointId(d.id)}
+src/features/citizen/components/BloodPressureTrendChart.tsx:584 -> const isSelected = d.id === selectedPointId;
+src/features/citizen/components/BloodPressureTrendChart.tsx:588 -> key={`sys-node-${d.id}`}
+src/features/citizen/components/BloodPressureTrendChart.tsx:589 -> onClick={() => setSelectedPointId(d.id)}
+src/features/citizen/components/BloodPressureTrendChart.tsx:701 -> const isSelected = item.id === selectedPointId;
+src/features/citizen/components/BloodPressureTrendChart.tsx:706 -> key={item.id}
+src/features/citizen/components/BloodPressureTrendChart.tsx:707 -> onClick={() => setSelectedPointId(item.id)}
+src/features/citizen/components/CitizenAppShell.tsx:244 -> const isCurrent = currentUser?.id === p.id;
+src/features/citizen/components/CitizenAppShell.tsx:247 -> key={p.id}
+src/features/citizen/components/CitizenAppShell.tsx:250 -> await switchDemoUser(p.id);
+src/features/citizen/components/CitizenAppShell.tsx:309 -> key={s.id}
+src/features/citizen/components/CitizenAppShell.tsx:311 -> setDemoMode(s.id);
+src/features/citizen/components/CitizenAppShell.tsx:315 -> demoMode === s.id
+src/features/citizen/context/CitizenContext.tsx:62 -> const prof = await citizenProfileService.getProfile(c.id);
+src/features/citizen/context/CitizenContext.tsx:64 -> const vals = await citizenProfileService.getHealthValues(c.id);
+src/features/citizen/context/CitizenContext.tsx:66 -> const cache = await citizenOfflineCacheService.getOfflineData(c.id);
+src/features/citizen/context/CitizenContext.tsx:137 -> const cache = await citizenOfflineCacheService.getOfflineData(citizen.id);
+src/features/citizen/context/CitizenContext.tsx:141 -> const prof = await citizenProfileService.getProfile(citizen.id);
+src/features/citizen/context/CitizenContext.tsx:143 -> const vals = await citizenProfileService.getHealthValues(citizen.id);
+src/features/citizen/context/CitizenContext.tsx:145 -> const cache = await citizenOfflineCacheService.getOfflineData(citizen.id);
+src/features/citizen/context/CitizenContext.tsx:167 -> const cache = await citizenOfflineCacheService.getOfflineData(citizen.id);
+src/features/citizen/context/CitizenContext.tsx:199 -> citizenId: citizen.id,
+src/features/citizen/pages/CitizenBarrierPage.tsx:39 -> citizenId: citizen.id,
+src/features/citizen/pages/CitizenHelpPage.tsx:41 -> const history = await citizenHelpService.getCitizenHelpRequests(citizen.id);
+src/features/citizen/pages/CitizenHelpPage.tsx:56 -> citizenId: citizen.id,
+src/features/citizen/pages/CitizenHelpPage.tsx:159 -> const isSelected = preferredChannel === item.id;
+src/features/citizen/pages/CitizenHelpPage.tsx:163 -> key={item.id}
+src/features/citizen/pages/CitizenHelpPage.tsx:164 -> onClick={() => setPreferredChannel(item.id as any)}
+src/features/citizen/pages/CitizenHelpPage.tsx:233 -> key={item.id}
+src/features/citizen/pages/CitizenMessageResponseLanding.tsx:73 -> tokenId: token.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:77 -> citizenId: citizen.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:78 -> appointmentId: appointment.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:101 -> appointmentId: appointment.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:102 -> citizenId: citizen.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:131 -> citizenId: citizen.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:158 -> appointmentId: appointment.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:159 -> citizenId: citizen.id,
+src/features/citizen/pages/CitizenSchedulePage.tsx:182 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:113 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:145 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:176 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:204 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:231 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:307 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:340 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:369 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:397 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:505 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:537 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:565 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:593 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:620 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:690 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:716 -> citizenId: citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:993 -> const classificationId = `RC-${citizen.id}-${Date.now()}`;
+src/features/classification/engine/clinicalRuleEngine.ts:1047 -> const cluster = this.generateClusters(citizen.id, classificationId, domainResults);
+src/features/classification/engine/clinicalRuleEngine.ts:1064 -> citizen.id,
+src/features/classification/engine/clinicalRuleEngine.ts:1072 -> citizenId: citizen.id,
+src/features/clinical/components/ClinicalEncounterModal.tsx:188 -> setPrescriptions(prescriptions.filter((p) => p.id !== id));
+src/features/clinical/components/ClinicalEncounterModal.tsx:801 -> <tr key={rx.id} className="hover:bg-slate-50/60">
+src/features/clinical/components/ClinicalEncounterModal.tsx:810 -> onClick={() => handleRemoveMedication(rx.id)}
+src/features/clinical/components/HospitalReferralDetailModal.tsx:308 -> <p className="font-mono text-[10px]">{referral.id}</p>
+src/features/clinical/pages/ClinicalFollowUpPage.tsx:147 -> selectedReferral.id,
+src/features/clinical/pages/ClinicalFollowUpPage.tsx:354 -> key={task.id}
+src/features/clinical/pages/ClinicalFollowUpPage.tsx:360 -> <span className="text-[10px] font-mono text-slate-400">{task.id}</span>
+src/features/clinical/pages/ClinicalFollowUpPage.tsx:429 -> <tr key={enc.id} className="hover:bg-slate-50/70">
+src/features/clinical/pages/ClinicalFollowUpPage.tsx:496 -> key={ref.id}
+src/features/clinical/pages/ClinicalFollowUpPage.tsx:562 -> <tr key={prol.id} className="hover:bg-slate-50/70">
+src/features/clinical/pages/ClinicalFollowUpPage.tsx:710 -> <p className="text-slate-500">ID: {selectedEncounterDetail.id}</p>
+src/features/cohorts/OutcomeTrendsPage.tsx:25 -> setSelectedCitizenId(list[0].id);
+src/features/cohorts/OutcomeTrendsPage.tsx:77 -> <option key={c.id} value={c.id}>
+src/features/cohorts/OutcomeTrendsPage.tsx:77 -> <option key={c.id} value={c.id}>
+src/features/command-center/components/SendAttentionModal.tsx:37 -> const selectedFacility = puskesmasList.find((f) => f && f.id === targetFacilityId) || puskesmasList[0] || null;
+src/features/command-center/components/SendAttentionModal.tsx:73 -> targetFacilityId: selectedFacility.id,
+src/features/command-center/components/SendAttentionModal.tsx:148 -> <option key={pkm.id} value={pkm.id}>
+src/features/command-center/components/SendAttentionModal.tsx:148 -> <option key={pkm.id} value={pkm.id}>
+src/features/command-center/pages/AreaAnalysisPage.tsx:64 -> : kecamatanData.filter((k) => k.id === selectedKecamatanId);
+src/features/command-center/pages/AreaAnalysisPage.tsx:158 -> <option key={k.id} value={k.id} className="bg-slate-900">
+src/features/command-center/pages/AreaAnalysisPage.tsx:158 -> <option key={k.id} value={k.id} className="bg-slate-900">
+src/features/command-center/pages/AreaAnalysisPage.tsx:189 -> key={kec.id}
+src/features/command-center/pages/AreaAnalysisPage.tsx:250 -> key={v.id}
+src/features/command-center/pages/CascadePage.tsx:143 -> <option key={f.id} value={f.id} className="bg-slate-900">
+src/features/command-center/pages/CascadePage.tsx:143 -> <option key={f.id} value={f.id} className="bg-slate-900">
+src/features/command-center/pages/DrilldownAuditLogPage.tsx:85 -> <tr key={log.id} className="hover:bg-slate-800/40 transition">
+src/features/command-center/pages/FollowUpGapPage.tsx:89 -> id: g.id,
+src/features/command-center/pages/FollowUpGapPage.tsx:143 -> <option key={f.id} value={f.id} className="bg-slate-900">
+src/features/command-center/pages/FollowUpGapPage.tsx:143 -> <option key={f.id} value={f.id} className="bg-slate-900">
+src/features/command-center/pages/FollowUpGapPage.tsx:248 -> <div key={sig.id} className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/80 space-y-2">
+src/features/command-center/pages/FollowUpGapPage.tsx:306 -> <tr key={item.id} className="hover:bg-slate-800/40 transition">
+src/features/command-center/pages/PopulationInterventionPage.tsx:59 -> const kec = INITIAL_KECAMATAN.find((k) => k.id === newRegionId) || INITIAL_KECAMATAN[0];
+src/features/command-center/pages/PopulationInterventionPage.tsx:66 -> targetRegionId: kec.id,
+src/features/command-center/pages/PopulationInterventionPage.tsx:68 -> ownerUserId: user.id,
+src/features/command-center/pages/PopulationInterventionPage.tsx:163 -> key={item.id}
+src/features/command-center/pages/PopulationInterventionPage.tsx:230 -> <div key={note.id} className="p-2.5 rounded-lg bg-slate-800/30 text-xs text-slate-300 space-y-1">
+src/features/command-center/pages/PopulationInterventionPage.tsx:248 -> setSelectedInterventionId(item.id);
+src/features/command-center/pages/PopulationInterventionPage.tsx:256 -> onClick={() => handleComplete(item.id)}
+src/features/command-center/pages/PopulationInterventionPage.tsx:313 -> <option key={k.id} value={k.id}>
+src/features/command-center/pages/PopulationInterventionPage.tsx:313 -> <option key={k.id} value={k.id}>
+src/features/consent/ConsentPage.tsx:192 -> await consentService.revokeConsent(currentUser, consent.id, reason);
+src/features/consent/ConsentPage.tsx:345 -> keyExtractor={(c) => c.id}
+src/features/dashboard/DashboardPage.tsx:712 -> <div key={event.id} className="py-3 flex items-start justify-between gap-4 text-xs">
+src/features/dashboard/components/AdminRiskOutcomeComparisonChart.tsx:1123 -> <option key={opt.id} value={opt.id}>
+src/features/dashboard/components/AdminRiskOutcomeComparisonChart.tsx:1123 -> <option key={opt.id} value={opt.id}>
+src/features/data-quality/components/DataQualityDetailModal.tsx:28 -> .map((id) => rawStorage.getCitizens().find((c) => c.id === id))
+src/features/data-quality/components/DataQualityDetailModal.tsx:35 -> const selectedCandidate = candidates.find((c) => c.id === selectedCandidateId);
+src/features/data-quality/components/DataQualityDetailModal.tsx:50 -> issue.id,
+src/features/data-quality/components/DataQualityDetailModal.tsx:54 -> selectedCandidate.id
+src/features/data-quality/components/DataQualityDetailModal.tsx:59 -> citizenId: selectedCandidate.id,
+src/features/data-quality/components/DataQualityDetailModal.tsx:61 -> details: { issueId: issue.id, candidateId: selectedCandidate.id, notes: resolutionNotes },
+src/features/data-quality/components/DataQualityDetailModal.tsx:61 -> details: { issueId: issue.id, candidateId: selectedCandidate.id, notes: resolutionNotes },
+src/features/data-quality/components/DataQualityDetailModal.tsx:85 -> issue.id,
+src/features/data-quality/components/DataQualityDetailModal.tsx:89 -> newCitizen.id
+src/features/data-quality/components/DataQualityDetailModal.tsx:94 -> citizenId: newCitizen.id,
+src/features/data-quality/components/DataQualityDetailModal.tsx:96 -> details: { issueId: issue.id, citizenId: newCitizen.id, notes: resolutionNotes },
+src/features/data-quality/components/DataQualityDetailModal.tsx:96 -> details: { issueId: issue.id, citizenId: newCitizen.id, notes: resolutionNotes },
+src/features/data-quality/components/DataQualityDetailModal.tsx:102 -> issue.id,
+src/features/data-quality/components/DataQualityDetailModal.tsx:111 -> details: { issueId: issue.id, notes: resolutionNotes },
+src/features/data-quality/components/DataQualityDetailModal.tsx:116 -> await dataQualityRepo.resolve(issue.id, 'REJECT', resolutionNotes, currentUser);
+src/features/data-quality/components/DataQualityDetailModal.tsx:178 -> {rawStorage.getCitizenIdentifiers().find((i) => i.citizenId === selectedCandidate.id)?.identifierValue || '—'}
+src/features/data-quality/components/DataQualityDetailModal.tsx:181 -> {issue.identifierValue === rawStorage.getCitizenIdentifiers().find((i) => i.citizenId === selectedCandidate.id)?.identifierValue ? (
+src/features/data-quality/pages/DataQualityPage.tsx:69 -> title: `Peninjauan Masalah Data: ${issue.id}`,
+src/features/data-quality/pages/DataQualityPage.tsx:103 -> render: (row) => <span className="font-mono font-bold text-xs text-black">{row.id}</span>,
+src/features/data-quality/pages/DataQualityPage.tsx:240 -> keyExtractor={(item) => item.id}
+src/features/dropout/components/TerminalStatusModal.tsx:70 -> await dropoutCandidateService.setTerminalStatus(candidate.id, selectedStatus, reason, {
+src/features/dropout/components/TerminalStatusModal.tsx:71 -> id: currentUser.id,
+src/features/dropout/pages/DropoutCandidatePage.tsx:54 -> await dropoutCandidateService.reactivateToCascade(cand.id, reason, {
+src/features/dropout/pages/DropoutCandidatePage.tsx:55 -> id: currentUser.id,
+src/features/dropout/pages/DropoutCandidatePage.tsx:174 -> <tr key={cand.id} className="hover:bg-[#F0F5F4] transition-colors">
+src/features/duplicate/components/DuplicateCompareModal.tsx:27 -> const citizenA = rawStorage.getCitizens().find((c) => c.id === candidate.citizenAId);
+src/features/duplicate/components/DuplicateCompareModal.tsx:28 -> const citizenB = rawStorage.getCitizens().find((c) => c.id === candidate.citizenBId);
+src/features/duplicate/components/DuplicateCompareModal.tsx:50 -> const sourceId = targetCitizenId === citizenA.id ? citizenB.id : citizenA.id;
+src/features/duplicate/components/DuplicateCompareModal.tsx:50 -> const sourceId = targetCitizenId === citizenA.id ? citizenB.id : citizenA.id;
+src/features/duplicate/components/DuplicateCompareModal.tsx:50 -> const sourceId = targetCitizenId === citizenA.id ? citizenB.id : citizenA.id;
+src/features/duplicate/components/DuplicateCompareModal.tsx:62 -> await duplicateRepo.markMerged(candidate.id);
+src/features/duplicate/components/DuplicateCompareModal.tsx:69 -> candidateId: candidate.id,
+src/features/duplicate/components/DuplicateCompareModal.tsx:90 -> await duplicateRepo.dismiss(candidate.id);
+src/features/duplicate/components/DuplicateCompareModal.tsx:102 -> onClick={() => setTargetCitizenId(citizenA.id)}
+src/features/duplicate/components/DuplicateCompareModal.tsx:104 -> targetCitizenId === citizenA.id
+src/features/duplicate/components/DuplicateCompareModal.tsx:114 -> {targetCitizenId === citizenA.id && (
+src/features/duplicate/components/DuplicateCompareModal.tsx:149 -> onClick={() => setTargetCitizenId(citizenB.id)}
+src/features/duplicate/components/DuplicateCompareModal.tsx:151 -> targetCitizenId === citizenB.id
+src/features/duplicate/components/DuplicateCompareModal.tsx:161 -> {targetCitizenId === citizenB.id && (
+src/features/duplicate/pages/DuplicateReviewPage.tsx:60 -> title: `Peninjauan Kemiripan Identitas: ${cand.id}`,
+src/features/duplicate/pages/DuplicateReviewPage.tsx:86 -> await citizenRepo.unmerge(history.id, reason, currentUser);
+src/features/duplicate/pages/DuplicateReviewPage.tsx:90 -> details: { mergeHistoryId: history.id, reason },
+src/features/duplicate/pages/DuplicateReviewPage.tsx:347 -> keyExtractor={(item) => item.id}
+src/features/duplicate/pages/DuplicateReviewPage.tsx:357 -> keyExtractor={(item) => item.id}
+src/features/governance/RuleVersionPage.tsx:184 -> await ruleVersionService.submitReview(currentUser, rule.id);
+src/features/governance/RuleVersionPage.tsx:226 -> await ruleVersionService.approve(currentUser, rule.id);
+src/features/governance/RuleVersionPage.tsx:268 -> await ruleVersionService.publish(currentUser, rule.id);
+src/features/governance/RuleVersionPage.tsx:445 -> keyExtractor={(r) => r.id}
+src/features/ingestion/pages/ImportCkgPage.tsx:47 -> const selectedFacility = facilities.find((f) => f.id === selectedFacilityId) || facilities[0];
+src/features/ingestion/pages/ImportCkgPage.tsx:83 -> selectedFacility.id,
+src/features/ingestion/pages/ImportCkgPage.tsx:93 -> facilityId: selectedFacility.id,
+src/features/ingestion/pages/ImportCkgPage.tsx:95 -> uploadedByUserId: currentUser.id,
+src/features/ingestion/pages/ImportCkgPage.tsx:254 -> <option key={f.id} value={f.id}>
+src/features/ingestion/pages/ImportCkgPage.tsx:254 -> <option key={f.id} value={f.id}>
+src/features/ingestion/pages/ImportHistoryPage.tsx:45 -> subtitle: `ID: ${item.id} • Faskes: ${item.facilityName}`,
+src/features/ingestion/pages/ImportHistoryPage.tsx:92 -> render: (row) => <span className="font-mono font-bold text-xs text-black">{row.id}</span>,
+src/features/ingestion/pages/ImportHistoryPage.tsx:185 -> keyExtractor={(item) => item.id}
+src/features/ingestion/pages/IngestionMonitorPage.tsx:94 -> title: `Detail Eksekusi Ingestion: ${run.id}`,
+src/features/ingestion/pages/IngestionMonitorPage.tsx:167 -> render: (row) => <span className="font-mono font-bold text-xs text-black">{row.id}</span>,
+src/features/ingestion/pages/IngestionMonitorPage.tsx:328 -> keyExtractor={(item) => item.id}
+src/features/ingestion/pages/SourceMappingPage.tsx:122 -> keyExtractor={(item) => item.id}
+src/features/kader/modals/AssistSchedulingModal.tsx:56 -> userId: currentUser.id,
+src/features/kader/modals/KaderRecapModal.tsx:39 -> return kaderStorageRepo.getLocalFieldVisits(currentUser.id);
+src/features/kader/modals/RecordVisitModal.tsx:86 -> packageId: `pkg-${currentUser.id}`,
+src/features/kader/modals/RecordVisitModal.tsx:90 -> userId: currentUser.id,
+src/features/kader/modals/UrgentObservationModal.tsx:50 -> userId: currentUser.id,
+src/features/kader/pages/DeviceStatusPage.tsx:72 -> const res = await kaderSyncService.syncQueue(currentUser.id);
+src/features/kader/pages/NewAssignmentsPage.tsx:78 -> userId: currentUser.id,
+src/features/kader/pages/NewAssignmentsPage.tsx:87 -> localQueueService.enqueue(currentUser.id, 'ASSIGNMENT_RESPONSE', response, 'HIGH');
+src/features/kader/pages/NewAssignmentsPage.tsx:118 -> userId: currentUser.id,
+src/features/kader/pages/NewAssignmentsPage.tsx:128 -> localQueueService.enqueue(currentUser.id, 'ASSIGNMENT_RESPONSE', response, 'HIGH');
+src/features/kader/pages/SyncCenterPage.tsx:42 -> const res = await kaderSyncService.syncQueue(currentUser.id);
+src/features/kader/pages/SyncCenterPage.tsx:154 -> key={c.id}
+src/features/kader/pages/SyncCenterPage.tsx:191 -> key={item.id}
+src/features/monitoring/ActiveMonitoringPage.tsx:122 -> const evalItem = evaluations.find((e) => e.cycleId === c.id && !e.supersededById);
+src/features/monitoring/ActiveMonitoringPage.tsx:127 -> const adhItem = adherences.find((a) => a.cycleId === c.id);
+src/features/monitoring/ActiveMonitoringPage.tsx:350 -> const evalItem = evaluations.find((e) => e.cycleId === c.id && !e.supersededById);
+src/features/monitoring/ActiveMonitoringPage.tsx:351 -> const adhItem = adherences.find((a) => a.cycleId === c.id);
+src/features/monitoring/ActiveMonitoringPage.tsx:354 -> <tr key={c.id} className="hover:bg-stone-50/80 transition-colors">
+src/features/monitoring/AwaitingEvaluationPage.tsx:66 -> const ev = evaluations.find((e) => e.cycleId === c.id && !e.supersededById);
+src/features/monitoring/AwaitingEvaluationPage.tsx:73 -> const ev = evaluations.find((e) => e.cycleId === c.id && !e.supersededById);
+src/features/monitoring/AwaitingEvaluationPage.tsx:235 -> const ev = evaluations.find((e) => e.cycleId === c.id && !e.supersededById);
+src/features/monitoring/AwaitingEvaluationPage.tsx:238 -> <tr key={c.id} className="hover:bg-stone-50 transition-colors">
+src/features/monitoring/TodayControlsPage.tsx:114 -> const adhItem = adherences.find((a) => a.cycleId === c.id);
+src/features/monitoring/TodayControlsPage.tsx:118 -> key={c.id}
+src/features/monitoring/modals/AdherenceAssessmentModal.tsx:86 -> cycleId: cycle.id,
+src/features/monitoring/modals/AdherenceAssessmentModal.tsx:170 -> key={item.id}
+src/features/monitoring/modals/AdherenceAssessmentModal.tsx:171 -> onClick={() => setAdherenceLevel(item.id as AdherenceLevel)}
+src/features/monitoring/modals/AdherenceAssessmentModal.tsx:173 -> adherenceLevel === item.id ? `${item.color} shadow-xs font-medium` : 'border-stone-200 hover:border-stone-300 bg-white text-stone-700'
+src/features/monitoring/modals/AdvanceCycleModal.tsx:56 -> await monitoringCycleService.advanceToNextCycle(cycle.id, currentUser, intervalDays);
+src/features/monitoring/modals/ControlVisitModal.tsx:82 -> cycleId: cycle.id,
+src/features/monitoring/modals/ManualDeterminationModal.tsx:76 -> cycleId: cycle.id,
+src/features/monitoring/modals/ManualDeterminationModal.tsx:185 -> key={item.id}
+src/features/monitoring/modals/ManualDeterminationModal.tsx:186 -> onClick={() => setControlStatus(item.id as ControlStatus)}
+src/features/monitoring/modals/ManualDeterminationModal.tsx:188 -> controlStatus === item.id
+src/features/monitoring/modals/TransferVillageModal.tsx:56 -> cycleId: cycle.id,
+src/features/organization/CakupanWilayahPage.tsx:27 -> if (k[0]?.id) initialExpanded[k[0].id] = true;
+src/features/organization/CakupanWilayahPage.tsx:28 -> if (k[1]?.id) initialExpanded[k[1].id] = true;
+src/features/organization/CakupanWilayahPage.tsx:57 -> const isExpanded = !!expandedKec[kec.id];
+src/features/organization/CakupanWilayahPage.tsx:58 -> const desasInKec = desaList.filter((d) => d.kecamatanId === kec.id);
+src/features/organization/CakupanWilayahPage.tsx:59 -> const faskesInKec = facilities.filter((f) => f.kecamatanId === kec.id);
+src/features/organization/CakupanWilayahPage.tsx:62 -> <div key={kec.id} className="bg-white rounded-xl border border-[#D8E5E2] shadow-2xs overflow-hidden">
+src/features/organization/CakupanWilayahPage.tsx:65 -> onClick={() => toggleExpand(kec.id)}
+src/features/organization/CakupanWilayahPage.tsx:104 -> key={f.id}
+src/features/organization/CakupanWilayahPage.tsx:125 -> key={d.id}
+src/features/organization/FacilityPage.tsx:62 -> const assignedUsers = await userService.getUsers(currentUser!, { facilityId: faskes.id });
+src/features/organization/FacilityPage.tsx:63 -> const auditLogs = await auditRepo.getLogs({ facilityId: faskes.id });
+src/features/organization/FacilityPage.tsx:181 -> key={u.id}
+src/features/organization/FacilityPage.tsx:205 -> key={a.id}
+src/features/organization/FacilityPage.tsx:236 -> const draftKey = faskesToEdit ? `edit_faskes_${faskesToEdit.id}` : 'create_faskes';
+src/features/organization/FacilityPage.tsx:280 -> const selectedKec = kecamatanList.find((k) => k.id === formData.kecamatanId);
+src/features/organization/FacilityPage.tsx:281 -> const selectedDes = desaList.find((d) => d.id === formData.desaId);
+src/features/organization/FacilityPage.tsx:282 -> const parentPkm = puskesmasList.find((p) => p.id === formData.parentFacilityId);
+src/features/organization/FacilityPage.tsx:288 -> await facilityService.updateFacility(currentUser, faskesToEdit.id, {
+src/features/organization/FacilityPage.tsx:367 -> options={kecamatanList.map((k) => ({ value: k.id, label: k.name }))}
+src/features/organization/FacilityPage.tsx:375 -> options={filteredDesaOptions.map((d) => ({ value: d.id, label: d.name }))}
+src/features/organization/FacilityPage.tsx:386 -> ...puskesmasList.map((p) => ({ value: p.id, label: p.name })),
+src/features/organization/FacilityPage.tsx:442 -> faskes.id,
+src/features/organization/FacilityPage.tsx:663 -> keyExtractor={(f) => f.id}
+src/features/organization/FacilityPage.tsx:685 -> ...kecamatanList.map((k) => ({ value: k.id, label: k.name })),
+src/features/organization/ServicePage.tsx:52 -> const draftKey = serviceToEdit ? `edit_srv_${serviceToEdit.id}` : 'create_srv';
+src/features/organization/ServicePage.tsx:89 -> await serviceRepo.updateService(serviceToEdit.id, formData);
+src/features/organization/ServicePage.tsx:91 -> actorUserId: currentUser.id,
+src/features/organization/ServicePage.tsx:96 -> entityId: serviceToEdit.id,
+src/features/organization/ServicePage.tsx:107 -> actorUserId: currentUser.id,
+src/features/organization/ServicePage.tsx:112 -> entityId: newSrv.id,
+src/features/organization/ServicePage.tsx:232 -> await serviceRepo.toggleStatus(srv.id, isActivating ? 'ACTIVE' : 'INACTIVE');
+src/features/organization/ServicePage.tsx:234 -> actorUserId: currentUser.id,
+src/features/organization/ServicePage.tsx:239 -> entityId: srv.id,
+src/features/organization/ServicePage.tsx:368 -> keyExtractor={(s) => s.id}
+src/features/organization/WilayahPage.tsx:63 -> const draftKey = kecToEdit ? `edit_kec_${kecToEdit.id}` : 'create_kec';
+src/features/organization/WilayahPage.tsx:97 -> await regionService.updateKecamatan(currentUser, kecToEdit.id, formData);
+src/features/organization/WilayahPage.tsx:153 -> const draftKey = desaToEdit ? `edit_desa_${desaToEdit.id}` : 'create_desa';
+src/features/organization/WilayahPage.tsx:185 -> const selectedKec = kecamatanList.find((k) => k.id === formData.kecamatanId);
+src/features/organization/WilayahPage.tsx:186 -> const selectedPkm = facilities.find((f) => f.id === formData.puskesmasId);
+src/features/organization/WilayahPage.tsx:192 -> await regionService.updateDesa(currentUser, desaToEdit.id, {
+src/features/organization/WilayahPage.tsx:253 -> options={kecamatanList.map((k) => ({ value: k.id, label: k.name }))}
+src/features/organization/WilayahPage.tsx:261 -> options={facilities.map((f) => ({ value: f.id, label: `${f.name} (${f.kecamatanName})` }))}
+src/features/organization/WilayahPage.tsx:295 -> kec.id,
+src/features/organization/WilayahPage.tsx:359 -> desa.id,
+src/features/organization/WilayahPage.tsx:573 -> keyExtractor={(k) => k.id}
+src/features/organization/WilayahPage.tsx:597 -> keyExtractor={(d) => d.id}
+src/features/organization/WilayahPage.tsx:619 -> ...kecamatanList.map((k) => ({ value: k.id, label: k.name })),
+src/features/organization/pages/FacilityLogisticsPage.tsx:78 -> key={s.id}
+src/features/outreach/components/DigitalOutreachModal.tsx:54 -> const res = await outreachOrchestrationService.prepareNextOutreach(task.id);
+src/features/outreach/components/DigitalOutreachModal.tsx:71 -> await outreachOrchestrationService.sendSimulatedMessage(task.id, prepData.payload, {
+src/features/outreach/components/DigitalOutreachModal.tsx:72 -> id: currentUser.id,
+src/features/outreach/components/PhoneContactModal.tsx:80 -> task.id,
+src/features/outreach/components/PhoneContactModal.tsx:84 -> { id: currentUser.id, name: currentUser.name }
+src/features/outreach/pages/OutreachConfigPage.tsx:140 -> <div key={tmpl.id} className="py-4 first:pt-0 last:pb-0 space-y-2">
+src/features/outreach/pages/OutreachQueuePage.tsx:69 -> selectedTask.id,
+src/features/outreach/pages/OutreachQueuePage.tsx:194 -> <tr key={task.id} className="hover:bg-[#F0F5F4] transition-colors">
+src/features/registry/components/AreaChangeModal.tsx:31 -> const selectedDesa = desas.find((d) => d.id === selectedDesaId);
+src/features/registry/components/AreaChangeModal.tsx:32 -> const targetPuskesmas = selectedDesa ? faskesList.find((f) => f.id === selectedDesa.puskesmasId) : null;
+src/features/registry/components/AreaChangeModal.tsx:45 -> citizen.id,
+src/features/registry/components/AreaChangeModal.tsx:46 -> selectedDesa.id,
+src/features/registry/components/AreaChangeModal.tsx:50 -> targetPuskesmas.id,
+src/features/registry/components/AreaChangeModal.tsx:53 -> currentUser.id,
+src/features/registry/components/AreaChangeModal.tsx:59 -> citizenId: citizen.id,
+src/features/registry/components/AreaChangeModal.tsx:116 -> .filter((d) => d.id !== citizen.villageId)
+src/features/registry/components/AreaChangeModal.tsx:118 -> <option key={d.id} value={d.id}>
+src/features/registry/components/AreaChangeModal.tsx:118 -> <option key={d.id} value={d.id}>
+src/features/registry/components/CitizenDetailDrawer.tsx:123 -> setExpandedSessionId(cSessions[0].id);
+src/features/registry/components/CitizenDetailDrawer.tsx:130 -> citizenId: data.id,
+src/features/registry/components/CitizenDetailDrawer.tsx:148 -> await classificationService.evaluateCitizen(citizen.id, currentUser);
+src/features/registry/components/CitizenDetailDrawer.tsx:192 -> const consents = rawStorage.getConsents().filter((c) => c.citizenId === citizen.id || c.citizenNik === primaryNik);
+src/features/registry/components/CitizenDetailDrawer.tsx:195 -> const auditEvents = rawStorage.getAuditLogs().filter((a) => a.citizenId === citizen.id);
+src/features/registry/components/CitizenDetailDrawer.tsx:200 -> subtitle: `Warga: ${citizen.fullName} (${citizen.id})`,
+src/features/registry/components/CitizenDetailDrawer.tsx:218 -> subtitle: `Warga: ${citizen.fullName} (${citizen.id})`,
+src/features/registry/components/CitizenDetailDrawer.tsx:275 -> {citizen.id}
+src/features/registry/components/CitizenDetailDrawer.tsx:470 -> {results.find((r) => r.sessionId === sessions[0].id && r.measureCode === 'BP_SYSTOLIC')?.valueNumeric || '—'} /{' '}
+src/features/registry/components/CitizenDetailDrawer.tsx:471 -> {results.find((r) => r.sessionId === sessions[0].id && r.measureCode === 'BP_DIASTOLIC')?.valueNumeric || '—'}
+src/features/registry/components/CitizenDetailDrawer.tsx:479 -> {results.find((r) => r.sessionId === sessions[0].id && r.measureCode === 'RANDOM_GLUCOSE')?.valueNumeric || '—'}
+src/features/registry/components/CitizenDetailDrawer.tsx:487 -> {results.find((r) => r.sessionId === sessions[0].id && r.measureCode === 'BMI')?.valueNumeric || '—'}
+src/features/registry/components/CitizenDetailDrawer.tsx:495 -> {results.find((r) => r.sessionId === sessions[0].id && r.measureCode === 'WAIST_CIRCUMFERENCE')?.valueNumeric || '—'}
+src/features/registry/components/CitizenDetailDrawer.tsx:618 -> subtitle: `${citizen.fullName} • ${citizen.id}`,
+src/features/registry/components/CitizenDetailDrawer.tsx:744 -> key={nba.id || idx}
+src/features/registry/components/CitizenDetailDrawer.tsx:774 -> key={hist.id}
+src/features/registry/components/CitizenDetailDrawer.tsx:873 -> key={ident.id}
+src/features/registry/components/CitizenDetailDrawer.tsx:901 -> const isExpanded = expandedSessionId === ses.id;
+src/features/registry/components/CitizenDetailDrawer.tsx:902 -> const sessionResults = results.filter((r) => r.sessionId === ses.id);
+src/features/registry/components/CitizenDetailDrawer.tsx:906 -> key={ses.id}
+src/features/registry/components/CitizenDetailDrawer.tsx:910 -> onClick={() => setExpandedSessionId(isExpanded ? null : ses.id)}
+src/features/registry/components/CitizenDetailDrawer.tsx:930 -> {ses.facilityName || 'Faskes'} • Sumber: {ses.sourceSystem} (ID: {ses.sourceRecordId || ses.id})
+src/features/registry/components/CitizenDetailDrawer.tsx:956 -> <tr key={res.id}>
+src/features/registry/components/CitizenDetailDrawer.tsx:1007 -> <tr key={r.id}>
+src/features/registry/components/CitizenDetailDrawer.tsx:1072 -> <div key={ah.id} className="p-3.5 bg-white rounded-xl border border-[#D8E5E2] text-xs space-y-1">
+src/features/registry/components/CitizenDetailDrawer.tsx:1114 -> <div key={t.id} className="p-4 bg-white rounded-xl border border-[#D8E5E2] space-y-2.5 text-xs shadow-2xs">
+src/features/registry/components/CitizenDetailDrawer.tsx:1118 -> {t.id}
+src/features/registry/components/CitizenDetailDrawer.tsx:1168 -> <div key={apt.id} className="p-3 bg-white rounded-xl border border-[#D8E5E2] text-xs space-y-1">
+src/features/registry/components/CitizenDetailDrawer.tsx:1194 -> <div key={att.id} className="p-3 bg-white rounded-xl border border-[#D8E5E2] text-xs space-y-1">
+src/features/registry/components/CitizenDetailDrawer.tsx:1219 -> <div key={evt.id} className="p-3 bg-white rounded-xl border border-[#D8E5E2] text-xs space-y-1">
+src/features/registry/components/DataCorrectionModal.tsx:40 -> await citizenRepo.update(citizen.id, {
+src/features/registry/components/DataCorrectionModal.tsx:48 -> citizenId: citizen.id,
+src/features/registry/pages/RegistryPage.tsx:304 -> onClick={() => setSelectedCitizenId(row.id)}
+src/features/registry/pages/RegistryPage.tsx:459 -> <option key={f.id} value={f.id}>
+src/features/registry/pages/RegistryPage.tsx:459 -> <option key={f.id} value={f.id}>
+src/features/registry/pages/RegistryPage.tsx:475 -> <option key={k.id} value={k.id}>
+src/features/registry/pages/RegistryPage.tsx:475 -> <option key={k.id} value={k.id}>
+src/features/registry/pages/RegistryPage.tsx:491 -> <option key={d.id} value={d.id}>
+src/features/registry/pages/RegistryPage.tsx:491 -> <option key={d.id} value={d.id}>
+src/features/registry/pages/RegistryPage.tsx:540 -> keyExtractor={(item) => item.id}
+src/features/risk/StratificationRegistryView.tsx:322 -> <option key={f.id} value={f.id}>
+src/features/risk/StratificationRegistryView.tsx:322 -> <option key={f.id} value={f.id}>
+src/features/risk/StratificationRegistryView.tsx:397 -> key={item.id}
+src/features/risk/components/BatchExecutionModal.tsx:105 -> <option key={f.id} value={f.id}>
+src/features/risk/components/BatchExecutionModal.tsx:105 -> <option key={f.id} value={f.id}>
+src/features/risk/components/BatchExecutionModal.tsx:165 -> Batch ID: <span className="font-mono font-semibold">{completedBatch.id}</span>
+src/features/risk/components/ClinicianOverrideModal.tsx:108 -> await classificationService.override(classification.id, {
+src/features/risk/components/StratificationDetailModal.tsx:331 -> key={nba.id || idx}
+src/features/roles/RolesPage.tsx:111 -> const isSelected = selectedRole.id === r.id;
+src/features/roles/RolesPage.tsx:111 -> const isSelected = selectedRole.id === r.id;
+src/features/roles/RolesPage.tsx:114 -> key={r.id}
+src/features/roles/RolesPage.tsx:179 -> const hasAccess = permissionService.hasSensitivityAccess(selectedRole.id, lvl);
+src/features/settings/components/MedicalGlossaryTable.tsx:336 -> const isSelected = selectedCategory === cat.id;
+src/features/settings/components/MedicalGlossaryTable.tsx:339 -> key={cat.id}
+src/features/settings/components/MedicalGlossaryTable.tsx:340 -> onClick={() => setSelectedCategory(cat.id)}
+src/features/settings/components/MedicalGlossaryTable.tsx:375 -> key={item.id}
+src/features/sync/SyncPage.tsx:68 -> await syncService.retryItem(currentUser, item.id);
+src/features/sync/SyncPage.tsx:270 -> keyExtractor={(q) => q.id}
+src/features/users/UsersPage.tsx:82 -> const userAudits = await auditRepo.getLogs({ actorUserId: user.id });
+src/features/users/UsersPage.tsx:238 -> key={a.id}
+src/features/users/UsersPage.tsx:269 -> const draftKey = userToEdit ? `edit_user_${userToEdit.id}` : 'create_user';
+src/features/users/UsersPage.tsx:276 -> ? allRoles.filter((r) => ['DOCTOR', 'NURSE_MIDWIFE', 'PHARMACY_OFFICER', 'KADER', 'PUSTU', 'POSYANDU'].includes(r.id))
+src/features/users/UsersPage.tsx:321 -> const selectedFaskes = facilities.find((f) => f.id === formData.facilityId);
+src/features/users/UsersPage.tsx:322 -> const selectedScopeKec = kecamatanList.find((k) => k.id === formData.areaScopeId);
+src/features/users/UsersPage.tsx:323 -> const selectedDesa = desaList.find((d) => d.id === formData.villageAssignment);
+src/features/users/UsersPage.tsx:329 -> await userService.updateUser(currentUser, userToEdit.id, {
+src/features/users/UsersPage.tsx:400 -> placeholder="email@puskesmas.id"
+src/features/users/UsersPage.tsx:419 -> options={availableRoles.map((r) => ({ value: r.id, label: `${r.name} (${r.category})` }))}
+src/features/users/UsersPage.tsx:427 -> options={facilities.map((f) => ({ value: f.id, label: `${f.name} (${f.type})` }))}
+src/features/users/UsersPage.tsx:437 -> options={kecamatanList.map((k) => ({ value: k.id, label: k.name }))}
+src/features/users/UsersPage.tsx:447 -> options={desaList.map((d) => ({ value: d.id, label: `Desa ${d.name} (${d.kecamatanName})` }))}
+src/features/users/UsersPage.tsx:488 -> user.id,
+src/features/users/UsersPage.tsx:651 -> disabled={currentUser?.id === row.id}
+src/features/users/UsersPage.tsx:685 -> keyExtractor={(u) => u.id}
+src/features/users/UsersPage.tsx:696 -> ...permissionService.getAllRoles().map((r) => ({ value: r.id, label: r.name })),
+src/features/users/UsersPage.tsx:717 -> ...facilities.map((f) => ({ value: f.id, label: f.name })),
+src/features/workload/pages/WorkloadOverviewPage.tsx:142 -> key={t.id}
+src/features/workload/pages/WorkloadOverviewPage.tsx:149 -> {t.id} <span className="text-[#60716D]">({t.taskType})</span>
+src/mock/initialCareTaskData.ts:497 -> 'Halo Baharuddin Sangaji, Puskesmas Puskesmas Bobong mengundang Anda untuk melakukan tindak lanjut skrining kesehatan. Mohon konfirmasi kesediaan atau pilih jadwal kunjungan Anda melalui tautan berikut: https://taliabu.smartcare.id/c/bhr01.',
+src/mock/initialCareTaskData.ts:514 -> 'Halo Nurhayati Soleman, Puskesmas Puskesmas Bobong mengundang Anda untuk melakukan tindak lanjut skrining kesehatan. Mohon konfirmasi kesediaan atau pilih jadwal kunjungan Anda melalui tautan berikut: https://taliabu.smartcare.id/c/nrh02.',
+src/mock/initialCkgData.ts:290 -> id: `IDN-${c.id}`,
+src/mock/initialCkgData.ts:291 -> citizenId: c.id,
+src/mock/initialCkgData.ts:425 -> id: `SES-${c.id}-1`,
+src/mock/initialCkgData.ts:426 -> citizenId: c.id,
+src/mock/initialCkgData.ts:668 -> id: `RES-${ses.id}-1`,
+src/mock/initialCkgData.ts:669 -> sessionId: ses.id,
+src/mock/initialCkgData.ts:681 -> id: `RES-${ses.id}-2`,
+src/mock/initialCkgData.ts:682 -> sessionId: ses.id,
+src/mock/initialCkgData.ts:694 -> id: `RES-${ses.id}-3`,
+src/mock/initialCkgData.ts:695 -> sessionId: ses.id,
+src/mock/initialCkgData.ts:707 -> id: `RES-${ses.id}-4`,
+src/mock/initialCkgData.ts:708 -> sessionId: ses.id,
+src/mock/initialData.ts:701 -> email: 'admin.system@taliabukab.go.id',
+src/mock/initialData.ts:718 -> email: 'kadis@dinkes.taliabukab.go.id',
+src/mock/initialData.ts:735 -> email: 'ratna.sari@dinkes.taliabukab.go.id',
+src/mock/initialData.ts:752 -> email: 'hendra.w@pkm-bobong.id',
+src/mock/initialData.ts:769 -> email: 'fahmi.h@pkm-bobong.id',
+src/mock/initialData.ts:786 -> email: 'siti.rahmawati@pkm-bobong.id',
+src/mock/initialData.ts:803 -> email: 'nur.aini@pkm-bobong.id',
+src/mock/initialData.ts:820 -> email: 'dimas.p@pkm-bobong.id',
+src/mock/initialRegionalPtmForecastData.ts:38 -> id: `ptm-fc-${kec.id}`,
+src/mock/initialRegionalPtmForecastData.ts:39 -> kecamatanId: kec.id,
+src/repositories/adherenceAssessmentRepo.ts:13 -> return list.find((a) => a.id === id) || null;
+src/repositories/adherenceAssessmentRepo.ts:42 -> id: c.id || `cause-${Date.now()}-${idx}`,
+src/repositories/adherenceAssessmentRepo.ts:54 -> const index = list.findIndex((a) => a.id === assessmentId);
+src/repositories/aiRepository.ts:418 -> return initialClinicalRecommendations.find((r) => r.id === id);
+src/repositories/aiRepository.ts:428 -> const index = initialClinicalRecommendations.findIndex((r) => r.id === id);
+src/repositories/appointmentRepo.ts:25 -> return apts.find((a) => a.id === id) || null;
+src/repositories/appointmentRepo.ts:47 -> a.id.toLowerCase().includes(q)
+src/repositories/appointmentRepo.ts:104 -> await serviceQuotaRepo.incrementBooked(quota.id);
+src/repositories/appointmentRepo.ts:124 -> const taskIdx = tasks.findIndex((t) => t.id === appointment.taskId);
+src/repositories/appointmentRepo.ts:145 -> userId: actor.id,
+src/repositories/appointmentRepo.ts:178 -> await serviceQuotaRepo.decrementBooked(oldQuota.id);
+src/repositories/appointmentRepo.ts:182 -> await serviceQuotaRepo.incrementBooked(newQuota.id);
+src/repositories/appointmentRepo.ts:185 -> const idx = apts.findIndex((a) => a.id === id);
+src/repositories/appointmentRepo.ts:206 -> userId: actor.id,
+src/repositories/appointmentRepo.ts:228 -> await serviceQuotaRepo.decrementBooked(quota.id);
+src/repositories/appointmentRepo.ts:232 -> const idx = apts.findIndex((a) => a.id === id);
+src/repositories/appointmentRepo.ts:251 -> userId: actor.id,
+src/repositories/appointmentRepo.ts:302 -> userId: actor.id,
+src/repositories/careTaskRepo.ts:27 -> return tasks.find((t) => t.id === id) || null;
+src/repositories/careTaskRepo.ts:49 -> t.id.toLowerCase().includes(q) ||
+src/repositories/careTaskRepo.ts:126 -> const idx = tasks.findIndex((t) => t.id === id);
+src/repositories/careTaskRepo.ts:172 -> assignedByUserId: actor.id,
+src/repositories/careTaskRepo.ts:189 -> userId: actor.id,
+src/repositories/careTaskRepo.ts:230 -> assignedByUserId: actor.id,
+src/repositories/careTaskRepo.ts:257 -> userId: actor.id,
+src/repositories/careTaskRepo.ts:294 -> closedByUserId: actor.id,
+src/repositories/careTaskRepo.ts:324 -> userId: actor.id,
+src/repositories/careTaskRepo.ts:353 -> userId: actor.id,
+src/repositories/citizenBarrierRepo.ts:31 -> const item = all.find((b) => b.id === id);
+src/repositories/citizenHelpRequestRepo.ts:33 -> const item = all.find((r) => r.id === id);
+src/repositories/citizenRepo.ts:75 -> const citizenIdMatch = c.id.toLowerCase().includes(q);
+src/repositories/citizenRepo.ts:87 -> filtered = filtered.filter((c) => matchingCitizenIds.has(c.id));
+src/repositories/citizenRepo.ts:92 -> const cIdentifiers = identifiers.filter((i) => i.citizenId === c.id);
+src/repositories/citizenRepo.ts:93 -> const cSessions = sessions.filter((s) => s.citizenId === c.id);
+src/repositories/citizenRepo.ts:131 -> const citizen = citizens.find((c) => c.id === id);
+src/repositories/citizenRepo.ts:148 -> return citizens.find((c) => c.id === match.citizenId) || null;
+src/repositories/citizenRepo.ts:196 -> const index = citizens.findIndex((c) => c.id === id);
+src/repositories/citizenRepo.ts:224 -> const citizen = citizens.find((c) => c.id === citizenId);
+src/repositories/citizenRepo.ts:272 -> const source = citizens.find((c) => c.id === sourceCitizenId);
+src/repositories/citizenRepo.ts:273 -> const target = citizens.find((c) => c.id === targetCitizenId);
+src/repositories/citizenRepo.ts:301 -> mergedByUserId: user.id,
+src/repositories/citizenRepo.ts:320 -> const history = mergeHistories.find((h) => h.id === mergeHistoryId);
+src/repositories/citizenRepo.ts:328 -> const source = citizens.find((c) => c.id === history.sourceCitizenId);
+src/repositories/citizenRepo.ts:338 -> history.unmergedByUserId = user.id;
+src/repositories/citizenResponseRepo.ts:12 -> return tokens.find((t) => t.id === id) || null;
+src/repositories/citizenResponseRepo.ts:23 -> const token = tokens.find((t) => t.id === id);
+src/repositories/citizenResponseRepo.ts:43 -> const idx = challenges.findIndex((c) => c.id === challenge.id);
+src/repositories/citizenResponseRepo.ts:43 -> const idx = challenges.findIndex((c) => c.id === challenge.id);
+src/repositories/classificationRepo.ts:30 -> return rawStorage.getRiskClassifications().find((c) => c.id === id);
+src/repositories/classificationRepo.ts:64 -> if (c.id === oldId) {
+src/repositories/classificationRepo.ts:65 -> return { ...c, supersededById: newClassification.id };
+src/repositories/classificationRepo.ts:79 -> const current = existing.find((c) => c.id === classificationId);
+src/repositories/classificationRepo.ts:95 -> overriddenByUserId: input.actor.id,
+src/repositories/classificationRepo.ts:108 -> if (c.id === classificationId) {
+src/repositories/classificationRepo.ts:160 -> return { ...c, supersededById: matchingNew.id };
+src/repositories/classificationRepo.ts:178 -> targetId: batch.id,
+src/repositories/classificationRepo.ts:179 -> targetLabel: `Batch ${batch.id} (${batch.ruleVersion})`,
+src/repositories/classificationReviewRepo.ts:18 -> const item = existing.find((r) => r.id === id);
+src/repositories/classificationReviewRepo.ts:32 -> const updatedList = existing.map((r) => (r.id === id ? updatedItem : r));
+src/repositories/classificationReviewRepo.ts:36 -> targetId: item.id,
+src/repositories/clinicalRepo.ts:37 -> e.id.toLowerCase().includes(q) ||
+src/repositories/clinicalRepo.ts:74 -> return list.find((e) => e.id === id) || null;
+src/repositories/clinicalRepo.ts:132 -> hospitalReferralId = newReferral.id;
+src/repositories/clinicalRepo.ts:137 -> entityId: newReferral.id,
+src/repositories/clinicalRepo.ts:143 -> userId: actor.id,
+src/repositories/clinicalRepo.ts:158 -> prolanisEnrollmentId = existing.id;
+src/repositories/clinicalRepo.ts:191 -> prolanisEnrollmentId = newProlanis.id;
+src/repositories/clinicalRepo.ts:196 -> entityId: newProlanis.id,
+src/repositories/clinicalRepo.ts:202 -> userId: actor.id,
+src/repositories/clinicalRepo.ts:254 -> userId: actor.id,
+src/repositories/clinicalRepo.ts:268 -> const index = list.findIndex((e) => e.id === id);
+src/repositories/clinicalRepo.ts:288 -> userId: actor.id,
+src/repositories/clinicalRepo.ts:335 -> const index = list.findIndex((r) => r.id === id);
+src/repositories/clinicalRepo.ts:364 -> userId: actor.id,
+src/repositories/consentRepo.ts:60 -> const index = list.findIndex((c) => c.id === id);
+src/repositories/contactAttemptRepo.ts:50 -> const taskIndex = tasks.findIndex((t) => t.id === attempt.taskId);
+src/repositories/contactAttemptRepo.ts:74 -> userId: actor.id,
+src/repositories/dataQualityRepo.ts:45 -> return items.find((i) => i.id === id) || null;
+src/repositories/dataQualityRepo.ts:57 -> const index = items.findIndex((i) => i.id === id);
+src/repositories/dataQualityRepo.ts:67 -> resolvedByUserId: user.id,
+src/repositories/duplicateRepo.ts:17 -> return candidates.find((c) => c.id === id) || null;
+src/repositories/duplicateRepo.ts:28 -> const index = candidates.findIndex((c) => c.id === id);
+src/repositories/duplicateRepo.ts:38 -> const index = candidates.findIndex((c) => c.id === id);
+src/repositories/facilityRepo.ts:46 -> return list.find((f) => f.id === id);
+src/repositories/facilityRepo.ts:67 -> const index = list.findIndex((f) => f.id === id);
+src/repositories/ingestionRepo.ts:34 -> const index = runs.findIndex((r) => r.id === id);
+src/repositories/kaderStorageRepo.ts:92 -> console.log(`[PackagePurge] Read-only package ${pkg.id} purged (${reason}). Unsynced work queue is PROTECTED.`);
+src/repositories/kaderStorageRepo.ts:117 -> const idx = all.findIndex((v) => v.id === visit.id || v.taskId === visit.taskId);
+src/repositories/kaderStorageRepo.ts:117 -> const idx = all.findIndex((v) => v.id === visit.id || v.taskId === visit.taskId);
+src/repositories/kaderStorageRepo.ts:134 -> const idx = all.findIndex((r) => r.id === req.id || r.taskId === req.taskId);
+src/repositories/kaderStorageRepo.ts:134 -> const idx = all.findIndex((r) => r.id === req.id || r.taskId === req.taskId);
+src/repositories/kaderStorageRepo.ts:150 -> const idx = all.findIndex((e) => e.id === esc.id);
+src/repositories/kaderStorageRepo.ts:150 -> const idx = all.findIndex((e) => e.id === esc.id);
+src/repositories/kaderStorageRepo.ts:166 -> const idx = all.findIndex((r) => r.id === res.id || r.taskId === res.taskId);
+src/repositories/kaderStorageRepo.ts:166 -> const idx = all.findIndex((r) => r.id === res.id || r.taskId === res.taskId);
+src/repositories/kaderStorageRepo.ts:187 -> const idx = all.findIndex((i) => i.id === item.id);
+src/repositories/kaderStorageRepo.ts:187 -> const idx = all.findIndex((i) => i.id === item.id);
+src/repositories/kaderStorageRepo.ts:198 -> const item = all.find((i) => i.id === id);
+src/repositories/kaderStorageRepo.ts:212 -> all.filter((i) => i.id !== id)
+src/repositories/kaderStorageRepo.ts:223 -> const idx = all.findIndex((c) => c.id === conflict.id);
+src/repositories/kaderStorageRepo.ts:223 -> const idx = all.findIndex((c) => c.id === conflict.id);
+src/repositories/kaderStorageRepo.ts:240 -> const idx = all.findIndex((v) => v.id === visit.id);
+src/repositories/kaderStorageRepo.ts:240 -> const idx = all.findIndex((v) => v.id === visit.id);
+src/repositories/modelGovernanceRepo.ts:403 -> return initialModels.find((m) => m.id === id || m.modelCode === id);
+src/repositories/modelGovernanceRepo.ts:412 -> const model = initialModels.find((m) => m.id === modelId || m.modelCode === modelId);
+src/repositories/monitoringCycleRepo.ts:13 -> return list.find((c) => c.id === id) || null;
+src/repositories/monitoringCycleRepo.ts:63 -> const index = list.findIndex((c) => c.id === id);
+src/repositories/outcomeEvaluationRepo.ts:13 -> return list.find((o) => o.id === id) || null;
+src/repositories/outcomeEvaluationRepo.ts:64 -> const oldIndex = list.findIndex((o) => o.id === oldId);
+src/repositories/outreachConfigRepo.ts:55 -> userId: actor.id,
+src/repositories/populationAttentionRepo.ts:26 -> const index = list.findIndex((item) => item.id === id);
+src/repositories/populationInterventionRepo.ts:13 -> return list.find((item) => item.id === id);
+src/repositories/populationInterventionRepo.ts:32 -> const index = list.findIndex((item) => item.id === id);
+src/repositories/populationInterventionRepo.ts:49 -> const index = list.findIndex((item) => item.id === id);
+src/repositories/priorityWeightRepo.ts:49 -> targetId: newVersion.id,
+src/repositories/regionRepo.ts:20 -> return list.find((k) => k.id === id);
+src/repositories/regionRepo.ts:41 -> const index = list.findIndex((k) => k.id === id);
+src/repositories/regionRepo.ts:81 -> return list.find((d) => d.id === id);
+src/repositories/regionRepo.ts:109 -> const kecIdx = kecList.findIndex((k) => k.id === data.kecamatanId);
+src/repositories/regionRepo.ts:125 -> const index = list.findIndex((d) => d.id === id);
+src/repositories/ruleVersionRepo.ts:26 -> return list.find((r) => r.id === id);
+src/repositories/ruleVersionRepo.ts:62 -> const index = list.findIndex((r) => r.id === id);
+src/repositories/ruleVersionRepo.ts:79 -> const index = list.findIndex((r) => r.id === id);
+src/repositories/ruleVersionRepo.ts:97 -> const index = list.findIndex((r) => r.id === id);
+src/repositories/serviceQuotaRepo.ts:70 -> userId: actor.id,
+src/repositories/serviceQuotaRepo.ts:84 -> const idx = quotas.findIndex((q) => q.id === id);
+src/repositories/serviceQuotaRepo.ts:112 -> userId: actor.id,
+src/repositories/serviceQuotaRepo.ts:121 -> const idx = quotas.findIndex((q) => q.id === id);
+src/repositories/serviceQuotaRepo.ts:135 -> const idx = quotas.findIndex((q) => q.id === id);
+src/repositories/serviceRepo.ts:43 -> const index = list.findIndex((s) => s.id === id);
+src/repositories/storage.ts:268 -> if (users.some((u) => excludedIds.includes(u.id))) {
+src/repositories/storage.ts:269 -> const filtered = users.filter((u) => !excludedIds.includes(u.id));
+src/repositories/syncRepo.ts:73 -> const index = queue.findIndex((item) => item.id === id);
+src/repositories/userRepo.ts:47 -> return list.find((u) => u.id === id);
+src/repositories/userRepo.ts:77 -> const index = list.findIndex((u) => u.id === id);
+src/services/adherenceAssessmentService.ts:58 -> assessedByUserId: params.assessorUser.id,
+src/services/adherenceAssessmentService.ts:84 -> entityId: assessment.id,
+src/services/adherenceAssessmentService.ts:92 -> userId: params.assessorUser.id,
+src/services/aiClinicalCopilotService.ts:23 -> params.id,
+src/services/aiClinicalCopilotService.ts:36 -> entityId: params.id,
+src/services/aiForecastService.ts:20 -> actorUserId: actor.id,
+src/services/aiForecastService.ts:25 -> entityId: forecast.id,
+src/services/aiGovernanceService.ts:14 -> actorUserId: actor.id,
+src/services/aiNudgeService.ts:64 -> actorUserId: params.actor.id,
+src/services/aiNudgeService.ts:69 -> entityId: created.id,
+src/services/aiRouteOptimizerService.ts:15 -> actorUserId: actor.id,
+src/services/aiRouteOptimizerService.ts:20 -> entityId: route.id,
+src/services/auditService.ts:25 -> actorUserId: actor.id,
+src/services/authService.ts:24 -> const currentUser = users.find((u) => u.id === session.userId);
+src/services/authService.ts:62 -> userId: user.id,
+src/services/authService.ts:71 -> token: `ckg_jwt_${user.id}_${Date.now()}`,
+src/services/authService.ts:77 -> await userRepo.updateUser(user.id, { lastLogin: now.toISOString() });
+src/services/authService.ts:81 -> actorUserId: user.id,
+src/services/careTaskService.ts:36 -> const citizen = citizens.find((c) => c.id === citizenId);
+src/services/careTaskService.ts:91 -> const updated = await careTaskRepo.update(existing.id, {
+src/services/careTaskService.ts:95 -> classificationId: classification.id,
+src/services/careTaskService.ts:110 -> classificationId: classification.id,
+src/services/careTaskService.ts:124 -> nbaId: nba.id,
+src/services/careTaskService.ts:138 -> classificationId: classification.id,
+src/services/careTaskService.ts:140 -> userId: actor.id,
+src/services/careTaskService.ts:187 -> const citizen = citizens.find((cz) => cz.id === c.citizenId);
+src/services/citizenAppointmentService.ts:77 -> citizenId: citizen.id,
+src/services/citizenAppointmentService.ts:90 -> { id: citizen.id, name: citizen.fullName }
+src/services/citizenAppointmentService.ts:94 -> await citizenProfileService.getProfile(citizen.id);
+src/services/citizenAppointmentService.ts:130 -> citizenId: citizen.id,
+src/services/citizenAppointmentService.ts:135 -> appointmentId: existingApt.id,
+src/services/citizenAppointmentService.ts:147 -> { id: citizen.id, name: citizen.fullName }
+src/services/citizenAppointmentService.ts:151 -> await citizenProfileService.getProfile(citizen.id);
+src/services/citizenAppointmentService.ts:179 -> id: citizen.id,
+src/services/citizenAppointmentService.ts:184 -> await citizenProfileService.getProfile(citizen.id);
+src/services/citizenAppointmentService.ts:212 -> citizenId: citizen.id,
+src/services/citizenAppointmentService.ts:220 -> { id: citizen.id, name: citizen.fullName }
+src/services/citizenAuthService.ts:64 -> const sessions = await screeningRepo.getSessionsByCitizenId(matched.id);
+src/services/citizenAuthService.ts:68 -> const activeConsent = await consentRepo.getByCitizenId(matched.id);
+src/services/citizenAuthService.ts:76 -> citizenId: matched.id,
+src/services/citizenAuthService.ts:89 -> entityId: matched.id,
+src/services/citizenAuthService.ts:92 -> userId: matched.id,
+src/services/citizenBarrierService.ts:23 -> citizenId: citizen.id,
+src/services/citizenBarrierService.ts:48 -> entityId: params.taskId || citizen.id,
+src/services/citizenBarrierService.ts:53 -> userId: citizen.id,
+src/services/citizenFacilityService.ts:16 -> id: facility.id,
+src/services/citizenHelpService.ts:53 -> citizenId: citizen.id,
+src/services/citizenHelpService.ts:72 -> entityId: helpRequest.id,
+src/services/citizenHelpService.ts:78 -> userId: citizen.id,
+src/services/citizenOtpService.ts:57 -> challengeId: existingActive.id,
+src/services/citizenOtpService.ts:67 -> challengeId: newChallenge.id,
+src/services/citizenOtpService.ts:78 -> const challenge = challenges.find((c) => c.id === challengeId);
+src/services/citizenProfileService.ts:52 -> id: facilityDetail.id,
+src/services/citizenResponseService.ts:70 -> entityId: apt.id,
+src/services/citizenStatusTranslationService.ts:57 -> taskId: task.id,
+src/services/citizenStatusTranslationService.ts:80 -> id: appointment.id,
+src/services/citizenStatusTranslationService.ts:199 -> citizenId: citizen.id,
+src/services/classificationService.ts:55 -> targetId: evalResult.classification.id,
+src/services/classificationService.ts:57 -> citizenId: citizen.id,
+src/services/classificationService.ts:104 -> screeningRepo.getSessionsByCitizenId(citizen.id),
+src/services/classificationService.ts:105 -> screeningRepo.getResultsByCitizenId(citizen.id),
+src/services/classificationService.ts:106 -> screeningRepo.getObservationsByCitizenId(citizen.id),
+src/services/classificationService.ts:137 -> console.error(`Failed to evaluate citizen ${citizen.id}:`, err);
+src/services/cohortService.ts:84 -> const cycleEval = evals.find((e) => e.cycleId === c.id && !e.supersededById);
+src/services/commandCenterExportService.ts:509 -> ['User ID Pemohon', user.id],
+src/services/commandCenterOverviewService.ts:210 -> kecamatanId: k.id,
+src/services/consentService.ts:24 -> assistedByUserId: actor.id,
+src/services/consentService.ts:30 -> actorUserId: actor.id,
+src/services/consentService.ts:35 -> entityId: newConsent.id,
+src/services/consentService.ts:51 -> actorUserId: actor.id,
+src/services/consentService.ts:56 -> entityId: revoked.id,
+src/services/controlVisitService.ts:61 -> examinerUserId: input.examinerUser.id,
+src/services/controlVisitService.ts:97 -> { id: input.examinerUser.id, name: input.examinerUser.name }
+src/services/controlVisitService.ts:120 -> cycleId: cycle.id,
+src/services/controlVisitService.ts:126 -> const updatedCycle = await monitoringCycleRepo.update(cycle.id, {
+src/services/controlVisitService.ts:128 -> encounterId: encounter.id,
+src/services/controlVisitService.ts:137 -> const updatedCycle = await monitoringCycleRepo.update(cycle.id, {
+src/services/controlVisitService.ts:139 -> encounterId: encounter.id,
+src/services/controlVisitService.ts:146 -> cycleId: cycle.id,
+src/services/controlVisitService.ts:151 -> id: `obs-${encounter.id}`,
+src/services/dropoutCandidateService.ts:33 -> const idx = candidates.findIndex((c) => c.id === candidateId);
+src/services/dropoutCandidateService.ts:71 -> userId: actor.id,
+src/services/dropoutCandidateService.ts:91 -> const idx = candidates.findIndex((c) => c.id === candidateId);
+src/services/dropoutCandidateService.ts:109 -> userId: actor.id,
+src/services/dropoutMonitoringService.ts:55 -> cycleId: c.id,
+src/services/dropoutMonitoringService.ts:114 -> entityId: cycle.id,
+src/services/dropoutMonitoringService.ts:117 -> cycleId: cycle.id,
+src/services/dropoutMonitoringService.ts:119 -> outreachTaskId: outreachTask.id,
+src/services/dropoutMonitoringService.ts:121 -> userId: operatorUser.id,
+src/services/facilityPerformanceService.ts:141 -> const comp = completenessMap.get(pkm.id);
+src/services/facilityPerformanceService.ts:142 -> const prof = facilityProfiles[pkm.id] || {
+src/services/facilityPerformanceService.ts:163 -> facilityId: pkm.id,
+src/services/facilityService.ts:33 -> actorUserId: actor.id,
+src/services/facilityService.ts:38 -> entityId: newFacility.id,
+src/services/facilityService.ts:40 -> facilityId: newFacility.id,
+src/services/facilityService.ts:57 -> actorUserId: actor.id,
+src/services/facilityService.ts:62 -> entityId: updated.id,
+src/services/facilityService.ts:64 -> facilityId: updated.id,
+src/services/facilityService.ts:81 -> actorUserId: actor.id,
+src/services/facilityService.ts:86 -> entityId: updated.id,
+src/services/facilityService.ts:88 -> facilityId: updated.id,
+src/services/fieldVisitService.ts:36 -> const visitId = existing ? existing.id : `fvisit-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+src/services/fieldWorkPackageService.ts:30 -> id: `pkg-preview-${user.id}`,
+src/services/fieldWorkPackageService.ts:31 -> assignedUserId: user.id,
+src/services/fieldWorkPackageService.ts:87 -> const desaMap = new Map(allDesa.map((d) => [d.id, d.name]));
+src/services/fieldWorkPackageService.ts:88 -> const facilityMap = new Map(allFacilities.map((f) => [f.id, f.name]));
+src/services/fieldWorkPackageService.ts:89 -> const citizenMap = new Map(allCitizens.map((c) => [c.id, c]));
+src/services/fieldWorkPackageService.ts:92 -> // If assignedToUserId matches user.id OR unassigned in this village
+src/services/fieldWorkPackageService.ts:106 -> if (t.assignedToUserId && t.assignedToUserId !== user.id) {
+src/services/fieldWorkPackageService.ts:132 -> taskId: task.id,
+src/services/fieldWorkPackageService.ts:177 -> id: `pkg-${user.id}-${Date.now()}`,
+src/services/fieldWorkPackageService.ts:178 -> assignedUserId: user.id,
+src/services/fieldWorkPackageService.ts:197 -> userId: user.id,
+src/services/fieldWorkPackageService.ts:200 -> packageId: newPackage.id,
+src/services/fieldWorkPackageService.ts:208 -> actorUserId: user.id,
+src/services/fieldWorkPackageService.ts:213 -> entityId: newPackage.id,
+src/services/fieldWorkPackageService.ts:216 -> packageId: newPackage.id,
+src/services/ingestionService.ts:70 -> await ingestionRepo.updateRun(run.id, {
+src/services/ingestionService.ts:82 -> runId: run.id,
+src/services/ingestionService.ts:97 -> await ingestionRepo.updateRun(run.id, {
+src/services/ingestionService.ts:104 -> runId: run.id,
+src/services/ingestionService.ts:119 -> await ingestionRepo.updateRun(run.id, {
+src/services/ingestionService.ts:126 -> runId: run.id,
+src/services/ingestionService.ts:195 -> citizenId = newCitizen.id;
+src/services/ingestionService.ts:245 -> await ingestionRepo.updateRun(run.id, {
+src/services/ingestionService.ts:280 -> runId: run.id,
+src/services/kaderSyncService.ts:70 -> item.id,
+src/services/kaderSyncService.ts:78 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'SYNCING');
+src/services/kaderSyncService.ts:88 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'CONFLICT', res.conflictMessage);
+src/services/kaderSyncService.ts:91 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'SYNCED');
+src/services/kaderSyncService.ts:97 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'CONFLICT', res.conflictMessage);
+src/services/kaderSyncService.ts:100 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'SYNCED');
+src/services/kaderSyncService.ts:105 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'SYNCED');
+src/services/kaderSyncService.ts:109 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'SYNCED');
+src/services/kaderSyncService.ts:113 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'FAILED', err.message || 'Gagal mengirim data');
+src/services/kaderSyncService.ts:156 -> const task = allTasks.find((t) => t.id === visit.taskId);
+src/services/kaderSyncService.ts:162 -> queueItemId: visit.id,
+src/services/kaderSyncService.ts:175 -> id: `att-fvisit-${visit.id}`,
+src/services/kaderSyncService.ts:226 -> fieldVisitId: visit.id,
+src/services/kaderSyncService.ts:252 -> id: `conf-slot-${req.id}`,
+src/services/kaderSyncService.ts:253 -> queueItemId: req.id,
+src/services/kaderSyncService.ts:292 -> const task = allTasks.find((t) => t.id === req.taskId);
+src/services/kaderSyncService.ts:294 -> task.appointmentId = appointment.id;
+src/services/kaderSyncService.ts:308 -> const task = allTasks.find((t) => t.id === esc.taskId);
+src/services/kaderSyncService.ts:329 -> escalationId: esc.id,
+src/services/kaderSyncService.ts:339 -> const task = allTasks.find((t) => t.id === res.taskId);
+src/services/learnedClusterService.ts:69 -> return defaultClusters.find((c) => c.id === id || c.clusterCode === id);
+src/services/localQueueService.ts:24 -> id: payload.id, // Idempotency key from record
+src/services/localQueueService.ts:67 -> kaderStorageRepo.updateQueueItemStatus(item.id, 'PENDING');
+src/services/modelFairnessService.ts:37 -> const target = findings.find((f) => f.id === findingId);
+src/services/monitoringCycleService.ts:73 -> encounterId: encounter.id,
+src/services/monitoringCycleService.ts:74 -> taskId: task.id,
+src/services/monitoringCycleService.ts:83 -> entityId: cycle.id,
+src/services/monitoringCycleService.ts:90 -> userId: initiatorUser.id,
+src/services/monitoringCycleService.ts:149 -> taskId: task.id,
+src/services/monitoringCycleService.ts:157 -> entityId: newCycle.id,
+src/services/monitoringCycleService.ts:164 -> userId: initiatorUser.id,
+src/services/monitoringCycleService.ts:199 -> entityId: cycle.id,
+src/services/monitoringCycleService.ts:202 -> cycleId: cycle.id,
+src/services/monitoringCycleService.ts:207 -> userId: params.operatorUser.id,
+src/services/monitoringCycleService.ts:232 -> entityId: cycle.id,
+src/services/monitoringCycleService.ts:234 -> details: { cycleId: cycle.id, isContinuingFkrtl: true },
+src/services/monitoringCycleService.ts:235 -> userId: operatorUser.id,
+src/services/monitoringIntegrityService.ts:68 -> const citizen = allCitizens.find((c) => c.id === citizenId);
+src/services/monitoringIntegrityService.ts:86 -> cycleIds: activeCycles.map((c) => c.id),
+src/services/monitoringIntegrityService.ts:116 -> citizenNik: (citizen as any).nikPrimary || (citizen as any).nik || citizen.id,
+src/services/monitoringReminderService.ts:35 -> ? `\n\nKonfirmasi kehadiran Anda dengan mudah melalui tautan:\nhttps://ckg.taliabukab.go.id/c/${tokenString}`
+src/services/monitoringReminderService.ts:48 -> responseUrl: tokenString ? `https://ckg.taliabukab.go.id/c/${tokenString}` : undefined,
+src/services/monitoringReminderService.ts:61 -> citizenId: citizen.id,
+src/services/monitoringReminderService.ts:71 -> tokenString: token.id,
+src/services/mpiService.ts:61 -> const candidate = citizens.find((c) => c.id === nikMatch.citizenId);
+src/services/mpiService.ts:69 -> const hasConsent = await this.checkProcessingBasis(candidate.id, candidate.fullName, record.nik);
+src/services/mpiService.ts:76 -> citizenId: candidate.id,
+src/services/mpiService.ts:93 -> citizenId: candidate.id,
+src/services/mpiService.ts:108 -> candidateCitizenIds: [candidate.id],
+src/services/mpiService.ts:128 -> const hasConsent = await this.checkProcessingBasis(exactDemoMatch.id, exactDemoMatch.fullName, record.nik || '');
+src/services/mpiService.ts:135 -> citizenId: exactDemoMatch.id,
+src/services/mpiService.ts:158 -> citizenId: similarDemoMatch.id,
+src/services/mpiService.ts:173 -> candidateCitizenIds: [similarDemoMatch.id],
+src/services/normalizationService.ts:136 -> sourceRecordId: String(raw.sourceRecordId || raw.id || `SRC-${Date.now()}-${Math.floor(Math.random() * 1000)}`),
+src/services/outcomeEvaluationService.ts:117 -> result = await outcomeEvaluationRepo.supersede(existing.id, evaluationData);
+src/services/outcomeEvaluationService.ts:126 -> entityId: result.id,
+src/services/outcomeEvaluationService.ts:135 -> userId: params.doctorUser.id,
+src/services/outcomeTrendService.ts:49 -> const enc = encounters.find((e) => e.id === c.encounterId || e.taskId === c.taskId);
+src/services/outcomeTrendService.ts:50 -> const adh = assessments.find((a) => a.cycleId === c.id);
+src/services/outcomeTrendService.ts:51 -> const evalItem = evals.find((e) => e.cycleId === c.id && !e.supersededById);
+src/services/outreachOrchestrationService.ts:37 -> const citizen = rawStorage.getCitizens().find((c) => c.id === task.citizenId);
+src/services/outreachOrchestrationService.ts:71 -> const actionUrl = `https://taliabu.smartcare.id/c/${task.id.toLowerCase()}`;
+src/services/outreachOrchestrationService.ts:71 -> const actionUrl = `https://taliabu.smartcare.id/c/${task.id.toLowerCase()}`;
+src/services/permissionService.ts:42 -> return INITIAL_ROLES.find((r) => r.id === roleId) || INITIAL_ROLES[0];
+src/services/populationGapService.ts:18 -> const citizenMap = new Map(allCitizens.map((c) => [c.id, c]));
+src/services/populationGapService.ts:44 -> id: `gap-${t.id}`,
+src/services/populationGapService.ts:97 -> actorUserId: params.creatorUser.id,
+src/services/populationGapService.ts:102 -> entityId: signal.id,
+src/services/populationGapService.ts:122 -> actorUserId: user.id,
+src/services/populationInterventionService.ts:32 -> createdByUserId: user.id,
+src/services/populationInterventionService.ts:36 -> actorUserId: user.id,
+src/services/populationInterventionService.ts:41 -> entityId: item.id,
+src/services/populationInterventionService.ts:58 -> actorUserId: user.id,
+src/services/populationInterventionService.ts:80 -> actorUserId: user.id,
+src/services/populationPrivacyService.ts:57 -> actorUserId: params.user.id,
+src/services/populationPrivacyService.ts:78 -> actorUserId: params.user.id,
+src/services/populationPrivacyService.ts:96 -> actorUserId: params.user.id,
+src/services/populationReportService.ts:111 -> actorUserId: user.id,
+src/services/predictiveDropoutService.ts:51 -> predictionId: pred.id,
+src/services/predictiveDropoutService.ts:60 -> predictionId: pred.id,
+src/services/regionService.ts:23 -> actorUserId: actor.id,
+src/services/regionService.ts:28 -> entityId: newKec.id,
+src/services/regionService.ts:45 -> actorUserId: actor.id,
+src/services/regionService.ts:50 -> entityId: updated.id,
+src/services/regionService.ts:67 -> actorUserId: actor.id,
+src/services/regionService.ts:72 -> entityId: updated.id,
+src/services/regionService.ts:99 -> actorUserId: actor.id,
+src/services/regionService.ts:104 -> entityId: newDesa.id,
+src/services/regionService.ts:121 -> actorUserId: actor.id,
+src/services/regionService.ts:126 -> entityId: updated.id,
+src/services/regionService.ts:143 -> actorUserId: actor.id,
+src/services/regionService.ts:148 -> entityId: updated.id,
+src/services/ruleVersionService.ts:28 -> actorUserId: actor.id,
+src/services/ruleVersionService.ts:33 -> entityId: draft.id,
+src/services/ruleVersionService.ts:50 -> actorUserId: actor.id,
+src/services/ruleVersionService.ts:55 -> entityId: updated.id,
+src/services/ruleVersionService.ts:72 -> actorUserId: actor.id,
+src/services/ruleVersionService.ts:77 -> entityId: approved.id,
+src/services/ruleVersionService.ts:94 -> actorUserId: actor.id,
+src/services/ruleVersionService.ts:99 -> entityId: published.id,
+src/services/scenarioSimulationService.ts:90 -> return defaultScenarios.find((s) => s.id === id);
+src/services/syncService.ts:26 -> actorUserId: actor.id,
+src/services/syncService.ts:45 -> actorUserId: actor.id,
+src/services/syncService.ts:50 -> entityId: retried.id,
+src/services/taskAssignmentService.ts:59 -> t.assignedToUserId === user.id &&
+src/services/taskAssignmentService.ts:92 -> taskId: task.id,
+src/services/userService.ts:69 -> actorUserId: actor.id,
+src/services/userService.ts:74 -> entityId: newUser.id,
+src/services/userService.ts:109 -> actorUserId: actor.id,
+src/services/userService.ts:114 -> entityId: updated.id,
+src/services/userService.ts:134 -> if (actor.id === id) {
+src/services/userService.ts:141 -> actorUserId: actor.id,
+src/services/userService.ts:146 -> entityId: updated.id,
+src/services/workloadService.ts:35 -> const latest = (attemptsByTask.get(t.id) || []).sort(
+src/services/workloadService.ts:115 -> const userTasks = activeTasks.filter((t) => t.assignedToUserId === u.id);
+src/services/workloadService.ts:133 -> const vTasks = activeTasks.filter((t) => t.villageId === v.id);
+src/services/workloadService.ts:136 -> villageId: v.id,

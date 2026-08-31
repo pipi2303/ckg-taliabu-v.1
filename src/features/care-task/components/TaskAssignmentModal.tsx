@@ -68,8 +68,8 @@ export const TaskAssignmentModal: React.FC<TaskAssignmentModalProps> = ({
     e.preventDefault();
     if (!currentUser || !selectedUserId) return;
 
-    const selectedOption = candidates.find((c) => c.user.id === selectedUserId);
-    if (!selectedOption) return;
+    const selectedOption = candidates.find((c) => c.user?.id === selectedUserId);
+    if (!selectedOption || !selectedOption.user) return;
 
     if (isReassign && (!reason || reason.trim().length < 5)) {
       setError('Alasan pengalihan tugas wajib diisi minimal 5 karakter.');
@@ -187,11 +187,12 @@ export const TaskAssignmentModal: React.FC<TaskAssignmentModalProps> = ({
             ) : (
               <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                 {candidates.map((cand) => {
-                  const isSelected = selectedUserId === cand.user.id;
+                  const userId = cand.user?.id || '';
+                  const isSelected = selectedUserId === userId;
                   return (
                     <div
-                      key={cand.user.id}
-                      onClick={() => setSelectedUserId(cand.user.id)}
+                      key={userId || Math.random().toString()}
+                      onClick={() => userId && setSelectedUserId(userId)}
                       className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                         isSelected
                           ? 'border-[#00201C] bg-[#E1F5FE] ring-1 ring-[#00201C]'
@@ -200,9 +201,9 @@ export const TaskAssignmentModal: React.FC<TaskAssignmentModalProps> = ({
                     >
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-xs text-black">{cand.user.name}</span>
+                          <span className="font-bold text-xs text-black">{cand.user?.name || 'Petugas'}</span>
                           <span className="text-[10px] px-1.5 py-0.5 rounded font-semibold bg-[#F0F5F4] text-black">
-                            {cand.user.roleId}
+                            {cand.user?.roleId || '-'}
                           </span>
                           {cand.isSameVillage && (
                             <span className="text-[10px] px-1.5 py-0.5 rounded font-semibold bg-emerald-100 text-emerald-800 flex items-center gap-0.5">

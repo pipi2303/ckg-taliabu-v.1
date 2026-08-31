@@ -147,18 +147,34 @@ export const BloodPressureTrendChart: React.FC<BloodPressureTrendChartProps> = (
   customData,
   onScheduleClick,
 }) => {
-  const data = customData && customData.length > 0 ? customData : DEFAULT_BP_HISTORY;
-  const [selectedPointId, setSelectedPointId] = useState<string>(data[data.length - 1].id);
+  const data = customData && customData.length > 0 ? customData : (DEFAULT_BP_HISTORY.length > 0 ? DEFAULT_BP_HISTORY : []);
+  const [selectedPointId, setSelectedPointId] = useState<string>(data.length > 0 ? data[data.length - 1]?.id || '' : '');
   const [filterMode, setFilterMode] = useState<'ALL' | 'SYS' | 'DIA'>('ALL');
   const [timeRange, setTimeRange] = useState<'ALL' | 'RECENT_3'>('ALL');
 
   const displayedData = timeRange === 'RECENT_3' ? data.slice(-3) : data;
-  const selectedPoint = displayedData.find((p) => p.id === selectedPointId) || displayedData[displayedData.length - 1];
+  const selectedPoint = displayedData.find((p) => p.id === selectedPointId) || displayedData[displayedData.length - 1] || data[0] || {
+    id: 'default',
+    timestamp: new Date().toISOString(),
+    dateLabel: 'Hari Ini',
+    timeLabel: '08:00 WIT',
+    eventNote: 'Pemeriksaan Rutin',
+    facility: 'Puskesmas',
+    examiner: 'Petugas Medis',
+    systolic: 120,
+    diastolic: 80,
+    pulse: 75,
+    status: 'NORMAL' as const,
+    statusLabel: 'Normal',
+    sourceType: 'PUSKESMAS' as const,
+    therapyNote: '-',
+    isConfirmed: true,
+  };
 
-  const firstPoint = data[0];
-  const latestPoint = data[data.length - 1];
-  const deltaSys = latestPoint.systolic - firstPoint.systolic;
-  const deltaDia = latestPoint.diastolic - firstPoint.diastolic;
+  const firstPoint = data[0] || selectedPoint;
+  const latestPoint = data[data.length - 1] || selectedPoint;
+  const deltaSys = (latestPoint?.systolic || 0) - (firstPoint?.systolic || 0);
+  const deltaDia = (latestPoint?.diastolic || 0) - (firstPoint?.diastolic || 0);
 
   // Chart dimensions & math coordinates
   const svgWidth = 520;

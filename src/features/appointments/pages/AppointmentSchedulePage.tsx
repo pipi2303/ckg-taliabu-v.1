@@ -56,7 +56,7 @@ export const AppointmentSchedulePage: React.FC = () => {
   const loadReference = async () => {
     const facs = await facilityRepo.getAll();
     setFacilities(facs);
-    if (facs.length > 0) {
+    if (facs.length > 0 && facs[0]?.id) {
       setSelectedFacilityId(facs[0].id);
     }
   };

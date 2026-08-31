@@ -22,14 +22,21 @@ export const LoginPage: React.FC = () => {
     }
   };
 
+  const kadisUser = INITIAL_USERS.find((u) => u.roleId === 'KEPALA_DINAS') || INITIAL_USERS[1];
+  const adminUser = INITIAL_USERS.find((u) => u.roleId === 'ADMIN_DINKES') || INITIAL_USERS[0];
+  const kapusUser = INITIAL_USERS.find((u) => u.roleId === 'KEPALA_PUSKESMAS') || INITIAL_USERS[3];
+  const doctorUser = INITIAL_USERS.find((u) => u.roleId === 'DOCTOR') || INITIAL_USERS[5];
+  const kaderUser = INITIAL_USERS.find((u) => u.roleId === 'KADER') || INITIAL_USERS[8];
+  const citizenUser = INITIAL_USERS.find((u) => u.roleId === 'CITIZEN') || INITIAL_USERS[INITIAL_USERS.length - 1];
+
   const demoAccounts = [
-    { label: 'Kepala Dinas (Dinkes)', user: INITIAL_USERS[1] },
-    { label: 'Admin System', user: INITIAL_USERS[0] },
-    { label: 'Kepala Puskesmas', user: INITIAL_USERS[3] },
-    { label: 'Dokter Puskesmas', user: INITIAL_USERS[5] },
-    { label: 'Kader Posyandu', user: INITIAL_USERS[8] },
-    { label: 'Warga / Sasaran', user: INITIAL_USERS[12] },
-  ];
+    { label: 'Kepala Dinas (Dinkes)', user: kadisUser },
+    { label: 'Admin System', user: adminUser },
+    { label: 'Kepala Puskesmas', user: kapusUser },
+    { label: 'Dokter Puskesmas', user: doctorUser },
+    { label: 'Kader Posyandu', user: kaderUser },
+    { label: 'Warga / Sasaran', user: citizenUser },
+  ].filter((item) => !!item.user);
 
   return (
     <div className="min-h-screen bg-[#F8FBFA] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -137,12 +144,14 @@ export const LoginPage: React.FC = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
               {demoAccounts.map(({ label, user }) => {
-                const isSystemAdmin = user.id === 'usr-1' || user.name === label;
+                const userId = user?.id || '';
+                const userName = user?.name || label;
+                const isSystemAdmin = userId === 'usr-1' || userName === label;
                 return (
                   <button
-                    key={user.id}
+                    key={userId || label}
                     type="button"
-                    onClick={() => switchDemoUser(user.id)}
+                    onClick={() => userId && switchDemoUser(userId)}
                     className="px-2 py-2 text-left bg-[#F8FBFA] hover:bg-[#E1F5FE] border border-[#D8E5E2] hover:border-[#BDE3F5] rounded-lg transition-all text-[11px] group cursor-pointer"
                   >
                     <span className="font-bold text-black block group-hover:text-black truncate">
@@ -150,7 +159,7 @@ export const LoginPage: React.FC = () => {
                     </span>
                     {!isSystemAdmin && (
                       <span className="text-[10px] text-[#60716D] block truncate">
-                        {user.name.split(',')[0]}
+                        {userName.split(',')[0]}
                       </span>
                     )}
                   </button>

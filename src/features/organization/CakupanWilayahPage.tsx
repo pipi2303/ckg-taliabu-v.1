@@ -23,7 +23,10 @@ export const CakupanWilayahPage: React.FC = () => {
 
       // Expand the first two kecamatan by default
       if (k.length > 0) {
-        setExpandedKec({ [k[0].id]: true, [k[1]?.id]: true });
+        const initialExpanded: Record<string, boolean> = {};
+        if (k[0]?.id) initialExpanded[k[0].id] = true;
+        if (k[1]?.id) initialExpanded[k[1].id] = true;
+        setExpandedKec(initialExpanded);
       }
     };
     load();

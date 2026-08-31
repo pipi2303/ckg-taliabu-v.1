@@ -119,7 +119,7 @@ export const CitizenDetailDrawer: React.FC<CitizenDetailDrawerProps> = ({
         setCareTasks(cTasks);
         setAppointments(cApts);
         setContactAttempts(cAtts);
-        if (cSessions.length > 0) {
+        if (cSessions.length > 0 && cSessions[0]?.id) {
           setExpandedSessionId(cSessions[0].id);
         }
 

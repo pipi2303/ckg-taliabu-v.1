@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Sparkles,
   ShieldCheck,
@@ -28,7 +28,22 @@ import {
   Printer,
   ExternalLink,
   Eye,
+  BarChart3,
+  Filter,
 } from 'lucide-react';
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Bar,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  Legend,
+  ReferenceLine,
+  Cell,
+} from 'recharts';
 import { Card } from '../../../components/common/Card';
 import { Button } from '../../../components/common/Button';
 import { ActionIconButton } from '../../../components/common/ActionIconButton';
@@ -58,7 +73,8 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
   const [facilities, setFacilities] = useState<FacilityPerformanceSummary[]>([]);
   const [impact, setImpact] = useState<ImpactIndexSummary | null>(null);
   const [cascade, setCascade] = useState<CascadeAggregation | null>(null);
-  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'FACILITIES' | 'OUTCOME'>('OVERVIEW');
+  const [pkmViewMode, setPkmViewMode] = useState<'VOLUME' | 'CONTINUITY'>('VOLUME');
+  const [pkmRegionFilter, setPkmRegionFilter] = useState<'ALL' | 'MAINLAND' | 'REMOTE'>('ALL');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isExportingPDF, setIsExportingPDF] = useState<boolean>(false);
   const [isExportingExcel, setIsExportingExcel] = useState<boolean>(false);
@@ -113,12 +129,33 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
     }
   };
 
-  // Aggregations
-  const totalScreened = cascade?.totalScreened || 1250;
-  const totalFollowedUp = cascade?.attendedFollowUp || 780;
-  const followUpRate = totalScreened > 0 ? Math.round((totalFollowedUp / totalScreened) * 100) : 62;
-  const totalPuskesmas = facilities.length || 8;
-  const meetingTargetCount = facilities.filter((f) => f.continuityRate >= 50).length || 6;
+  // Filtered facilities for matrix chart & table
+  const filteredFacilities = useMemo(() => {
+    return facilities.filter((f) => {
+      if (pkmRegionFilter === 'MAINLAND') return !f.isRemoteIsland;
+      if (pkmRegionFilter === 'REMOTE') return f.isRemoteIsland;
+      return true;
+    });
+  }, [facilities, pkmRegionFilter]);
+
+  // Chart data formatted for Recharts
+  const pkmChartData = useMemo(() => {
+    return filteredFacilities.map((f) => {
+      const pendingGap = Math.max(0, f.eligibleFollowUpCount - f.attendedFollowUpCount);
+      return {
+        name: f.facilityName.replace('Puskesmas ', 'PKM '),
+        fullName: f.facilityName,
+        kecamatan: f.kecamatanName,
+        isRemote: f.isRemoteIsland,
+        screened: f.screenedCount,
+        attended: f.attendedFollowUpCount,
+        eligible: f.eligibleFollowUpCount,
+        gap: pendingGap,
+        continuityRate: f.continuityRate,
+        targetRate: 50, // SPM target threshold
+      };
+    });
+  }, [filteredFacilities]);
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
@@ -180,322 +217,235 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
         </div>
       </div>
 
-      {/* 2. Top Executive Management Key Metrics */}
-      <div className="grid grid-cols-2 lg:grid-cols-6 gap-3.5">
-        <div
-          onClick={() => onNavigate('dinkes-ringkasan')}
-          className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Total Warga Diperiksa</span>
-            <div className="p-1.5 rounded-lg bg-teal-50 text-teal-700 group-hover:bg-teal-700 group-hover:text-white transition-colors">
-              <Users className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <p className="text-xl sm:text-2xl font-bold text-black tracking-tight">{totalScreened.toLocaleString('id-ID')}</p>
-          <p className="text-[10px] text-teal-700 font-medium mt-0.5">8 Kecamatan (100% Wilayah)</p>
-        </div>
-
-        <div
-          onClick={() => onNavigate('dinkes-kaskade')}
-          className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Warga Sudah Ditangani</span>
-            <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <p className="text-xl sm:text-2xl font-bold text-black tracking-tight">{followUpRate}%</p>
-          <p className="text-[10px] text-emerald-700 font-medium mt-0.5">{totalFollowedUp} Warga Tertangani</p>
-        </div>
-
-        <div
-          onClick={() => onNavigate('dinkes-impact-index')}
-          className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Penurunan Risiko Sakit</span>
-            <div className="p-1.5 rounded-lg bg-sky-50 text-sky-700 group-hover:bg-sky-700 group-hover:text-white transition-colors">
-              <TrendingUp className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <p className="text-xl sm:text-2xl font-bold text-sky-800 tracking-tight">-18.4%</p>
-          <p className="text-[10px] text-sky-700 font-medium mt-0.5">Pencegahan Komplikasi</p>
-        </div>
-
-        <div
-          onClick={() => onNavigate('dinkes-kinerja-pkm')}
-          className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Puskesmas Capai Target</span>
-            <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-700 group-hover:bg-indigo-700 group-hover:text-white transition-colors">
-              <Building2 className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <p className="text-xl sm:text-2xl font-bold text-black tracking-tight">{meetingTargetCount} / {totalPuskesmas}</p>
-          <p className="text-[10px] text-indigo-700 font-medium mt-0.5">Mencapai Standar Pelayanan</p>
-        </div>
-
-        <div
-          onClick={() => onNavigate('dinkes-gap')}
-          className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Kesenjangan Rujukan</span>
-            <div className="p-1.5 rounded-lg bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-colors">
-              <AlertTriangle className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <p className="text-xl sm:text-2xl font-bold text-amber-800 tracking-tight">38.2%</p>
-          <p className="text-[10px] text-amber-700 font-medium mt-0.5">Taliabu Selatan & Barat</p>
-        </div>
-
-        <div
-          onClick={() => onNavigate('tren-outcome')}
-          className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Kondisi Kesehatan Terkontrol</span>
-            <div className="p-1.5 rounded-lg bg-[#EBF7F2] text-[#2E7D5B] group-hover:bg-[#2E7D5B] group-hover:text-white transition-colors">
-              <ShieldCheck className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <p className="text-xl sm:text-2xl font-bold text-[#2E7D5B] tracking-tight">72.4%</p>
-          <p className="text-[10px] text-[#2E7D5B] font-medium mt-0.5">Tensi & Gula Darah Aman</p>
-        </div>
-      </div>
-
-      {/* 3. Executive KPI Recharts Analytics (Grafik Batang & Grafik Area 6 KPI) */}
+      {/* 2. Executive KPI Recharts Analytics (Grafik Batang & Grafik Area 6 KPI) */}
       <ExecutiveKPIRechartsSection onNavigate={onNavigate} />
 
-      {/* 4. Curated Management Feature Hub */}
-      <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#D8E5E2]">
-          <div>
-            <h2 className="text-sm font-bold text-black uppercase tracking-wider flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-[#2E7D5B]" />
-              Katalog Fitur Khusus Manajemen Dinas Kesehatan
-            </h2>
-            <p className="text-xs text-[#60716D] mt-0.5">
-              Akses cepat instrumen pengambil keputusan, evaluasi 8 puskesmas wilayah, dan pemantauan outcome kesehatan.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-1.5 bg-[#F0F5F4] p-1 rounded-xl border border-[#D8E5E2] text-xs">
-            <button
-              onClick={() => setActiveTab('OVERVIEW')}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                activeTab === 'OVERVIEW' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] hover:text-black'
-              }`}
-            >
-              Semua Modul
-            </button>
-            <button
-              onClick={() => setActiveTab('FACILITIES')}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                activeTab === 'FACILITIES' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] hover:text-black'
-              }`}
-            >
-              Puskesmas & Wilayah
-            </button>
-            <button
-              onClick={() => setActiveTab('OUTCOME')}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                activeTab === 'OUTCOME' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] hover:text-black'
-              }`}
-            >
-              Pemantauan & Outcome
-            </button>
-          </div>
-        </div>
-
-        {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
-          {/* Pilar 1: Komando & Pengambilan Keputusan */}
-          {(activeTab === 'OVERVIEW' || activeTab === 'FACILITIES') && (
-            <div className="bg-[#F8FBFA] p-4 rounded-xl border border-[#D8E5E2] flex flex-col justify-between space-y-3 hover:border-[#00201C] transition-all">
-              <div>
-                <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-800 flex items-center justify-center mb-2.5 font-bold">
-                  <Sparkles className="w-4 h-4" />
-                </div>
-                <h3 className="text-xs font-bold text-black">Executive Command Center</h3>
-                <p className="text-[11px] text-[#60716D] mt-1 leading-relaxed">
-                  Ringkasan populasi, visualisasi kaskade CKG, indeks dampak risiko, dan generator dokumen resmi untuk Kepala Daerah.
-                </p>
-              </div>
-              <div className="space-y-1.5 pt-2 border-t border-[#D8E5E2]/80">
-                <button
-                  onClick={() => onNavigate('dinkes-ringkasan')}
-                  className="w-full text-left text-[11px] font-semibold text-teal-800 hover:text-teal-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Ringkasan Wilayah Dinas Kesehatan</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('dinkes-impact-index')}
-                  className="w-full text-left text-[11px] font-semibold text-teal-800 hover:text-teal-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• CKG Impact Index & Reduksi</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('dinkes-laporan')}
-                  className="w-full text-left text-[11px] font-semibold text-teal-800 hover:text-teal-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Laporan Resmi & Ekspor PDF</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Pilar 2: Evaluasi Kinerja Puskesmas & Wilayah */}
-          {(activeTab === 'OVERVIEW' || activeTab === 'FACILITIES') && (
-            <div className="bg-[#F8FBFA] p-4 rounded-xl border border-[#D8E5E2] flex flex-col justify-between space-y-3 hover:border-[#00201C] transition-all">
-              <div>
-                <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center mb-2.5 font-bold">
-                  <Building2 className="w-4 h-4" />
-                </div>
-                <h3 className="text-xs font-bold text-black">Kinerja 8 Puskesmas & Wilayah</h3>
-                <p className="text-[11px] text-[#60716D] mt-1 leading-relaxed">
-                  Analisis disparitas 8 kecamatan, rujukan tertunda, audit penyebab kendala maritim, dan komparasi tren antar periode.
-                </p>
-              </div>
-              <div className="space-y-1.5 pt-2 border-t border-[#D8E5E2]/80">
-                <button
-                  onClick={() => onNavigate('dinkes-kinerja-pkm')}
-                  className="w-full text-left text-[11px] font-semibold text-indigo-800 hover:text-indigo-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Evaluasi Kinerja 8 Puskesmas</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('dinkes-wilayah')}
-                  className="w-full text-left text-[11px] font-semibold text-indigo-800 hover:text-indigo-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Analisis 8 Wilayah Kecamatan</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('dinkes-penyebab-kendala')}
-                  className="w-full text-left text-[11px] font-semibold text-indigo-800 hover:text-indigo-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Kendala Transportasi & Logistik</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Pilar 3: Kaskade & Intervensi Sasaran */}
-          {(activeTab === 'OVERVIEW' || activeTab === 'FACILITIES' || activeTab === 'OUTCOME') && (
-            <div className="bg-[#F8FBFA] p-4 rounded-xl border border-[#D8E5E2] flex flex-col justify-between space-y-3 hover:border-[#00201C] transition-all">
-              <div>
-                <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 flex items-center justify-center mb-2.5 font-bold">
-                  <Layers className="w-4 h-4" />
-                </div>
-                <h3 className="text-xs font-bold text-black">Kaskade & Intervensi Terpadu</h3>
-                <p className="text-[11px] text-[#60716D] mt-1 leading-relaxed">
-                  Monitoring konversi skrining, analisis rujukan tertunda, dan intervensi sasaran berbasis kelompok prioritas.
-                </p>
-              </div>
-              <div className="space-y-1.5 pt-2 border-t border-[#D8E5E2]/80">
-                <button
-                  onClick={() => onNavigate('dinkes-kaskade')}
-                  className="w-full text-left text-[11px] font-semibold text-sky-800 hover:text-sky-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Kaskade Tindak Lanjut CKG</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('dinkes-gap')}
-                  className="w-full text-left text-[11px] font-semibold text-sky-800 hover:text-sky-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Disparitas Akses & Rujukan</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('dinkes-intervensi-populasi')}
-                  className="w-full text-left text-[11px] font-semibold text-sky-800 hover:text-sky-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Rencana Intervensi Sasaran</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Pilar 4: Pemantauan Pasien & Outcome Jangka Panjang */}
-          {(activeTab === 'OVERVIEW' || activeTab === 'OUTCOME') && (
-            <div className="bg-[#F8FBFA] p-4 rounded-xl border border-[#D8E5E2] flex flex-col justify-between space-y-3 hover:border-[#00201C] transition-all">
-              <div>
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center mb-2.5 font-bold">
-                  <Activity className="w-4 h-4" />
-                </div>
-                <h3 className="text-xs font-bold text-black">Pemantauan & Outcome</h3>
-                <p className="text-[11px] text-[#60716D] mt-1 leading-relaxed">
-                  Pemantauan kohort PTM aktif, evaluasi tekanan darah/gula darah terkontrol, dan mitigasi risiko putus pengobatan.
-                </p>
-              </div>
-              <div className="space-y-1.5 pt-2 border-t border-[#D8E5E2]/80">
-                <button
-                  onClick={() => onNavigate('pemantauan-aktif')}
-                  className="w-full text-left text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Pasien Pemantauan Aktif</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('integritas-monitoring')}
-                  className="w-full text-left text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Integritas Monitoring</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('tren-outcome')}
-                  className="w-full text-left text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Tren Outcome Klinis Pasien</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('risiko-putus')}
-                  className="w-full text-left text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Risiko Putus Perawatan</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 4. Strategic Performance Table: Evaluasi 8 Puskesmas Se-Kabupaten */}
-      <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      {/* 3. Strategic Performance Matrix: Evaluasi & Grafik 8 Puskesmas Se-Kabupaten */}
+      <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-xs space-y-5">
+        {/* Header & Controls */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-[#D8E5E2]">
           <div>
             <h3 className="text-sm font-bold text-black flex items-center gap-2">
               <Building2 className="w-4 h-4 text-[#2E7D5B]" />
               Matriks Kinerja & Kesiapan 8 Puskesmas Se-Kabupaten Pulau Taliabu
             </h3>
-            <p className="text-xs text-[#60716D]">
+            <p className="text-xs text-[#60716D] mt-0.5">
               Evaluasi kontinuitas pelayanan, beban sasaran skrining CKG, dan mitigasi kendala operasional faskes.
             </p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onNavigate('dinkes-kinerja-pkm')}
-            rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
-          >
-            Lihat Analisis Lengkap
-          </Button>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {/* View Mode Toggle */}
+            <div className="flex items-center gap-1 bg-[#F0F5F4] p-1 rounded-xl border border-[#D8E5E2] text-xs font-semibold">
+              <button
+                type="button"
+                onClick={() => setPkmViewMode('VOLUME')}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  pkmViewMode === 'VOLUME'
+                    ? 'bg-[#00201C] text-white shadow-2xs'
+                    : 'text-[#60716D] hover:text-black'
+                }`}
+              >
+                Volume Skrining & Tindak Lanjut
+              </button>
+              <button
+                type="button"
+                onClick={() => setPkmViewMode('CONTINUITY')}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  pkmViewMode === 'CONTINUITY'
+                    ? 'bg-[#00201C] text-white shadow-2xs'
+                    : 'text-[#60716D] hover:text-black'
+                }`}
+              >
+                Tingkat Kontinuitas (%) vs Target SPM
+              </button>
+            </div>
+
+            {/* Region Filter */}
+            <div className="flex items-center gap-1 bg-[#F8FBFA] px-2 py-1 rounded-xl border border-[#D8E5E2] text-xs">
+              <Filter className="w-3.5 h-3.5 text-[#60716D]" />
+              <select
+                value={pkmRegionFilter}
+                onChange={(e) => setPkmRegionFilter(e.target.value as any)}
+                className="bg-transparent font-semibold text-black focus:outline-hidden cursor-pointer"
+              >
+                <option value="ALL">Semua Faskes ({facilities.length})</option>
+                <option value="MAINLAND">Daratan Utama</option>
+                <option value="REMOTE">Pesisir & Pulau Terluar</option>
+              </select>
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onNavigate('dinkes-kinerja-pkm')}
+              rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
+            >
+              Analisis Lengkap
+            </Button>
+          </div>
         </div>
 
+        {/* RECHARTS VISUALIZATION FOR 8 PUSKESMAS */}
+        <div className="bg-[#FAFDFB] p-4 rounded-xl border border-[#D8E5E2]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div>
+              <h4 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
+                <BarChart3 className="w-3.5 h-3.5 text-teal-700" />
+                {pkmViewMode === 'VOLUME'
+                  ? 'Grafik Komparasi Beban Skrining, Warga Ditangani & Kesenjangan Kasus'
+                  : 'Grafik Capaian Kontinuitas Layanan Puskesmas Terhadap Standar Pelayanan Minimal (50%)'}
+              </h4>
+              <p className="text-[11px] text-[#60716D] mt-0.5">
+                {pkmViewMode === 'VOLUME'
+                  ? 'Membandingkan total skrining, rujukan tertangani, dan sisa kasus tertunda per fasilitas kesehatan.'
+                  : 'Garis merah putus-putus menunjukkan batas target SPM kontinuitas pelayanan primer (50%).'}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 text-[11px]">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-teal-100 text-teal-900 font-semibold">
+                <span className="w-2 h-2 rounded-full bg-teal-700" /> Daratan
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-900 font-semibold">
+                <span className="w-2 h-2 rounded-full bg-indigo-600" /> Maritim / Terluar
+              </span>
+            </div>
+          </div>
+
+          <div className="h-64 sm:h-72 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              {pkmViewMode === 'VOLUME' ? (
+                <ComposedChart data={pkmChartData} margin={{ top: 10, right: 15, left: -10, bottom: 25 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fill: '#334643', fontSize: 11, fontWeight: 600 }}
+                    axisLine={{ stroke: '#CBD5E1' }}
+                    tickLine={false}
+                    interval={0}
+                    angle={-15}
+                    textAnchor="end"
+                  />
+                  <YAxis
+                    tick={{ fill: '#64748B', fontSize: 11 }}
+                    axisLine={false}
+                    tickLine={false}
+                    label={{ value: 'Jumlah Warga', angle: -90, position: 'insideLeft', offset: 15, style: { fontSize: 10, fill: '#64748B' } }}
+                  />
+                  <RechartsTooltip
+                    formatter={(val: any, name: any) => {
+                      if (name === 'Sasaran Skrining') return [`${val} Warga`, name];
+                      if (name === 'Sudah Ditangani') return [`${val} Warga`, name];
+                      if (name === 'Kesenjangan / Tertunda') return [`${val} Warga`, name];
+                      return [val, name];
+                    }}
+                    labelFormatter={(label, payload) => {
+                      const item = payload && payload[0]?.payload;
+                      return item ? `${item.fullName} (${item.kecamatan}) ${item.isRemote ? '• Pesisir Terluar' : '• Daratan'}` : label;
+                    }}
+                    contentStyle={{
+                      backgroundColor: '#00201C',
+                      borderColor: '#0D443C',
+                      borderRadius: '0.75rem',
+                      color: '#F8FAFC',
+                      fontSize: '11px',
+                    }}
+                  />
+                  <Legend
+                    verticalAlign="top"
+                    align="right"
+                    wrapperStyle={{ paddingBottom: '10px', fontSize: '11px' }}
+                  />
+                  <Bar
+                    dataKey="screened"
+                    name="Sasaran Skrining"
+                    fill="#0F766E"
+                    radius={[4, 4, 0, 0]}
+                    maxBarSize={28}
+                  />
+                  <Bar
+                    dataKey="attended"
+                    name="Sudah Ditangani"
+                    fill="#10B981"
+                    radius={[4, 4, 0, 0]}
+                    maxBarSize={28}
+                  />
+                  <Bar
+                    dataKey="gap"
+                    name="Kesenjangan / Tertunda"
+                    fill="#F59E0B"
+                    radius={[4, 4, 0, 0]}
+                    maxBarSize={28}
+                  />
+                </ComposedChart>
+              ) : (
+                <ComposedChart data={pkmChartData} margin={{ top: 10, right: 15, left: -10, bottom: 25 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fill: '#334643', fontSize: 11, fontWeight: 600 }}
+                    axisLine={{ stroke: '#CBD5E1' }}
+                    tickLine={false}
+                    interval={0}
+                    angle={-15}
+                    textAnchor="end"
+                  />
+                  <YAxis
+                    domain={[0, 100]}
+                    tick={{ fill: '#64748B', fontSize: 11 }}
+                    axisLine={false}
+                    tickLine={false}
+                    unit="%"
+                  />
+                  <RechartsTooltip
+                    formatter={(val: any, name: any) => {
+                      if (name === 'Tingkat Kontinuitas') return [`${val}%`, name];
+                      if (name === 'Target SPM') return [`${val}%`, name];
+                      return [val, name];
+                    }}
+                    labelFormatter={(label, payload) => {
+                      const item = payload && payload[0]?.payload;
+                      return item ? `${item.fullName} (${item.kecamatan})` : label;
+                    }}
+                    contentStyle={{
+                      backgroundColor: '#00201C',
+                      borderColor: '#0D443C',
+                      borderRadius: '0.75rem',
+                      color: '#F8FAFC',
+                      fontSize: '11px',
+                    }}
+                  />
+                  <Legend
+                    verticalAlign="top"
+                    align="right"
+                    wrapperStyle={{ paddingBottom: '10px', fontSize: '11px' }}
+                  />
+                  <ReferenceLine
+                    y={50}
+                    stroke="#EF4444"
+                    strokeDasharray="4 4"
+                    strokeWidth={2}
+                    label={{ value: 'Target SPM 50%', fill: '#DC2626', position: 'insideTopRight', fontSize: 10, fontWeight: 'bold' }}
+                  />
+                  <Bar
+                    dataKey="continuityRate"
+                    name="Tingkat Kontinuitas"
+                    radius={[6, 6, 0, 0]}
+                    maxBarSize={36}
+                  >
+                    {pkmChartData.map((entry, index) => {
+                      const color = entry.continuityRate >= 50 ? '#059669' : '#D97706';
+                      return <Cell key={`cell-${index}`} fill={color} />;
+                    })}
+                  </Bar>
+                </ComposedChart>
+              )}
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Detail Table */}
         <div className="overflow-x-auto border border-[#D8E5E2] rounded-xl">
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F8FBFA] border-b border-[#D8E5E2] text-[#60716D] font-semibold">
@@ -510,7 +460,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
               </tr>
             </thead>
             <tbody className="divide-y divide-[#D8E5E2] text-black">
-              {facilities.map((fac) => {
+              {filteredFacilities.map((fac) => {
                 const isOptimal = fac.continuityRate >= 55;
                 const isWarning = fac.continuityRate >= 40 && fac.continuityRate < 55;
                 return (
@@ -579,7 +529,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
         </div>
       </div>
 
-      {/* 5. Policy Interventions & Strategic AI Recommendations for Kadinkes */}
+      {/* 4. Policy Interventions & Strategic AI Recommendations for Kadinkes */}
       <div className="bg-gradient-to-r from-teal-900/10 via-emerald-900/5 to-transparent p-5 rounded-2xl border border-teal-200/80">
         <div className="flex items-start gap-3">
           <div className="p-2 rounded-xl bg-[#00201C] text-white shrink-0 mt-0.5">
@@ -635,3 +585,4 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
     </div>
   );
 };
+
