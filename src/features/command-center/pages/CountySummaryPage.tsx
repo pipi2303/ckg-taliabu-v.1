@@ -18,6 +18,7 @@ import { useToast } from '../../../context/ToastContext';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { CompletenessBanner } from '../components/CompletenessBanner';
 import { QualifiedMetricCard } from '../components/QualifiedMetricCard';
+import { ImpactLevelAnalyticsCharts } from '../components/ImpactLevelAnalyticsCharts';
 import {
   populationQualificationService,
   CountyCompletenessSummary,
@@ -195,6 +196,9 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
           />
           <QualifiedMetricCard metric={impact.level3Outcome} levelBadge="Level 3" />
         </div>
+
+        {/* Recharts Analytics Charts for Level 1, 2, and 3 (Bar, Area, Composed, Radar, Cohort) */}
+        <ImpactLevelAnalyticsCharts impact={impact} onNavigate={onNavigate} />
       </div>
 
       {/* 3. Cascade Funnel Overview & Largest Drop Point */}

@@ -134,6 +134,7 @@ export const permissionService = {
         // Dinkes/Puskesmas/clinical roles, not the system administrator account.
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'wilayah', 'faskes', 'layanan',
           'pengguna', 'peran', 'cakupan',
           'persetujuan', 'versi-aturan', 'audit-log',
@@ -168,6 +169,7 @@ export const permissionService = {
         // Irrelevant administrative items (master data faskes, catalog layanan, data cleansing, cadre mobile app, admin configs) are removed.
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-nudge-budaya', 'ai-rute-maritim',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
@@ -179,6 +181,7 @@ export const permissionService = {
       case 'PJ_CKG':
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-nudge-budaya', 'ai-rute-maritim',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
@@ -191,6 +194,7 @@ export const permissionService = {
       case 'DOCTOR':
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'prioritas-harian', 'care-task', 'clinical-followup', 'jadwal-kuota', 'kandidat-putus',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-clinical-copilot', 'ai-nudge-budaya',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
@@ -202,6 +206,7 @@ export const permissionService = {
       case 'NURSE_MIDWIFE':
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'jadwal-kuota', 'kandidat-putus',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-nudge-budaya', 'ai-rute-maritim',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'kepatuhan-kendala', 'risiko-putus',
@@ -213,6 +218,7 @@ export const permissionService = {
       case 'PHARMACY_OFFICER':
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'care-task', 'clinical-followup', 'jadwal-kuota',
           'ai-kepatuhan-obat', 'ai-proyeksi-beban',
           'pemantauan-aktif', 'kontrol-harian',
@@ -229,6 +235,7 @@ export const permissionService = {
         // 'citizen-app' is strictly reserved for CITIZEN role only.
         return [
           'kader-app',
+          'dinkes-ringkasan',
           'penugasan-lapangan',
           'ai-nudge-budaya',
           'ai-rute-maritim',
@@ -238,6 +245,7 @@ export const permissionService = {
       case 'PUSTU':
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'prioritas-harian', 'outreach', 'penugasan-lapangan', 'kader-app',
           'ai-nudge-budaya', 'ai-rute-maritim',
           'sinkronisasi',
@@ -246,6 +254,7 @@ export const permissionService = {
       case 'POSYANDU':
         return [
           'dashboard',
+          'dinkes-ringkasan',
           'prioritas-harian', 'outreach', 'penugasan-lapangan', 'kader-app',
           'sinkronisasi',
         ];
@@ -253,6 +262,7 @@ export const permissionService = {
       case 'CITIZEN':
         return [
           'citizen-app',
+          'dinkes-ringkasan',
         ];
 
       default:
