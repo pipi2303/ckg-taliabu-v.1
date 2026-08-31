@@ -385,158 +385,228 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
         onNavigate={onNavigate}
       />
 
-      {/* Filter Wilayah */}
-      <div className="flex items-center gap-2 flex-wrap p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-        <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5 shrink-0">
-          <Filter className="w-3.5 h-3.5 text-teal-400" /> Filter Wilayah:
-        </span>
-        <select
-          value={selectedKecamatanId}
-          onChange={(e) => setSelectedKecamatanId(e.target.value)}
-          className="bg-slate-800/80 border border-slate-700 text-xs text-white px-3 py-1.5 rounded-lg focus:outline-none cursor-pointer"
-        >
-          <option value="ALL" className="bg-slate-900">Semua Kecamatan</option>
-          {kecamatanGrid.map((k) => (
-            <option key={k.kecamatanId} value={k.kecamatanId} className="bg-slate-900">
-              {k.kecamatanName}
-            </option>
-          ))}
-        </select>
-        <span className="text-[10px] text-slate-500">Memfilter Peta Persebaran Risiko di bawah.</span>
+      {/* Filter Wilayah Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xs">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 shrink-0">
+            <Filter className="w-3.5 h-3.5 text-teal-400" /> Filter Wilayah Fokus:
+          </span>
+          <select
+            value={selectedKecamatanId}
+            onChange={(e) => setSelectedKecamatanId(e.target.value)}
+            className="bg-slate-800/90 border border-slate-700 text-xs text-white px-3 py-1.5 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer"
+          >
+            <option value="ALL" className="bg-slate-900">Semua Kecamatan (8 Wilayah)</option>
+            {kecamatanGrid.map((k) => (
+              <option key={k.kecamatanId} value={k.kecamatanId} className="bg-slate-900">
+                {k.kecamatanName} ({k.puskesmasName})
+              </option>
+            ))}
+          </select>
+        </div>
+        <span className="text-[11px] text-slate-400">Menyesuaikan tampilan distribusi risiko dan prioritas wilayah secara real-time.</span>
       </div>
 
-      {/* Row: Peta (Where) | Penyakit & Faktor Risiko (What) | Prioritas Tindakan + Alert (What Next / Did It Work) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Peta Persebaran Risiko (Placeholder Grid) */}
-        <div id="where" className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-4 scroll-mt-4">
-          <div>
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-emerald-400" />
-              Peta Persebaran Risiko
-            </h3>
-            <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
-              Grid risiko per kecamatan (ilustratif — tidak ada data batas wilayah geografis di sistem ini).
-              Klik "Analisis Wilayah" untuk rincian per desa.
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            {filteredKecamatan.map((k) => {
-              const meta = RISK_LEVEL_META[k.riskLevel];
-              return (
-                <button
-                  key={k.kecamatanId}
-                  onClick={() => onNavigate?.('dinkes-wilayah')}
-                  className="w-full p-2.5 rounded-xl bg-slate-800/50 border border-slate-800 hover:border-slate-700 transition flex items-center justify-between text-left cursor-pointer"
-                >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${meta.dot}`} />
-                    <div className="min-w-0">
-                      <p className="text-xs font-semibold text-white truncate">{k.kecamatanName}</p>
-                      <p className="text-[10px] text-slate-500 truncate flex items-center gap-1">
-                        {k.puskesmasName}
-                        {k.burdenSuppressed && (
-                          <span className="flex items-center gap-0.5 text-amber-400" title="Angka beban disembunyikan (DS-OI-06, populasi kecil)">
-                            <Lock className="w-2.5 h-2.5" /> {k.burdenDisplayValue}
-                          </span>
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border shrink-0 ${meta.badge}`}>
-                    {meta.label}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center gap-2.5">
-            {(Object.keys(RISK_LEVEL_META) as KecamatanRiskProfile['riskLevel'][]).map((lvl) => (
-              <span key={lvl} className="flex items-center gap-1 text-[10px] text-slate-400">
-                <span className={`w-2 h-2 rounded-full ${RISK_LEVEL_META[lvl].dot}`} />
-                {RISK_LEVEL_META[lvl].label}
+      {/* Row 1: Peta (Where) | Penyakit & Faktor Risiko (What) | Prioritas Tindakan + Alert (What Next / Did It Work) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6">
+        {/* Card 1: Peta Persebaran Risiko */}
+        <div
+          id="where"
+          className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 scroll-mt-4"
+        >
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                    Peta Persebaran Risiko
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Grid status risiko per kecamatan (8 Puskesmas).
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                WHERE
               </span>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        {/* Penyakit & Faktor Risiko Dominan */}
-        <div id="what" className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-4 scroll-mt-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Activity className="w-4 h-4 text-sky-400" />
-              Penyakit & Faktor Risiko Dominan
-            </h3>
-          </div>
-          <div className="flex items-center gap-1 bg-slate-800/60 p-1 rounded-lg text-[11px] w-fit">
-            <button
-              onClick={() => setDiseaseTab('PRIORITY')}
-              className={`px-2.5 py-1 rounded-md font-semibold transition ${diseaseTab === 'PRIORITY' ? 'bg-sky-600 text-white' : 'text-slate-400 hover:text-white'}`}
-            >
-              Kasus Prioritas
-            </button>
-            <button
-              onClick={() => setDiseaseTab('AT_RISK')}
-              className={`px-2.5 py-1 rounded-md font-semibold transition ${diseaseTab === 'AT_RISK' ? 'bg-sky-600 text-white' : 'text-slate-400 hover:text-white'}`}
-            >
-              Populasi Berisiko
-            </button>
-          </div>
-
-          <div className="space-y-2.5">
-            {diseaseRanking.map((d, idx) => {
-              const count = diseaseTab === 'PRIORITY' ? d.priorityCaseCount : d.atRiskCount;
-              const pct = diseaseTab === 'PRIORITY' ? d.priorityCasePercentage : d.atRiskPercentage;
-              const widthPct = Math.max(3, (count / maxDiseaseCount) * 100);
-              return (
-                <div key={d.domain} className="space-y-1">
-                  <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-300 font-medium flex items-center gap-1.5">
-                      <span className="text-slate-500 font-mono">{idx + 1}.</span> {d.label}
+            <div className="space-y-2 max-h-[330px] overflow-y-auto pr-1">
+              {filteredKecamatan.map((k) => {
+                const meta = RISK_LEVEL_META[k.riskLevel];
+                return (
+                  <button
+                    key={k.kecamatanId}
+                    onClick={() => onNavigate?.('dinkes-wilayah')}
+                    className="w-full p-2.5 rounded-xl bg-slate-800/50 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-800/80 transition flex items-center justify-between text-left cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${meta.dot}`} />
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-white truncate">{k.kecamatanName}</p>
+                        <p className="text-[10px] text-slate-400 truncate flex items-center gap-1">
+                          {k.puskesmasName}
+                          {k.burdenSuppressed && (
+                            <span className="flex items-center gap-0.5 text-amber-400" title="Angka beban disembunyikan (DS-OI-06, populasi kecil)">
+                              <Lock className="w-2.5 h-2.5" /> {k.burdenDisplayValue}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border shrink-0 ${meta.badge}`}>
+                      {meta.label}
                     </span>
-                    <span className="text-white font-bold">
-                      {count.toLocaleString('id-ID')} <span className="text-slate-500 font-normal">({pct}%)</span>
-                    </span>
-                  </div>
-                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full ${idx === 0 ? 'bg-rose-500' : idx === 1 ? 'bg-orange-500' : 'bg-sky-500'}`}
-                      style={{ width: `${widthPct}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="pt-3 border-t border-slate-800 space-y-2">
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
-              Faktor Risiko Dominan (% Populasi Berisiko)
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {riskChips.map((c) => (
-                <div key={c.code} className="px-2.5 py-1.5 rounded-lg bg-slate-800/60 border border-slate-800 text-center">
-                  <p className="text-xs font-bold text-white">{c.percentage}%</p>
-                  <p className="text-[9px] text-slate-400">{c.label}</p>
-                </div>
-              ))}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          <p className="text-[10px] text-slate-500 leading-relaxed flex items-start gap-1.5">
-            <Info className="w-3 h-3 shrink-0 mt-0.5" />
-            Hanya domain klinis aktif pada CRS-CKG v0.9 (Tekanan Darah, Gula Darah, Gizi, Perilaku) yang ditampilkan. Domain Jantung/PPOK/Kanker/Ginjal belum memiliki aturan klasifikasi di sistem ini.
-          </p>
+          <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              {(Object.keys(RISK_LEVEL_META) as KecamatanRiskProfile['riskLevel'][]).map((lvl) => (
+                <span key={lvl} className="flex items-center gap-1 text-[10px] text-slate-400">
+                  <span className={`w-2 h-2 rounded-full ${RISK_LEVEL_META[lvl].dot}`} />
+                  {RISK_LEVEL_META[lvl].label}
+                </span>
+              ))}
+            </div>
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate('dinkes-wilayah')}
+                className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer"
+              >
+                Analisis Wilayah <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Prioritas Tindakan + Alert & Insight */}
-        <div className="space-y-6">
-          <div id="what-next" className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-3 scroll-mt-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Target className="w-4 h-4 text-amber-400" />
-              Prioritas Tindakan
-            </h3>
+        {/* Card 2: Penyakit & Faktor Risiko Dominan */}
+        <div
+          id="what"
+          className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 scroll-mt-4"
+        >
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                  <Activity className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                    Penyakit & Faktor Risiko
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Stratifikasi beban domain klinis aktif CRS-CKG.
+                  </p>
+                </div>
+              </div>
+
+              {/* Tab Switcher */}
+              <div className="flex items-center gap-1 bg-slate-800/80 p-0.5 rounded-lg text-[10px] border border-slate-700">
+                <button
+                  onClick={() => setDiseaseTab('PRIORITY')}
+                  className={`px-2 py-1 rounded-md font-bold transition cursor-pointer ${
+                    diseaseTab === 'PRIORITY' ? 'bg-sky-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Prioritas
+                </button>
+                <button
+                  onClick={() => setDiseaseTab('AT_RISK')}
+                  className={`px-2 py-1 rounded-md font-bold transition cursor-pointer ${
+                    diseaseTab === 'AT_RISK' ? 'bg-sky-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Berisiko
+                </button>
+              </div>
+            </div>
+
+            {/* Horizontal Bar Visualizer */}
+            <div className="space-y-2.5">
+              {diseaseRanking.map((d, idx) => {
+                const count = diseaseTab === 'PRIORITY' ? d.priorityCaseCount : d.atRiskCount;
+                const pct = diseaseTab === 'PRIORITY' ? d.priorityCasePercentage : d.atRiskPercentage;
+                const widthPct = Math.max(4, (count / maxDiseaseCount) * 100);
+                return (
+                  <div key={d.domain} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-200 font-semibold flex items-center gap-1.5">
+                        <span className="text-slate-500 font-mono text-[11px]">{idx + 1}.</span> {d.label}
+                      </span>
+                      <span className="text-white font-bold font-mono">
+                        {count.toLocaleString('id-ID')} <span className="text-slate-400 font-normal">({pct}%)</span>
+                      </span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all ${
+                          idx === 0 ? 'bg-rose-500' : idx === 1 ? 'bg-amber-500' : 'bg-sky-500'
+                        }`}
+                        style={{ width: `${widthPct}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Risk Factor Chips */}
+            <div className="pt-2 border-t border-slate-800 space-y-2">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                Faktor Risiko Dominan (% Populasi Berisiko)
+              </p>
+              <div className="grid grid-cols-3 gap-1.5">
+                {riskChips.map((c) => (
+                  <div key={c.code} className="p-2 rounded-xl bg-slate-800/60 border border-slate-800 text-center">
+                    <p className="text-xs font-extrabold text-teal-400">{c.percentage}%</p>
+                    <p className="text-[9px] text-slate-300 truncate mt-0.5">{c.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-2 border-t border-slate-800">
+            <p className="text-[10px] text-slate-500 leading-relaxed flex items-start gap-1.5">
+              <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-slate-400" />
+              Domain aktif: Hipertensi, Diabetes Melitus, Gizi/Obesitas, dan Perilaku Merokok.
+            </p>
+          </div>
+        </div>
+
+        {/* Card 3: Prioritas Tindakan & Sinyal Alert */}
+        <div
+          id="what-next"
+          className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 scroll-mt-4"
+        >
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <Target className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                    Prioritas Tindakan & Alert
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Intervensi mendesak & sinyal mitigasi dini.
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                WHAT NEXT
+              </span>
+            </div>
+
+            {/* Action Priorities List */}
             <div className="space-y-2">
               {actionPriorities.map((a) => {
                 const target = a.code === 'REFERRAL' ? 'dinkes-gap' : a.code === 'FACILITY_SUPPORT' ? 'dinkes-kinerja-pkm' : 'dinkes-penyebab-kendala';
@@ -544,17 +614,17 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
                   <div
                     key={a.code}
                     onClick={isBupati ? undefined : () => onNavigate?.(target)}
-                    className={`w-full p-2.5 rounded-xl bg-slate-800/50 border border-slate-800 transition flex items-center gap-3 text-left ${
-                      isBupati ? '' : 'hover:border-amber-500/40 cursor-pointer'
+                    className={`w-full p-2.5 rounded-xl bg-slate-800/50 border border-slate-800 transition flex items-center gap-2.5 text-left ${
+                      isBupati ? '' : 'hover:border-amber-500/40 hover:bg-slate-800/80 cursor-pointer'
                     }`}
                   >
-                    <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400 shrink-0">{ACTION_ICON[a.code]}</div>
+                    <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 shrink-0">{ACTION_ICON[a.code]}</div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-bold text-white">{a.label}</p>
+                      <p className="text-xs font-bold text-white truncate">{a.label}</p>
                       <p className="text-[10px] text-slate-400 truncate">{a.description}</p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-sm font-black text-white">{a.count}</p>
+                      <p className="text-sm font-extrabold text-amber-400 font-mono">{a.count}</p>
                       <p className="text-[9px] text-slate-500">{a.unit}</p>
                     </div>
                   </div>
@@ -562,38 +632,26 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
               })}
             </div>
 
-            {/* PC-06: capacity gaps (faskes-side) and citizen-access gaps (village-side) are
-                deliberately kept as two separate numbers — merging them hides which lever
-                Dinkes actually needs to pull. */}
+            {/* Capacity vs Access Gap summary */}
             {gapSummary && (
-              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800">
-                <div className="p-2 rounded-lg bg-slate-800/40 text-center">
-                  <p className="text-sm font-bold text-white">{gapSummary.capacityGapCount}</p>
-                  <p className="text-[9px] text-slate-400">Kesenjangan Kapasitas Faskes</p>
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <div className="p-2 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
+                  <p className="text-sm font-extrabold text-white font-mono">{gapSummary.capacityGapCount}</p>
+                  <p className="text-[9px] text-slate-400 font-medium">Gap Kapasitas Faskes</p>
                 </div>
-                <div className="p-2 rounded-lg bg-slate-800/40 text-center">
-                  <p className="text-sm font-bold text-white">{gapSummary.citizenAccessGapCount}</p>
-                  <p className="text-[9px] text-slate-400">Kesenjangan Akses Warga</p>
+                <div className="p-2 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
+                  <p className="text-sm font-extrabold text-white font-mono">{gapSummary.citizenAccessGapCount}</p>
+                  <p className="text-[9px] text-slate-400 font-medium">Gap Akses Warga</p>
                 </div>
               </div>
             )}
-            {isBupati && (
-              <p className="text-[9px] text-slate-500 italic pt-1">
-                Rincian operasional per kasus tidak tersedia pada akun tingkat eksekutif.
-              </p>
-            )}
-          </div>
 
-          <div id="did-it-work" className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-3 scroll-mt-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-teal-400" />
-              Alert & Insight
-            </h3>
-            <div className="space-y-2">
-              {alerts.map((al) => (
+            {/* Alerts List */}
+            <div className="space-y-1.5 pt-2 border-t border-slate-800">
+              {alerts.slice(0, 2).map((al) => (
                 <div
                   key={al.code}
-                  className={`p-2.5 rounded-xl border text-xs space-y-1 ${
+                  className={`p-2.5 rounded-xl border text-xs space-y-0.5 ${
                     al.severity === 'CRITICAL'
                       ? 'bg-rose-500/10 border-rose-500/30'
                       : al.severity === 'WARNING'
@@ -601,168 +659,247 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
                       : 'bg-slate-800/50 border-slate-800'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5 font-bold text-white">
+                  <div className="flex items-center gap-1.5 font-bold text-white text-[11px]">
                     {ALERT_ICON[al.code]}
                     <span>{al.title}</span>
                   </div>
                   <p className="text-[10px] text-slate-300 leading-relaxed">{al.description}</p>
                 </div>
               ))}
-              {alerts.length === 0 && (
-                <p className="text-[11px] text-slate-500 italic">Tidak ada sinyal perhatian saat ini.</p>
-              )}
             </div>
+          </div>
+
+          <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span className="text-[10px] text-slate-500">Tersinkronisasi CRS Alert Dispatcher</span>
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate('dinkes-gap')}
+                className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 cursor-pointer"
+              >
+                Atasi Gap <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Bottom Row: Tindak Lanjut & Drop-out | Kinerja Puskesmas | Penyelesaian Intervensi */}
-      <div id="tindak-lanjut" className="grid grid-cols-1 lg:grid-cols-3 gap-6 scroll-mt-4">
-        {/* Funnel */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-4">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Layers className="w-4 h-4 text-sky-400" />
-            Tindak Lanjut & Drop-out
-          </h3>
+      {/* Row 2: Tindak Lanjut & Drop-out | Kinerja 8 Puskesmas | Penyelesaian Intervensi */}
+      <div id="tindak-lanjut" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 scroll-mt-4">
+        {/* Card 4: Funnel Tindak Lanjut & Drop-out */}
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4">
           <div className="space-y-3">
-            {funnelStages.map((s, idx) => {
-              const pctOfFirst = funnelStages[0].count > 0 ? Math.round((s.count / funnelStages[0].count) * 1000) / 10 : 0;
-              return (
-                <div key={s.label} className="space-y-1">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-300 font-medium">{s.label}</span>
-                    <span className="font-bold text-white">
-                      {s.count.toLocaleString('id-ID')} <span className="text-slate-500 font-normal">({idx === 0 ? 100 : pctOfFirst}%)</span>
-                    </span>
-                  </div>
-                  <div className="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${s.color}`} style={{ width: `${idx === 0 ? 100 : Math.max(4, pctOfFirst)}%` }} />
-                  </div>
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                  <Layers className="w-4 h-4" />
                 </div>
-              );
-            })}
-            <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-between text-xs">
-              <span className="font-semibold text-rose-300">Drop-out (Hadir tapi belum tuntas)</span>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-white">
-                  {dropoutFromFunnel.toLocaleString('id-ID')} <span className="text-rose-300 font-normal">({dropoutPct}%)</span>
-                </span>
-                {!isBupati && (
-                  <button
-                    onClick={handleDropoutDrilldown}
-                    title="Telusuri Kasus Drop-out (Tercatat pada Jejak Audit)"
-                    className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 hover:text-rose-200 border border-slate-700 transition cursor-pointer"
-                  >
-                    <FileSearch className="w-3.5 h-3.5" />
-                  </button>
-                )}
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                    Kaskade Tindak Lanjut
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Mitigasi risiko drop-out dan kesinambungan rawat.
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                DID IT WORK
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {funnelStages.map((s, idx) => {
+                const pctOfFirst = funnelStages[0].count > 0 ? Math.round((s.count / funnelStages[0].count) * 1000) / 10 : 0;
+                return (
+                  <div key={s.label} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-300 font-medium">{s.label}</span>
+                      <span className="font-bold text-white font-mono">
+                        {s.count.toLocaleString('id-ID')} <span className="text-slate-400 font-normal">({idx === 0 ? 100 : pctOfFirst}%)</span>
+                      </span>
+                    </div>
+                    <div className="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                      <div className={`h-full rounded-full transition-all ${s.color}`} style={{ width: `${idx === 0 ? 100 : Math.max(4, pctOfFirst)}%` }} />
+                    </div>
+                  </div>
+                );
+              })}
+
+              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-between text-xs">
+                <span className="font-semibold text-rose-300">Drop-out (Hadir belum tuntas)</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-white font-mono">
+                    {dropoutFromFunnel.toLocaleString('id-ID')} <span className="text-rose-300 font-normal">({dropoutPct}%)</span>
+                  </span>
+                  {!isBupati && (
+                    <button
+                      onClick={handleDropoutDrilldown}
+                      title="Telusuri Kasus Drop-out (Tercatat pada Jejak Audit)"
+                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 hover:text-rose-200 border border-slate-700 transition cursor-pointer"
+                    >
+                      <FileSearch className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* PC-03: Menunggu Konfirmasi & Kasus Keluar (Exits) */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200">
+                <p className="text-[10px] font-bold uppercase tracking-wider">Menunggu Konfirmasi</p>
+                <p className="text-sm font-extrabold text-white mt-0.5 font-mono">{cascade.awaitingConfirmationCount.toLocaleString('id-ID')}</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-800 text-slate-300">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Kasus Keluar (Exits)</p>
+                <p className="text-sm font-extrabold text-white mt-0.5 font-mono">{cascade.exits.totalExits.toLocaleString('id-ID')}</p>
               </div>
             </div>
           </div>
 
-          {/* PC-03: Menunggu Konfirmasi & Kasus Keluar (Exits) must be shown as distinct
-              buckets, never folded into the funnel stages or silently dropped. */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200">
-              <p className="text-[10px] font-semibold uppercase tracking-wider">Menunggu Konfirmasi</p>
-              <p className="text-sm font-bold text-white mt-0.5">{cascade.awaitingConfirmationCount.toLocaleString('id-ID')}</p>
-            </div>
-            <div className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-800 text-slate-300">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Kasus Keluar (Exits)</p>
-              <p className="text-sm font-bold text-white mt-0.5">{cascade.exits.totalExits.toLocaleString('id-ID')}</p>
-            </div>
+          <div className="pt-2 border-t border-slate-800">
+            <p className="text-[10px] text-slate-500">
+              Exits: {cascade.exits.lostToFollowUp} LTFU · {cascade.exits.refused} Menolak · {cascade.exits.moved} Pindah · {cascade.exits.deceased} Meninggal (Target &lt;20%)
+            </p>
           </div>
-          <p className="text-[10px] text-slate-500">
-            Exits: {cascade.exits.lostToFollowUp} LTFU · {cascade.exits.refused} Menolak · {cascade.exits.moved} Pindah · {cascade.exits.deceased} Meninggal · Target Drop-out &lt; 20% (Saat ini {dropoutPct}%)
-          </p>
         </div>
 
-        {/* Kinerja Puskesmas */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-4">
-          <div>
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-indigo-400" />
-              Kinerja Puskesmas
-            </h3>
-            <p className="text-[10px] text-slate-500 mt-1">Tindak Lanjut % (kontinuitas) vs Kualitas Pencatatan % (100 − rasio penutupan manual)</p>
-          </div>
-          <div className="space-y-2.5">
-            {topFacilities.map((f) => {
-              const dataQuality = Math.max(0, 100 - f.manualClosureRatio);
-              return (
-                <div key={f.facilityId} className="space-y-1">
-                  <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-300 font-medium truncate max-w-[140px]">{f.facilityName}</span>
-                    <span className="text-slate-400">{f.continuityRate}% / {dataQuality}%</span>
-                  </div>
-                  <div className="flex gap-1">
-                    <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-sky-500 rounded-full" style={{ width: `${f.continuityRate}%` }} />
-                    </div>
-                    <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${dataQuality}%` }} />
-                    </div>
-                  </div>
+        {/* Card 5: Kinerja 8 Puskesmas */}
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4">
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                  <Building2 className="w-4 h-4" />
                 </div>
-              );
-            })}
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                    Kinerja 8 Puskesmas
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Kontinuitas tindak lanjut vs kualitas data.
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                FASKES
+              </span>
+            </div>
+
+            <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
+              {topFacilities.map((f) => {
+                const dataQuality = Math.max(0, 100 - f.manualClosureRatio);
+                return (
+                  <div key={f.facilityId} className="p-2 rounded-xl bg-slate-800/40 border border-slate-800/80 space-y-1.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-200 font-bold truncate max-w-[150px]">{f.facilityName}</span>
+                      <span className="text-slate-400 font-mono text-[11px]">{f.continuityRate}% / {dataQuality}%</span>
+                    </div>
+                    <div className="flex gap-1.5">
+                      <div className="flex-1 space-y-0.5">
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div className="h-full bg-sky-500 rounded-full" style={{ width: `${f.continuityRate}%` }} />
+                        </div>
+                      </div>
+                      <div className="flex-1 space-y-0.5">
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${dataQuality}%` }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
-            <span>Puskesmas Melapor Lengkap: {facilities.filter((f) => f.dataCompleteness === 'COMPLETE').length} / {facilities.length}</span>
-            {!isBupati && (
-              <button onClick={() => onNavigate?.('dinkes-kinerja-pkm')} className="text-teal-400 hover:text-teal-300 flex items-center gap-1 cursor-pointer">
-                Detail <ArrowRight className="w-3 h-3" />
+
+          <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span className="text-[10px]">Melapor Lengkap: {facilities.filter((f) => f.dataCompleteness === 'COMPLETE').length} / {facilities.length} PKM</span>
+            {!isBupati && onNavigate && (
+              <button onClick={() => onNavigate('dinkes-kinerja-pkm')} className="text-teal-400 hover:text-teal-300 font-bold flex items-center gap-1 cursor-pointer">
+                Detail Faskes <ArrowRight className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
         </div>
 
-        {/* Penyelesaian Intervensi Donut */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-4">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            Penyelesaian Intervensi
-          </h3>
-          <p className="text-[10px] text-slate-500">Status warga dengan temuan berisiko yang memerlukan tindak lanjut</p>
+        {/* Card 6: Penyelesaian Intervensi Donut */}
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4">
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                    Penyelesaian Intervensi
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Hasil tata laksana populasi berisiko.
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                OUTCOME
+              </span>
+            </div>
 
-          <div className="flex items-center gap-5">
-            <div className="relative w-28 h-28 shrink-0">
-              <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-                <circle cx="50" cy="50" r="40" fill="none" stroke="#1e293b" strokeWidth="14" />
-                <circle
-                  cx="50" cy="50" r="40" fill="none" stroke="#10b981" strokeWidth="14"
-                  strokeDasharray={`${seg(donutSelesaiPct)} ${CIRC}`} strokeLinecap="round"
-                />
-                <circle
-                  cx="50" cy="50" r="40" fill="none" stroke="#94a3b8" strokeWidth="14"
-                  strokeDasharray={`${seg(donutProsesPct)} ${CIRC}`}
-                  strokeDashoffset={-seg(donutSelesaiPct)} strokeLinecap="round"
-                />
-                <circle
-                  cx="50" cy="50" r="40" fill="none" stroke="#f43f5e" strokeWidth="14"
-                  strokeDasharray={`${seg(donutBelumPct)} ${CIRC}`}
-                  strokeDashoffset={-seg(donutSelesaiPct + donutProsesPct)} strokeLinecap="round"
-                />
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-lg font-black text-white">{donutSelesaiPct}%</span>
-                <span className="text-[9px] text-slate-400">Selesai</span>
+            <div className="flex flex-col sm:flex-row items-center gap-5 py-2">
+              <div className="relative w-28 h-28 shrink-0">
+                <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#1e293b" strokeWidth="14" />
+                  <circle
+                    cx="50" cy="50" r="40" fill="none" stroke="#10b981" strokeWidth="14"
+                    strokeDasharray={`${seg(donutSelesaiPct)} ${CIRC}`} strokeLinecap="round"
+                  />
+                  <circle
+                    cx="50" cy="50" r="40" fill="none" stroke="#94a3b8" strokeWidth="14"
+                    strokeDasharray={`${seg(donutProsesPct)} ${CIRC}`}
+                    strokeDashoffset={-seg(donutSelesaiPct)} strokeLinecap="round"
+                  />
+                  <circle
+                    cx="50" cy="50" r="40" fill="none" stroke="#f43f5e" strokeWidth="14"
+                    strokeDasharray={`${seg(donutBelumPct)} ${CIRC}`}
+                    strokeDashoffset={-seg(donutSelesaiPct + donutProsesPct)} strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-lg font-black text-white font-mono">{donutSelesaiPct}%</span>
+                  <span className="text-[9px] text-slate-400 font-semibold">Tuntas</span>
+                </div>
+              </div>
+
+              <div className="space-y-2.5 text-xs flex-1 w-full">
+                <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-emerald-300 font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" /> Selesai
+                  </span>
+                  <span className="font-bold text-white font-mono">{donutSelesai.toLocaleString('id-ID')}</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-slate-300 font-medium">
+                    <span className="w-2 h-2 rounded-full bg-slate-400" /> Proses
+                  </span>
+                  <span className="font-bold text-white font-mono">{donutDalamProses.toLocaleString('id-ID')}</span>
+                </div>
+                <div className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-rose-300 font-medium">
+                    <span className="w-2 h-2 rounded-full bg-rose-500" /> Belum
+                  </span>
+                  <span className="font-bold text-white font-mono">{donutBelumSelesai.toLocaleString('id-ID')}</span>
+                </div>
               </div>
             </div>
-            <div className="space-y-2 text-xs flex-1">
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-1.5 text-slate-300"><span className="w-2 h-2 rounded-full bg-emerald-500" /> Intervensi Selesai</span>
-                <span className="font-bold text-white">{donutSelesai.toLocaleString('id-ID')}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-1.5 text-slate-300"><span className="w-2 h-2 rounded-full bg-slate-400" /> Dalam Proses</span>
-                <span className="font-bold text-white">{donutDalamProses.toLocaleString('id-ID')}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-1.5 text-slate-300"><span className="w-2 h-2 rounded-full bg-rose-500" /> Belum Ditindaklanjuti</span>
-                <span className="font-bold text-white">{donutBelumSelesai.toLocaleString('id-ID')}</span>
-              </div>
-            </div>
+          </div>
+
+          <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span className="text-[10px]">Populasi Perlu Intervensi: {findingCount.toLocaleString('id-ID')} Warga</span>
+            {onNavigate && (
+              <button onClick={() => onNavigate('tren-outcome')} className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1 cursor-pointer">
+                Tren Outcome <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
       </div>

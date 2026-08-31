@@ -964,8 +964,8 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         {/* ========================================================================= */}
         {(chartType === 'COMBINED' || chartType === 'BAR_CHART') && (
           <div
-            className={`p-4 sm:p-5 rounded-2xl border shadow-xs flex flex-col justify-between space-y-4 ${
-              isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
+            className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
+              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
             }`}
           >
             {/* Bar Chart Header Controls */}
@@ -1201,8 +1201,8 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         {/* ========================================================================= */}
         {(chartType === 'COMBINED' || chartType === 'AREA_CHART') && (
           <div
-            className={`p-4 sm:p-5 rounded-2xl border shadow-xs flex flex-col justify-between space-y-4 ${
-              isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
+            className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
+              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
             }`}
           >
             {/* Area Chart Header Controls */}
