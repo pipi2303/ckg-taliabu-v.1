@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Eye, Edit2, Building2, MapPin, Phone, Users, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { Plus, Eye, Edit2, Building2, MapPin, Phone, Users, ShieldAlert, CheckCircle2, LineChart as LineChartIcon, TrendingUp } from 'lucide-react';
 import { EntityTable, Column } from '../../components/common/EntityTable';
 import { Button } from '../../components/common/Button';
 import { Badge, getStatusBadgeVariant } from '../../components/common/Badge';
@@ -14,6 +14,7 @@ import { userService } from '../../services/userService';
 import { auditRepo } from '../../repositories/auditRepo';
 import { FacilityType, HealthFacility, Kecamatan, Desa, Status, User, AuditEvent } from '../../types';
 import { subscribeToStorage } from '../../repositories/storage';
+import { PuskesmasMonthlyTrendChart } from '../command-center/components/PuskesmasMonthlyTrendChart';
 
 export const FacilityPage: React.FC = () => {
   const [facilities, setFacilities] = useState<HealthFacility[]>([]);
@@ -65,25 +66,39 @@ export const FacilityPage: React.FC = () => {
     openModal({
       title: `Detail Fasilitas: ${faskes.name}`,
       subtitle: `${faskes.code} • ${faskes.serviceLevel}`,
-      size: 'lg',
+      size: 'xl',
       content: ({ closeModal }) => {
-        const [activeSubTab, setActiveSubTab] = useState<'general' | 'network' | 'users' | 'audit'>('general');
+        const [activeSubTab, setActiveSubTab] = useState<'general' | 'trends' | 'network' | 'users' | 'audit'>('general');
+
+        const isRemote =
+          faskes.name.toLowerCase().includes('pancado') ||
+          faskes.name.toLowerCase().includes('gela') ||
+          faskes.name.toLowerCase().includes('lede');
 
         return (
           <div className="space-y-4">
             {/* Sub-tabs */}
-            <div className="flex border-b border-[#D8E5E2] gap-2">
+            <div className="flex border-b border-[#D8E5E2] gap-2 overflow-x-auto">
               <button
                 onClick={() => setActiveSubTab('general')}
-                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors ${
+                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors whitespace-nowrap ${
                   activeSubTab === 'general' ? 'border-[#00201C] text-black' : 'border-transparent text-[#60716D]'
                 }`}
               >
                 Informasi Umum & Lokasi
               </button>
               <button
+                onClick={() => setActiveSubTab('trends')}
+                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors whitespace-nowrap flex items-center gap-1.5 ${
+                  activeSubTab === 'trends' ? 'border-teal-600 text-teal-700' : 'border-transparent text-[#60716D]'
+                }`}
+              >
+                <LineChartIcon className="w-3.5 h-3.5" />
+                <span>Tren Kinerja Bulanan (Line Chart)</span>
+              </button>
+              <button
                 onClick={() => setActiveSubTab('network')}
-                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors ${
+                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors whitespace-nowrap ${
                   activeSubTab === 'network' ? 'border-[#00201C] text-black' : 'border-transparent text-[#60716D]'
                 }`}
               >
@@ -91,7 +106,7 @@ export const FacilityPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveSubTab('users')}
-                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors ${
+                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors whitespace-nowrap ${
                   activeSubTab === 'users' ? 'border-[#00201C] text-black' : 'border-transparent text-[#60716D]'
                 }`}
               >
@@ -99,13 +114,25 @@ export const FacilityPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveSubTab('audit')}
-                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors ${
+                className={`pb-2 text-xs font-semibold px-2 border-b-2 -mb-[1px] transition-colors whitespace-nowrap ${
                   activeSubTab === 'audit' ? 'border-[#00201C] text-black' : 'border-transparent text-[#60716D]'
                 }`}
               >
                 Riwayat Perubahan ({auditLogs.length})
               </button>
             </div>
+
+            {/* Trends Tab */}
+            {activeSubTab === 'trends' && (
+              <div className="animate-in fade-in duration-200">
+                <PuskesmasMonthlyTrendChart
+                  facilityId={faskes.id}
+                  facilityName={faskes.name}
+                  kecamatanName={faskes.kecamatanName}
+                  isRemoteIsland={isRemote}
+                />
+              </div>
+            )}
 
             {/* General Tab */}
             {activeSubTab === 'general' && (

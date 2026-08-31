@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import {
+  ComposedChart,
   BarChart,
   Bar,
+  Scatter,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -21,6 +23,7 @@ import {
   Building2,
   Flame,
   Sparkles,
+  BarChart3,
 } from 'lucide-react';
 
 interface FunnelStep {
@@ -99,6 +102,7 @@ export const AdminFollowupAnalytics: React.FC<{ onNavigate?: (navId: string) => 
   onNavigate,
 }) => {
   const [activeTab, setActiveTab] = useState<'FUNNEL' | 'SLA_AGING'>('FUNNEL');
+  const [slaChartMode, setSlaChartMode] = useState<'STACKED' | 'DUMBBELL'>('STACKED');
 
   const totalOverdue = PUSKESMAS_SLA_DATA.reduce((acc, p) => acc + p.overdue, 0);
   const totalWarning = PUSKESMAS_SLA_DATA.reduce((acc, p) => acc + p.warning, 0);
@@ -231,6 +235,34 @@ export const AdminFollowupAnalytics: React.FC<{ onNavigate?: (navId: string) => 
       ) : (
         <div className="space-y-4">
           {/* Summary SLA badges */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <span className="text-xs font-bold text-slate-700">Ringkasan SLA & Kepatuhan Antar Puskesmas</span>
+            <div className="flex items-center gap-1 bg-[#F0F5F4] p-0.5 rounded-lg border border-[#D8E5E2] text-[11px] font-bold">
+              <button
+                type="button"
+                onClick={() => setSlaChartMode('STACKED')}
+                className={`px-2.5 py-1 rounded-md transition cursor-pointer ${
+                  slaChartMode === 'STACKED'
+                    ? 'bg-[#00201C] text-white shadow-2xs'
+                    : 'text-[#60716D] hover:text-black'
+                }`}
+              >
+                Stacked SLA Status
+              </button>
+              <button
+                type="button"
+                onClick={() => setSlaChartMode('DUMBBELL')}
+                className={`px-2.5 py-1 rounded-md transition cursor-pointer ${
+                  slaChartMode === 'DUMBBELL'
+                    ? 'bg-[#00201C] text-white shadow-2xs'
+                    : 'text-[#60716D] hover:text-black'
+                }`}
+              >
+                Dumbbell Kepatuhan vs Target
+              </button>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
               <span className="text-[10px] font-bold text-emerald-800 uppercase">On-Track (&lt; 7 Hari)</span>
@@ -257,84 +289,161 @@ export const AdminFollowupAnalytics: React.FC<{ onNavigate?: (navId: string) => 
             </div>
           </div>
 
-          {/* Recharts Stacked Bar Chart */}
+          {/* Recharts Chart Area (Stacked vs Dumbbell) */}
           <div className="w-full h-72 pt-1">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={PUSKESMAS_SLA_DATA} margin={{ top: 15, right: 15, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
-                <XAxis
-                  dataKey="name"
-                  tick={{ fill: '#475569', fontSize: 11, fontWeight: 600 }}
-                  axisLine={{ stroke: '#CBD5E1' }}
-                />
-                <YAxis
-                  tick={{ fill: '#475569', fontSize: 11 }}
-                  axisLine={{ stroke: '#CBD5E1' }}
-                  label={{
-                    value: 'Jumlah Kasus Aktif',
-                    angle: -90,
-                    position: 'insideLeft',
-                    style: { fill: '#64748B', fontSize: 10, textAnchor: 'middle' },
-                    offset: 10,
-                  }}
-                />
-                <Tooltip
-                  content={({ active, payload, label }) => {
-                    if (active && payload && payload.length) {
-                      const data = payload[0].payload as PuskesmasSlaData;
-                      return (
-                        <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl border border-slate-700 text-xs space-y-1">
-                          <div className="font-bold border-b border-slate-700 pb-1 flex justify-between gap-4">
-                            <span>Puskesmas {data.name}</span>
-                            <span className="text-emerald-400 font-mono">{data.complianceRate}% Patuh</span>
+              {slaChartMode === 'STACKED' ? (
+                <BarChart data={PUSKESMAS_SLA_DATA} margin={{ top: 15, right: 15, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fill: '#475569', fontSize: 11, fontWeight: 600 }}
+                    axisLine={{ stroke: '#CBD5E1' }}
+                  />
+                  <YAxis
+                    tick={{ fill: '#475569', fontSize: 11 }}
+                    axisLine={{ stroke: '#CBD5E1' }}
+                    label={{
+                      value: 'Jumlah Kasus Aktif',
+                      angle: -90,
+                      position: 'insideLeft',
+                      style: { fill: '#64748B', fontSize: 10, textAnchor: 'middle' },
+                      offset: 10,
+                    }}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload as PuskesmasSlaData;
+                        return (
+                          <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl border border-slate-700 text-xs space-y-1">
+                            <div className="font-bold border-b border-slate-700 pb-1 flex justify-between gap-4">
+                              <span>Puskesmas {data.name}</span>
+                              <span className="text-emerald-400 font-mono">{data.complianceRate}% Patuh</span>
+                            </div>
+                            <div className="text-[11px] pt-1 space-y-0.5">
+                              <div className="text-emerald-300 flex justify-between gap-3">
+                                <span>On-track (&lt;7 hr):</span>
+                                <span className="font-bold">{data.onTrack}</span>
+                              </div>
+                              <div className="text-amber-300 flex justify-between gap-3">
+                                <span>Warning (7-14 hr):</span>
+                                <span className="font-bold">{data.warning}</span>
+                              </div>
+                              <div className="text-rose-300 flex justify-between gap-3">
+                                <span>Overdue (&gt;14 hr):</span>
+                                <span className="font-bold">{data.overdue}</span>
+                              </div>
+                              <div className="text-slate-300 border-t border-slate-700 pt-1 font-semibold flex justify-between gap-3">
+                                <span>Total Tugas:</span>
+                                <span className="font-bold">{data.totalActive}</span>
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-[11px] pt-1 space-y-0.5">
-                            <div className="text-emerald-300 flex justify-between gap-3">
-                              <span>On-track (&lt;7 hr):</span>
-                              <span className="font-bold">{data.onTrack}</span>
-                            </div>
-                            <div className="text-amber-300 flex justify-between gap-3">
-                              <span>Warning (7-14 hr):</span>
-                              <span className="font-bold">{data.warning}</span>
-                            </div>
-                            <div className="text-rose-300 flex justify-between gap-3">
-                              <span>Overdue (&gt;14 hr):</span>
-                              <span className="font-bold">{data.overdue}</span>
-                            </div>
-                            <div className="text-slate-300 border-t border-slate-700 pt-1 font-semibold flex justify-between gap-3">
-                              <span>Total Tugas:</span>
-                              <span className="font-bold">{data.totalActive}</span>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} iconType="circle" />
+                  <Bar
+                    dataKey="onTrack"
+                    name="On-Track (< 7 Hari)"
+                    stackId="sla"
+                    fill="#10B981"
+                    radius={[0, 0, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="warning"
+                    name="Mendekati Tenggat (7–14 Hari)"
+                    stackId="sla"
+                    fill="#F59E0B"
+                    radius={[0, 0, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="overdue"
+                    name="Overdue SLA (> 14 Hari)"
+                    stackId="sla"
+                    fill="#E11D48"
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              ) : (
+                <ComposedChart
+                  data={PUSKESMAS_SLA_DATA.map((p) => ({
+                    ...p,
+                    targetSla: 85,
+                  }))}
+                  layout="vertical"
+                  margin={{ top: 8, right: 25, left: 10, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" horizontal={false} />
+                  <XAxis
+                    type="number"
+                    domain={[0, 100]}
+                    unit="%"
+                    tick={{ fill: '#64748B', fontSize: 10 }}
+                    axisLine={{ stroke: '#CBD5E1' }}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    tick={{ fill: '#334643', fontSize: 11, fontWeight: 600 }}
+                    axisLine={{ stroke: '#CBD5E1' }}
+                    tickLine={false}
+                    width={80}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload;
+                        return (
+                          <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl border border-slate-700 text-xs space-y-1">
+                            <p className="font-bold border-b border-slate-700 pb-1">Puskesmas {data.name}</p>
+                            <div className="text-[11px] pt-1 space-y-1">
+                              <p className="text-emerald-400 flex justify-between gap-4">
+                                <span>🟢 Kepatuhan Aktual:</span>
+                                <span className="font-bold font-mono">{data.complianceRate}%</span>
+                              </p>
+                              <p className="text-sky-400 flex justify-between gap-4">
+                                <span>🔵 Standar Target SPM:</span>
+                                <span className="font-bold font-mono">85%</span>
+                              </p>
+                              <p className="text-teal-200 border-t border-slate-700 pt-0.5 flex justify-between gap-4">
+                                <span>Margin Kepatuhan:</span>
+                                <span className="font-bold font-mono">{data.complianceRate >= 85 ? `+${(data.complianceRate - 85).toFixed(1)}%` : `-${(85 - data.complianceRate).toFixed(1)}%`}</span>
+                              </p>
                             </div>
                           </div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} iconType="circle" />
-                <Bar
-                  dataKey="onTrack"
-                  name="On-Track (< 7 Hari)"
-                  stackId="sla"
-                  fill="#10B981"
-                  radius={[0, 0, 0, 0]}
-                />
-                <Bar
-                  dataKey="warning"
-                  name="Mendekati Tenggat (7–14 Hari)"
-                  stackId="sla"
-                  fill="#F59E0B"
-                  radius={[0, 0, 0, 0]}
-                />
-                <Bar
-                  dataKey="overdue"
-                  name="Overdue SLA (> 14 Hari)"
-                  stackId="sla"
-                  fill="#E11D48"
-                  radius={[4, 4, 0, 0]}
-                />
-              </BarChart>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                  <Bar
+                    dataKey="targetSla"
+                    name="Rentang Standar SLA"
+                    fill="#F1F5F9"
+                    stroke="#CBD5E1"
+                    barSize={10}
+                    radius={[0, 4, 4, 0]}
+                  />
+                  <Scatter
+                    dataKey="complianceRate"
+                    name="Kepatuhan Nyata (%)"
+                    fill="#10B981"
+                    shape="circle"
+                  />
+                  <Scatter
+                    dataKey="targetSla"
+                    name="Target Dinkes (85%)"
+                    fill="#3B82F6"
+                    shape="circle"
+                  />
+                </ComposedChart>
+              )}
             </ResponsiveContainer>
           </div>
         </div>

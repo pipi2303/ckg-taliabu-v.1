@@ -166,21 +166,6 @@ export const AreaAnalysisPage: React.FC = () => {
 
       <CompletenessBanner completeness={completeness} onRefresh={loadData} />
 
-      {/* Crucial Epistemological Disclaimer: Cakupan Rendah != Risiko Rendah */}
-      <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-200 flex items-start gap-3">
-        <div className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 shrink-0 mt-0.5">
-          <Info className="w-5 h-5" />
-        </div>
-        <div className="text-xs space-y-1">
-          <span className="font-bold text-white uppercase tracking-wider">
-            Prinsip Interpretasi: Cakupan Skrining Rendah Bukan Berarti Beban Penyakit Rendah
-          </span>
-          <p className="text-indigo-200/90 leading-relaxed">
-            Wilayah atau desa dengan angka temuan sedikit sering kali disebabkan oleh akses transportasi yang belum terjangkau atau kader belum selesai melakukan skrining, <strong>bukan karena warganya bebas dari risiko kronis</strong>. Jangan mengurangi alokasi intervensi pada wilayah dengan cakupan rendah.
-          </p>
-        </div>
-      </div>
-
       {/* Kecamatan Matrix Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredKecamatan.map((kec) => {

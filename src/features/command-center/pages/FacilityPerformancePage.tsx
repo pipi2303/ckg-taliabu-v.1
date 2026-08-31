@@ -17,6 +17,9 @@ import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { CompletenessBanner } from '../components/CompletenessBanner';
+import { PuskesmasWorkloadComparisonSection } from '../components/PuskesmasWorkloadComparisonSection';
+import { PuskesmasMonthlyTrendChart } from '../components/PuskesmasMonthlyTrendChart';
+import { PuskesmasDetailTrendModal } from '../components/PuskesmasDetailTrendModal';
 import {
   populationQualificationService,
   CountyCompletenessSummary,
@@ -24,6 +27,7 @@ import {
 import { facilityPerformanceService } from '../../../services/facilityPerformanceService';
 import { commandCenterExportService } from '../../../services/commandCenterExportService';
 import { FacilityPerformanceSummary } from '../../../types';
+import { ChevronDown, ChevronUp, LineChart as LineChartIcon, Maximize2 } from 'lucide-react';
 
 export const FacilityPerformancePage: React.FC = () => {
   const { user } = useAuth();
@@ -32,6 +36,9 @@ export const FacilityPerformancePage: React.FC = () => {
   const [facilities, setFacilities] = useState<FacilityPerformanceSummary[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isExportingExcel, setIsExportingExcel] = useState<boolean>(false);
+  const [expandedFacilityTrendId, setExpandedFacilityTrendId] = useState<string | null>(null);
+  const [isTrendModalOpen, setIsTrendModalOpen] = useState<boolean>(false);
+  const [modalFacilityId, setModalFacilityId] = useState<string | undefined>(undefined);
 
   const loadData = async () => {
     setIsLoading(true);
@@ -110,6 +117,15 @@ export const FacilityPerformancePage: React.FC = () => {
 
       <CompletenessBanner completeness={completeness} onRefresh={loadData} />
 
+      {/* Komparasi Grafik Beban Skrining, Warga Ditangani & Kesenjangan Kasus */}
+      <PuskesmasWorkloadComparisonSection
+        facilities={facilities}
+        onFacilityClick={(fId) => {
+          setModalFacilityId(fId);
+          setIsTrendModalOpen(true);
+        }}
+      />
+
       {/* Non-Leaderboard Philosophy Note */}
       <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 flex items-start gap-3">
         <div className="p-2 rounded-lg bg-teal-500/10 text-teal-400 shrink-0 mt-0.5">
@@ -125,12 +141,13 @@ export const FacilityPerformancePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Facilities Cards Grid */}
+      {/* Facilities Cards Grid with Longitudinal Trend Line Chart */}
       <div className="space-y-4">
         {facilities.map((fac) => {
           const isNotReporting = fac.dataCompleteness === 'PARTIAL' && fac.screenedCount === 0;
           const isStale = fac.dataCompleteness === 'STALE';
           const isHighManual = fac.manualClosureRatio > 25;
+          const isTrendExpanded = expandedFacilityTrendId === fac.facilityId;
 
           return (
             <div
@@ -164,8 +181,8 @@ export const FacilityPerformancePage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Status Badge */}
-                <div className="self-end md:self-center">
+                {/* Status Badge & Actions */}
+                <div className="flex items-center gap-2 self-end md:self-center flex-wrap">
                   {isNotReporting ? (
                     <span className="text-xs px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold flex items-center gap-1.5">
                       <WifiOff className="w-3.5 h-3.5" />
@@ -182,6 +199,41 @@ export const FacilityPerformancePage: React.FC = () => {
                       Pelaporan Lengkap
                     </span>
                   )}
+
+                  {/* Toggle Inline Line Chart Button */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExpandedFacilityTrendId(isTrendExpanded ? null : fac.facilityId)
+                    }
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition flex items-center gap-1.5 cursor-pointer ${
+                      isTrendExpanded
+                        ? 'bg-teal-600 text-white border-teal-500 shadow-xs'
+                        : 'bg-slate-800 hover:bg-slate-700 text-teal-300 border-slate-700'
+                    }`}
+                    title="Buka / Tutup Grafik Tren Bulanan"
+                  >
+                    <LineChartIcon className="w-3.5 h-3.5" />
+                    <span>{isTrendExpanded ? 'Tutup Tren' : 'Grafik Tren Bulanan'}</span>
+                    {isTrendExpanded ? (
+                      <ChevronUp className="w-3.5 h-3.5" />
+                    ) : (
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+
+                  {/* Open Modal Fullscreen Button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setModalFacilityId(fac.facilityId);
+                      setIsTrendModalOpen(true);
+                    }}
+                    className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition cursor-pointer"
+                    title="Buka Modal Analisis Lengkap"
+                  >
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </div>
 
@@ -225,6 +277,18 @@ export const FacilityPerformancePage: React.FC = () => {
                 </div>
               </div>
 
+              {/* Expandable Longitudinal Trend Line Chart Component */}
+              {isTrendExpanded && (
+                <div className="pt-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <PuskesmasMonthlyTrendChart
+                    facilityId={fac.facilityId}
+                    facilityName={fac.facilityName}
+                    kecamatanName={fac.kecamatanName}
+                    isRemoteIsland={fac.isRemoteIsland}
+                  />
+                </div>
+              )}
+
               {/* Notes & Special Alerts */}
               {fac.notes.length > 0 && (
                 <div className="pt-2 text-xs space-y-1">
@@ -250,6 +314,14 @@ export const FacilityPerformancePage: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Global Puskesmas Detail Trend Modal */}
+      <PuskesmasDetailTrendModal
+        isOpen={isTrendModalOpen}
+        onClose={() => setIsTrendModalOpen(false)}
+        initialFacilityId={modalFacilityId}
+        facilities={facilities}
+      />
     </div>
   );
 };

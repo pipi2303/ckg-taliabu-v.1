@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   Briefcase,
   Users,
@@ -11,7 +11,20 @@ import {
   PieChart,
   ArrowRight,
   ShieldCheck,
+  BarChart3,
 } from 'lucide-react';
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  BarChart,
+  Bar,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  Legend,
+} from 'recharts';
 import { WorkloadOverview, workloadService } from '../../../services/workloadService';
 import { CareTask } from '../../../types';
 import { useAuth } from '../../../context/AuthContext';
@@ -23,6 +36,7 @@ export const WorkloadOverviewPage: React.FC = () => {
   const [overview, setOverview] = useState<WorkloadOverview | null>(null);
   const [selectedTask, setSelectedTask] = useState<CareTask | null>(null);
   const [isAssignModalOpen, setIsAssignModalOpen] = useState<boolean>(false);
+  const [chartType, setChartType] = useState<'STACKED' | 'DUMBBELL'>('STACKED');
 
   useEffect(() => {
     loadOverview();
@@ -36,6 +50,27 @@ export const WorkloadOverviewPage: React.FC = () => {
     const res = workloadService.getWorkloadOverview(facilityId);
     setOverview(res);
   };
+
+  const staffChartData = useMemo(() => {
+    if (!overview) return [];
+    return overview.staffWorkloads.map((s) => {
+      const active = s.activeTasks;
+      const overdue = s.overdueTasks;
+      const onTrack = Math.max(0, active - overdue);
+      const name = (s.user?.name || 'Petugas').split(' ')[0] + ' (' + (s.user?.facilityName?.replace('Puskesmas ', 'PKM ') || 'PKM') + ')';
+      return {
+        id: s.user?.id || Math.random().toString(),
+        name,
+        fullName: s.user?.name || 'Petugas Faskes',
+        facility: s.user?.facilityName || '-',
+        onTrack,
+        overdue,
+        escalated: s.escalatedTasks,
+        totalActive: active,
+        targetCap: 15,
+      };
+    });
+  }, [overview]);
 
   if (!overview) return null;
 
@@ -89,6 +124,185 @@ export const WorkloadOverviewPage: React.FC = () => {
         <div className="bg-white p-4 rounded-xl border border-[#D8E5E2] space-y-1">
           <span className="text-[11px] font-bold text-emerald-800 uppercase">Tugas Tereskalasi</span>
           <div className="text-2xl font-extrabold text-emerald-800">{overview.totalEscalatedTasks}</div>
+        </div>
+      </div>
+
+      {/* Visualisasi Distribusi Beban Kerja (Stacked Bar & Dumbbell Gap) */}
+      <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D8E5E2]">
+          <div className="flex items-center gap-2">
+            <div className="p-2 rounded-xl bg-teal-50 text-teal-800 border border-teal-200">
+              <BarChart3 className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-black tracking-tight">
+                Distribusi & Kesenjangan Beban Petugas Faskes
+              </h3>
+              <p className="text-xs text-[#60716D]">
+                Visualisasi perbandingan tugas on-track vs terlambat serta kapasitas penanganan per faskes.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[#F0F5F4] p-1 rounded-xl border border-[#D8E5E2] text-xs font-semibold">
+            <button
+              type="button"
+              onClick={() => setChartType('STACKED')}
+              className={`px-3 py-1 rounded-lg transition cursor-pointer ${
+                chartType === 'STACKED' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] hover:text-black'
+              }`}
+            >
+              Stacked Breakdown
+            </button>
+            <button
+              type="button"
+              onClick={() => setChartType('DUMBBELL')}
+              className={`px-3 py-1 rounded-lg transition cursor-pointer ${
+                chartType === 'DUMBBELL' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] hover:text-black'
+              }`}
+            >
+              Dumbbell Capacity Gap
+            </button>
+          </div>
+        </div>
+
+        <div className="h-64 w-full pt-1">
+          <ResponsiveContainer width="100%" height="100%">
+            {chartType === 'STACKED' ? (
+              <BarChart data={staffChartData} margin={{ top: 10, right: 15, left: -15, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+                <XAxis
+                  dataKey="name"
+                  tick={{ fill: '#334643', fontSize: 10, fontWeight: 600 }}
+                  axisLine={{ stroke: '#CBD5E1' }}
+                  tickLine={false}
+                  interval={0}
+                  angle={-15}
+                  textAnchor="end"
+                />
+                <YAxis
+                  tick={{ fill: '#64748B', fontSize: 10 }}
+                  axisLine={false}
+                  tickLine={false}
+                  label={{ value: 'Tugas Aktif (Kasus)', angle: -90, position: 'insideLeft', offset: 12, style: { fontSize: 10, fill: '#64748B' } }}
+                />
+                <RechartsTooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="p-3 rounded-xl bg-slate-950 border border-slate-700 shadow-xl text-xs space-y-1.5 z-50 text-white">
+                          <p className="font-bold border-b border-slate-800 pb-1">{data.fullName} · {data.facility}</p>
+                          <div className="space-y-1 text-[11px]">
+                            <p className="text-emerald-400 flex justify-between gap-4">
+                              <span>🟢 On-Track (Tepat Waktu):</span>
+                              <span className="font-mono font-bold">{data.onTrack} Tugas</span>
+                            </p>
+                            <p className="text-rose-400 flex justify-between gap-4">
+                              <span>🔴 Overdue (Terlambat):</span>
+                              <span className="font-mono font-bold">{data.overdue} Tugas</span>
+                            </p>
+                            <p className="text-amber-400 flex justify-between gap-4">
+                              <span>⚡ Tereskalasi:</span>
+                              <span className="font-mono font-bold">{data.escalated} Tugas</span>
+                            </p>
+                            <p className="text-sky-300 border-t border-slate-800 pt-1 flex justify-between gap-4 font-semibold">
+                              <span>Total Beban Aktif:</span>
+                              <span className="font-mono">{data.totalActive} Tugas</span>
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                <Bar
+                  dataKey="onTrack"
+                  name="Tugas On-Track"
+                  stackId="workload"
+                  fill="#10B981"
+                  radius={[0, 0, 0, 0]}
+                  maxBarSize={28}
+                />
+                <Bar
+                  dataKey="overdue"
+                  name="Tugas Lewat Batas (Overdue)"
+                  stackId="workload"
+                  fill="#E11D48"
+                  radius={[4, 4, 0, 0]}
+                  maxBarSize={28}
+                />
+              </BarChart>
+            ) : (
+              <ComposedChart
+                data={staffChartData}
+                layout="vertical"
+                margin={{ top: 8, right: 30, left: 15, bottom: 10 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" horizontal={false} />
+                <XAxis
+                  type="number"
+                  tick={{ fill: '#64748B', fontSize: 10 }}
+                  axisLine={{ stroke: '#CBD5E1' }}
+                  tickLine={false}
+                />
+                <YAxis
+                  type="category"
+                  dataKey="name"
+                  tick={{ fill: '#334643', fontSize: 10, fontWeight: 600 }}
+                  axisLine={{ stroke: '#CBD5E1' }}
+                  tickLine={false}
+                  width={110}
+                />
+                <RechartsTooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="p-3 rounded-xl bg-slate-950 border border-slate-700 shadow-xl text-xs space-y-1 text-white">
+                          <p className="font-bold border-b border-slate-800 pb-1">{data.fullName}</p>
+                          <div className="space-y-1 text-[11px] pt-1">
+                            <p className="text-emerald-400 flex justify-between gap-4">
+                              <span>🟢 Beban Aktif Saat Ini:</span>
+                              <span className="font-mono font-bold">{data.totalActive} Kasus</span>
+                            </p>
+                            <p className="text-sky-400 flex justify-between gap-4">
+                              <span>🔵 Batas Kapasitas Ideal:</span>
+                              <span className="font-mono font-bold">{data.targetCap} Kasus</span>
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                <Bar
+                  dataKey="targetCap"
+                  name="Batas Rentang Kapasitas"
+                  fill="#F1F5F9"
+                  stroke="#CBD5E1"
+                  barSize={10}
+                  radius={[0, 4, 4, 0]}
+                />
+                <Scatter
+                  dataKey="totalActive"
+                  name="Beban Tugas Riil"
+                  fill="#E11D48"
+                  shape="circle"
+                />
+                <Scatter
+                  dataKey="targetCap"
+                  name="Kapasitas Standar"
+                  fill="#0284C7"
+                  shape="circle"
+                />
+              </ComposedChart>
+            )}
+          </ResponsiveContainer>
         </div>
       </div>
 

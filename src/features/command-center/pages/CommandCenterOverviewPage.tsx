@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Sparkles,
   Search,
@@ -26,12 +26,30 @@ import {
   Lock,
   Info,
   FileSearch,
+  BarChart3,
 } from 'lucide-react';
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  BarChart,
+  Bar,
+  Line,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  Legend,
+  ReferenceLine,
+  Cell,
+} from 'recharts';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { CompletenessBanner } from '../components/CompletenessBanner';
 import { DrilldownModal } from '../components/DrilldownModal';
+import { PuskesmasWorkloadComparisonSection } from '../components/PuskesmasWorkloadComparisonSection';
+import { PuskesmasDetailTrendModal } from '../components/PuskesmasDetailTrendModal';
 import {
   populationQualificationService,
   CountyCompletenessSummary,
@@ -100,6 +118,8 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
 
   const [diseaseTab, setDiseaseTab] = useState<'PRIORITY' | 'AT_RISK'>('PRIORITY');
   const [selectedKecamatanId, setSelectedKecamatanId] = useState<string>('ALL');
+  const [pkmViewMode, setPkmViewMode] = useState<'VOLUME' | 'CONTINUITY'>('VOLUME');
+  const [pkmChartType, setPkmChartType] = useState<'STACKED_LINE' | 'DUMBBELL' | 'GROUPED'>('STACKED_LINE');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isExportingPDF, setIsExportingPDF] = useState<boolean>(false);
   const [isExportingExcel, setIsExportingExcel] = useState<boolean>(false);
@@ -109,6 +129,8 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
   const [drilldownTitle, setDrilldownTitle] = useState<string>('');
   const [drilldownDescription, setDrilldownDescription] = useState<string>('');
   const [drilldownItems, setDrilldownItems] = useState<any[]>([]);
+  const [isTrendModalOpen, setIsTrendModalOpen] = useState<boolean>(false);
+  const [selectedTrendFacilityId, setSelectedTrendFacilityId] = useState<string | undefined>(undefined);
 
   const loadData = async () => {
     setIsLoading(true);
@@ -250,6 +272,27 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
 
   const topFacilities = [...facilities].sort((a, b) => b.continuityRate - a.continuityRate).slice(0, 8);
   const maxDiseaseCount = Math.max(1, ...diseaseRanking.map((d) => (diseaseTab === 'PRIORITY' ? d.priorityCaseCount : d.atRiskCount)));
+
+  const pkmChartData = useMemo(() => {
+    return facilities.map((f) => {
+      const pendingGap = Math.max(0, f.eligibleFollowUpCount - f.attendedFollowUpCount);
+      const dataQuality = Math.max(0, 100 - f.manualClosureRatio);
+      return {
+        id: f.facilityId,
+        name: f.facilityName.replace('Puskesmas ', 'PKM '),
+        fullName: f.facilityName,
+        kecamatan: f.kecamatanName,
+        isRemote: f.isRemoteIsland,
+        screened: f.screenedCount,
+        attended: f.attendedFollowUpCount,
+        eligible: f.eligibleFollowUpCount,
+        gap: pendingGap,
+        continuityRate: f.continuityRate,
+        dataQuality,
+        targetRate: 50,
+      };
+    });
+  }, [facilities]);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
@@ -764,63 +807,15 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
           </div>
         </div>
 
-        {/* Card 5: Kinerja 8 Puskesmas */}
-        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-800">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                  <Building2 className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
-                    Kinerja 8 Puskesmas
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    Kontinuitas tindak lanjut vs kualitas data.
-                  </p>
-                </div>
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                FASKES
-              </span>
-            </div>
-
-            <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
-              {topFacilities.map((f) => {
-                const dataQuality = Math.max(0, 100 - f.manualClosureRatio);
-                return (
-                  <div key={f.facilityId} className="p-2 rounded-xl bg-slate-800/40 border border-slate-800/80 space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-200 font-bold truncate max-w-[150px]">{f.facilityName}</span>
-                      <span className="text-slate-400 font-mono text-[11px]">{f.continuityRate}% / {dataQuality}%</span>
-                    </div>
-                    <div className="flex gap-1.5">
-                      <div className="flex-1 space-y-0.5">
-                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                          <div className="h-full bg-sky-500 rounded-full" style={{ width: `${f.continuityRate}%` }} />
-                        </div>
-                      </div>
-                      <div className="flex-1 space-y-0.5">
-                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                          <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${dataQuality}%` }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-            <span className="text-[10px]">Melapor Lengkap: {facilities.filter((f) => f.dataCompleteness === 'COMPLETE').length} / {facilities.length} PKM</span>
-            {!isBupati && onNavigate && (
-              <button onClick={() => onNavigate('dinkes-kinerja-pkm')} className="text-teal-400 hover:text-teal-300 font-bold flex items-center gap-1 cursor-pointer">
-                Detail Faskes <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
+        {/* Card 5: Grafik Komparasi Beban Skrining, Warga Ditangani & Kesenjangan Kasus Per Puskesmas */}
+        <div className="lg:col-span-2">
+          <PuskesmasWorkloadComparisonSection
+            facilities={facilities}
+            onFacilityClick={(facilityId) => {
+              setSelectedTrendFacilityId(facilityId);
+              setIsTrendModalOpen(true);
+            }}
+          />
         </div>
 
         {/* Card 6: Penyelesaian Intervensi Donut */}
@@ -912,6 +907,14 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
         contextDescription={drilldownDescription}
         currentUser={user}
         items={drilldownItems}
+      />
+
+      {/* Global Puskesmas Detail Trend Modal */}
+      <PuskesmasDetailTrendModal
+        isOpen={isTrendModalOpen}
+        onClose={() => setIsTrendModalOpen(false)}
+        initialFacilityId={selectedTrendFacilityId}
+        facilities={facilities}
       />
     </div>
   );

@@ -685,21 +685,8 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         }`}
       >
         <div className="space-y-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span
-              className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1.5 ${
-                isDark
-                  ? 'bg-teal-500/15 text-teal-300 border border-teal-500/30'
-                  : 'bg-teal-50 text-teal-800 border border-teal-200'
-              }`}
-            >
-              <Sparkles className={`w-3.5 h-3.5 ${isDark ? 'text-teal-400' : 'text-teal-600'}`} />
-              {isDark ? 'Visualisasi Metrik Recharts Command Center' : 'Visualisasi Eksekutif Recharts'}
-            </span>
-            <DocBadge code={docBadgeCode || (isDark ? 'SCR-DNK-A03-VIS' : 'KPI-DNK-VIS01')} size="sm" />
-          </div>
           <h2 className={`text-base sm:text-lg font-bold tracking-tight flex items-center gap-2 ${isDark ? 'text-white' : 'text-black'}`}>
-            {title || 'Visualisasi Grafik Batang & Grafik Area 6 KPI Strategis Dinas Kesehatan'}
+            {title || 'Laporan Kinerja Strategis Dinas Kesehatan'}
           </h2>
           <p className={`text-xs leading-relaxed max-w-4xl ${isDark ? 'text-slate-400' : 'text-[#60716D]'}`}>
             {subtitle ||
@@ -709,22 +696,6 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
 
         {/* Global Controls & Action */}
         <div className="flex flex-wrap items-center gap-2">
-          <div
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold ${
-              isDark ? 'bg-slate-800/80 border-slate-700 text-slate-300' : 'bg-[#F0F5F4] border-[#D8E5E2] text-[#00201C]'
-            }`}
-          >
-            <span className="flex items-center gap-1.5">
-              <BarChart3 className="w-3.5 h-3.5 text-teal-600" />
-              <span>Komparasi Faskes</span>
-            </span>
-            <span className={isDark ? 'text-slate-600' : 'text-slate-300'}>•</span>
-            <span className="flex items-center gap-1.5">
-              <AreaChartIcon className="w-3.5 h-3.5 text-teal-600" />
-              <span>Tren Waktu</span>
-            </span>
-          </div>
-
           <ActionIconButton
             variant="outline"
             size="sm"
@@ -924,7 +895,7 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
                 <div className="flex items-center gap-2">
                   <BarChart3 className={`w-4 h-4 ${isDark ? 'text-teal-400' : 'text-[#00201C]'}`} />
                   <h3 className={`text-sm font-bold ${isDark ? 'text-white' : 'text-black'}`}>
-                    Grafik Batang: Komparasi Kinerja 8 Puskesmas & Capaian Target
+                    Kinerja 8 Puskesmas & Capaian Target
                   </h3>
                 </div>
                 <p className={`text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-[#60716D]'}`}>
@@ -1159,7 +1130,7 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
                 <div className="flex items-center gap-2">
                   <AreaChartIcon className={`w-4 h-4 ${isDark ? 'text-teal-400' : 'text-teal-700'}`} />
                   <h3 className={`text-sm font-bold ${isDark ? 'text-white' : 'text-black'}`}>
-                    Grafik Area: Tren Pertumbuhan & Mitigasi Risiko Longitudinal
+                    Tren Pertumbuhan & Mitigasi Risiko Longitudinal
                   </h3>
                 </div>
                 <p className={`text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-[#60716D]'}`}>

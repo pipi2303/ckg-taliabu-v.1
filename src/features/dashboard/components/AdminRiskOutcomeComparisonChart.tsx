@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import {
   BarChart,
   Bar,
+  Scatter,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -29,6 +30,7 @@ import {
   Eye,
   EyeOff,
   Layers,
+  BarChart3,
 } from 'lucide-react';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { Tooltip as UiTooltip } from '../../../components/common/Tooltip';
@@ -943,6 +945,7 @@ const PUSKESMAS_OPTIONS = [
 export const AdminRiskOutcomeComparisonChart: React.FC = () => {
   const [selectedFacility, setSelectedFacility] = useState<string>('ALL');
   const [metricFocus, setMetricFocus] = useState<'ALL' | 'RISK_VS_VISIT' | 'OUTCOME_EFFICIENCY'>('ALL');
+  const [chartStyle, setChartStyle] = useState<'COMBO' | 'STACKED' | 'DUMBBELL'>('COMBO');
   const [timeRange, setTimeRange] = useState<'3M' | '6M' | '1Y'>('6M');
   const [lastSyncTime, setLastSyncTime] = useState<string>(new Date().toLocaleTimeString('id-ID'));
   const [storageTick, setStorageTick] = useState(0);
@@ -1169,6 +1172,43 @@ export const AdminRiskOutcomeComparisonChart: React.FC = () => {
               </button>
             </UiTooltip>
           </div>
+
+          {/* Chart Style Toggle: Combo vs Stacked vs Dumbbell */}
+          <div className="flex rounded-lg bg-[#F0F5F4] p-0.5 text-[11px] font-bold border border-[#D8E5E2]">
+            <button
+              type="button"
+              onClick={() => setChartStyle('COMBO')}
+              className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                chartStyle === 'COMBO'
+                  ? 'bg-[#00201C] text-white shadow-2xs'
+                  : 'text-[#60716D] hover:text-black'
+              }`}
+            >
+              Grouped + Line
+            </button>
+            <button
+              type="button"
+              onClick={() => setChartStyle('STACKED')}
+              className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                chartStyle === 'STACKED'
+                  ? 'bg-[#00201C] text-white shadow-2xs'
+                  : 'text-[#60716D] hover:text-black'
+              }`}
+            >
+              Stacked + Trend
+            </button>
+            <button
+              type="button"
+              onClick={() => setChartStyle('DUMBBELL')}
+              className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                chartStyle === 'DUMBBELL'
+                  ? 'bg-[#00201C] text-white shadow-2xs'
+                  : 'text-[#60716D] hover:text-black'
+              }`}
+            >
+              Dumbbell Gap
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1276,178 +1316,264 @@ export const AdminRiskOutcomeComparisonChart: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Recharts Composed Chart */}
+      {/* Main Recharts Composed / Dumbbell / Stacked Chart */}
       <div className="w-full h-84 pt-1">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={chartData} margin={{ top: 15, right: 25, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
-            <XAxis
-              dataKey="monthLabel"
-              tick={{ fill: '#475569', fontSize: 11, fontWeight: 600 }}
-              axisLine={{ stroke: '#CBD5E1' }}
-            />
-            <YAxis
-              yAxisId="left"
-              tick={{ fill: '#475569', fontSize: 11 }}
-              axisLine={{ stroke: '#CBD5E1' }}
-              label={{
-                value: 'Jumlah Warga / Kunjungan',
-                angle: -90,
-                position: 'insideLeft',
-                style: { fill: '#64748B', fontSize: 10, textAnchor: 'middle' },
-                offset: 10,
-              }}
-            />
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              domain={[0, 100]}
-              tick={{ fill: '#7C3AED', fontSize: 11 }}
-              unit="%"
-              axisLine={{ stroke: '#DDD6FE' }}
-            />
-            
-            {/* Custom Tooltip */}
-            <Tooltip
-              content={({ active, payload, label }) => {
-                if (active && payload && payload.length) {
-                  const data = payload[0].payload as MonthlyRiskOutcomeData;
-                  const kaderAchievementRate = data.targetKaderVisits > 0
-                    ? Math.round((data.actualKaderVisits / data.targetKaderVisits) * 100)
-                    : 0;
-                  const controlledRatio = data.highRiskCount > 0
-                    ? Math.round((data.controlledOutcomeCount / data.highRiskCount) * 100)
-                    : 0;
-
-                  return (
-                    <div className="bg-slate-900/95 backdrop-blur-md text-white p-3.5 rounded-2xl shadow-2xl border border-slate-700/80 text-xs space-y-2 max-w-xs animate-in fade-in duration-150">
-                      <div className="font-bold border-b border-slate-700/80 pb-1.5 flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-1.5">
-                          <Calendar className="w-3.5 h-3.5 text-teal-400" />
-                          <span>Periode: {data.monthLabel}</span>
-                        </div>
-                        <span className="text-[10px] bg-purple-900/80 text-purple-200 border border-purple-600 px-1.5 py-0.5 rounded-md font-mono font-bold">
-                          Efektivitas {data.effectivenessRate}%
-                        </span>
-                      </div>
-
-                      <div className="space-y-1.5 text-[11px] pt-0.5">
-                        <div className="flex justify-between items-center text-sky-300">
-                          <span className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-sky-400" />
-                            Target vs Realisasi Kader:
-                          </span>
-                          <span className="font-bold font-mono">
-                            {data.actualKaderVisits} / {data.targetKaderVisits} ({kaderAchievementRate}%)
-                          </span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-rose-300">
-                          <span className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-rose-500" />
-                            Kasus Risiko Tinggi:
-                          </span>
-                          <span className="font-bold font-mono">{data.highRiskCount} org</span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-orange-300">
-                          <span className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-orange-400" />
-                            Temuan Kritis (Rujukan):
-                          </span>
-                          <span className="font-bold font-mono">{data.criticalCount} org</span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-emerald-300 border-t border-slate-800 pt-1">
-                          <span className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                            Outcome Warga Terkontrol:
-                          </span>
-                          <span className="font-bold font-mono">{data.controlledOutcomeCount} org</span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-teal-200 text-[10px] font-medium">
-                          <span>Rasio Terkontrol vs Risiko:</span>
-                          <span className="font-bold font-mono text-teal-300">{controlledRatio}%</span>
+          {chartStyle === 'DUMBBELL' ? (
+            <ComposedChart
+              data={chartData.map((d) => ({
+                ...d,
+                gapVisits: Math.max(0, d.targetKaderVisits - d.actualKaderVisits),
+              }))}
+              layout="vertical"
+              margin={{ top: 10, right: 30, left: 10, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" horizontal={false} />
+              <XAxis
+                type="number"
+                tick={{ fill: '#64748B', fontSize: 10 }}
+                axisLine={{ stroke: '#CBD5E1' }}
+                tickLine={false}
+              />
+              <YAxis
+                type="category"
+                dataKey="monthLabel"
+                tick={{ fill: '#334643', fontSize: 11, fontWeight: 600 }}
+                axisLine={{ stroke: '#CBD5E1' }}
+                tickLine={false}
+                width={70}
+              />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const data = payload[0].payload as MonthlyRiskOutcomeData & { gapVisits: number };
+                    return (
+                      <div className="bg-slate-900/95 backdrop-blur-md text-white p-3 rounded-xl shadow-xl border border-slate-700 text-xs space-y-1.5 z-50">
+                        <p className="font-bold border-b border-slate-700 pb-1 flex justify-between gap-4">
+                          <span>{data.monthLabel}</span>
+                          <span className="text-purple-300 font-mono">Efektivitas {data.effectivenessRate}%</span>
+                        </p>
+                        <div className="space-y-1 text-[11px]">
+                          <p className="text-sky-300 flex justify-between gap-4">
+                            <span>🔵 Realisasi Kunjungan:</span>
+                            <span className="font-bold font-mono">{data.actualKaderVisits} kunjungan</span>
+                          </p>
+                          <p className="text-slate-300 flex justify-between gap-4">
+                            <span>⚪ Target Rencana:</span>
+                            <span className="font-bold font-mono">{data.targetKaderVisits} kunjungan</span>
+                          </p>
+                          <p className="text-amber-300 flex justify-between gap-4">
+                            <span>⚠️ Kesenjangan (Gap):</span>
+                            <span className="font-bold font-mono">{data.gapVisits} kunjungan</span>
+                          </p>
+                          <p className="text-emerald-300 border-t border-slate-800 pt-1 flex justify-between gap-4">
+                            <span>🟢 Warga Terkontrol:</span>
+                            <span className="font-bold font-mono">{data.controlledOutcomeCount} org</span>
+                          </p>
                         </div>
                       </div>
-
-                      <div className="pt-1 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between">
-                        <span>Total Skrining CKG:</span>
-                        <span className="font-mono text-slate-200 font-bold">{data.totalScreened} Jiwa</span>
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-
-            {/* Bars: Target Kunjungan Kader */}
-            {(metricFocus === 'ALL' || metricFocus === 'RISK_VS_VISIT') && (
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
               <Bar
-                yAxisId="left"
                 dataKey="targetKaderVisits"
-                name="Target Kunjungan Kader"
-                fill="#94A3B8"
-                radius={[4, 4, 0, 0]}
-                barSize={14}
-                hide={hiddenSeries['targetKaderVisits']}
+                name="Rentang Target Kunjungan"
+                fill="#F1F5F9"
+                stroke="#CBD5E1"
+                barSize={12}
+                radius={[0, 4, 4, 0]}
               />
-            )}
-
-            {/* Bars: Realisasi Kunjungan Kader */}
-            {(metricFocus === 'ALL' || metricFocus === 'RISK_VS_VISIT') && (
-              <Bar
-                yAxisId="left"
+              <Scatter
                 dataKey="actualKaderVisits"
-                name="Realisasi Kunjungan Kader"
+                name="Realisasi Kunjungan"
                 fill="#0284C7"
-                radius={[4, 4, 0, 0]}
-                barSize={14}
-                hide={hiddenSeries['actualKaderVisits']}
+                shape="circle"
               />
-            )}
-
-            {/* Bars: Kasus Risiko Tinggi Terdeteksi */}
-            {(metricFocus === 'ALL' || metricFocus === 'RISK_VS_VISIT') && (
-              <Bar
+              <Scatter
+                dataKey="targetKaderVisits"
+                name="Target Rencana"
+                fill="#64748B"
+                shape="circle"
+              />
+            </ComposedChart>
+          ) : (
+            <ComposedChart data={chartData} margin={{ top: 15, right: 25, left: 0, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+              <XAxis
+                dataKey="monthLabel"
+                tick={{ fill: '#475569', fontSize: 11, fontWeight: 600 }}
+                axisLine={{ stroke: '#CBD5E1' }}
+              />
+              <YAxis
                 yAxisId="left"
-                dataKey="highRiskCount"
-                name="Kasus Risiko Tinggi Terdeteksi"
-                fill="#E11D48"
-                radius={[4, 4, 0, 0]}
-                barSize={14}
-                hide={hiddenSeries['highRiskCount']}
+                tick={{ fill: '#475569', fontSize: 11 }}
+                axisLine={{ stroke: '#CBD5E1' }}
+                label={{
+                  value: 'Jumlah Warga / Kunjungan',
+                  angle: -90,
+                  position: 'insideLeft',
+                  style: { fill: '#64748B', fontSize: 10, textAnchor: 'middle' },
+                  offset: 10,
+                }}
               />
-            )}
-
-            {/* Bars: Warga Terkontrol / Outcome Positif */}
-            {(metricFocus === 'ALL' || metricFocus === 'OUTCOME_EFFICIENCY') && (
-              <Bar
-                yAxisId="left"
-                dataKey="controlledOutcomeCount"
-                name="Warga Terkontrol / Outcome Positif"
-                fill="#10B981"
-                radius={[4, 4, 0, 0]}
-                barSize={14}
-                hide={hiddenSeries['controlledOutcomeCount']}
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                domain={[0, 100]}
+                tick={{ fill: '#7C3AED', fontSize: 11 }}
+                unit="%"
+                axisLine={{ stroke: '#DDD6FE' }}
               />
-            )}
+              
+              {/* Custom Tooltip */}
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const data = payload[0].payload as MonthlyRiskOutcomeData;
+                    const kaderAchievementRate = data.targetKaderVisits > 0
+                      ? Math.round((data.actualKaderVisits / data.targetKaderVisits) * 100)
+                      : 0;
+                    const controlledRatio = data.highRiskCount > 0
+                      ? Math.round((data.controlledOutcomeCount / data.highRiskCount) * 100)
+                      : 0;
 
-            {/* Trend Line: % Efektivitas Intervensi */}
-            <Line
-              yAxisId="right"
-              type="monotone"
-              dataKey="effectivenessRate"
-              name="% Efektivitas Intervensi"
-              stroke="#8B5CF6"
-              strokeWidth={2.5}
-              dot={{ r: 4, fill: '#8B5CF6', strokeWidth: 2, stroke: '#FFFFFF' }}
-              activeDot={{ r: 6, fill: '#6D28D9' }}
-              hide={hiddenSeries['effectivenessRate']}
-            />
-          </ComposedChart>
+                    return (
+                      <div className="bg-slate-900/95 backdrop-blur-md text-white p-3.5 rounded-2xl shadow-2xl border border-slate-700/80 text-xs space-y-2 max-w-xs animate-in fade-in duration-150">
+                        <div className="font-bold border-b border-slate-700/80 pb-1.5 flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-teal-400" />
+                            <span>Periode: {data.monthLabel}</span>
+                          </div>
+                          <span className="text-[10px] bg-purple-900/80 text-purple-200 border border-purple-600 px-1.5 py-0.5 rounded-md font-mono font-bold">
+                            Efektivitas {data.effectivenessRate}%
+                          </span>
+                        </div>
+
+                        <div className="space-y-1.5 text-[11px] pt-0.5">
+                          <div className="flex justify-between items-center text-sky-300">
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-2 h-2 rounded-full bg-sky-400" />
+                              Target vs Realisasi Kader:
+                            </span>
+                            <span className="font-bold font-mono">
+                              {data.actualKaderVisits} / {data.targetKaderVisits} ({kaderAchievementRate}%)
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center text-rose-300">
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-2 h-2 rounded-full bg-rose-500" />
+                              Kasus Risiko Tinggi:
+                            </span>
+                            <span className="font-bold font-mono">{data.highRiskCount} org</span>
+                          </div>
+
+                          <div className="flex justify-between items-center text-orange-300">
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-2 h-2 rounded-full bg-orange-400" />
+                              Temuan Kritis (Rujukan):
+                            </span>
+                            <span className="font-bold font-mono">{data.criticalCount} org</span>
+                          </div>
+
+                          <div className="flex justify-between items-center text-emerald-300 border-t border-slate-800 pt-1">
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                              Outcome Warga Terkontrol:
+                            </span>
+                            <span className="font-bold font-mono">{data.controlledOutcomeCount} org</span>
+                          </div>
+
+                          <div className="flex justify-between items-center text-teal-200 text-[10px] font-medium">
+                            <span>Rasio Terkontrol vs Risiko:</span>
+                            <span className="font-bold font-mono text-teal-300">{controlledRatio}%</span>
+                          </div>
+                        </div>
+
+                        <div className="pt-1 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between">
+                          <span>Total Skrining CKG:</span>
+                          <span className="font-mono text-slate-200 font-bold">{data.totalScreened} Jiwa</span>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+
+              {/* Bars: Target Kunjungan Kader */}
+              {(metricFocus === 'ALL' || metricFocus === 'RISK_VS_VISIT') && (
+                <Bar
+                  yAxisId="left"
+                  dataKey="targetKaderVisits"
+                  name="Target Kunjungan Kader"
+                  fill="#94A3B8"
+                  radius={chartStyle === 'STACKED' ? [0, 0, 0, 0] : [4, 4, 0, 0]}
+                  barSize={chartStyle === 'STACKED' ? 24 : 14}
+                  stackId={chartStyle === 'STACKED' ? 'visits' : undefined}
+                  hide={hiddenSeries['targetKaderVisits']}
+                />
+              )}
+
+              {/* Bars: Realisasi Kunjungan Kader */}
+              {(metricFocus === 'ALL' || metricFocus === 'RISK_VS_VISIT') && (
+                <Bar
+                  yAxisId="left"
+                  dataKey="actualKaderVisits"
+                  name="Realisasi Kunjungan Kader"
+                  fill="#0284C7"
+                  radius={chartStyle === 'STACKED' ? [4, 4, 0, 0] : [4, 4, 0, 0]}
+                  barSize={chartStyle === 'STACKED' ? 24 : 14}
+                  stackId={chartStyle === 'STACKED' ? 'visits' : undefined}
+                  hide={hiddenSeries['actualKaderVisits']}
+                />
+              )}
+
+              {/* Bars: Kasus Risiko Tinggi Terdeteksi */}
+              {(metricFocus === 'ALL' || metricFocus === 'RISK_VS_VISIT') && (
+                <Bar
+                  yAxisId="left"
+                  dataKey="highRiskCount"
+                  name="Kasus Risiko Tinggi Terdeteksi"
+                  fill="#E11D48"
+                  radius={chartStyle === 'STACKED' ? [0, 0, 0, 0] : [4, 4, 0, 0]}
+                  barSize={chartStyle === 'STACKED' ? 24 : 14}
+                  stackId={chartStyle === 'STACKED' ? 'outcomes' : undefined}
+                  hide={hiddenSeries['highRiskCount']}
+                />
+              )}
+
+              {/* Bars: Warga Terkontrol / Outcome Positif */}
+              {(metricFocus === 'ALL' || metricFocus === 'OUTCOME_EFFICIENCY') && (
+                <Bar
+                  yAxisId="left"
+                  dataKey="controlledOutcomeCount"
+                  name="Warga Terkontrol / Outcome Positif"
+                  fill="#10B981"
+                  radius={chartStyle === 'STACKED' ? [4, 4, 0, 0] : [4, 4, 0, 0]}
+                  barSize={chartStyle === 'STACKED' ? 24 : 14}
+                  stackId={chartStyle === 'STACKED' ? 'outcomes' : undefined}
+                  hide={hiddenSeries['controlledOutcomeCount']}
+                />
+              )}
+
+              {/* Trend Line: % Efektivitas Intervensi */}
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="effectivenessRate"
+                name="% Efektivitas Intervensi"
+                stroke="#8B5CF6"
+                strokeWidth={2.5}
+                dot={{ r: 4, fill: '#8B5CF6', strokeWidth: 2, stroke: '#FFFFFF' }}
+                activeDot={{ r: 6, fill: '#6D28D9' }}
+                hide={hiddenSeries['effectivenessRate']}
+              />
+            </ComposedChart>
+          )}
         </ResponsiveContainer>
       </div>
 
