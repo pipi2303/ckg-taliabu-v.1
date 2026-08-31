@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShieldAlert, CheckCircle2, Clock, WifiOff, Info } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShieldAlert, CheckCircle2, Clock, WifiOff, Info, RefreshCw } from 'lucide-react';
 import { CountyCompletenessSummary } from '../../../services/populationQualificationService';
 
 interface CompletenessBannerProps {
@@ -8,8 +8,19 @@ interface CompletenessBannerProps {
 }
 
 export const CompletenessBanner: React.FC<CompletenessBannerProps> = ({ completeness, onRefresh }) => {
+  const [isRotating, setIsRotating] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const isPartial = completeness.overallStatus === 'PARTIAL';
   const isComplete = completeness.overallStatus === 'COMPLETE';
+
+  const handleRefresh = () => {
+    if (onRefresh) {
+      setIsRotating(true);
+      onRefresh();
+      setTimeout(() => setIsRotating(false), 600);
+    }
+  };
 
   return (
     <div
@@ -35,7 +46,7 @@ export const CompletenessBanner: React.FC<CompletenessBannerProps> = ({ complete
 
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-semibold text-sm text-black">Status Kelengkapan Data Kabupaten:</span>
+              <span className="font-semibold text-sm text-black">Status Kelengkapan Data Dinas Kesehatan:</span>
               <span
                 className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${
                   isPartial
@@ -75,12 +86,28 @@ export const CompletenessBanner: React.FC<CompletenessBannerProps> = ({ complete
         </div>
 
         {onRefresh && (
-          <button
-            onClick={onRefresh}
-            className="px-3 py-1.5 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition self-start md:self-center shrink-0"
-          >
-            Segarkan Status
-          </button>
+          <div className="relative flex items-center self-start md:self-center shrink-0">
+            <button
+              onClick={handleRefresh}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+              onFocus={() => setShowTooltip(true)}
+              onBlur={() => setShowTooltip(false)}
+              aria-label="Segarkan Status"
+              title="Segarkan Status"
+              className="p-2.5 rounded-lg bg-white/90 hover:bg-white text-slate-800 hover:text-teal-700 border border-slate-300 shadow-sm hover:shadow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+            >
+              <RefreshCw className={`w-4 h-4 ${isRotating ? 'animate-spin text-teal-600' : 'transition-transform duration-300 hover:rotate-45'}`} />
+            </button>
+
+            {/* Custom Tooltip */}
+            {showTooltip && (
+              <div className="absolute right-0 top-full mt-1.5 z-30 px-2.5 py-1 text-[11px] font-medium text-white bg-slate-900/95 backdrop-blur-sm rounded-md shadow-lg whitespace-nowrap pointer-events-none border border-slate-700/80 animate-in fade-in zoom-in-95 duration-150">
+                Segarkan Status
+                <div className="absolute -top-1 right-3 w-2 h-2 bg-slate-900/95 border-t border-l border-slate-700/80 rotate-45" />
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

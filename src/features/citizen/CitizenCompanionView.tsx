@@ -10,11 +10,27 @@ import { CitizenBarrierPage } from './pages/CitizenBarrierPage';
 import { CitizenHelpPage } from './pages/CitizenHelpPage';
 import { CitizenAccountPage } from './pages/CitizenAccountPage';
 import { CitizenMessageResponseLanding } from './pages/CitizenMessageResponseLanding';
+import { useAuth } from '../../context/AuthContext';
 
-export const CitizenCompanionContent: React.FC = () => {
+interface CitizenCompanionViewProps {
+  onExitToWebApp?: () => void;
+}
+
+export const CitizenCompanionContent: React.FC<CitizenCompanionViewProps> = ({ onExitToWebApp }) => {
   const { citizen, isLoading } = useCitizen();
+  const { switchDemoUser, currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState<CitizenActiveTab>('HOME');
   const [activeTokenId, setActiveTokenId] = useState<string | null>(null);
+
+  const handleExit = () => {
+    if (onExitToWebApp) {
+      onExitToWebApp();
+    } else {
+      if (currentUser?.roleId === 'CITIZEN') {
+        switchDemoUser('usr-1');
+      }
+    }
+  };
 
   // If viewing token response link
   if (activeTokenId) {
@@ -28,11 +44,20 @@ export const CitizenCompanionContent: React.FC = () => {
 
   // If not logged in
   if (!isLoading && !citizen) {
-    return <CitizenLoginPage onSuccess={() => setActiveTab('HOME')} />;
+    return (
+      <CitizenLoginPage
+        onSuccess={() => setActiveTab('HOME')}
+        onExitToWebApp={handleExit}
+      />
+    );
   }
 
   return (
-    <CitizenAppShell activeTab={activeTab} setActiveTab={setActiveTab}>
+    <CitizenAppShell
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
+      onExitToWebApp={handleExit}
+    >
       {activeTab === 'HOME' && <CitizenHomePage onNavigate={(t) => setActiveTab(t)} />}
       {activeTab === 'SCHEDULE' && <CitizenSchedulePage />}
       {activeTab === 'RESULTS' && (
@@ -50,15 +75,16 @@ export const CitizenCompanionContent: React.FC = () => {
       {activeTab === 'HELP' && (
         <CitizenHelpPage onBack={() => setActiveTab('HOME')} />
       )}
-      {activeTab === 'ACCOUNT' && <CitizenAccountPage />}
+      {activeTab === 'ACCOUNT' && <CitizenAccountPage onExitToWebApp={handleExit} />}
     </CitizenAppShell>
   );
 };
 
-export const CitizenCompanionView: React.FC = () => {
+export const CitizenCompanionView: React.FC<CitizenCompanionViewProps> = ({ onExitToWebApp }) => {
   return (
     <CitizenProvider>
-      <CitizenCompanionContent />
+      <CitizenCompanionContent onExitToWebApp={onExitToWebApp} />
     </CitizenProvider>
   );
 };
+

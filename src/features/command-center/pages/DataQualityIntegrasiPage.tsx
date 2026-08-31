@@ -82,16 +82,16 @@ export const DataQualityIntegrasiPage: React.FC = () => {
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-xs text-indigo-400 font-semibold uppercase tracking-wider mb-1">
-          <Database className="w-4 h-4" />
-          SYSTEM INTEGRITY & INGESTION GOVERNANCE
+        <div className="flex items-center gap-2 text-xs text-teal-700 font-semibold uppercase tracking-wider mb-1">
+          <Database className="w-4 h-4 text-teal-600" />
+          PEMERIKSAAN KUALITAS & KEAMANAN DATA
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-2xl font-bold text-black tracking-tight">Kualitas Data & Integrasi Wilayah</h1>
           <DocBadge code="SCR-DNK-B11" size="sm" />
         </div>
         <p className="text-xs text-gray-600 mt-1">
-          Pemantauan watermark faskes, sinkronisasi data kader offline, antrean masalah data quality, dan tata kelola privasi sel kecil (DS-OI-06).
+          Pemantauan waktu pengiriman data dari 8 Puskesmas, pengiriman data luring kader, dan perlindungan kerahasiaan identitas warga.
         </p>
       </div>
 

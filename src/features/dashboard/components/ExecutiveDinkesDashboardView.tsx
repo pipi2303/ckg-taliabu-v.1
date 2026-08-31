@@ -27,9 +27,12 @@ import {
   ChevronRight,
   Printer,
   ExternalLink,
+  Eye,
 } from 'lucide-react';
 import { Card } from '../../../components/common/Card';
 import { Button } from '../../../components/common/Button';
+import { ActionIconButton } from '../../../components/common/ActionIconButton';
+import { Tooltip } from '../../../components/common/Tooltip';
 import { Badge } from '../../../components/common/Badge';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { useAuth } from '../../../context/AuthContext';
@@ -39,6 +42,7 @@ import { impactIndexService, ImpactIndexSummary } from '../../../services/impact
 import { populationCascadeService } from '../../../services/populationCascadeService';
 import { commandCenterExportService } from '../../../services/commandCenterExportService';
 import { ruleVersionService } from '../../../services/ruleVersionService';
+import { ExecutiveKPIRechartsSection } from './ExecutiveKPIRechartsSection';
 import { FacilityPerformanceSummary, CascadeAggregation } from '../../../types';
 
 interface ExecutiveDinkesDashboardViewProps {
@@ -142,35 +146,36 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
           </div>
 
           {/* Quick Action Buttons */}
-          <div className="flex flex-wrap gap-2.5 shrink-0">
-            <Button
-              variant="secondary"
+          <div className="flex flex-wrap gap-2 shrink-0">
+            <ActionIconButton
+              variant="teal"
               size="sm"
-              onClick={() => onNavigate('dinkes-command-center')}
+              onClick={() => onNavigate('dinkes-ringkasan')}
+              icon={<Sparkles className="w-4 h-4 text-white" />}
+              tooltip="Buka Ringkasan Eksekutif Wilayah Dinas Kesehatan (SCR-DNK-A01)"
+              tooltipPosition="bottom"
               className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold border-0 shadow-sm"
-              leftIcon={<Sparkles className="w-4 h-4 text-slate-950" />}
-            >
-              Command Center
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onNavigate('dinkes-kepala-daerah')}
-              className="text-teal-100 bg-white/10 hover:bg-white/20 border-white/25 font-semibold"
-              leftIcon={<Activity className="w-4 h-4 text-teal-300" />}
-            >
-              Ringkasan Bupati
-            </Button>
-            <Button
+            />
+            <ActionIconButton
               variant="outline"
               size="sm"
               onClick={handleExportPDF}
               isLoading={isExportingPDF}
+              icon={<Download className="w-4 h-4 text-emerald-300" />}
+              tooltip="Unduh Dokumen Laporan Eksekutif Resmi Kadinkes (.pdf)"
+              tooltipPosition="bottom"
               className="text-white bg-white/10 hover:bg-white/20 border-white/25 font-semibold"
-              leftIcon={<Download className="w-4 h-4 text-emerald-400" />}
-            >
-              Unduh Laporan PDF
-            </Button>
+            />
+            <ActionIconButton
+              variant="outline"
+              size="sm"
+              onClick={handleExportExcel}
+              isLoading={isExportingExcel}
+              icon={<FileSpreadsheet className="w-4 h-4 text-emerald-300" />}
+              tooltip="Unduh Rekapitulasi Data Kinerja 8 Puskesmas (.xlsx)"
+              tooltipPosition="bottom"
+              className="text-white bg-white/10 hover:bg-white/20 border-white/25 font-semibold"
+            />
           </div>
         </div>
       </div>
@@ -182,13 +187,13 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
           className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Total Sasaran CKG</span>
+            <span className="text-[11px] font-semibold">Total Warga Diperiksa</span>
             <div className="p-1.5 rounded-lg bg-teal-50 text-teal-700 group-hover:bg-teal-700 group-hover:text-white transition-colors">
               <Users className="w-3.5 h-3.5" />
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-bold text-black tracking-tight">{totalScreened.toLocaleString('id-ID')}</p>
-          <p className="text-[10px] text-teal-700 font-medium mt-0.5">8 Kecamatan (100% MPI)</p>
+          <p className="text-[10px] text-teal-700 font-medium mt-0.5">8 Kecamatan (100% Wilayah)</p>
         </div>
 
         <div
@@ -196,13 +201,13 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
           className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Tindak Lanjut Faskes</span>
+            <span className="text-[11px] font-semibold">Warga Sudah Ditangani</span>
             <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
               <CheckCircle2 className="w-3.5 h-3.5" />
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-bold text-black tracking-tight">{followUpRate}%</p>
-          <p className="text-[10px] text-emerald-700 font-medium mt-0.5">{totalFollowedUp} Pasien Ditangani</p>
+          <p className="text-[10px] text-emerald-700 font-medium mt-0.5">{totalFollowedUp} Warga Tertangani</p>
         </div>
 
         <div
@@ -210,13 +215,13 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
           className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Reduksi Risiko CKG</span>
+            <span className="text-[11px] font-semibold">Penurunan Risiko Sakit</span>
             <div className="p-1.5 rounded-lg bg-sky-50 text-sky-700 group-hover:bg-sky-700 group-hover:text-white transition-colors">
               <TrendingUp className="w-3.5 h-3.5" />
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-bold text-sky-800 tracking-tight">-18.4%</p>
-          <p className="text-[10px] text-sky-700 font-medium mt-0.5">Impact Index Komplikasi</p>
+          <p className="text-[10px] text-sky-700 font-medium mt-0.5">Pencegahan Komplikasi</p>
         </div>
 
         <div
@@ -224,13 +229,13 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
           className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Kinerja Puskesmas</span>
+            <span className="text-[11px] font-semibold">Puskesmas Capai Target</span>
             <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-700 group-hover:bg-indigo-700 group-hover:text-white transition-colors">
               <Building2 className="w-3.5 h-3.5" />
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-bold text-black tracking-tight">{meetingTargetCount} / {totalPuskesmas}</p>
-          <p className="text-[10px] text-indigo-700 font-medium mt-0.5">Mencapai Target Standar</p>
+          <p className="text-[10px] text-indigo-700 font-medium mt-0.5">Mencapai Standar Pelayanan</p>
         </div>
 
         <div
@@ -238,7 +243,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
           className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Disparitas Rujukan Wilayah</span>
+            <span className="text-[11px] font-semibold">Kesenjangan Rujukan</span>
             <div className="p-1.5 rounded-lg bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-colors">
               <AlertTriangle className="w-3.5 h-3.5" />
             </div>
@@ -252,17 +257,20 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
           className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs hover:border-[#00201C] transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between text-[#60716D] mb-1.5">
-            <span className="text-[11px] font-semibold">Outcome Klinis Terkontrol</span>
+            <span className="text-[11px] font-semibold">Kondisi Kesehatan Terkontrol</span>
             <div className="p-1.5 rounded-lg bg-[#EBF7F2] text-[#2E7D5B] group-hover:bg-[#2E7D5B] group-hover:text-white transition-colors">
               <ShieldCheck className="w-3.5 h-3.5" />
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-bold text-[#2E7D5B] tracking-tight">72.4%</p>
-          <p className="text-[10px] text-[#2E7D5B] font-medium mt-0.5">Target TD & GDS Terkendali</p>
+          <p className="text-[10px] text-[#2E7D5B] font-medium mt-0.5">Tensi & Gula Darah Aman</p>
         </div>
       </div>
 
-      {/* 3. Curated Management Feature Hub */}
+      {/* 3. Executive KPI Recharts Analytics (Grafik Batang & Grafik Area 6 KPI) */}
+      <ExecutiveKPIRechartsSection onNavigate={onNavigate} />
+
+      {/* 4. Curated Management Feature Hub */}
       <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#D8E5E2]">
           <div>
@@ -322,7 +330,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
                   onClick={() => onNavigate('dinkes-ringkasan')}
                   className="w-full text-left text-[11px] font-semibold text-teal-800 hover:text-teal-950 hover:underline flex items-center justify-between cursor-pointer"
                 >
-                  <span>• Ringkasan Wilayah Kabupaten</span>
+                  <span>• Ringkasan Wilayah Dinas Kesehatan</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
                 <button
@@ -330,13 +338,6 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
                   className="w-full text-left text-[11px] font-semibold text-teal-800 hover:text-teal-950 hover:underline flex items-center justify-between cursor-pointer"
                 >
                   <span>• CKG Impact Index & Reduksi</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onNavigate('dinkes-kepala-daerah')}
-                  className="w-full text-left text-[11px] font-semibold text-teal-800 hover:text-teal-950 hover:underline flex items-center justify-between cursor-pointer"
-                >
-                  <span>• Tampilan Kepala Daerah</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
                 <button
@@ -561,12 +562,14 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
                       </Badge>
                     </td>
                     <td className="p-3 text-center">
-                      <button
+                      <ActionIconButton
+                        variant="ghost"
+                        size="xs"
                         onClick={() => onNavigate('dinkes-kinerja-pkm')}
-                        className="text-xs font-semibold text-[#397B94] hover:text-black hover:underline cursor-pointer"
-                      >
-                        Detail
-                      </button>
+                        icon={<Eye className="w-3.5 h-3.5 text-[#397B94]" />}
+                        tooltip={`Lihat Analisis Detail Kinerja ${fac.facilityName}`}
+                        tooltipPosition="left"
+                      />
                     </td>
                   </tr>
                 );

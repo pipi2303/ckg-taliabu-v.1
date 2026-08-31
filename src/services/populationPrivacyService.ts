@@ -51,7 +51,7 @@ export const populationPrivacyService = {
     rowCount: number;
     targetContext: string;
   }): Promise<{ authorized: boolean; reason?: string }> {
-    // 1. Role Boundary: Bupati (P-BUP) is STRICTLY FORBIDDEN from accessing individual data
+    // 1. Role Boundary: Executive level (BUPATI role) is STRICTLY FORBIDDEN from accessing individual data
     if (params.user.roleId === 'BUPATI') {
       await auditRepo.log({
         actorUserId: params.user.id,
@@ -60,13 +60,13 @@ export const populationPrivacyService = {
         action: 'ACCESS_DENIED',
         entityType: 'CITIZEN',
         entityId: 'ALL',
-        targetLabel: 'Penelusuran Individual Ditolak (Bupati)',
-        description: 'Akses drilldown individual ditolak sesuai batas kewenangan P-BUP (hanya ringkasan agregat).',
-        details: { rejectionReason: 'BUPATI_S0_CEILING' },
+        targetLabel: 'Penelusuran Individual Ditolak (Eksekutif)',
+        description: 'Akses drilldown individual ditolak sesuai batas kewenangan S0 (hanya ringkasan agregat).',
+        details: { rejectionReason: 'EXECUTIVE_S0_CEILING' },
       });
       return {
         authorized: false,
-        reason: 'Peran Bupati (P-BUP) tidak memiliki izin melihat data identitas individual warga. Hanya ringkasan agregat yang disediakan.',
+        reason: 'Peran Eksekutif Pimpinan Daerah tidak memiliki izin melihat data identitas individual warga. Hanya ringkasan agregat yang disediakan.',
       };
     }
 

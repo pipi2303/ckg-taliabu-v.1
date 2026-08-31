@@ -87,33 +87,9 @@ export const permissionService = {
       return { allowed: true };
     }
 
-    // Kepala Puskesmas can only manage users in their own Puskesmas / network
-    if (actor.roleId === 'KEPALA_PUSKESMAS') {
-      if (!targetUser) return { allowed: true };
-
-      // Cannot assign or manage Dinkes roles
-      const restrictedRoles: RoleId[] = ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES', 'AUDITOR'];
-      if (targetUser.roleId && restrictedRoles.includes(targetUser.roleId)) {
-        return {
-          allowed: false,
-          reason: 'Kepala Puskesmas tidak memiliki wewenang untuk mengelola akun tingkat Dinas Kesehatan.',
-        };
-      }
-
-      // Must be within same facility or area scope
-      if (targetUser.facilityId && targetUser.facilityId !== actor.facilityId) {
-        return {
-          allowed: false,
-          reason: 'Anda hanya dapat mengelola staf dan kader di bawah fasilitas Puskesmas Anda.',
-        };
-      }
-
-      return { allowed: true };
-    }
-
     return {
       allowed: false,
-      reason: 'Peran Anda tidak memiliki hak akses untuk mengelola pengguna.',
+      reason: 'Peran Anda tidak memiliki hak akses untuk mengelola akun pengguna.',
     };
   },
 
@@ -135,13 +111,13 @@ export const permissionService = {
 
   canViewAuditLogs(actor: User): boolean {
     if (actor.status !== 'ACTIVE') return false;
-    const allowedRoles: RoleId[] = ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES', 'KEPALA_PUSKESMAS', 'AUDITOR'];
+    const allowedRoles: RoleId[] = ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES'];
     return allowedRoles.includes(actor.roleId);
   },
 
   // Check area scope containment
   isInScope(actor: User, scopeId: string): boolean {
-    if (actor.roleId === 'ADMIN_DINKES' || actor.roleId === 'KEPALA_DINAS' || actor.roleId === 'ANALYST_DINKES' || actor.roleId === 'AUDITOR') {
+    if (actor.roleId === 'ADMIN_DINKES' || actor.roleId === 'KEPALA_DINAS' || actor.roleId === 'ANALYST_DINKES') {
       return true; // Kabupaten wide
     }
     return actor.areaScopes.includes(scopeId) || actor.villageAssignment === scopeId;
@@ -171,77 +147,43 @@ export const permissionService = {
       case 'KEPALA_DINAS':
         return [
           'dashboard',
-          'dinkes-command-center', 'dinkes-ringkasan', 'dinkes-impact-index', 'dinkes-kaskade', 'dinkes-wilayah', 'dinkes-gap', 'dinkes-kinerja-pkm', 'dinkes-penyebab-kendala', 'dinkes-intervensi-populasi', 'dinkes-perbandingan-periode', 'dinkes-kualitas-data', 'dinkes-kepala-daerah', 'dinkes-laporan', 'dinkes-audit-drilldown',
-          'pemantauan-aktif', 'integritas-monitoring', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
+          'dinkes-ringkasan', 'dinkes-impact-index', 'dinkes-kaskade', 'dinkes-wilayah', 'dinkes-gap', 'dinkes-kinerja-pkm', 'dinkes-penyebab-kendala', 'dinkes-intervensi-populasi', 'dinkes-perbandingan-periode', 'dinkes-laporan',
+          'ai-scenario-lab',
           'stratifikasi',
-          'wilayah', 'faskes', 'layanan',
-          'future-facility', 'future-ai',
+          'wilayah', 'faskes',
         ];
 
       case 'ANALYST_DINKES':
         return [
-          'dashboard',
-          'dinkes-command-center', 'dinkes-ringkasan', 'dinkes-impact-index', 'dinkes-kaskade', 'dinkes-wilayah', 'dinkes-gap', 'dinkes-kinerja-pkm', 'dinkes-penyebab-kendala', 'dinkes-intervensi-populasi', 'dinkes-perbandingan-periode', 'dinkes-kualitas-data', 'dinkes-laporan', 'dinkes-audit-drilldown',
-          'ai-tata-kelola', 'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-scenario-lab', 'ai-klaster-populasi', 'ai-kepatuhan-obat', 'ai-kinerja-model', 'ai-prioritas-pencegahan',
-          'pemantauan-aktif', 'integritas-monitoring', 'kohort-kondisi', 'tren-outcome',
-          'data-quality', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history', 'source-mapping',
+          'dinkes-ringkasan', 'dinkes-impact-index', 'dinkes-kaskade', 'dinkes-wilayah', 'dinkes-gap', 'dinkes-kinerja-pkm', 'dinkes-penyebab-kendala', 'dinkes-intervensi-populasi', 'dinkes-perbandingan-periode', 'dinkes-laporan',
+          'ai-tata-kelola', 'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-scenario-lab', 'ai-klaster-populasi', 'ai-kepatuhan-obat', 'ai-kinerja-model', 'ai-prioritas-pencegahan', 'ai-rute-maritim', 'future-ai',
+          'kohort-kondisi', 'tren-outcome',
           'stratifikasi',
-          'wilayah', 'faskes', 'layanan',
-          'versi-aturan', 'audit-log',
-          'integrasi',
-          'future-ai',
-        ];
-
-      case 'BUPATI':
-        return [
-          'dinkes-kepala-daerah',
-          'dinkes-command-center',
-          'dinkes-ringkasan',
-          'dinkes-impact-index',
-          'dinkes-kaskade',
-          'dinkes-wilayah',
-          'dinkes-perbandingan-periode',
-          'dinkes-laporan',
-          'ai-scenario-lab',
-          'ai-proyeksi-beban',
-          'wilayah',
-          'faskes',
+          'wilayah', 'faskes', 'future-facility', 'layanan',
         ];
 
       case 'KEPALA_PUSKESMAS':
+        // Scoped to Puskesmas clinical leadership & operations (priorities, tasks, clinical follow-ups,
+        // cadre field dispatching, scheduling, patient monitoring, cohort tracking, clinical AI, and facility readiness).
+        // Irrelevant administrative items (master data faskes, catalog layanan, data cleansing, cadre mobile app, admin configs) are removed.
         return [
           'dashboard',
-          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'kader-app', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja', 'outreach-config',
+          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-nudge-budaya', 'ai-rute-maritim',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
-          'registry', 'data-quality',
+          'registry',
           'stratifikasi',
-          'faskes', 'future-facility', 'layanan',
-          'pengguna', 'cakupan',
-          'persetujuan', 'audit-log',
-          'sinkronisasi',
-        ];
-
-      case 'AUDITOR':
-        return [
-          'dashboard',
-          'ai-tata-kelola', 'ai-kinerja-model',
-          'integritas-monitoring',
-          'dinkes-ringkasan', 'dinkes-audit-drilldown',
-          'registry', 'data-quality', 'duplicate-review',
-          'versi-aturan', 'audit-log',
-          'future-ai',
+          'future-facility',
         ];
 
       case 'PJ_CKG':
         return [
           'dashboard',
-          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'kader-app', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja', 'outreach-config',
+          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-nudge-budaya', 'ai-rute-maritim',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
-          'registry', 'data-quality', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history',
+          'registry', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history',
           'stratifikasi',
-          'persetujuan',
           'future-facility',
           'sinkronisasi',
         ];
@@ -284,10 +226,10 @@ export const permissionService = {
         // the desktop Sidebar via the "Portal" switch button — where these would render the
         // unscoped, facility-wide DailyPriorityQueuePage/OutreachQueuePage (no per-kader
         // filtering), violating the hard S2 ceiling enforced elsewhere in this file.
+        // 'citizen-app' is strictly reserved for CITIZEN role only.
         return [
           'kader-app',
           'penugasan-lapangan',
-          'citizen-app',
           'ai-nudge-budaya',
           'ai-rute-maritim',
           'sinkronisasi',
@@ -325,14 +267,10 @@ export const permissionService = {
 
   getDefaultNavForRole(roleId: RoleId): string {
     switch (roleId) {
-      case 'BUPATI':
-        return 'dinkes-kepala-daerah';
       case 'CITIZEN':
         return 'citizen-app';
       case 'KADER':
         return 'kader-app';
-      case 'AUDITOR':
-        return 'audit-log';
       case 'DOCTOR':
       case 'NURSE_MIDWIFE':
       case 'PUSTU':

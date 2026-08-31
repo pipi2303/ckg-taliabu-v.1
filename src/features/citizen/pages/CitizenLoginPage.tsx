@@ -5,20 +5,23 @@ import {
   ShieldCheck,
   Building2,
   ArrowRight,
+  ArrowLeft,
   Sparkles,
   AlertTriangle,
   RefreshCw,
   PhoneCall,
   User,
+  LayoutDashboard,
 } from 'lucide-react';
 import { useCitizen } from '../context/CitizenContext';
 import { DocBadge } from '../components/DocBadge';
 
 interface CitizenLoginPageProps {
   onSuccess: () => void;
+  onExitToWebApp?: () => void;
 }
 
-export const CitizenLoginPage: React.FC<CitizenLoginPageProps> = ({ onSuccess }) => {
+export const CitizenLoginPage: React.FC<CitizenLoginPageProps> = ({ onSuccess, onExitToWebApp }) => {
   const { requestOtp, verifyOtpAndLogin } = useCitizen();
 
   const [step, setStep] = useState<'PHONE' | 'OTP'>('PHONE');
@@ -87,7 +90,19 @@ export const CitizenLoginPage: React.FC<CitizenLoginPageProps> = ({ onSuccess })
     <div className="min-h-screen bg-[#F0F5F4] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-[#D8E5E2] overflow-hidden">
         {/* Top Header */}
-        <div className="bg-[#00201C] text-white p-6 text-center space-y-2">
+        <div className="bg-[#00201C] text-white p-6 text-center space-y-2 relative">
+          {onExitToWebApp && (
+            <button
+              type="button"
+              onClick={onExitToWebApp}
+              className="absolute left-4 top-4 flex items-center gap-1 px-2.5 py-1.5 bg-[#003B33] hover:bg-[#004D43] text-teal-100 rounded-lg text-xs font-bold border border-teal-500/50 transition-colors cursor-pointer shadow-xs"
+              title="Kembali ke Aplikasi Portal Web"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-teal-300" />
+              <span>Kembali</span>
+            </button>
+          )}
+
           <div className="w-12 h-12 mx-auto rounded-2xl bg-[#E1F5FE] text-black flex items-center justify-center font-extrabold text-xl shadow-md">
             CKG
           </div>
@@ -271,6 +286,19 @@ export const CitizenLoginPage: React.FC<CitizenLoginPageProps> = ({ onSuccess })
                 </button>
               </div>
             </form>
+          )}
+
+          {onExitToWebApp && (
+            <div className="pt-2 border-t border-gray-100 text-center">
+              <button
+                type="button"
+                onClick={onExitToWebApp}
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-black py-1.5 px-3 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <LayoutDashboard className="w-3.5 h-3.5 text-teal-700" />
+                <span>Kembali ke Aplikasi Portal Web CKG</span>
+              </button>
+            </div>
           )}
         </div>
       </div>

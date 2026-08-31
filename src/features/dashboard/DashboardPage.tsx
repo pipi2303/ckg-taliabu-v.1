@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import { Card } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
+import { ActionIconButton } from '../../components/common/ActionIconButton';
+import { Tooltip } from '../../components/common/Tooltip';
 import { Badge, getStatusBadgeVariant } from '../../components/common/Badge';
 import { DocBadge } from '../../components/common/DocBadge';
 import { rawStorage, subscribeToStorage } from '../../repositories/storage';
@@ -30,6 +32,10 @@ import { useNetwork } from '../../context/NetworkContext';
 import { permissionService } from '../../services/permissionService';
 import { AuditEvent } from '../../types';
 import { ExecutiveDinkesDashboardView } from './components/ExecutiveDinkesDashboardView';
+import { AdminRiskOutcomeComparisonChart } from './components/AdminRiskOutcomeComparisonChart';
+import { AdminScreeningAreaGrowthChart } from './components/AdminScreeningAreaGrowthChart';
+import { AdminFollowupAnalytics } from './components/AdminFollowupAnalytics';
+import { AdminRiskStratificationMatrix } from './components/AdminRiskStratificationMatrix';
 
 interface DashboardPageProps {
   onNavigate: (navId: string) => void;
@@ -143,6 +149,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
     );
   }
 
+  const isPosyanduOrKader = roleId === 'POSYANDU' || roleId === 'KADER';
+
   return (
     <div data-tour="dashboard-overview-area" className="space-y-6">
       {/* Welcome Banner */}
@@ -150,7 +158,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">
-              Sistem Operasional Aktif
+              Sistem Aktif
             </span>
             <span className="text-xs text-slate-300">Kabupaten Pulau Taliabu</span>
           </div>
@@ -161,54 +169,56 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             <DocBadge code="SCR-PKM-A01" size="sm" />
           </div>
           <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
-            Sistem Manajemen Master Data, Akses Keamanan Terpadu, Ingestion CKG, Stratifikasi Risiko Deterministik, Orkestrasi Care Task & Penjangkauan Aktif Pulau Taliabu.
+            {isPosyanduOrKader
+              ? 'Pusat informasi pemeriksaan Cek Kesehatan Gratis (CKG), daftar tindak lanjut warga, dan pemantauan kesehatan di wilayah Anda.'
+              : 'Pusat informasi pemeriksaan Cek Kesehatan Gratis (CKG), tindak lanjut kesehatan warga, dan koordinasi layanan terpadu Pulau Taliabu.'}
           </p>
         </div>
 
         <div className="flex flex-wrap gap-2 shrink-0">
           {can('prioritas-harian') && (
-            <Button
+            <ActionIconButton
               variant="secondary"
               size="sm"
               onClick={() => onNavigate('prioritas-harian')}
-              leftIcon={<Activity className="w-4 h-4" />}
-            >
-              Prioritas Hari Ini
-            </Button>
+              icon={<Activity className="w-4 h-4 text-slate-900" />}
+              tooltip="Buka Prioritas Tindak Lanjut & Antrean Harian Warga (SCR-PKM-B01)"
+              tooltipPosition="bottom"
+            />
           )}
           {can('clinical-followup') && (
-            <Button
+            <ActionIconButton
               variant="outline"
               size="sm"
               onClick={() => onNavigate('clinical-followup')}
+              icon={<ClipboardList className="w-4 h-4 text-emerald-300" />}
+              tooltip="Buka Antrean Pemeriksaan & Validasi Klinis Dokter (SCR-DOC-A01)"
+              tooltipPosition="bottom"
               className="text-white bg-white/10 hover:bg-white/20 border-white/20"
-              leftIcon={<ClipboardList className="w-4 h-4" />}
-            >
-              Layanan Klinis
-            </Button>
+            />
           )}
-          {can('dinkes-command-center') && (
-            <Button
+          {can('dinkes-ringkasan') && (
+            <ActionIconButton
               variant="outline"
               size="sm"
-              onClick={() => onNavigate('dinkes-command-center')}
+              onClick={() => onNavigate('dinkes-ringkasan')}
+              icon={<Sparkles className="w-4 h-4 text-teal-300" />}
+              tooltip="Buka Dashboard Eksekutif & Ringkasan Dinas Kesehatan (SCR-DNK-A01)"
+              tooltipPosition="bottom"
               className="text-teal-200 bg-teal-500/20 hover:bg-teal-500/30 border-teal-400/40 font-bold"
-              leftIcon={<Sparkles className="w-4 h-4 text-teal-300" />}
-            >
-              Command Center
-            </Button>
+            />
           )}
         </div>
       </div>
 
-      {/* Highlights: Care Task Orchestration & Outreach */}
+      {/* Highlights: Tindak Lanjut & Kunjungan Warga */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold uppercase tracking-wider text-[#60716D]">
-            Care Task Orchestration & Active Outreach
+            Tindak Lanjut & Pendampingan Warga
           </h3>
           <span className="text-xs text-[#2E7D5B] font-semibold flex items-center gap-1">
-            <Activity className="w-3.5 h-3.5" /> Engine Kaskade Siap
+            <Activity className="w-3.5 h-3.5" /> Pelayanan Siap
           </span>
         </div>
 
@@ -217,64 +227,69 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             {...cardProps('prioritas-harian')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Tugas Aktif</span>
+              <span className="text-xs font-semibold">Tugas Sedang Berjalan</span>
               <div className="p-2 rounded-lg bg-[#EBF7F2] text-[#2E7D5B] group-hover:bg-[#2E7D5B] group-hover:text-white transition-colors">
                 <ClipboardList className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-black tracking-tight">{stats.activeCareTasks}</p>
-            <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">Dari {stats.totalCareTasks} Total Care Tasks</p>
+            <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">Dari {stats.totalCareTasks} Total Tugas Pendampingan</p>
           </div>
 
           <div
             {...cardProps('prioritas-harian')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Tugas Kritis Terbuka</span>
+              <span className="text-xs font-semibold">Butuh Penanganan Cepat</span>
               <div className="p-2 rounded-lg bg-red-50 text-red-700 group-hover:bg-red-700 group-hover:text-white transition-colors">
                 <AlertCircle className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-red-700 tracking-tight">{stats.criticalCareTasks}</p>
-            <p className="text-[11px] text-red-700 font-medium mt-1">Bypass Kaskade Otomatis</p>
+            <p className="text-[11px] text-red-700 font-medium mt-1">Kondisi darurat / prioritas utama</p>
           </div>
 
           <div
             {...cardProps('jadwal-kuota')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Janji Temu Hari Ini</span>
+              <span className="text-xs font-semibold">Jadwal Periksa Hari Ini</span>
               <div className="p-2 rounded-lg bg-blue-50 text-blue-700 group-hover:bg-blue-700 group-hover:text-white transition-colors">
                 <Clock className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-blue-800 tracking-tight">{stats.todayAppointments}</p>
-            <p className="text-[11px] text-blue-700 font-medium mt-1">Anti-Overbooking Proteksi</p>
+            <p className="text-[11px] text-blue-700 font-medium mt-1">Warga dijadwalkan ke Puskesmas</p>
           </div>
 
           <div
             {...cardProps('kandidat-putus')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Kandidat Putus</span>
+              <span className="text-xs font-semibold">Warga Perlu Diingatkan</span>
               <div className="p-2 rounded-lg bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-colors">
                 <Users className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-amber-700 tracking-tight">{stats.dropoutCandidates}</p>
-            <p className="text-[11px] text-amber-700 font-medium mt-1">Wajib Kontak Manusia (R-91)</p>
+            <p className="text-[11px] text-amber-700 font-medium mt-1">Belum datang kontrol ulang</p>
           </div>
+        </div>
+
+        {/* Dedicated Follow-up & SLA Aging Analytics */}
+        <div className="mt-4">
+          <AdminFollowupAnalytics onNavigate={onNavigate} />
         </div>
       </div>
 
-      {/* Highlights: Stratifikasi Risiko & Next-Best-Action */}
+      {/* Highlights: Kategori Risiko & Langkah Penanganan */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold uppercase tracking-wider text-[#60716D]">
-            Stratifikasi Risiko & Next-Best-Action
+            Hasil Pemeriksaan & Tingkat Risiko Warga
           </h3>
           <span className="text-xs text-[#2E7D5B] font-semibold flex items-center gap-1">
-            <Activity className="w-3.5 h-3.5" /> Engine CRS v0.9 Siap
+            <Activity className="w-3.5 h-3.5" /> Pedoman Pemeriksaan Aktif
           </span>
         </div>
 
@@ -283,64 +298,70 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Terkategori Risiko</span>
+              <span className="text-xs font-semibold">Sudah Diperiksa</span>
               <div className="p-2 rounded-lg bg-[#EBF7F2] text-[#2E7D5B] group-hover:bg-[#2E7D5B] group-hover:text-white transition-colors">
                 <Activity className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-black tracking-tight">{stats.totalClassifications}</p>
-            <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">Append-only Record</p>
+            <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">Hasil periksa tersimpan lengkap</p>
           </div>
 
           <div
             {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Temuan Kritis</span>
+              <span className="text-xs font-semibold">Kondisi Darurat</span>
               <div className="p-2 rounded-lg bg-red-50 text-red-700 group-hover:bg-red-700 group-hover:text-white transition-colors">
                 <Activity className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-red-700 tracking-tight">{stats.criticalCount}</p>
-            <p className="text-[11px] text-red-700 font-medium mt-1">Perlu Penanganan Cepat</p>
+            <p className="text-[11px] text-red-700 font-medium mt-1">Butuh tindakan dokter segera</p>
           </div>
 
           <div
             {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Risiko Merah / Tinggi</span>
+              <span className="text-xs font-semibold">Risiko Tinggi (Perlu Dirujuk)</span>
               <div className="p-2 rounded-lg bg-orange-50 text-orange-700 group-hover:bg-orange-700 group-hover:text-white transition-colors">
                 <ShieldCheck className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-orange-700 tracking-tight">{stats.highRiskCount}</p>
-            <p className="text-[11px] text-orange-700 font-medium mt-1">FKTP & Rujukan FKRTL</p>
+            <p className="text-[11px] text-orange-700 font-medium mt-1">Rujukan ke Puskesmas atau RS</p>
           </div>
 
           <div
             {...cardProps('stratifikasi')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Tata Kelola Aturan</span>
+              <span className="text-xs font-semibold">Pedoman Pemeriksaan</span>
               <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
                 <GitBranch className="w-4 h-4" />
               </div>
             </div>
-            <p className="text-2xl font-bold text-[#2E7D5B] tracking-tight">CRS v0.9</p>
-            <p className="text-[11px] text-[#60716D] font-medium mt-1">Deterministik 5-Domain</p>
+            <p className="text-2xl font-bold text-[#2E7D5B] tracking-tight">Kemenkes 2026</p>
+            <p className="text-[11px] text-[#60716D] font-medium mt-1">5 Standar Tes Kesehatan</p>
           </div>
+        </div>
+
+        {/* Dedicated Monthly Comparison Recharts & Risk Matrix */}
+        <div className="mt-4 space-y-4">
+          <AdminRiskOutcomeComparisonChart />
+          <AdminRiskStratificationMatrix />
         </div>
       </div>
 
-      {/* Highlights: Registry & Ingestion Statistics */}
+      {/* Highlights: Data Warga & Pemeriksaan CKG */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold uppercase tracking-wider text-[#60716D]">
-            Registry CKG & Ingestion Pipeline
+            Data Warga & Pemeriksaan CKG
           </h3>
           <span className="text-xs text-[#2E7D5B] font-semibold flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5" /> Pipeline Berjalan Normal
+            <CheckCircle2 className="w-3.5 h-3.5" /> Pendataan Lancar
           </span>
         </div>
 
@@ -349,27 +370,27 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             {...cardProps('registry')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Warga Terdaftar</span>
+              <span className="text-xs font-semibold">Total Warga Terdata</span>
               <div className="p-2 rounded-lg bg-[#EBF7F2] text-[#2E7D5B] group-hover:bg-[#2E7D5B] group-hover:text-white transition-colors">
                 <Users className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-black tracking-tight">{stats.totalCitizens}</p>
-            <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">Master Patient Index</p>
+            <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">Berdasarkan NIK & Domisili</p>
           </div>
 
           <div
             {...cardProps('registry')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Sesi Skrining CKG</span>
+              <span className="text-xs font-semibold">Pemeriksaan CKG Selesai</span>
               <div className="p-2 rounded-lg bg-[#E1F5FE] text-[#397B94] group-hover:bg-[#397B94] group-hover:text-white transition-colors">
                 <ClipboardList className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-black tracking-tight">{stats.totalSessions}</p>
             <p className="text-[11px] text-[#397B94] font-medium mt-1">
-              {stats.completeSessions} Lengkap
+              {stats.completeSessions} Pemeriksaan Lengkap
             </p>
           </div>
 
@@ -377,46 +398,51 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             {...cardProps('data-quality')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Antrean Masalah Data</span>
+              <span className="text-xs font-semibold">Data Perlu Dilengkapi</span>
               <div className="p-2 rounded-lg bg-[#FFFACD] text-[#C99720] group-hover:bg-[#C99720] group-hover:text-white transition-colors">
                 <AlertCircle className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-[#C99720] tracking-tight">{stats.openDqIssues}</p>
-            <p className="text-[11px] text-[#C99720] font-medium mt-1">Perlu Keputusan PJ CKG</p>
+            <p className="text-[11px] text-[#C99720] font-medium mt-1">NIK belum lengkap / tercatat ganda</p>
           </div>
 
           <div
             {...cardProps('ingestion-monitor')}
           >
             <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Ingestion & Watermark</span>
+              <span className="text-xs font-semibold">Status Pengiriman Data</span>
               <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
                 <Activity className="w-4 h-4" />
               </div>
             </div>
-            <p className="text-2xl font-bold text-[#2E7D5B] tracking-tight">Aktif</p>
-            <p className="text-[11px] text-[#60716D] font-medium mt-1">Sinkronisasi Terjadwal</p>
+            <p className="text-2xl font-bold text-[#2E7D5B] tracking-tight">Lancar</p>
+            <p className="text-[11px] text-[#60716D] font-medium mt-1">Tersimpan aman di sistem</p>
           </div>
+        </div>
+
+        {/* Dedicated Screening Area Growth Chart */}
+        <div className="mt-4">
+          <AdminScreeningAreaGrowthChart />
         </div>
       </div>
 
-      {/* Section 1: Platform Configuration & Master Data Stats (Hidden for ADMIN_DINKES) */}
+      {/* Section 1: Fasilitas & Wilayah Kerja */}
       {currentUser?.roleId !== 'ADMIN_DINKES' && (
         <div>
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-bold uppercase tracking-wider text-[#60716D]">
-              Konfigurasi Platform & Master Data
+              Informasi Wilayah & Petugas
             </h3>
             <span className="text-xs text-[#2E7D5B] font-semibold flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Struktur Wilayah Aktif
+              <CheckCircle2 className="w-3.5 h-3.5" /> Wilayah Binaan
             </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
             <div {...cardProps('pengguna')}>
               <div className="flex items-center justify-between text-[#60716D] mb-2">
-                <span className="text-xs font-semibold">Pengguna Aktif</span>
+                <span className="text-xs font-semibold">Petugas Aktif</span>
                 <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
                   <Users className="w-4 h-4" />
                 </div>
@@ -429,13 +455,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
             <div {...cardProps('faskes')}>
               <div className="flex items-center justify-between text-[#60716D] mb-2">
-                <span className="text-xs font-semibold">Fasilitas Kesehatan</span>
+                <span className="text-xs font-semibold">Tempat Pelayanan</span>
                 <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
                   <Building2 className="w-4 h-4" />
                 </div>
               </div>
               <p className="text-2xl font-bold text-black tracking-tight">{stats.totalFacilities}</p>
-              <p className="text-[11px] text-[#60716D] mt-1">{stats.puskesmasCount} Puskesmas + Pustu & Posyandu</p>
+              <p className="text-[11px] text-[#60716D] mt-1">{stats.puskesmasCount} Puskesmas, Pustu & Posyandu</p>
             </div>
 
             <div {...cardProps('wilayah')}>
@@ -446,7 +472,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
               <p className="text-2xl font-bold text-black tracking-tight">{stats.kecamatanCount}</p>
-              <p className="text-[11px] text-[#60716D] mt-1">Kecamatan se-Kabupaten</p>
+              <p className="text-[11px] text-[#60716D] mt-1">Kecamatan di Pulau Taliabu</p>
             </div>
 
             <div {...cardProps('wilayah')}>
@@ -457,7 +483,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
               <p className="text-2xl font-bold text-black tracking-tight">{stats.villageCount}</p>
-              <p className="text-[11px] text-[#60716D] mt-1">Desa Binaan & Posyandu</p>
+              <p className="text-[11px] text-[#60716D] mt-1">Desa Binaan Posyandu</p>
             </div>
 
             <div {...cardProps('pengguna')} className={`${cardProps('pengguna').className} col-span-2 sm:col-span-1`}>
@@ -468,13 +494,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
               <p className="text-2xl font-bold text-black tracking-tight">{stats.kaderCount}</p>
-              <p className="text-[11px] text-[#397B94] font-medium mt-1">Plafon Plafond S2 Terpasang</p>
+              <p className="text-[11px] text-[#397B94] font-medium mt-1">Siap mendampingi warga</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Section 2: Governance & System Status */}
+      {/* Section 2: Keamanan Data & Sambungan Jaringan */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Governance Panel */}
         <Card className="flex flex-col justify-between">
@@ -482,17 +508,17 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-[#2E7D5B]" />
-                <h4 className="text-sm font-bold text-black">Tata Kelola & Kepatuhan</h4>
+                <h4 className="text-sm font-bold text-black">Kerahasiaan & Izin Warga</h4>
               </div>
               <span className="text-[11px] font-semibold text-[#397B94] bg-[#E1F5FE] px-2 py-0.5 rounded">
-                Governance
+                Privasi Terjaga
               </span>
             </div>
 
             <div className="space-y-3 text-xs">
               <div {...rowProps('versi-aturan')}>
                 <div>
-                  <p className="font-semibold text-black">Versi Aturan Klinis Aktif</p>
+                  <p className="font-semibold text-black">Pedoman Pemeriksaan Resmi</p>
                   <p className="text-[11px] text-[#60716D] mt-0.5">{stats.activeRuleVersion}</p>
                 </div>
                 <Badge variant="published" size="sm">
@@ -502,16 +528,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
               <div {...rowProps('persetujuan')}>
                 <div>
-                  <p className="font-semibold text-black">Rekaman Persetujuan Warga</p>
-                  <p className="text-[11px] text-[#60716D] mt-0.5">Consent foundation aktif</p>
+                  <p className="font-semibold text-black">Surat Izin Pemeriksaan Warga</p>
+                  <p className="text-[11px] text-[#60716D] mt-0.5">Izin tindak lanjut kesehatan</p>
                 </div>
-                <span className="text-sm font-bold text-black">{stats.activeConsents} Dokumen</span>
+                <span className="text-sm font-bold text-black">{stats.activeConsents} Surat</span>
               </div>
 
               <div className="p-3 bg-[#FFFACD]/40 rounded-lg border border-[#F5EC9C] text-[#8C6407]">
-                <p className="font-semibold">Batas Plafon Data Kader (S2 Ceiling)</p>
+                <p className="font-semibold">Privasi Data Warga Terlindungi</p>
                 <p className="text-[11px] mt-0.5 text-[#6D4C04]">
-                  Terkonfigurasi aman: Kader tidak menerima data tensi, gula, atau diagnosa medis dari server.
+                  Petugas posyandu dan kader hanya melihat data kontak dan jadwal pendampingan, menjaga kerahasiaan rekam medis warga.
                 </p>
               </div>
             </div>
@@ -526,7 +552,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 onClick={() => onNavigate('versi-aturan')}
                 rightIcon={<ArrowRight className="w-4 h-4" />}
               >
-                Kelola Versi Aturan Klinis
+                Lihat Pedoman Pemeriksaan
               </Button>
             </div>
           )}
@@ -538,7 +564,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <RefreshCw className="w-5 h-5 text-[#397B94]" />
-                <h4 className="text-sm font-bold text-black">Infrastruktur Sinkronisasi</h4>
+                <h4 className="text-sm font-bold text-black">Kondisi Jaringan & Pengiriman Data</h4>
               </div>
               <span className="text-[11px] font-semibold text-[#2E7D5B] bg-[#EBF7F2] px-2 py-0.5 rounded">
                 Sistem Siap
@@ -548,26 +574,26 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             <div className="space-y-3 text-xs">
               <div className="p-3 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] flex items-center justify-between">
                 <div>
-                  <p className="font-semibold text-black">Status Jaringan Saat Ini</p>
-                  <p className="text-[11px] text-[#60716D] mt-0.5">Mode operasional</p>
+                  <p className="font-semibold text-black">Koneksi Internet Saat Ini</p>
+                  <p className="text-[11px] text-[#60716D] mt-0.5">Kondisi jaringan di lokasi</p>
                 </div>
                 <Badge variant={isOffline ? 'warning' : 'active'} size="sm">
-                  {networkMode === 'ONLINE' ? 'Daring (Online)' : networkMode === 'SLOW' ? 'Jaringan Lambat' : 'Luring (Offline)'}
+                  {networkMode === 'ONLINE' ? 'Terhubung (Online)' : networkMode === 'SLOW' ? 'Sinyal Lemah' : 'Tanpa Internet (Offline)'}
                 </Badge>
               </div>
 
               <div {...rowProps('sinkronisasi')}>
                 <div>
-                  <p className="font-semibold text-black">Antrian Luring Idempotency</p>
-                  <p className="text-[11px] text-[#60716D] mt-0.5">Menunggu sinkronisasi</p>
+                  <p className="font-semibold text-black">Data Menunggu Terkirim</p>
+                  <p className="text-[11px] text-[#60716D] mt-0.5">Tersimpan di perangkat saat offline</p>
                 </div>
-                <span className="text-sm font-bold text-black">{stats.pendingSync} Item</span>
+                <span className="text-sm font-bold text-black">{stats.pendingSync} Data</span>
               </div>
 
               <div className="p-3 bg-[#E1F5FE] rounded-lg border border-[#BDE3F5] text-[#1E5D75]">
-                <p className="font-semibold">Kesiapan SATUSEHAT & Integrasi</p>
+                <p className="font-semibold">Bisa Digunakan Tanpa Sinyal</p>
                 <p className="text-[11px] mt-0.5 text-[#334643]">
-                  Bridge metadata faskes terstandarisasi dengan kode Kemenkes RI.
+                  Aplikasi tetap bisa dipakai mencatat di desa terpencil meski tidak ada jaringan internet.
                 </p>
               </div>
             </div>
@@ -582,7 +608,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 onClick={() => onNavigate('sinkronisasi')}
                 rightIcon={<ArrowRight className="w-4 h-4" />}
               >
-                Pusat Sinkronisasi
+                Kirim Data Sekarang
               </Button>
             </div>
           )}
@@ -594,7 +620,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <PlusCircle className="w-5 h-5 text-black" />
-                <h4 className="text-sm font-bold text-black">Aksi Cepat</h4>
+                <h4 className="text-sm font-bold text-black">Menu Cepat</h4>
               </div>
 
               <div className="space-y-2">
@@ -605,7 +631,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                   >
                     <div className="flex items-center gap-2.5">
                       <ClipboardList className="w-4 h-4 text-[#2E7D5B]" />
-                      <span>Cari & Lihat Kartu Warga (Registry)</span>
+                      <span>Cari & Lihat Data Warga</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
                   </button>
@@ -618,7 +644,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                   >
                     <div className="flex items-center gap-2.5">
                       <AlertCircle className="w-4 h-4 text-[#C99720]" />
-                      <span>Tinjau Antrean Masalah ({stats.openDqIssues})</span>
+                      <span>Perbaiki Data Warga ({stats.openDqIssues})</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
                   </button>
@@ -631,7 +657,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                   >
                     <div className="flex items-center gap-2.5">
                       <UserPlus className="w-4 h-4 text-[#397B94]" />
-                      <span>Tambah Akun Pengguna / Kader</span>
+                      <span>Tambah Akun Petugas / Kader</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
                   </button>
@@ -644,7 +670,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                   >
                     <div className="flex items-center gap-2.5">
                       <Building2 className="w-4 h-4 text-black" />
-                      <span>Kelola Fasilitas Kesehatan</span>
+                      <span>Daftar Posyandu & Puskesmas</span>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-[#60716D] group-hover:text-black" />
                   </button>
@@ -653,7 +679,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="p-3 mt-4 bg-[#F8FBFA] rounded-lg border border-[#D8E5E2] text-[11px] text-[#60716D]">
-              Setiap aksi modifikasi master data dan pengguna secara otomatis dicatat dalam Jejak Audit permanen.
+              Semua pencatatan dan perubahan data tersimpan aman di dalam sistem.
             </div>
           </Card>
         )}
@@ -665,8 +691,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           <div className="flex items-center gap-2">
             <History className="w-5 h-5 text-black" />
             <div>
-              <h4 className="text-sm font-bold text-black">Aktivitas & Jejak Audit Terbaru</h4>
-              <p className="text-xs text-[#60716D]">Rekaman peristiwa append-only sistem secara waktu-nyata</p>
+              <h4 className="text-sm font-bold text-black">Riwayat Aktivitas Terbaru</h4>
+              <p className="text-xs text-[#60716D]">Catatan kegiatan petugas dan kader yang baru saja dilakukan</p>
             </div>
           </div>
           {can('audit-log') && (
@@ -676,7 +702,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               onClick={() => onNavigate('audit-log')}
               rightIcon={<ArrowRight className="w-4 h-4" />}
             >
-              Lihat Semua Audit
+              Lihat Semua Riwayat
             </Button>
           )}
         </div>

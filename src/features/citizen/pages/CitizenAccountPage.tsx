@@ -15,12 +15,20 @@ import {
   Clock,
   Sparkles,
   X,
+  LayoutDashboard,
+  ArrowLeft,
 } from 'lucide-react';
 import { useCitizen } from '../context/CitizenContext';
+import { useAuth } from '../../../context/AuthContext';
 import { DocBadge } from '../components/DocBadge';
 
-export const CitizenAccountPage: React.FC = () => {
+interface CitizenAccountPageProps {
+  onExitToWebApp?: () => void;
+}
+
+export const CitizenAccountPage: React.FC<CitizenAccountPageProps> = ({ onExitToWebApp }) => {
   const { citizen, profile, logout } = useCitizen();
+  const { logout: authLogout } = useAuth();
 
   const [optOutMessage, setOptOutMessage] = useState(profile?.optOutMessaging || false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -33,6 +41,7 @@ export const CitizenAccountPage: React.FC = () => {
   const handleConfirmLogout = async () => {
     setShowLogoutModal(false);
     await logout();
+    await authLogout();
   };
 
   return (
@@ -215,11 +224,22 @@ export const CitizenAccountPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Logout Button */}
-      <div className="pt-2">
+      {/* Action Buttons */}
+      <div className="pt-2 space-y-2.5">
+        {onExitToWebApp && (
+          <button
+            onClick={onExitToWebApp}
+            className="w-full py-3 bg-[#00201C] hover:bg-[#00332D] text-white rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+          >
+            <LayoutDashboard className="w-4 h-4 text-teal-300" />
+            Kembali ke Aplikasi Portal Web
+          </button>
+        )}
+
+        {/* Logout Button */}
         <button
           onClick={() => setShowLogoutModal(true)}
-          className="w-full py-3 bg-white border border-red-200 text-red-700 hover:bg-red-50 rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-2 shadow-2xs"
+          className="w-full py-3 bg-white border border-red-200 text-red-700 hover:bg-red-50 rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
         >
           <LogOut className="w-4 h-4" />
           Keluar dari Akun

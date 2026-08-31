@@ -11,9 +11,11 @@ import {
   Download,
   AlertCircle,
   Search,
+  Eye,
 } from 'lucide-react';
 import { FieldWorkPackage, KaderAssignmentPayload } from '../../../types';
 import { fieldVisitService } from '../../../services/fieldVisitService';
+import { ActionIconButton } from '../../../components/common/ActionIconButton';
 import { KaderCitizenCardModal } from '../modals/KaderCitizenCardModal';
 import { RecordVisitModal } from '../modals/RecordVisitModal';
 
@@ -120,23 +122,47 @@ export const TodayVisitListPage: React.FC<TodayVisitListPageProps> = ({
 
   return (
     <div className="p-3.5 space-y-3 pb-24">
-      {/* Progress Card */}
-      <div className="bg-white p-3.5 rounded-2xl border border-[#D8E5E2] shadow-2xs space-y-2">
-        <div className="flex items-center justify-between text-xs">
-          <span className="font-bold text-black">Progres Kunjungan Hari Ini</span>
-          <span className="font-bold text-[#2E7D5B]">
-            Belum Dikunjungi: {remainingCount} / {totalCount}
-          </span>
+      {/* Kartu Ringkasan Target Harian Kader */}
+      <div className="bg-white p-4 rounded-2xl border border-[#D8E5E2] shadow-2xs space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-xs font-bold text-black uppercase tracking-wide">Target Kunjungan Hari Ini</h3>
+            <p className="text-[11px] text-[#60716D]">
+              {remainingCount === 0
+                ? '🎉 Luar biasa! Semua sasaran kunjungan hari ini sudah selesai.'
+                : `Masih ada ${remainingCount} rumah warga yang perlu dikunjungi.`}
+            </p>
+          </div>
+          <div className="text-right">
+            <span className="text-xl font-extrabold text-[#2E7D5B]">
+              {recordedCount}<span className="text-xs font-semibold text-[#60716D]">/{totalCount}</span>
+            </span>
+            <p className="text-[10px] text-[#60716D]">Warga Selesai</p>
+          </div>
         </div>
-        <div className="w-full bg-[#D8E5E2] h-2.5 rounded-full overflow-hidden">
+
+        {/* Progress Bar */}
+        <div className="w-full bg-[#E5E9E8] h-3 rounded-full overflow-hidden p-0.5">
           <div
-            className="bg-[#2E7D5B] h-full rounded-full transition-all duration-300"
+            className="bg-[#2E7D5B] h-full rounded-full transition-all duration-500"
             style={{ width: `${totalCount > 0 ? (recordedCount / totalCount) * 100 : 0}%` }}
           />
         </div>
-        <div className="flex items-center justify-between text-[10px] text-[#60716D]">
-          <span>{recordedCount} Warga Sudah Dicatat</span>
-          <span>Wilayah: {activePackage.villageName}</span>
+
+        {/* Status Kunjungan Singkat */}
+        <div className="grid grid-cols-3 gap-2 pt-1">
+          <div className="p-2 bg-[#EBF7F2] rounded-xl text-center border border-[#2E7D5B]/20">
+            <p className="text-sm font-bold text-[#2E7D5B]">{totalCount}</p>
+            <p className="text-[10px] text-[#334643] font-medium">Total Sasaran</p>
+          </div>
+          <div className="p-2 bg-[#FFFACD] rounded-xl text-center border border-yellow-300">
+            <p className="text-sm font-bold text-amber-950">{recordedCount}</p>
+            <p className="text-[10px] text-amber-900 font-medium">Sudah Dicatat</p>
+          </div>
+          <div className="p-2 bg-slate-50 rounded-xl text-center border border-slate-200">
+            <p className="text-sm font-bold text-slate-800">{remainingCount}</p>
+            <p className="text-[10px] text-slate-600 font-medium">Perlu Dikunjungi</p>
+          </div>
         </div>
       </div>
 
@@ -280,13 +306,15 @@ export const TodayVisitListPage: React.FC<TodayVisitListPageProps> = ({
                   <span>{isRecorded ? 'Ubah Catatan' : 'Catat Hasil'}</span>
                 </button>
 
-                <button
-                  type="button"
+                <ActionIconButton
+                  variant="outline"
+                  size="md"
                   onClick={() => setSelectedForCard(assignment)}
-                  className="min-h-[44px] px-3.5 bg-white border border-[#D8E5E2] text-[#60716D] hover:text-black rounded-xl font-semibold text-xs cursor-pointer"
-                >
-                  Detail
-                </button>
+                  icon={<Eye className="w-4 h-4 text-[#00201C]" />}
+                  tooltip="Buka Kartu & Rekam Riwayat Warga (SCR-KDR-C01)"
+                  tooltipPosition="left"
+                  className="min-h-[44px] min-w-[44px]"
+                />
               </div>
             </div>
           );

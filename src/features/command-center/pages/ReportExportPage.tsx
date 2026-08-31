@@ -54,7 +54,7 @@ export const ReportExportPage: React.FC = () => {
     setIsExportingPDF(true);
     try {
       await commandCenterExportService.exportExecutivePDF(activeUser);
-      addToast('Laporan PDF Eksekutif Bupati & Kadinkes berhasil diunduh', 'success');
+      addToast('Laporan PDF Eksekutif Dinas Kesehatan berhasil diunduh', 'success');
     } catch (err) {
       console.error('PDF Export failed:', err);
       addToast('Gagal menghasilkan file PDF', 'error');
@@ -121,7 +121,7 @@ export const ReportExportPage: React.FC = () => {
             <DocBadge code="SCR-DNK-B13" size="sm" />
           </div>
           <p className="text-xs text-gray-600 mt-1 max-w-2xl">
-            Pusat ekspor laporan resmi berintegritas tinggi untuk Pemda, Bupati, Dinas Kesehatan, dan Bappeda Kab. Pulau Taliabu dengan kepatuhan S0 Aggregate Only.
+            Pusat ekspor laporan resmi berintegritas tinggi untuk Pemda, Dinas Kesehatan, dan Bappeda Kab. Pulau Taliabu dengan kepatuhan S0 Aggregate Only.
           </p>
         </div>
 
@@ -179,7 +179,7 @@ export const ReportExportPage: React.FC = () => {
                 <FileText className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-sm font-bold text-white">Dokumen PDF Eksekutif Bupati & Kadinkes</h2>
+                <h2 className="text-sm font-bold text-white">Dokumen PDF Eksekutif Dinas Kesehatan</h2>
                 <span className="text-[11px] text-teal-400">Siap Cetak & Presentasi Resmi (A4 Multi-Page)</span>
               </div>
             </div>

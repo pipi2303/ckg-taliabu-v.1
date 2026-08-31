@@ -89,10 +89,10 @@ export const DrilldownModal: React.FC<DrilldownModalProps> = ({
             <div className="p-5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 space-y-2">
               <div className="flex items-center gap-2 font-semibold text-amber-300">
                 <Lock className="w-5 h-5" />
-                Akses Penelusuran Individual Dibatasi (P-BUP)
+                Akses Penelusuran Individual Dibatasi
               </div>
               <p className="text-xs text-amber-200/90 leading-relaxed">
-                Sesuai batasan kewenangan privasi Kepala Daerah (Bupati), penelusuran data tingkat individual/warga tidak diperkenankan. Anda dapat menggunakan Tampilan Kepala Daerah atau Ringkasan Wilayah untuk melihat gambaran makro.
+                Sesuai batasan kewenangan privasi akun Anda, penelusuran data tingkat individual/warga tidak diperkenankan. Anda dapat menggunakan Ringkasan Wilayah untuk melihat gambaran makro.
               </p>
             </div>
           ) : !isUnlocked ? (

@@ -121,7 +121,7 @@ export const CascadePage: React.FC = () => {
             CARE CONTINUUM ANALYTICS
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl font-bold text-black tracking-tight">Kaskade Tindak Lanjut Kabupaten</h1>
+            <h1 className="text-2xl font-bold text-black tracking-tight">Kaskade Tindak Lanjut Dinas Kesehatan</h1>
             <DocBadge code="SCR-DNK-B02" size="sm" />
           </div>
           <p className="text-xs text-gray-600 mt-1">

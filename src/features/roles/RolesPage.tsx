@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, ShieldAlert, Check, X, Info, Lock, Eye } from 'lucide-react';
+import { Shield, ShieldAlert, Check, X, Info, Lock, Eye, Users } from 'lucide-react';
 import { Card } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
 import { SensitivityBadge } from '../../components/common/SensitivityBadge';
@@ -7,6 +7,7 @@ import { permissionService, SENSITIVITY_DESCRIPTIONS } from '../../services/perm
 import { RoleDefinition, RoleId, SensitivityLevel } from '../../types';
 import { useModal } from '../../context/ModalContext';
 import { Button } from '../../components/common/Button';
+import { DinkesRoleComparisonInfographic } from './components/DinkesRoleComparisonInfographic';
 
 export const RolesPage: React.FC = () => {
   const roles = permissionService.getAllRoles();
@@ -230,6 +231,11 @@ export const RolesPage: React.FC = () => {
             </div>
           </div>
         </Card>
+      </div>
+
+      {/* Dinkes Role Comparison & Collaboration Infographic */}
+      <div className="pt-2">
+        <DinkesRoleComparisonInfographic />
       </div>
     </div>
   );

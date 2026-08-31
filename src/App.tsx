@@ -99,7 +99,7 @@ import { PreventionPriorityPage } from './features/ai-intelligence/pages/Prevent
 import { RegionalPtmForecastPage } from './features/ai-intelligence/pages/RegionalPtmForecastPage';
 
 const MainAppContent: React.FC = () => {
-  const { currentUser, isLoading } = useAuth();
+  const { currentUser, isLoading, switchDemoUser } = useAuth();
   const [activeNav, setActiveNav] = useState<string>('dashboard');
   const [viewMode, setViewMode] = useState<'AUTO' | 'KADER_MOBILE' | 'DESKTOP'>('AUTO');
   const { setOnNavigateCallback } = useTour();
@@ -155,79 +155,94 @@ const MainAppContent: React.FC = () => {
     );
   }
 
+  // Citizen role (Rusli Usman / Warga) renders the standalone CitizenCompanionView directly
+  const isCitizen = currentUser.roleId === 'CITIZEN';
+  if (isCitizen || activeNav === 'citizen-app') {
+    return (
+      <CitizenCompanionView
+        onExitToWebApp={async () => {
+          if (isCitizen) {
+            await switchDemoUser('usr-1');
+          }
+          setActiveNav('dashboard');
+        }}
+      />
+    );
+  }
+
   // Page titles and breadcrumbs map
   const pageMeta: Record<string, { title: string; breadcrumbs: string[] }> = {
-    dashboard: { title: 'Ringkasan Platform CKG', breadcrumbs: ['Beranda', 'Dashboard'] },
-    'prioritas-harian': { title: 'Prioritas Hari Ini (Daily Active Queue)', breadcrumbs: ['Care Orchestration', 'Prioritas Hari Ini'] },
-    'care-task': { title: 'Care Task Registry & Eskalasi', breadcrumbs: ['Care Orchestration', 'Care Task Registry'] },
-    'clinical-followup': { title: 'Layanan Klinis & Closed-Loop CKG', breadcrumbs: ['Care Orchestration', 'Layanan Klinis FKTP'] },
-    outreach: { title: 'Kaskade Penjangkauan & Kontak Warga', breadcrumbs: ['Care Orchestration', 'Kaskade Outreach'] },
-    'penugasan-lapangan': { title: 'Alokasi Penugasan Kader & Lapangan', breadcrumbs: ['Care Orchestration', 'Penugasan Kader'] },
-    'kader-app': { title: 'Kader Field App (Offline PWA)', breadcrumbs: ['Field Operations', 'Kader Field App'] },
-    'citizen-app': { title: 'Citizen Companion App — Sahabat Warga', breadcrumbs: ['Citizen Engagement', 'Sahabat Warga'] },
+    dashboard: { title: 'Beranda & Ringkasan Wilayah', breadcrumbs: ['Beranda', 'Ringkasan'] },
+    'prioritas-harian': { title: 'Daftar Tugas Prioritas Hari Ini', breadcrumbs: ['Tindak Lanjut', 'Tugas Hari Ini'] },
+    'care-task': { title: 'Jadwal & Batas Waktu Pelayanan', breadcrumbs: ['Tindak Lanjut', 'Jadwal Pelayanan'] },
+    'clinical-followup': { title: 'Pemeriksaan Dokter di Puskesmas', breadcrumbs: ['Tindak Lanjut', 'Pemeriksaan Dokter'] },
+    outreach: { title: 'Catatan Menghubungi Warga', breadcrumbs: ['Tindak Lanjut', 'Catatan Kontak Warga'] },
+    'penugasan-lapangan': { title: 'Pembagian Tugas Kunjungan Kader', breadcrumbs: ['Tindak Lanjut', 'Tugas Kunjungan Kader'] },
+    'kader-app': { title: 'Aplikasi Lapangan Kader (Bisa Tanpa Sinyal)', breadcrumbs: ['Layanan Lapangan', 'Aplikasi Kader'] },
+    'citizen-app': { title: 'Aplikasi Sahabat Warga CKG', breadcrumbs: ['Layanan Warga', 'Sahabat Warga'] },
+    'jadwal-kuota': { title: 'Jadwal Pelayanan Puskesmas', breadcrumbs: ['Tindak Lanjut', 'Jadwal Pelayanan'] },
+    'kandidat-putus': { title: 'Daftar Warga Belum Kontrol Ulang', breadcrumbs: ['Tindak Lanjut', 'Warga Belum Kontrol'] },
+    'beban-kerja': { title: 'Pembagian Beban Kerja Petugas', breadcrumbs: ['Tindak Lanjut', 'Beban Kerja'] },
+    'outreach-config': { title: 'Pengaturan Pesan Pengingat Warga', breadcrumbs: ['Tindak Lanjut', 'Aturan Pengingat'] },
     // Pemantauan & Outcome Meta
-    'pemantauan-aktif': { title: 'Pemantauan Aktif & Status Hasil Kontrol', breadcrumbs: ['Pemantauan & Outcome', 'Pemantauan Aktif'] },
-    'kontrol-harian': { title: 'Antrean Kontrol Hari Ini', breadcrumbs: ['Pemantauan & Outcome', 'Kontrol Hari Ini'] },
-    'menunggu-evaluasi': { title: 'Status & Antrean Evaluasi Hasil Kontrol', breadcrumbs: ['Pemantauan & Outcome', 'Menunggu Evaluasi'] },
-    'integritas-monitoring': { title: 'Audit Integritas & Pemantauan Berkelanjutan', breadcrumbs: ['Pemantauan & Outcome', 'Integritas Sistem'] },
-    'kepatuhan-kendala': { title: 'Tata Kelola Kepatuhan & Mitigasi Kendala', breadcrumbs: ['Pemantauan & Outcome', 'Kepatuhan & Kendala'] },
-    'kohort-kondisi': { title: 'Kohort Kondisi Kronis & Evaluasi Agregat', breadcrumbs: ['Pemantauan & Outcome', 'Kohort Kondisi'] },
-    'tren-outcome': { title: 'Tren Longitudinal Hasil Kontrol & Terapi', breadcrumbs: ['Pemantauan & Outcome', 'Tren Longitudinal'] },
-    'risiko-putus': { title: 'Risiko Putus Perawatan & Re-engagement', breadcrumbs: ['Pemantauan & Outcome', 'Risiko Putus Perawatan'] },
+    'pemantauan-aktif': { title: 'Pemantauan Kesehatan Pasien', breadcrumbs: ['Pemantauan', 'Siklus Pemantauan'] },
+    'kontrol-harian': { title: 'Daftar Warga Kontrol Hari Ini', breadcrumbs: ['Pemantauan', 'Kontrol Hari Ini'] },
+    'menunggu-evaluasi': { title: 'Evaluasi Status Kesehatan Pasien', breadcrumbs: ['Pemantauan', 'Evaluasi Pasien'] },
+    'integritas-monitoring': { title: 'Audit Standar Pelayanan Puskesmas', breadcrumbs: ['Pemantauan', 'Audit Pelayanan'] },
+    'kepatuhan-kendala': { title: 'Kepatuhan Minum Obat & Kendala Warga', breadcrumbs: ['Pemantauan', 'Kepatuhan Obat'] },
+    'kohort-kondisi': { title: 'Kelompok Pasien Berdasarkan Penyakit', breadcrumbs: ['Pemantauan', 'Kelompok Penyakit'] },
+    'tren-outcome': { title: 'Perkembangan Hasil Terapi & Kontrol', breadcrumbs: ['Pemantauan', 'Perkembangan Terapi'] },
+    'risiko-putus': { title: 'Peringatan Dini Pasien Berisiko Putus Obat', breadcrumbs: ['Pemantauan', 'Cegah Putus Obat'] },
     // Dinkes Command Center Meta
-    'dinkes-command-center': { title: 'Command Center untuk Pimpinan Daerah', breadcrumbs: ['Dinkes Command Center', 'Command Center Eksekutif'] },
-    'dinkes-ringkasan': { title: 'Ringkasan Eksekutif Kabupaten', breadcrumbs: ['Dinkes Command Center', 'Ringkasan Kabupaten'] },
-    'dinkes-impact-index': { title: 'CKG Impact Index (Coverage, Continuity, Outcome)', breadcrumbs: ['Dinkes Command Center', 'Impact Index'] },
-    'dinkes-kaskade': { title: 'Kaskade Tindak Lanjut & Drop-Off Kaskade', breadcrumbs: ['Dinkes Command Center', 'Kaskade Tindak Lanjut'] },
-    'dinkes-wilayah': { title: 'Analisis Wilayah & Sebaran Beban (Kecamatan / Desa)', breadcrumbs: ['Dinkes Command Center', 'Analisis Wilayah'] },
-    'dinkes-gap': { title: 'Disparitas Tindak Lanjut (Akses Warga vs Kapasitas Faskes)', breadcrumbs: ['Dinkes Command Center', 'Disparitas Tindak Lanjut'] },
-    'dinkes-kinerja-pkm': { title: 'Kinerja & Kapasitas Kontekstual Puskesmas', breadcrumbs: ['Dinkes Command Center', 'Kinerja Puskesmas'] },
-    'dinkes-penyebab-kendala': { title: 'Distribusi Penyebab & Kendala Terlaporkan', breadcrumbs: ['Dinkes Command Center', 'Penyebab & Kendala'] },
-    'dinkes-intervensi-populasi': { title: 'Intervensi Populasi & Program Dinkes', breadcrumbs: ['Dinkes Command Center', 'Intervensi Populasi'] },
-    'dinkes-perbandingan-periode': { title: 'Perbandingan Longitudinal Antar-Periode', breadcrumbs: ['Dinkes Command Center', 'Perbandingan Periode'] },
-    'dinkes-kualitas-data': { title: 'Kualitas Data, Sinkronisasi & Integrasi Wilayah', breadcrumbs: ['Dinkes Command Center', 'Kualitas & Integrasi'] },
-    'dinkes-kepala-daerah': { title: 'Tampilan Eksekutif Kepala Daerah (Bupati)', breadcrumbs: ['Dinkes Command Center', 'Tampilan Kepala Daerah'] },
-    'dinkes-laporan': { title: 'Laporan Resmi & Generator Dokumen Eksekutif', breadcrumbs: ['Dinkes Command Center', 'Laporan & Ekspor'] },
-    'dinkes-audit-drilldown': { title: 'Jejak Audit Penelusuran Data (Drilldown Log)', breadcrumbs: ['Dinkes Command Center', 'Audit Penelusuran'] },
+    'dinkes-command-center': { title: 'Pusat Komando Dinas Kesehatan', breadcrumbs: ['Dinkes Command Center', 'Ringkasan Pimpinan'] },
+    'dinkes-ringkasan': { title: 'Ringkasan Capaian Dinas Kesehatan', breadcrumbs: ['Dinkes Command Center', 'Ringkasan Wilayah'] },
+    'dinkes-impact-index': { title: 'Indeks Keberhasilan & Dampak CKG', breadcrumbs: ['Dinkes Command Center', 'Indeks Dampak CKG'] },
+    'dinkes-kaskade': { title: 'Alur Tindak Lanjut & Kunjungan Pasien', breadcrumbs: ['Dinkes Command Center', 'Alur Tindak Lanjut'] },
+    'dinkes-wilayah': { title: 'Peta Beban Kesehatan per Desa & Kecamatan', breadcrumbs: ['Dinkes Command Center', 'Analisis Wilayah'] },
+    'dinkes-gap': { title: 'Disparitas & Kesenjangan Pelayanan Faskes', breadcrumbs: ['Dinkes Command Center', 'Kesenjangan Wilayah'] },
+    'dinkes-kinerja-pkm': { title: 'Kinerja Pelayanan Seluruh Puskesmas', breadcrumbs: ['Dinkes Command Center', 'Kinerja Puskesmas'] },
+    'dinkes-penyebab-kendala': { title: 'Penyebab & Kendala Pasien Belum Kontrol', breadcrumbs: ['Dinkes Command Center', 'Kendala Pasien'] },
+    'dinkes-intervensi-populasi': { title: 'Program & Intervensi Kesehatan Masyarakat', breadcrumbs: ['Dinkes Command Center', 'Intervensi Masyarakat'] },
+    'dinkes-perbandingan-periode': { title: 'Perbandingan Capaian Antar-Bulan / Periode', breadcrumbs: ['Dinkes Command Center', 'Perbandingan Periode'] },
+    'dinkes-kualitas-data': { title: 'Kualitas Data & Status Pengiriman', breadcrumbs: ['Dinkes Command Center', 'Kualitas Data'] },
+    'dinkes-kepala-daerah': { title: 'Ringkasan Khusus Pimpinan Daerah', breadcrumbs: ['Dinkes Command Center', 'Laporan Pimpinan'] },
+    'dinkes-laporan': { title: 'Laporan Resmi & Cetak Dokumen (PDF/Excel)', breadcrumbs: ['Dinkes Command Center', 'Cetak Laporan'] },
+    'dinkes-audit-drilldown': { title: 'Penelusuran Riwayat Data', breadcrumbs: ['Dinkes Command Center', 'Penelusuran Data'] },
     // MVP 10 Meta (Advanced AI Intelligence)
-    'ai-tata-kelola': { title: 'Tata Kelola & Telemetri Keamanan Model AI', breadcrumbs: ['Advanced AI Layer', 'Tata Kelola & Safety AI'] },
-    'ai-prediksi-dropout': { title: 'Prediksi Risiko Putus Berobat (PA-01)', breadcrumbs: ['Advanced AI Layer', 'Prediksi Putus Berobat'] },
-    'ai-digital-twin': { title: 'Digital Twin & Profil Longitudinal Warga', breadcrumbs: ['Advanced AI Layer', 'Digital Twin Warga'] },
-    'ai-proyeksi-beban': { title: 'Proyeksi Beban Penyakit & Kebutuhan Obat 6-Bulan (PA-08)', breadcrumbs: ['Advanced AI Layer', 'Proyeksi Beban & Obat'] },
-    'ai-scenario-lab': { title: 'Laboratorium Simulasi Skenario Kebijakan Dinkes', breadcrumbs: ['Advanced AI Layer', 'Simulasi Skenario'] },
-    'ai-klaster-populasi': { title: 'Klaster Pola Populasi & Kendala Akses (PA-10)', breadcrumbs: ['Advanced AI Layer', 'Klaster Populasi'] },
-    'ai-kepatuhan-obat': { title: 'Sintesis Kepatuhan Obat & Efektivitas Intervensi (PRD-5)', breadcrumbs: ['Advanced AI Layer', 'Kepatuhan Obat'] },
-    'ai-kinerja-model': { title: 'Kinerja, Deteksi Drift & Uji Keadilan AI', breadcrumbs: ['Advanced AI Layer', 'Kinerja & Keadilan AI'] },
-    'ai-prioritas-pencegahan': { title: 'Prioritas Pencegahan Lanjut & Trajektori (PA-07)', breadcrumbs: ['Advanced AI Layer', 'Prioritas Pencegahan'] },
-    'ai-clinical-copilot': { title: 'Clinical Decision Copilot & Keamanan Resep', breadcrumbs: ['Advanced AI Layer', 'Clinical Copilot'] },
-    'ai-nudge-budaya': { title: 'Generator Edukasi & Nudge Budaya Warga', breadcrumbs: ['Advanced AI Layer', 'Nudge Budaya'] },
-    'ai-rute-maritim': { title: 'Optimasi Rute Maritim & Beban Kerja Kader', breadcrumbs: ['Advanced AI Layer', 'Optimasi Rute Maritim'] },
-    'future-ai': { title: 'Advanced AI Assistant — Tren PTM Wilayah', breadcrumbs: ['Advanced AI Layer', 'Tren PTM Wilayah'] },
-    'jadwal-kuota': { title: 'Jadwal Janji Temu & Kuota Layanan', breadcrumbs: ['Care Orchestration', 'Jadwal & Kuota'] },
-    'kandidat-putus': { title: 'Telaah Kandidat Putus Perawatan', breadcrumbs: ['Care Orchestration', 'Kandidat Putus'] },
-    'beban-kerja': { title: 'Distribusi Beban Kerja Petugas & Kader', breadcrumbs: ['Care Orchestration', 'Beban Kerja Tim'] },
-    'outreach-config': { title: 'Konfigurasi Jenjang & Pesan Kaskade', breadcrumbs: ['Care Orchestration', 'Konfigurasi Jenjang'] },
-    registry: { title: 'Registry CKG — Wilayah Kerja', breadcrumbs: ['Registry & Ingestion', 'Registry CKG'] },
-    'data-quality': { title: 'Antrean Data Bermasalah', breadcrumbs: ['Registry & Ingestion', 'Antrean Masalah'] },
-    'duplicate-review': { title: 'Peninjauan Duplikat Identitas', breadcrumbs: ['Registry & Ingestion', 'Peninjauan Duplikat'] },
-    'import-ckg': { title: 'Import Data Skrining CKG', breadcrumbs: ['Registry & Ingestion', 'Import Data CKG'] },
-    'ingestion-monitor': { title: 'Ingestion & Watermark Monitor', breadcrumbs: ['Registry & Ingestion', 'Ingestion Monitor'] },
-    'import-history': { title: 'Riwayat Import File CKG', breadcrumbs: ['Registry & Ingestion', 'Riwayat Import'] },
-    'source-mapping': { title: 'Pemetaan Kolom Sumber (Source Mapping)', breadcrumbs: ['Registry & Ingestion', 'Pemetaan Kolom'] },
-    stratifikasi: { title: 'Stratifikasi Risiko & Prioritas Triage', breadcrumbs: ['Stratifikasi & Prioritas', 'Stratifikasi & Triage'] },
-    wilayah: { title: 'Master Wilayah (Kecamatan & Desa)', breadcrumbs: ['Organization', 'Wilayah'] },
-    faskes: { title: 'Fasilitas Kesehatan', breadcrumbs: ['Organization', 'Fasilitas Kesehatan'] },
-    'future-facility': { title: 'Alokasi Logistik Faskes', breadcrumbs: ['Organization', 'Alokasi Logistik Faskes'] },
-    layanan: { title: 'Katalog Layanan & Intervensi', breadcrumbs: ['Organization', 'Layanan'] },
-    pengguna: { title: 'Manajemen Pengguna', breadcrumbs: ['Access Management', 'Pengguna'] },
-    peran: { title: 'Peran & Hak Akses Pengguna', breadcrumbs: ['Access Management', 'Peran & Hak Akses'] },
-    cakupan: { title: 'Hierarki Cakupan Wilayah', breadcrumbs: ['Access Management', 'Cakupan Wilayah'] },
-    persetujuan: { title: 'Tata Kelola Persetujuan (Consent)', breadcrumbs: ['Governance', 'Persetujuan'] },
-    'versi-aturan': { title: 'Tata Kelola Versi Aturan Klinis', breadcrumbs: ['Governance', 'Versi Aturan'] },
-    'audit-log': { title: 'Jejak Audit Append-Only', breadcrumbs: ['Governance', 'Jejak Audit'] },
-    sinkronisasi: { title: 'Pusat Sinkronisasi & Antrian Luring', breadcrumbs: ['System', 'Sinkronisasi'] },
-    integrasi: { title: 'Konektivitas & Integrasi', breadcrumbs: ['System', 'Integrasi'] },
-    pengaturan: { title: 'Pengaturan Platform', breadcrumbs: ['System', 'Pengaturan'] },
+    'ai-tata-kelola': { title: 'Tata Kelola & Keamanan Sistem Cerdas', breadcrumbs: ['Kecerdasan Buatan', 'Tata Kelola AI'] },
+    'ai-prediksi-dropout': { title: 'Prediksi Pasien Berisiko Putus Berobat', breadcrumbs: ['Kecerdasan Buatan', 'Prediksi Putus Obat'] },
+    'ai-digital-twin': { title: 'Profil Riwayat Kesehatan Terpadu Warga', breadcrumbs: ['Kecerdasan Buatan', 'Profil Kesehatan'] },
+    'ai-proyeksi-beban': { title: 'Proyeksi Kebutuhan Obat & Beban 6 Bulan', breadcrumbs: ['Kecerdasan Buatan', 'Proyeksi Obat'] },
+    'ai-scenario-lab': { title: 'Simulasi Dampak Anggaran & Kebijakan', breadcrumbs: ['Kecerdasan Buatan', 'Simulasi Kebijakan'] },
+    'ai-klaster-populasi': { title: 'Pengelompokan Karakteristik Warga', breadcrumbs: ['Kecerdasan Buatan', 'Klaster Warga'] },
+    'ai-kepatuhan-obat': { title: 'Efektivitas Obat & Kepatuhan Minum Obat', breadcrumbs: ['Kecerdasan Buatan', 'Efektivitas Terapi'] },
+    'ai-kinerja-model': { title: 'Uji Akurasi & Keadilan Antar-Pulau', breadcrumbs: ['Kecerdasan Buatan', 'Uji Keadilan'] },
+    'ai-prioritas-pencegahan': { title: 'Prioritas Pencegahan Dini', breadcrumbs: ['Kecerdasan Buatan', 'Pencegahan Dini'] },
+    'ai-clinical-copilot': { title: 'Asisten Pendukung Keputusan Dokter', breadcrumbs: ['Kecerdasan Buatan', 'Asisten Dokter'] },
+    'ai-nudge-budaya': { title: 'Panduan Edukasi & Bahasa Daerah', breadcrumbs: ['Kecerdasan Buatan', 'Edukasi Bahasa'] },
+    'ai-rute-maritim': { title: 'Optimasi Rute Puskesmas Keliling Laut', breadcrumbs: ['Kecerdasan Buatan', 'Rute Pusling Laut'] },
+    'future-ai': { title: 'Tren Penyakit Tidak Menular Wilayah', breadcrumbs: ['Kecerdasan Buatan', 'Tren Penyakit'] },
+    registry: { title: 'Data Warga Wilayah Kerja (Registry)', breadcrumbs: ['Data Warga', 'Data Warga'] },
+    'data-quality': { title: 'Perbaikan NIK & Data Belum Lengkap', breadcrumbs: ['Data Warga', 'Perbaikan Data'] },
+    'duplicate-review': { title: 'Pemeriksaan & Penggabungan Data Ganda', breadcrumbs: ['Data Warga', 'Data Ganda'] },
+    'import-ckg': { title: 'Unggah Berkas Pemeriksaan CKG', breadcrumbs: ['Data Warga', 'Unggah Berkas'] },
+    'ingestion-monitor': { title: 'Pemantauan Data Masuk', breadcrumbs: ['Data Warga', 'Status Perekaman'] },
+    'import-history': { title: 'Riwayat Unggah Berkas', breadcrumbs: ['Data Warga', 'Riwayat Berkas'] },
+    'source-mapping': { title: 'Penyesuaian Kolom Excel', breadcrumbs: ['Data Warga', 'Format Kolom'] },
+    stratifikasi: { title: 'Kategori Penilaian Risiko Kesehatan', breadcrumbs: ['Penilaian Risiko', 'Kategori Risiko'] },
+    wilayah: { title: 'Daftar Kecamatan & Desa Binaan', breadcrumbs: ['Wilayah & Faskes', 'Kecamatan & Desa'] },
+    faskes: { title: 'Daftar Fasilitas Pelayanan Kesehatan', breadcrumbs: ['Wilayah & Faskes', 'Puskesmas & RS'] },
+    'future-facility': { title: 'Ketersediaan Obat & Tenaga Kesehatan', breadcrumbs: ['Wilayah & Faskes', 'Stok Obat'] },
+    layanan: { title: 'Katalog Layanan & Prosedur Medis', breadcrumbs: ['Wilayah & Faskes', 'Layanan Medis'] },
+    pengguna: { title: 'Daftar Akun Petugas & Kader', breadcrumbs: ['Akun & Hak Akses', 'Petugas & Kader'] },
+    peran: { title: 'Hak Akses & Wewenang Pengguna', breadcrumbs: ['Akun & Hak Akses', 'Peran Pengguna'] },
+    cakupan: { title: 'Penugasan Wilayah Kerja Petugas', breadcrumbs: ['Akun & Hak Akses', 'Wilayah Tugas'] },
+    persetujuan: { title: 'Persetujuan Tindakan & Izin Warga (Consent)', breadcrumbs: ['Keamanan & Aturan', 'Persetujuan Warga'] },
+    'versi-aturan': { title: 'Standar & Pedoman Klinis Kemenkes', breadcrumbs: ['Keamanan & Aturan', 'Pedoman Klinis'] },
+    'audit-log': { title: 'Catatan Riwayat Kegiatan Sistem', breadcrumbs: ['Keamanan & Aturan', 'Riwayat Sistem'] },
+    sinkronisasi: { title: 'Kirim Data (Sinkronisasi Offline)', breadcrumbs: ['Sistem', 'Kirim Data'] },
+    integrasi: { title: 'Status Sambungan SATUSEHAT Kemenkes', breadcrumbs: ['Sistem', 'SATUSEHAT'] },
+    pengaturan: { title: 'Pengaturan Sistem & Glosarium Medis', breadcrumbs: ['Sistem', 'Pengaturan & Glosarium'] },
   };
 
   const currentMeta = pageMeta[activeNav] || { title: 'CKG Smart Care', breadcrumbs: ['Beranda'] };
@@ -270,7 +285,16 @@ const MainAppContent: React.FC = () => {
       case 'penugasan-lapangan':
         return <FieldAssignmentPage />;
       case 'citizen-app':
-        return <CitizenCompanionView />;
+        return (
+          <CitizenCompanionView
+            onExitToWebApp={async () => {
+              if (isCitizen) {
+                await switchDemoUser('usr-1');
+              }
+              setActiveNav('dashboard');
+            }}
+          />
+        );
       // MVP 8 Routes
       case 'pemantauan-aktif':
         return <ActiveMonitoringPage currentUser={currentUser} />;

@@ -270,33 +270,18 @@ export const DevSimulatorDrawer: React.FC<DevSimulatorDrawerProps> = ({
             )}
           </div>
 
-          {/* 6. Switch Demo Kader Persona */}
+          {/* 6. Akun Kader Aktif */}
           <div className="space-y-2 pt-3 border-t border-[#D8E5E2]">
             <label className="font-bold text-black flex items-center gap-1.5">
               <UserCheck className="w-4 h-4 text-[#2E7D5B]" />
-              Ganti Akun Demo Kader
+              Akun Kader Lapangan
             </label>
-            <div className="space-y-1.5">
-              <button
-                onClick={() => switchDemoUser('usr-9')}
-                className={`w-full text-left p-2 rounded-lg border text-xs cursor-pointer ${
-                  currentUser?.id === 'usr-9'
-                    ? 'bg-[#EBF7F2] border-[#2E7D5B] font-bold text-black'
-                    : 'bg-white border-[#D8E5E2] text-[#334643]'
-                }`}
-              >
-                Kader Marlina — Desa Bobong
-              </button>
-              <button
-                onClick={() => switchDemoUser('usr-10')}
-                className={`w-full text-left p-2 rounded-lg border text-xs cursor-pointer ${
-                  currentUser?.id === 'usr-10'
-                    ? 'bg-[#EBF7F2] border-[#2E7D5B] font-bold text-black'
-                    : 'bg-white border-[#D8E5E2] text-[#334643]'
-                }`}
-              >
-                Kader Fatimah — Desa Wayo
-              </button>
+            <div className="p-2.5 rounded-lg border border-[#2E7D5B] bg-[#EBF7F2] text-xs">
+              <div className="font-bold text-black flex items-center justify-between">
+                <span>Kader Marlina</span>
+                <span className="text-[10px] bg-[#2E7D5B] text-white px-1.5 py-0.5 rounded font-semibold">Aktif</span>
+              </div>
+              <div className="text-[11px] text-[#2E7D5B] mt-0.5">Wilayah Binaan: Desa Bobong (Puskesmas Bobong)</div>
             </div>
           </div>
 

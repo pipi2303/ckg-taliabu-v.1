@@ -103,12 +103,12 @@ export const TOUR_STEPS: TourStep[] = [
     placement: 'right',
     badge: 'DINKES COMMAND CENTER',
     title: 'Dinkes Command Center & Kaskade Populasi',
-    subtitle: 'Evaluasi Dampak CKG, Kaskade Susut 8-Tahap, & Tampilan Bupati',
+    subtitle: 'Evaluasi Dampak CKG, Kaskade Susut 8-Tahap, & Ringkasan Wilayah',
     content:
-      'Pusat kendali kesehatan populasi untuk Dinas Kesehatan dan Bupati. Menampilkan CKG Impact Index, identifikasi bottleneck rujukan maritim (kondisi gelombang laut perahu nelayan), perbandingan kinerja 8 Puskesmas, dan ekspor laporan eksekutif ber-checksum.',
+      'Pusat kendali kesehatan populasi untuk Dinas Kesehatan Kabupaten. Menampilkan CKG Impact Index, identifikasi bottleneck rujukan maritim (kondisi gelombang laut perahu nelayan), perbandingan kinerja 8 Puskesmas, dan ekspor laporan eksekutif ber-checksum.',
     highlights: [
       'CKG Impact Index: Tingkat 1 Skrining, Tingkat 2 Kontinuitas, Tingkat 3 Terkunci aman (OI-08)',
-      'Tampilan Khusus Bupati: Kedap privasi (S0 Aggregate Only, tanpa NIK warga)',
+      'Ringkasan Populasi: Kedap privasi (S0 Aggregate Only, tanpa NIK warga)',
       'Audit penelusuran drilldown berlandaskan Purpose Code resmi',
     ],
   },
@@ -135,9 +135,9 @@ export const TOUR_STEPS: TourStep[] = [
     placement: 'bottom',
     badge: 'SIMULASI PERAN',
     title: 'Simulasi Jaringan & Pengujian Peran Demo',
-    subtitle: 'Uji Hak Akses 10 Peran & Pengoperasian Mode Luring (Offline)',
+    subtitle: 'Uji Hak Akses Peran Demo & Pengoperasian Mode Luring (Offline)',
     content:
-      'Gunakan tombol di pojok kanan atas ini untuk beralih instan antar-peran demo (Bupati, Kadinkes, Dokter Puskesmas, Bidan Desa, Kader Posyandu) guna menguji pembatasan hak akses setiap peran, serta beralih ke mode Offline/Slow untuk menguji ketahanan sinkronisasi PWA.',
+      'Gunakan tombol di pojok kanan atas ini untuk beralih instan antar-peran demo (Kadinkes, Dokter Puskesmas, Bidan Desa, Kader Posyandu) guna menguji pembatasan hak akses setiap peran, serta beralih ke mode Offline/Slow untuk menguji ketahanan sinkronisasi PWA.',
     highlights: [
       'Ganti Peran Demo: Verifikasi kepatuhan akses data dan pembatasan wewenang',
       'Simulasi Jaringan: Uji coba penyimpanan lokal IndexedDB saat sinyal terputus',

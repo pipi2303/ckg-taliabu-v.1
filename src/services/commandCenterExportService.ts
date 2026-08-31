@@ -217,29 +217,21 @@ export const commandCenterExportService = {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(40, 50, 50);
     doc.text('• Evaluasi Maritim: Wilayah Lede, Jorjoga, dan Samuya menghadapi gelombang laut tinggi pada penyeberangan perahu.', 18, finalY + 16);
-    doc.text('• Kepatuhan S0 (Bupati Ceiling): Laporan ini hanya memuat agregat statistik tanpa identitas individu (tanpa NIK warga).', 18, finalY + 21);
+    doc.text('• Kepatuhan S0 (Aggregate Only): Laporan ini hanya memuat agregat statistik tanpa identitas individu (tanpa NIK warga).', 18, finalY + 21);
     doc.text('• Closed-Loop Verification: Seluruh penutupan tugas faskes wajib menyertakan bukti konfirmasi klinis dokter FKTP/RSUD.', 18, finalY + 26);
     doc.text('• Buffer Stock Obat: Disarankan penambahan stok Amlodipine & Metformin di Pustu terpencil sebelum musim angin barat.', 18, finalY + 31);
 
     // Formal Signatures
     const signY = finalY + 49;
     doc.setFontSize(8);
-    doc.text(`Bobong, ${printDate}`, 145, signY);
-    doc.text('Kepala Dinas Kesehatan Kab. Pulau Taliabu', 14, signY + 4);
-    doc.text('Bupati Kabupaten Pulau Taliabu', 140, signY + 4);
+    doc.text(`Bobong, ${printDate}`, 140, signY);
+    doc.text('Kepala Dinas Kesehatan Kab. Pulau Taliabu', 140, signY + 4);
 
     doc.setFont('helvetica', 'bold');
-    doc.text('dr. Hj. Nur Aini, M.Kes', 14, signY + 22);
+    doc.text('dr. Hj. Nur Aini, M.Kes', 140, signY + 22);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);
-    doc.text('NIP. 19780512 200501 2 008', 14, signY + 26);
-
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
-    doc.text('H. Aliong Mus', 140, signY + 22);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7);
-    doc.text('Bupati Pulau Taliabu', 140, signY + 26);
+    doc.text('NIP. 19780512 200501 2 008', 140, signY + 26);
 
     // ================= PAGE 2: FACILITY COMPARISON & MARITIME BARRIERS =================
     doc.addPage();
@@ -354,7 +346,7 @@ export const commandCenterExportService = {
       action: 'EXPORT',
       entityType: 'POPULATION_REPORT',
       entityId: tokenChecksum,
-      targetLabel: 'Ekspor Laporan PDF Eksekutif Bupati & Dinkes',
+      targetLabel: 'Ekspor Laporan PDF Eksekutif Dinas Kesehatan',
       description: `Format: PDF Resmi | Periode: ${snapshot.period} | Checksum: ${tokenChecksum}`,
       details: {
         fileName,

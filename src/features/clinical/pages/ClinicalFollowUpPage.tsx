@@ -167,17 +167,17 @@ export const ClinicalFollowUpPage: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold">Layanan Klinis & Closed-Loop CKG</h1>
+                <h1 className="text-xl font-bold">Pemeriksaan Dokter & Rujukan</h1>
                 <DocBadge code="SCR-PKM-D01" size="xs" />
                 <span className="px-2 py-0.5 text-[10px] font-bold rounded bg-teal-500/20 text-teal-300 border border-teal-500/30">
-                  MODUL KLINIS AKTIF
+                  PELAYANAN MEDIS
                 </span>
                 <span className="px-2 py-0.5 text-[10px] font-semibold rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                  S3/S4 Security Tier
+                  Data Medis Dilindungi
                 </span>
               </div>
               <p className="text-xs text-slate-300 mt-1">
-                Konfirmasi diagnostik FKTP, Peresepan Obat Terpadu, Registri Prolanis BPJS & Rujukan RSUD Bobong Pulau Taliabu.
+                Pemeriksaan dokter Puskesmas, peresepan obat kronis, pendaftaran Prolanis BPJS, dan rujukan ke RSUD Bobong.
               </p>
             </div>
           </div>

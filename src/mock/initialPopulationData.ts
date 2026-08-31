@@ -26,7 +26,7 @@ export const APPROVED_DRILLDOWN_PURPOSES: DrilldownPurposeDefinition[] = [
     code: 'AUDIT_KLINIK_DAN_MUTU',
     label: 'Audit Mutu Layanan & Keselamatan Pasien',
     description: 'Investigasi kasus tertahan, rujukan macet, atau risiko keselamatan pasien dalam kaskade tindak lanjut.',
-    allowedRoles: ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES', 'AUDITOR'],
+    allowedRoles: ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES'],
   },
   {
     id: 'drp-3',

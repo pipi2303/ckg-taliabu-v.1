@@ -197,7 +197,7 @@ export const CITIZEN_SCREEN_REGISTRY: ScreenDocItem[] = [
   {
     code: 'SCR-WRG-D02',
     group: 'Kelompok D — Hasil & Riwayat',
-    name: 'Riwayat longitudinal',
+    name: 'Riwayat longitudinal (Garis Sistole & Diastole)',
     phase: 'F2',
     plafon: 'S4',
     useCase: 'UC PSN-08',
@@ -205,11 +205,11 @@ export const CITIZEN_SCREEN_REGISTRY: ScreenDocItem[] = [
     processRef: 'CKG-BP-05 T8',
     tabTarget: 'RESULTS',
     rules: [
-      'Tren tekanan darah, gula darah, dan berat badan ditampilkan antar waktu.',
-      'Tren ditampilkan berdampingan dengan terapi pengobatan yang sedang berjalan pada periode itu.',
-      'Nilai dari sumber berbeda tidak digabung ke dalam satu garis tunggal.',
+      'Garis Sistole dan Garis Diastole ditampilkan berdampingan terhadap catatan waktu pemeriksaan.',
+      'Tren ditampilkan berdampingan dengan terapi pengobatan dan intervensi pada periode tersebut.',
+      'Nilai dari sumber berbeda (faskes vs mandiri) diberi label dan pembeda visual tegas.',
     ],
-    description: 'Grafik tren pemantauan indikator vital longitudinal dari waktu ke waktu.',
+    description: 'Grafik Garis Sistole dan Garis Diastole vs Catatan Waktu untuk pemantauan tren tekanan darah longitudinal.',
   },
   {
     code: 'SCR-WRG-D03',

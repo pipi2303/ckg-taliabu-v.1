@@ -1,6 +1,6 @@
 {
   "name": "CKG Smart Care Platform",
-  "description": "Platform Terpadu Tindak Lanjut Cek Kesehatan Gratis (CKG) Pulau Taliabu - Ingestion, Data Quality, Care Task Registry, Outreach Cascade, Kader Field App PWA, Layanan Klinis FKTP/RSUD, Citizen Companion App Sahabat Warga, Outcome Monitoring, Command Center Dinkes & Bupati, serta Advanced AI Predictive Intelligence & Clinical Copilot (MVP 1 - MVP 10)",
+  "description": "Platform Terpadu Tindak Lanjut Cek Kesehatan Gratis (CKG) Pulau Taliabu - Ingestion, Data Quality, Care Task Registry, Outreach Cascade, Kader Field App PWA, Layanan Klinis FKTP/RSUD, Citizen Companion App Sahabat Warga, Outcome Monitoring, Command Center Dinkes, serta Advanced AI Predictive Intelligence & Clinical Copilot (MVP 1 - MVP 10)",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

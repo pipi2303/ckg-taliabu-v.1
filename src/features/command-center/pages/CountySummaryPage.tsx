@@ -68,7 +68,7 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
     setIsExportingPDF(true);
     try {
       await commandCenterExportService.exportExecutivePDF(user);
-      addToast('Laporan PDF Eksekutif Bupati & Kadinkes berhasil diunduh', 'success');
+      addToast('Laporan PDF Eksekutif Dinas Kesehatan berhasil diunduh', 'success');
     } catch (err) {
       console.error('PDF Export error:', err);
       addToast('Gagal menghasilkan file PDF', 'error');
@@ -99,7 +99,7 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
     return (
       <div className="p-8 text-center text-gray-600 space-y-3">
         <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xs">Memuat ringkasan populasi Kabupaten Pulau Taliabu...</p>
+        <p className="text-xs">Memuat ringkasan populasi Dinas Kesehatan Pulau Taliabu...</p>
       </div>
     );
   }
@@ -111,16 +111,16 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs text-teal-400 font-semibold uppercase tracking-wider mb-1">
-            <Sparkles className="w-4 h-4" />
-            POPULATION HEALTH COMMAND CENTER
+          <div className="flex items-center gap-2 text-xs text-teal-700 font-semibold uppercase tracking-wider mb-1">
+            <Sparkles className="w-4 h-4 text-teal-600" />
+            PUSAT INFORMASI DINAS KESEHATAN
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl font-bold text-black tracking-tight">Ringkasan Eksekutif Kabupaten</h1>
+            <h1 className="text-2xl font-bold text-black tracking-tight">Ringkasan Capaian Dinas Kesehatan</h1>
             <DocBadge code="SCR-DNK-B01" size="sm" />
           </div>
           <p className="text-xs text-gray-600 mt-1">
-            Gambaran komprehensif cakupan skrining CKG, kontinuitas tindak lanjut klinis, titik penyusutan kaskade, dan distribusi kendala wilayah.
+            Ringkasan cakupan pemeriksaan Cek Kesehatan Gratis (CKG), kunjungan kontrol pasien di Puskesmas, dan kendala akses pelayanan warga.
           </p>
         </div>
 
@@ -150,13 +150,6 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
               <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-300" />
             )}
             <span>{isExportingExcel ? 'Menyusun Excel...' : 'Ekspor Excel'}</span>
-          </button>
-          <button
-            onClick={() => onNavigate?.('dinkes-kepala-daerah')}
-            className="px-3.5 py-2 text-xs font-medium rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
-          >
-            <span>Tampilan Bupati</span>
-            <ArrowRight className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => onNavigate?.('dinkes-laporan')}

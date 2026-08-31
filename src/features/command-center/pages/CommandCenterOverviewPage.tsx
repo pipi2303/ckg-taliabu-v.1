@@ -51,6 +51,7 @@ import {
   GapCategorySummary,
 } from '../../../services/commandCenterOverviewService';
 import { CascadeAggregation, FacilityPerformanceSummary } from '../../../types';
+import { ExecutiveKPIRechartsSection } from '../../dashboard/components/ExecutiveKPIRechartsSection';
 
 interface CommandCenterOverviewPageProps {
   onNavigate?: (navId: string) => void;
@@ -103,7 +104,7 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
   const [isExportingPDF, setIsExportingPDF] = useState<boolean>(false);
   const [isExportingExcel, setIsExportingExcel] = useState<boolean>(false);
 
-  // Governed drilldown (PC-07) — purpose-code gated + permanently audited, Bupati denied
+  // Governed drilldown (PC-07) — purpose-code gated + permanently audited, executive denied individual data
   const [isDrilldownOpen, setIsDrilldownOpen] = useState<boolean>(false);
   const [drilldownTitle, setDrilldownTitle] = useState<string>('');
   const [drilldownDescription, setDrilldownDescription] = useState<string>('');
@@ -375,6 +376,15 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
         </div>
       </div>
 
+      {/* Visualisasi 6 KPI Strategis Recharts (Grafik Batang & Grafik Area) */}
+      <ExecutiveKPIRechartsSection
+        theme="dark"
+        title="Visualisasi Recharts 6 KPI Strategis Dinas Kesehatan"
+        subtitle="Komparasi capaian 8 Puskesmas (Grafik Batang) dan tren longitudinal 6 bulan (Grafik Area) untuk Total Warga Diperiksa, Sudah Ditangani, Penurunan Risiko, Puskesmas Capai Target, Kesenjangan Rujukan, serta Kondisi Kesehatan Terkontrol."
+        docBadgeCode="SCR-DNK-A03-RECHARTS"
+        onNavigate={onNavigate}
+      />
+
       {/* Filter Wilayah */}
       <div className="flex items-center gap-2 flex-wrap p-3 rounded-xl bg-slate-900/60 border border-slate-800">
         <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5 shrink-0">
@@ -569,7 +579,7 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
             )}
             {isBupati && (
               <p className="text-[9px] text-slate-500 italic pt-1">
-                Rincian operasional per kasus tidak tersedia pada tampilan Kepala Daerah.
+                Rincian operasional per kasus tidak tersedia pada akun tingkat eksekutif.
               </p>
             )}
           </div>

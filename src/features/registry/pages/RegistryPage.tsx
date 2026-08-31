@@ -13,8 +13,13 @@ import {
   Upload,
   Calendar,
   Download,
+  TrendingUp,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { Button } from '../../../components/common/Button';
+import { ActionIconButton } from '../../../components/common/ActionIconButton';
+import { Tooltip } from '../../../components/common/Tooltip';
 import { Badge } from '../../../components/common/Badge';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { EntityTable, Column } from '../../../components/common/EntityTable';
@@ -25,6 +30,7 @@ import { citizenRepo, CitizenQueryResult } from '../../../repositories/citizenRe
 import { auditRepo } from '../../../repositories/auditRepo';
 import { rawStorage, subscribeToStorage } from '../../../repositories/storage';
 import { CitizenDetailDrawer } from '../components/CitizenDetailDrawer';
+import { AdminScreeningAreaGrowthChart } from '../../dashboard/components/AdminScreeningAreaGrowthChart';
 
 const MAX_EXPORT_ROWS = 500;
 
@@ -33,6 +39,7 @@ export const RegistryPage: React.FC<{ onNavigate?: (navId: string) => void }> = 
   const { openModal } = useModal();
   const { addToast } = useToast();
   const [isExporting, setIsExporting] = useState(false);
+  const [showAnalyticsChart, setShowAnalyticsChart] = useState(true);
 
   const [loading, setLoading] = useState(true);
   const [queryResult, setQueryResult] = useState<CitizenQueryResult>({
@@ -291,14 +298,14 @@ export const RegistryPage: React.FC<{ onNavigate?: (navId: string) => void }> = 
       header: 'Aksi',
       align: 'right',
       render: (row) => (
-        <Button
+        <ActionIconButton
           variant="outline"
           size="sm"
           onClick={() => setSelectedCitizenId(row.id)}
-          leftIcon={<Eye className="w-3.5 h-3.5" />}
-        >
-          Kartu Warga
-        </Button>
+          icon={<Eye className="w-4 h-4 text-[#00201C]" />}
+          tooltip="Buka Kartu & Rekam Medis Warga"
+          tooltipPosition="left"
+        />
       ),
     },
   ];
@@ -318,33 +325,42 @@ export const RegistryPage: React.FC<{ onNavigate?: (navId: string) => void }> = 
         </div>
 
         <div className="flex items-center gap-2">
+          <ActionIconButton
+            variant={showAnalyticsChart ? 'primary' : 'outline'}
+            size="sm"
+            onClick={() => setShowAnalyticsChart(!showAnalyticsChart)}
+            icon={<TrendingUp className="w-4 h-4" />}
+            tooltip={showAnalyticsChart ? 'Sembunyikan Grafik Tren Cakupan' : 'Tampilkan Grafik Tren Cakupan Wilayah'}
+            tooltipPosition="bottom"
+          />
           {onNavigate && (
-            <Button
+            <ActionIconButton
               variant="outline"
               size="sm"
               onClick={() => onNavigate('import-ckg')}
-              leftIcon={<Upload className="w-3.5 h-3.5" />}
-            >
-              Import Data CKG
-            </Button>
+              icon={<Upload className="w-4 h-4 text-[#00201C]" />}
+              tooltip="Impor Data CKG dari Excel (.xlsx) / Sistem Eksternal"
+              tooltipPosition="bottom"
+            />
           )}
-          <Button
+          <ActionIconButton
             variant="outline"
             size="sm"
             onClick={handleExport}
             disabled={isExporting}
-            leftIcon={<Download className="w-3.5 h-3.5" />}
-          >
-            {isExporting ? 'Mengekspor...' : 'Ekspor'}
-          </Button>
-          <Button
+            isLoading={isExporting}
+            icon={<Download className="w-4 h-4 text-[#00201C]" />}
+            tooltip="Ekspor Data Registry Warga ke Excel (.xlsx)"
+            tooltipPosition="bottom"
+          />
+          <ActionIconButton
             variant="ghost"
             size="sm"
             onClick={() => loadData(queryResult.page)}
-            leftIcon={<RefreshCw className="w-3.5 h-3.5" />}
-          >
-            Muat Ulang
-          </Button>
+            icon={<RefreshCw className="w-4 h-4 text-slate-600" />}
+            tooltip="Segarkan & Muat Ulang Data Terkini"
+            tooltipPosition="bottom"
+          />
         </div>
       </div>
 
@@ -386,6 +402,13 @@ export const RegistryPage: React.FC<{ onNavigate?: (navId: string) => void }> = 
           <p className="text-[11px] text-[#60716D] mt-0.5">Memerlukan peninjauan</p>
         </div>
       </div>
+
+      {/* Visualisasi Grafik Area Tren Pertumbuhan Cakupan Pemeriksaan */}
+      {showAnalyticsChart && (
+        <div className="transition-all duration-300">
+          <AdminScreeningAreaGrowthChart />
+        </div>
+      )}
 
       {/* Advanced Filter Toolbar */}
       <div className="bg-white p-4 rounded-xl border border-[#D8E5E2] space-y-3 shadow-2xs">

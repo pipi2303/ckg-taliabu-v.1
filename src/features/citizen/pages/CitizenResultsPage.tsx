@@ -16,6 +16,7 @@ import { useCitizen } from '../context/CitizenContext';
 import { CitizenActiveTab } from '../components/CitizenAppShell';
 import { SAFETY_MESSAGES } from '../../../services/citizenCopyDictionary';
 import { DocBadge } from '../components/DocBadge';
+import { BloodPressureTrendChart, BpDataPoint, DEFAULT_BP_HISTORY } from '../components/BloodPressureTrendChart';
 
 interface CitizenResultsPageProps {
   onBack: () => void;
@@ -25,8 +26,37 @@ interface CitizenResultsPageProps {
 export const CitizenResultsPage: React.FC<CitizenResultsPageProps> = ({ onBack, onNavigate }) => {
   const { citizen, healthValues } = useCitizen();
   const [activeSubTab, setActiveSubTab] = useState<'LATEST' | 'TREND' | 'EDUCATION' | 'SELF'>('LATEST');
-  const [selfBp, setSelfBp] = useState('130/85');
+  const [selfBp, setSelfBp] = useState('125/80');
   const [selfLogged, setSelfLogged] = useState(false);
+  const [additionalPoints, setAdditionalPoints] = useState<BpDataPoint[]>([]);
+
+  const handleAddSelfMeasurement = () => {
+    if (!selfBp || !selfBp.includes('/')) return;
+    const parts = selfBp.split('/');
+    const sys = parseInt(parts[0].trim(), 10) || 120;
+    const dia = parseInt(parts[1].trim(), 10) || 80;
+
+    const newPoint: BpDataPoint = {
+      id: `self-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      dateLabel: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }),
+      timeLabel: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIT',
+      eventNote: 'Pencatatan Mandiri di Rumah (Alat Tensimeter Pribadi)',
+      facility: 'Data Mandiri Warga',
+      examiner: citizen?.fullName || 'Warga Mandiri',
+      systolic: sys,
+      diastolic: dia,
+      pulse: 75,
+      status: sys < 130 && dia < 80 ? 'NORMAL' : sys < 140 ? 'PRE_HTN' : 'STAGE_1',
+      statusLabel: 'Data Mandiri (Perlu Konfirmasi Nakes)',
+      sourceType: 'SELF_MANDIRI',
+      therapyNote: 'Catatan mandiri harian untuk pemantauan pribadi',
+      isConfirmed: false,
+    };
+
+    setAdditionalPoints((prev) => [...prev, newPoint]);
+    setSelfLogged(true);
+  };
 
   return (
     <div className="p-4 space-y-5">
@@ -226,8 +256,9 @@ export const CitizenResultsPage: React.FC<CitizenResultsPageProps> = ({ onBack, 
               useCase="UC PSN-08"
               description="Tren tekanan darah & gula darah antar waktu berdampingan dengan terapi pengobatan."
               rules={[
-                'Tren ditampilkan berdampingan dengan terapi pengobatan periode tersebut.',
-                'Nilai dari sumber berbeda tidak digabung ke dalam satu garis tunggal.',
+                'Garis Sistole dan Garis Diastole ditampilkan berdampingan dengan catatan waktu.',
+                'Tren dipadukan dengan catatan terapi pengobatan pada periode tersebut.',
+                'Nilai dari sumber berbeda tidak digabung ke dalam satu garis tanpa pembeda.',
               ]}
               variant="purple"
               size="xs"
@@ -235,35 +266,11 @@ export const CitizenResultsPage: React.FC<CitizenResultsPageProps> = ({ onBack, 
             <span className="text-[10px] text-gray-500 font-mono">F2 · Tren Historis</span>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-[#D8E5E2] shadow-2xs space-y-3">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-              <span className="text-xs font-bold text-black flex items-center gap-1.5">
-                <TrendingUp className="w-4 h-4 text-purple-700" />
-                Tren Tekanan Darah (Sistolik / Diastolik)
-              </span>
-              <span className="text-[10px] text-gray-500">6 Bulan Terakhir</span>
-            </div>
-
-            {/* Simulated Trend Plot */}
-            <div className="space-y-2 pt-1">
-              <div className="flex items-center justify-between text-xs p-2 bg-[#F8FBFA] rounded-lg">
-                <span className="font-medium text-gray-700">12 Okt 2025 (Skrining Awal)</span>
-                <span className="font-bold font-mono text-amber-800">145/95 mmHg</span>
-              </div>
-              <div className="flex items-center justify-between text-xs p-2 bg-[#F8FBFA] rounded-lg">
-                <span className="font-medium text-gray-700">18 Nov 2025 (Faskes Terapi)</span>
-                <span className="font-bold font-mono text-teal-800">138/88 mmHg</span>
-              </div>
-              <div className="flex items-center justify-between text-xs p-2 bg-[#E1F5FE]/60 rounded-lg border border-[#b2e3f8]">
-                <span className="font-bold text-black">15 Des 2025 (Terkini)</span>
-                <span className="font-extrabold font-mono text-emerald-800">130/82 mmHg</span>
-              </div>
-            </div>
-
-            <div className="p-2.5 bg-purple-50 rounded-xl text-[11px] text-purple-900 leading-relaxed border border-purple-200">
-              <strong>Catatan Terapi Berjalan:</strong> Mengonsumsi Amlodipine 5mg teratur. Menunjukkan tren penurunan yang baik menuju batas optimal.
-            </div>
-          </div>
+          {/* Dedicated Blood Pressure Trend Chart with Systole & Diastole lines vs Catatan Waktu */}
+          <BloodPressureTrendChart
+            customData={additionalPoints.length > 0 ? [...DEFAULT_BP_HISTORY, ...additionalPoints] : undefined}
+            onScheduleClick={() => onNavigate('SCHEDULE')}
+          />
         </div>
       )}
 
@@ -346,17 +353,22 @@ export const CitizenResultsPage: React.FC<CitizenResultsPageProps> = ({ onBack, 
             </div>
 
             <button
-              onClick={() => setSelfLogged(true)}
-              className="w-full py-2.5 bg-[#00201C] text-white text-xs font-bold rounded-xl hover:bg-[#102521] transition-all flex items-center justify-center gap-1.5"
+              onClick={handleAddSelfMeasurement}
+              className="w-full py-2.5 bg-[#00201C] text-white text-xs font-bold rounded-xl hover:bg-[#102521] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
-              Simpan Data Mandiri
+              Simpan Data Mandiri ke Riwayat
             </button>
 
             {selfLogged && (
-              <div className="p-2.5 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-xl text-xs flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>Pengukuran mandiri <strong>{selfBp} mmHg</strong> berhasil dicatat sebagai catatan pribadi.</span>
+              <div className="p-2.5 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-xl text-xs space-y-1">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <span>Pengukuran mandiri <strong>{selfBp} mmHg</strong> berhasil dicatat.</span>
+                </div>
+                <p className="text-[11px] text-emerald-800 pl-6">
+                  Data ini masuk ke catatan pribadi dan dapat Anda tinjau pada tab <strong>Tren (D02)</strong>.
+                </p>
               </div>
             )}
           </div>

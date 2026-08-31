@@ -36,6 +36,33 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
   const puskesmasList = facilities.filter((f) => f.type === 'PUSKESMAS');
   const selectedFacility = puskesmasList.find((f) => f.id === targetFacilityId) || puskesmasList[0];
 
+  const isKadis = currentUser?.roleId === 'KEPALA_DINAS';
+  const isAnalyst = currentUser?.roleId === 'ANALYST_DINKES';
+
+  const modalTitle = isKadis
+    ? 'Kirim Arahan Resmi Kepala Dinas'
+    : isAnalyst
+    ? 'Kirim Rekomendasi Analisis Dinkes'
+    : 'Teruskan Perhatian ke Puskesmas';
+
+  const modalSubtitle = isKadis
+    ? 'Kirim instruksi kebijakan & supervisi langsung ke Kepala Puskesmas'
+    : isAnalyst
+    ? 'Kirim catatan rekomendasi tindak lanjut & observasi data ke Puskesmas'
+    : 'Kirim sinyal koordinasi operasional tanpa mengubah data klinis';
+
+  const defaultMsgPlaceholder = isKadis
+    ? 'Tuliskan arahan resmi pimpinan terkait tindak lanjut percepatan atau dukungan sumber daya...'
+    : isAnalyst
+    ? 'Tuliskan rekomendasi analisis data, pola risiko wilayah, atau usulan intervensi faskes...'
+    : 'Tuliskan arahan tindak lanjut atau tawaran dukungan bantuan logistik/transportasi dari Dinkes...';
+
+  const submitButtonLabel = isKadis
+    ? 'Kirim Arahan Resmi'
+    : isAnalyst
+    ? 'Kirim Rekomendasi Analis'
+    : 'Kirim Sinyal Perhatian';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser || !selectedFacility) return;
@@ -48,7 +75,9 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
         gapType,
         affectedCount,
         period: 'Agustus 2026',
-        message: message || `Perhatian Dinkes terkait akumulasi ${affectedCount} kasus pada kategori ${gapType}. Mohon evaluasi tindak lanjut.`,
+        message: message || (isKadis 
+          ? `[Arahan Kadis] Evaluasi khusus atas akumulasi ${affectedCount} kasus pada kategori ${gapType}.`
+          : `[Rekomendasi Analis] Perhatian atas akumulasi ${affectedCount} kasus pada kategori ${gapType}.`),
         creatorUser: currentUser,
       });
 
@@ -71,12 +100,18 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
         {/* Header */}
         <div className="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-900">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <div className={`p-2.5 rounded-xl border ${
+              isKadis 
+                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                : isAnalyst 
+                ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' 
+                : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+            }`}>
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-semibold text-white">Teruskan Perhatian ke Puskesmas</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Kirim sinyal koordinasi operasional tanpa mengubah data klinis</p>
+              <h3 className="text-base font-semibold text-white">{modalTitle}</h3>
+              <p className="text-xs text-slate-400 mt-0.5">{modalSubtitle}</p>
             </div>
           </div>
           <button
@@ -93,7 +128,9 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
             <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
-            <h4 className="text-base font-semibold text-white">Sinyal Perhatian Berhasil Dikirim</h4>
+            <h4 className="text-base font-semibold text-white">
+              {isKadis ? 'Arahan Resmi Berhasil Dikirim' : isAnalyst ? 'Rekomendasi Analis Berhasil Terkirim' : 'Sinyal Perhatian Berhasil Dikirim'}
+            </h4>
             <p className="text-xs text-slate-300">
               Notifikasi telah diteruskan ke dashboard Kepala Puskesmas & PJ CKG terkait.
             </p>
@@ -142,10 +179,12 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
             </div>
 
             <div>
-              <label className="block font-medium text-slate-300 mb-1.5">Catatan Arahan Dinkes:</label>
+              <label className="block font-medium text-slate-300 mb-1.5">
+                {isKadis ? 'Instruksi Arahan Kebijakan Kadis:' : isAnalyst ? 'Catatan Rekomendasi Analis:' : 'Catatan Arahan Dinkes:'}
+              </label>
               <textarea
                 rows={3}
-                placeholder="Tuliskan arahan tindak lanjut atau tawaran dukungan bantuan logistik/transportasi dari Dinkes..."
+                placeholder={defaultMsgPlaceholder}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-1 focus:ring-teal-500 focus:outline-none resize-none"
@@ -167,10 +206,16 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-medium transition flex items-center gap-1.5"
+                className={`px-4 py-2 rounded-xl text-white font-medium transition flex items-center gap-1.5 cursor-pointer ${
+                  isKadis 
+                    ? 'bg-emerald-600 hover:bg-emerald-500' 
+                    : isAnalyst 
+                    ? 'bg-sky-600 hover:bg-sky-500' 
+                    : 'bg-teal-600 hover:bg-teal-500'
+                }`}
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>{isSubmitting ? 'Mengirim...' : 'Kirim Sinyal Perhatian'}</span>
+                <span>{isSubmitting ? 'Mengirim...' : submitButtonLabel}</span>
               </button>
             </div>
           </form>

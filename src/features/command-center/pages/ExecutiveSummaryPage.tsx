@@ -65,7 +65,7 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
     setIsExportingPDF(true);
     try {
       await commandCenterExportService.exportExecutivePDF(user);
-      addToast('Laporan PDF Eksekutif Bupati & Kadinkes berhasil diunduh', 'success');
+      addToast('Laporan PDF Eksekutif berhasil diunduh', 'success');
     } catch (err) {
       console.error('PDF Export error:', err);
       addToast('Gagal menghasilkan berkas PDF', 'error');
@@ -108,7 +108,7 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
         <div>
           <div className="flex items-center gap-2 text-xs text-amber-400 font-bold uppercase tracking-wider mb-1">
             <Shield className="w-4 h-4" />
-            RINGKASAN EKSEKUTIF KEPALA DAERAH (BUPATI PULAU TALIABU)
+            RINGKASAN EKSEKUTIF PEMERINTAH DAERAH
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="text-2xl font-black text-white tracking-tight">Status Kesehatan Populasi CKG</h1>
@@ -124,14 +124,14 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
             onClick={handleExportPDF}
             disabled={isExportingPDF}
             className="px-4 py-2.5 text-xs font-bold rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white shadow-lg transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
-            title="Unduh Laporan Eksekutif Bupati dalam Format PDF"
+            title="Unduh Laporan Eksekutif dalam Format PDF"
           >
             {isExportingPDF ? (
               <RefreshCw className="w-4 h-4 animate-spin" />
             ) : (
               <Download className="w-4 h-4" />
             )}
-            <span>{isExportingPDF ? 'Menyusun PDF...' : 'Ekspor PDF Bupati'}</span>
+            <span>{isExportingPDF ? 'Menyusun PDF...' : 'Ekspor PDF Eksekutif'}</span>
           </button>
           <button
             onClick={handleExportExcel}
@@ -161,7 +161,7 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
         <div className="flex items-center gap-2">
           <Lock className="w-4 h-4 text-teal-400" />
           <span>
-            Mode Privasi P-BUP Aktif: Tampilan ini secara ketat <strong>hanya menyajikan data agregat terstandarisasi</strong> tanpa memuat data identitas individual/NIK warga.
+            Mode Privasi S0 Aktif: Tampilan ini secara ketat <strong>hanya menyajikan data agregat terstandarisasi</strong> tanpa memuat data identitas individual/NIK warga.
           </span>
         </div>
         <span className="text-[11px] font-mono text-slate-500">ISO-27701 Governed</span>
@@ -213,7 +213,7 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
           </div>
         </div>
 
-        {/* Priority Action Areas for Bupati */}
+        {/* Priority Strategic Action Areas */}
         <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-4">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <h3 className="text-sm font-bold text-white flex items-center gap-2">

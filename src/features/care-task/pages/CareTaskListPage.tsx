@@ -14,6 +14,7 @@ import {
   ArrowUpDown,
   Download,
   AlertCircle,
+  Eye,
 } from 'lucide-react';
 import { CareTask, HealthFacility, TaskStatus, TaskType, Village } from '../../../types';
 import { careTaskRepo } from '../../../repositories/careTaskRepo';
@@ -22,6 +23,8 @@ import { rawStorage } from '../../../repositories/storage';
 import { careTaskService, OrchestrationGapItem } from '../../../services/careTaskService';
 import { useAuth } from '../../../context/AuthContext';
 import { Button } from '../../../components/common/Button';
+import { ActionIconButton } from '../../../components/common/ActionIconButton';
+import { Tooltip } from '../../../components/common/Tooltip';
 import { CareTaskDetailDrawer } from '../components/CareTaskDetailDrawer';
 import { TaskAssignmentModal } from '../components/TaskAssignmentModal';
 import { TaskClosureModal } from '../components/TaskClosureModal';
@@ -161,17 +164,17 @@ export const CareTaskListPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <Button
+          <ActionIconButton
             variant="outline"
             size="sm"
             onClick={() => {
               loadTasks();
               checkGaps();
             }}
-            leftIcon={<RefreshCw className="w-3.5 h-3.5" />}
-          >
-            Segarkan
-          </Button>
+            icon={<RefreshCw className="w-4 h-4 text-[#00201C]" />}
+            tooltip="Segarkan & Sinkronisasi Daftar Care Task"
+            tooltipPosition="bottom"
+          />
         </div>
       </div>
 
@@ -436,7 +439,7 @@ export const CareTaskListPage: React.FC = () => {
 
                       <td className="p-3.5 text-right whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center justify-end gap-1.5">
-                          <Button
+                          <ActionIconButton
                             variant="outline"
                             size="sm"
                             onClick={() => {
@@ -444,12 +447,18 @@ export const CareTaskListPage: React.FC = () => {
                               setIsAssignModalOpen(true);
                               setIsReassign(!!task.assignedToUserId);
                             }}
-                          >
-                            {task.assignedToUserId ? 'Alihkan' : 'Tugaskan'}
-                          </Button>
-                          <Button variant="primary" size="sm" onClick={() => handleOpenTask(task)}>
-                            Rincian
-                          </Button>
+                            icon={<UserCheck className="w-3.5 h-3.5 text-[#00201C]" />}
+                            tooltip={task.assignedToUserId ? 'Alihkan Petugas / Kader Pendamping' : 'Tugaskan Petugas / Kader Pendamping'}
+                            tooltipPosition="left"
+                          />
+                          <ActionIconButton
+                            variant="primary"
+                            size="sm"
+                            onClick={() => handleOpenTask(task)}
+                            icon={<Eye className="w-3.5 h-3.5 text-white" />}
+                            tooltip="Buka Rincian & Protokol Intervensi Tugas"
+                            tooltipPosition="left"
+                          />
                         </div>
                       </td>
                     </tr>

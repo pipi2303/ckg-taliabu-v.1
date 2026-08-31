@@ -79,25 +79,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: roleId === 'KEPALA_DINAS' ? 'Dashboard Eksekutif' : 'Beranda Puskesmas',
           icon: <LayoutDashboard className="w-4 h-4" />,
           badge: roleId === 'KEPALA_DINAS' ? 'SCR-DNK-A02' : 'SCR-PKM-A02',
-          docSpec: roleId === 'KEPALA_DINAS' ? 'Command Center Kabupaten · F1 · Plafon S3 Agregat · UC DNK-01' : 'Beranda Puskesmas · F1 · Plafon S3 · UC PKM-21, PKM-06',
+          docSpec: roleId === 'KEPALA_DINAS' ? 'Command Center Dinas Kesehatan · F1 · Plafon S3 Agregat · UC DNK-01' : 'Beranda Puskesmas · F1 · Plafon S3 · UC PKM-21, PKM-06',
           badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60',
         },
       ],
     },
     {
-      title: 'CARE ORCHESTRATION',
+      title: 'TINDAK LANJUT & PENDAMPINGAN',
       items: [
-        { id: 'prioritas-harian', label: 'Prioritas Hari Ini', icon: <Sparkles className="w-4 h-4 text-emerald-400" />, badge: 'SCR-PKM-B01', docSpec: 'Prioritas Hari Ini (Antrean Kapasitas Layanan) · F1 · Plafon S4 · UC PKM-06, PKM-07', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'care-task', label: 'Papan Tenggat & SLA', icon: <ListTodo className="w-4 h-4" />, badge: 'SCR-PKM-B05', docSpec: 'Papan Tenggat & Jenjang Pengingat · F1 · Plafon S2 · UC PKM-09', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'clinical-followup', label: 'Layanan Klinis & FKTP', icon: <Stethoscope className="w-4 h-4 text-teal-400" />, badge: 'SCR-PKM-D01', docSpec: 'Layanan Klinis & Konfirmasi FKTP (D01-D07) · F1 · Plafon S4 · UC PKM-12-16', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'outreach', label: 'Hasil Kontak & Outreach', icon: <MessageSquare className="w-4 h-4" />, badge: 'SCR-PKM-B03', docSpec: 'Hasil Kontak & Eskalasi Outreach · F1 ⚠ UX-OI-03 · Plafon S2 · UC PKM-09/10', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
-        { id: 'penugasan-lapangan', label: 'Penugasan Outreach', icon: <MapPin className="w-4 h-4" />, badge: 'SCR-PKM-B02', docSpec: 'Penugasan Outreach Kader Posyandu/Pustu · F1 · Plafon S2 · UC PKM-08', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'kader-app', label: 'Kader Field App', icon: <Smartphone className="w-4 h-4 text-emerald-400" />, badge: 'SCR-KDR-B01', docSpec: 'Aplikasi Lapangan Kader Posyandu (SCR-KDR-A01 s.d E02) · F1 · Plafon S2', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
-        { id: 'citizen-app', label: 'Citizen Sahabat Warga', icon: <Smartphone className="w-4 h-4 text-amber-300" />, badge: 'SCR-WRG-B01', docSpec: 'Aplikasi Sahabat Warga CKG (SCR-WRG-A01 s.d F03 · 17 Layar)', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
-        { id: 'jadwal-kuota', label: 'Jadwal & Kuota', icon: <Calendar className="w-4 h-4" />, badge: 'SCR-PKM-G01', docSpec: 'Jadwal & Kuota Layanan FKTP · F1 · Plafon S0 · UC PKM-23', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'kandidat-putus', label: 'Kandidat Putus Perawatan', icon: <UserX className="w-4 h-4" />, badge: 'SCR-PKM-B04', docSpec: 'Drop-out & Kandidat Putus Perawatan · F1 · Plafon S3 · UC PKM-11', badgeColor: 'bg-rose-950/90 text-rose-300 border-rose-700/60' },
-        { id: 'beban-kerja', label: 'Beban Kerja Tim', icon: <Briefcase className="w-4 h-4" />, badge: 'SCR-PKM-G02', docSpec: 'Distribusi Beban Kerja Petugas & Kader · F2 · Plafon S2 · UC PKM-22', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'outreach-config', label: 'Konfigurasi Jenjang', icon: <Sliders className="w-4 h-4" />, badge: 'SCR-PKM-B05', docSpec: 'Konfigurasi Jenjang Eskalasi & SLA Outreach · F1 · Plafon S2 · UC PKM-09', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'prioritas-harian', label: 'Tugas Prioritas Hari Ini', icon: <Sparkles className="w-4 h-4 text-emerald-400" />, badge: 'SCR-PKM-B01', docSpec: 'Daftar Tugas Penting yang Perlu Ditangani Hari Ini', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'care-task', label: 'Jadwal & Batas Waktu', icon: <ListTodo className="w-4 h-4" />, badge: 'SCR-PKM-B05', docSpec: 'Jadwal dan Batas Waktu Pelayanan Warga', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'clinical-followup', label: 'Pemeriksaan Dokter di Puskesmas', icon: <Stethoscope className="w-4 h-4 text-teal-400" />, badge: 'SCR-PKM-D01', docSpec: 'Jadwal dan Hasil Pemeriksaan Dokter di Puskesmas', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'outreach', label: 'Catatan Menghubungi Warga', icon: <MessageSquare className="w-4 h-4" />, badge: 'SCR-PKM-B03', docSpec: 'Catatan Petugas Saat Menghubungi dan Mengingatkan Warga', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
+        { id: 'penugasan-lapangan', label: 'Tugas Kunjungan Kader', icon: <MapPin className="w-4 h-4" />, badge: 'SCR-PKM-B02', docSpec: 'Pembagian Tugas Kunjungan Rumah untuk Kader Posyandu', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'kader-app', label: 'Aplikasi Lapangan Kader', icon: <Smartphone className="w-4 h-4 text-emerald-400" />, badge: 'SCR-KDR-B01', docSpec: 'Aplikasi HP untuk Kader Mencatat Warga Tanpa Perlu Internet', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'citizen-app', label: 'Aplikasi Sahabat Warga', icon: <Smartphone className="w-4 h-4 text-amber-300" />, badge: 'SCR-WRG-B01', docSpec: 'Aplikasi Pendamping Kesehatan Mandiri untuk Warga', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
+        { id: 'jadwal-kuota', label: 'Jadwal Pelayanan Puskesmas', icon: <Calendar className="w-4 h-4" />, badge: 'SCR-PKM-G01', docSpec: 'Pengaturan Jadwal dan Kuota Harian Pasien Puskesmas', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'kandidat-putus', label: 'Warga Belum Kontrol Ulang', icon: <UserX className="w-4 h-4" />, badge: 'SCR-PKM-B04', docSpec: 'Daftar Warga yang Sudah Waktunya Periksa Ulang Namun Belum Datang', badgeColor: 'bg-rose-950/90 text-rose-300 border-rose-700/60' },
+        { id: 'beban-kerja', label: 'Pembagian Beban Kerja', icon: <Briefcase className="w-4 h-4" />, badge: 'SCR-PKM-G02', docSpec: 'Pemerataan Tugas Antar Petugas Puskesmas dan Kader', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'outreach-config', label: 'Pengaturan Pesan Pengingat', icon: <Sliders className="w-4 h-4" />, badge: 'SCR-PKM-B05', docSpec: 'Aturan Waktu dan Format Pesan Pengingat untuk Warga', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
       ],
     },
     {
@@ -121,8 +121,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       title: 'DINKES COMMAND CENTER',
       items: [
-        { id: 'dinkes-command-center', label: 'Command Center Eksekutif', icon: <Sparkles className="w-4 h-4 text-teal-400" />, badge: 'SCR-DNK-A03', docSpec: 'Command Center untuk Pimpinan Daerah · F1 · Plafon S3 Agregat · UC DNK-01', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
-        { id: 'dinkes-ringkasan', label: 'Ringkasan Kabupaten', icon: <Sparkles className="w-4 h-4 text-teal-400" />, badge: 'SCR-DNK-A02', docSpec: 'Command Center Kabupaten · F1 · Plafon S3 Agregat · UC DNK-01', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'dinkes-ringkasan', label: 'Ringkasan Dinas Kesehatan', icon: <Sparkles className="w-4 h-4 text-teal-400" />, badge: 'SCR-DNK-A02', docSpec: 'Command Center Dinas Kesehatan · F1 · Plafon S3 Agregat · UC DNK-01', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'dinkes-impact-index', label: 'CKG Impact Index', icon: <Activity className="w-4 h-4 text-emerald-400" />, badge: 'SCR-DNK-B01', docSpec: 'CKG Impact Index (Level 1-3) · F1 (OI-08) · Plafon S3 Agregat · UC DNK-02', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'dinkes-kaskade', label: 'Kaskade Tindak Lanjut', icon: <Layers className="w-4 h-4 text-sky-400" />, badge: 'SCR-DNK-B02', docSpec: 'Rel Kaskade & Analisis Drop-off · F1 · Plafon S3 Agregat · UC DNK-02/05', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'dinkes-wilayah', label: 'Analisis Wilayah', icon: <MapPin className="w-4 h-4 text-teal-300" />, badge: 'SCR-DNK-C01', docSpec: 'Peta Risiko Desa & Kecamatan · F1 (DS-OI-06) · Plafon S3 Agregat · UC DNK-03', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
@@ -132,73 +131,71 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'dinkes-intervensi-populasi', label: 'Intervensi Populasi', icon: <Sparkles className="w-4 h-4 text-emerald-300" />, badge: 'SCR-DNK-E01', docSpec: 'Penetapan & Pelacakan Intervensi Populasi · F2 · Plafon S3 Agregat · UC DNK-07', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
         { id: 'dinkes-perbandingan-periode', label: 'Perbandingan Periode', icon: <TrendingUp className="w-4 h-4 text-sky-300" />, badge: 'SCR-DNK-B03', docSpec: 'Perbandingan Metrik Antar-Periode · F3 · Plafon S3 Agregat · UC DNK-09', badgeColor: 'bg-purple-950/90 text-purple-300 border-purple-700/60' },
         { id: 'dinkes-kualitas-data', label: 'Kualitas & Integrasi', icon: <Clock className="w-4 h-4 text-slate-300" />, badge: 'SCR-DNK-F03', docSpec: 'Status Integrasi INT-01 s.d INT-06 & Kualitas Data · F1 · Plafon S0 · UC SYS-01/09', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
-        { id: 'dinkes-kepala-daerah', label: 'Tampilan Kepala Daerah', icon: <ShieldCheck className="w-4 h-4 text-amber-300" />, badge: 'SCR-DNK-F06', docSpec: 'Ringkasan Eksekutif Kepala Daerah / Bupati · F2 · Plafon S3 Agregat · UC DNK-01', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'dinkes-laporan', label: 'Laporan & Ekspor', icon: <FileText className="w-4 h-4 text-teal-400" />, badge: 'SCR-DNK-F05', docSpec: 'Ekspor Laporan Bupati & Kemenkes (PDF/Excel) · F2 · Plafon S3 Agregat · UC DNK-10', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'dinkes-audit-drilldown', label: 'Audit Penelusuran', icon: <History className="w-4 h-4 text-slate-400" />, badge: 'SCR-DNK-C03', docSpec: 'Penelusuran Agregat ke Individu Terkendali CMP-09 · F2 · Plafon S1 · UC DNK-06', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'dinkes-laporan', label: 'Laporan & Ekspor', icon: <FileText className="w-4 h-4 text-teal-400" />, badge: 'SCR-DNK-F05', docSpec: 'Ekspor Laporan Resmi Eksekutif & Kemenkes (PDF/Excel) · F2 · Plafon S3 Agregat · UC DNK-10', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
       ],
     },
     {
-      title: 'PEMANTAUAN & OUTCOME',
+      title: 'PEMANTAUAN KESEHATAN',
       items: [
-        { id: 'pemantauan-aktif', label: 'Siklus Pemantauan', icon: <Activity className="w-4 h-4 text-teal-400" />, badge: 'SCR-PKM-F01', docSpec: 'Siklus Pemantauan Berjalan · F1 · Plafon S3 · UC PKM-20', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'kontrol-harian', label: 'Kunjungan Kontrol', icon: <Calendar className="w-4 h-4 text-emerald-400" />, badge: 'SCR-PKM-F02', docSpec: 'Kunjungan Kontrol Ulang Terjadwal · F1 · Plafon S4 · UC PKM-18', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'menunggu-evaluasi', label: 'Evaluasi Status Terkendali', icon: <Clock className="w-4 h-4 text-amber-400" />, badge: 'SCR-PKM-F04', docSpec: 'Penetapan Status Terkendali · F1 ⚠ OI-08 · Plafon S4 · UC PKM-18', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
-        { id: 'integritas-monitoring', label: 'Integritas & Audit PKM', icon: <ShieldCheck className="w-4 h-4 text-sky-400" />, badge: 'SCR-PKM-G06', docSpec: 'Jejak Audit & Integritas Puskesmas CMP-09 · F1 · Plafon S1 · UC DNK-12', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'kepatuhan-kendala', label: 'Kepatuhan & Penyebab', icon: <HeartHandshake className="w-4 h-4 text-teal-300" />, badge: 'SCR-PKM-F03', docSpec: 'Kepatuhan Minum Obat & Penyebab CMP-07 · F1 ⚠ UX-OI-03 · Plafon S4 · UC PKM-19', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
-        { id: 'kohort-kondisi', label: 'Kohort per Penyakit', icon: <Layers className="w-4 h-4 text-indigo-400" />, badge: 'SCR-PKM-F06', docSpec: 'Kohort Penyakit Kronis (HT, DM, Dislipidemia) · F2 · Plafon S3 · UC PKM-20', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'tren-outcome', label: 'Tren Outcome Pasien', icon: <TrendingUp className="w-4 h-4 text-emerald-300" />, badge: 'SCR-PKM-F07', docSpec: 'Tren Outcome Pasien Longitudinal Bersama Terapi · F2 · Plafon S4 · UC PKM-18', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'risiko-putus', label: 'Risiko Putus Perawatan', icon: <AlertTriangle className="w-4 h-4 text-rose-400" />, badge: 'SCR-PKM-B04', docSpec: 'Deteksi Dini & Pencegahan Drop-out Perawatan · F1 · Plafon S3 · UC PKM-11', badgeColor: 'bg-rose-950/90 text-rose-300 border-rose-700/60' },
+        { id: 'pemantauan-aktif', label: 'Siklus Pemantauan', icon: <Activity className="w-4 h-4 text-teal-400" />, badge: 'SCR-PKM-F01', docSpec: 'Pemantauan Kondisi Pasien Berjalan', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'kontrol-harian', label: 'Jadwal Kontrol Ulang', icon: <Calendar className="w-4 h-4 text-emerald-400" />, badge: 'SCR-PKM-F02', docSpec: 'Warga Terjadwal Kontrol Hari Ini', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'menunggu-evaluasi', label: 'Evaluasi Status Kesehatan', icon: <Clock className="w-4 h-4 text-amber-400" />, badge: 'SCR-PKM-F04', docSpec: 'Penetapan Kondisi Terkendali / Butuh Rujukan', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
+        { id: 'integritas-monitoring', label: 'Audit Kepatuhan Puskesmas', icon: <ShieldCheck className="w-4 h-4 text-sky-400" />, badge: 'SCR-PKM-G06', docSpec: 'Pemeriksaan Integritas & Standar Pelayanan', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'kepatuhan-kendala', label: 'Kepatuhan & Kendala Obat', icon: <HeartHandshake className="w-4 h-4 text-teal-300" />, badge: 'SCR-PKM-F03', docSpec: 'Pencatatan Kepatuhan Minum Obat & Kendala Warga', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
+        { id: 'kohort-kondisi', label: 'Kelompok Penyakit (Hipertensi/DM)', icon: <Layers className="w-4 h-4 text-indigo-400" />, badge: 'SCR-PKM-F06', docSpec: 'Daftar Pasien per Jenis Penyakit', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'tren-outcome', label: 'Perkembangan Hasil Terapi', icon: <TrendingUp className="w-4 h-4 text-emerald-300" />, badge: 'SCR-PKM-F07', docSpec: 'Grafik Perbaikan Tekanan Darah & Gula Darah', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'risiko-putus', label: 'Cegah Putus Berobat', icon: <AlertTriangle className="w-4 h-4 text-rose-400" />, badge: 'SCR-PKM-B04', docSpec: 'Peringatan Dini Warga Berisiko Berhenti Minum Obat', badgeColor: 'bg-rose-950/90 text-rose-300 border-rose-700/60' },
       ],
     },
     {
-      title: 'REGISTRY & INGESTION',
+      title: 'DATA WARGA & SKRINING',
       items: [
-        { id: 'registry', label: 'Registry Wilayah Kerja', icon: <ClipboardList className="w-4 h-4" />, badge: 'SCR-PKM-C01', docSpec: 'Registry Wilayah Kerja CKG · F1 · Plafon S4 · UC PKM-02', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'data-quality', label: 'Antrean Data Bermasalah', icon: <AlertCircle className="w-4 h-4" />, badge: 'SCR-PKM-C04', docSpec: 'Antrean Data Bermasalah (NIK/Anomali) · F1 · Plafon S3 · UC PKM-05', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
-        { id: 'duplicate-review', label: 'Peninjauan Duplikat', icon: <Users className="w-4 h-4" />, badge: 'SCR-PKM-C05', docSpec: 'Peninjauan & Resolusi Duplikasi Identitas · F2 · Plafon S3 · UC PKM-05', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'import-ckg', label: 'Import Data CKG', icon: <FileText className="w-4 h-4" />, badge: 'SCR-REG-04', docSpec: 'Ingestion & Impor Berkas CSV/Excel CKG · F1', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'ingestion-monitor', label: 'Ingestion Monitor', icon: <Activity className="w-4 h-4" />, badge: 'SCR-SYS-03', docSpec: 'Monitoring Pipeline Ingestion Realtime', badgeColor: 'bg-sky-950/90 text-sky-300 border-sky-700/60' },
-        { id: 'import-history', label: 'Riwayat Import', icon: <History className="w-4 h-4" />, badge: 'SCR-REG-05', docSpec: 'Riwayat & Audit Log Impor Berkas CKG', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
-        { id: 'source-mapping', label: 'Pemetaan Kolom', icon: <Share2 className="w-4 h-4" />, badge: 'SCR-REG-06', docSpec: 'Pemetaan Kolom & Schema Matching Ingestion', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
+        { id: 'registry', label: 'Data Warga (Registry)', icon: <ClipboardList className="w-4 h-4" />, badge: 'SCR-PKM-C01', docSpec: 'Daftar Seluruh Warga Berdasarkan NIK & Wilayah', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'data-quality', label: 'Perbaikan Data', icon: <AlertCircle className="w-4 h-4" />, badge: 'SCR-PKM-C04', docSpec: 'Koreksi NIK / Data Belum Lengkap', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
+        { id: 'duplicate-review', label: 'Pemeriksaan Data Ganda', icon: <Users className="w-4 h-4" />, badge: 'SCR-PKM-C05', docSpec: 'Penyatuan Data Warga yang Tercatat Ganda', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'import-ckg', label: 'Impor Berkas CKG', icon: <FileText className="w-4 h-4" />, badge: 'SCR-REG-04', docSpec: 'Unggah Data Excel / CSV Hasil Pemeriksaan Masal', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'ingestion-monitor', label: 'Status Perekaman', icon: <Activity className="w-4 h-4" />, badge: 'SCR-SYS-03', docSpec: 'Pemantauan Proses Masuknya Data Pemeriksaan', badgeColor: 'bg-sky-950/90 text-sky-300 border-sky-700/60' },
+        { id: 'import-history', label: 'Riwayat Impor', icon: <History className="w-4 h-4" />, badge: 'SCR-REG-05', docSpec: 'Catatan Berkas yang Pernah Diunggah', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
+        { id: 'source-mapping', label: 'Format Kolom Berkas', icon: <Share2 className="w-4 h-4" />, badge: 'SCR-REG-06', docSpec: 'Penyesuaian Kolom Excel dengan Sistem', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
       ],
     },
     {
-      title: 'STRATIFIKASI & PRIORITAS',
+      title: 'PENILAIAN RISIKO KESEHATAN',
       items: [
-        { id: 'stratifikasi', label: 'Dasar Klasifikasi CRS', icon: <Activity className="w-4 h-4" />, badge: 'SCR-PKM-C03', docSpec: 'Dasar Klasifikasi & Aturan Deterministik CRS · F1 · Plafon S4 · UC PKM-03/04', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'stratifikasi', label: 'Kategori Risiko (Kemenkes)', icon: <Activity className="w-4 h-4" />, badge: 'SCR-PKM-C03', docSpec: 'Kriteria Penilaian Tingkat Risiko Hijau, Kuning, Merah', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
       ],
     },
     {
-      title: 'ORGANIZATION',
+      title: 'WILAYAH & FASKES',
       items: [
-        { id: 'wilayah', label: 'Wilayah Binaan', icon: <MapPin className="w-4 h-4" />, badge: 'SCR-DNK-F01', docSpec: 'Master Data Wilayah & Desa Binaan · F1 · Plafon S1 · UC DNK-11', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
-        { id: 'faskes', label: 'Fasilitas & Rujukan', icon: <Building2 className="w-4 h-4" />, badge: 'SCR-PKM-E04', docSpec: 'Daftar Jejaring Fasilitas Rujukan FKTP · F2 · Plafon S0 · UC PKM-17, DNK-11', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'future-facility', label: 'Alokasi Logistik Faskes', icon: <Building2 className="w-4 h-4" />, badge: 'SCR-PKM-E05', docSpec: 'Kapasitas Lab, Stok Obat PTM & Kecukupan Tenaga per Faskes · F3', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'layanan', label: 'Layanan', icon: <Stethoscope className="w-4 h-4" />, badge: 'SCR-ADM-03', docSpec: 'Katalog Layanan & Prosedur FKTP/FKRTL', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
+        { id: 'wilayah', label: 'Kecamatan & Desa', icon: <MapPin className="w-4 h-4" />, badge: 'SCR-DNK-F01', docSpec: 'Daftar Kecamatan, Desa, dan Dusun Binaan', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'faskes', label: 'Puskesmas, Pustu & RS', icon: <Building2 className="w-4 h-4" />, badge: 'SCR-PKM-E04', docSpec: 'Daftar Fasilitas Kesehatan & Jejaring Rujukan', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'future-facility', label: 'Stok Obat & Tenaga Medis', icon: <Building2 className="w-4 h-4" />, badge: 'SCR-PKM-E05', docSpec: 'Kesiapan Obat, Laboratorium & Petugas di Faskes', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'layanan', label: 'Katalog Layanan Medis', icon: <Stethoscope className="w-4 h-4" />, badge: 'SCR-ADM-03', docSpec: 'Daftar Jenis Pemeriksaan & Tindakan Medis', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
       ],
     },
     {
-      title: 'ACCESS MANAGEMENT',
+      title: 'AKUN & HAK AKSES',
       items: [
-        { id: 'pengguna', label: 'Akun Staf & Kader', icon: <Users className="w-4 h-4" />, badge: 'SCR-PKM-G03', docSpec: 'Akun & Peran Puskesmas · F1 · Plafon S1 · UC PKM-24', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'peran', label: 'Peran & Hak Akses', icon: <ShieldCheck className="w-4 h-4" />, badge: 'SCR-ADM-02', docSpec: 'Manajemen Peran & Kebijakan Hak Akses RBAC · F1', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
-        { id: 'cakupan', label: 'Cakupan Wilayah', icon: <Map className="w-4 h-4" />, badge: 'SCR-DNK-A01', docSpec: 'Penetapan Identitas & Cakupan Wilayah Pengguna · F1 · Plafon S0 · UC DNK-12', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'pengguna', label: 'Petugas & Kader', icon: <Users className="w-4 h-4" />, badge: 'SCR-PKM-G03', docSpec: 'Daftar Akun Tenaga Kesehatan & Kader Posyandu', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'peran', label: 'Peran Pengguna', icon: <ShieldCheck className="w-4 h-4" />, badge: 'SCR-ADM-02', docSpec: 'Pengaturan Izin Akses (Dokter, Bidan, Kader, dll)', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'cakupan', label: 'Wilayah Tugas', icon: <Map className="w-4 h-4" />, badge: 'SCR-DNK-A01', docSpec: 'Penugasan Lokasi Kerja Masing-Masing Petugas', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
       ],
     },
     {
-      title: 'GOVERNANCE',
+      title: 'KEAMANAN & ATURAN',
       items: [
-        { id: 'persetujuan', label: 'Persetujuan', icon: <FileCheck2 className="w-4 h-4" />, badge: 'SCR-GOV-01', docSpec: 'Persetujuan Tindakan & Consent Medis Warga · S0', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
-        { id: 'versi-aturan', label: 'Versi Aturan CRS', icon: <GitBranch className="w-4 h-4" />, badge: 'SCR-DNK-F02', docSpec: 'Tata Kelola Versi Aturan Klinis CRS & Simulasi Dampak · F1 · Plafon S0 · UC DNK-11', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
-        { id: 'audit-log', label: 'Jejak Audit Puskesmas', icon: <History className="w-4 h-4" />, badge: 'SCR-PKM-G06', docSpec: 'Jejak Audit Puskesmas CMP-09 · F1 · Plafon S1 · UC DNK-12 turunan', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'persetujuan', label: 'Persetujuan Warga (Consent)', icon: <FileCheck2 className="w-4 h-4" />, badge: 'SCR-GOV-01', docSpec: 'Surat Izin Pemeriksaan & Tindak Lanjut dari Warga', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
+        { id: 'versi-aturan', label: 'Pedoman Klinis Kemenkes', icon: <GitBranch className="w-4 h-4" />, badge: 'SCR-DNK-F02', docSpec: 'Daftar Standar Baku Penilaian Kesehatan', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'audit-log', label: 'Catatan Riwayat Sistem', icon: <History className="w-4 h-4" />, badge: 'SCR-PKM-G06', docSpec: 'Riwayat Setiap Aktivitas Petugas di Dalam Sistem', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
       ],
     },
     {
-      title: 'SYSTEM',
+      title: 'SISTEM & KONEKSI',
       items: [
-        { id: 'sinkronisasi', label: 'Sinkronisasi', icon: <RefreshCw className="w-4 h-4" />, badge: 'SCR-SYS-01', docSpec: 'Sinkronisasi Data Offline-to-Online PWA Lapangan', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'integrasi', label: 'Integrasi', icon: <Share2 className="w-4 h-4" />, badge: 'SCR-SYS-02', docSpec: 'Monitoring Konektor API & Integrasi SATUSEHAT', badgeColor: 'bg-sky-950/90 text-sky-300 border-sky-700/60' },
-        { id: 'pengaturan', label: 'Pengaturan', icon: <Settings className="w-4 h-4" />, badge: 'SCR-SYS-04', docSpec: 'Pengaturan Konfigurasi Parameter Sistem', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
+        { id: 'sinkronisasi', label: 'Kirim Data (Sinkron)', icon: <RefreshCw className="w-4 h-4" />, badge: 'SCR-SYS-01', docSpec: 'Kirim Data dari HP / Laptop Saat Ada Sinyal', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'integrasi', label: 'Koneksi SATUSEHAT', icon: <Share2 className="w-4 h-4" />, badge: 'SCR-SYS-02', docSpec: 'Status Hubungan dengan Server Kemenkes RI', badgeColor: 'bg-sky-950/90 text-sky-300 border-sky-700/60' },
+        { id: 'pengaturan', label: 'Pengaturan & Glosarium', icon: <Settings className="w-4 h-4" />, badge: 'SCR-SYS-04', docSpec: 'Pengaturan Sistem & Glosarium Istilah Medis', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
       ],
     },
   ];
@@ -213,12 +210,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
       .filter((section) => section.items.length > 0);
 
     // Untuk Kepala Dinas Kesehatan, posisikan group DINKES COMMAND CENTER tepat di urutan ke-2 (setelah OVERVIEW)
+    // serta pastikan group KEAMANAN & ATURAN tersembunyi
     if (roleId === 'KEPALA_DINAS') {
       const dinkesIndex = sections.findIndex((s) => s.title === 'DINKES COMMAND CENTER');
       if (dinkesIndex > 1) {
         const [dinkesSection] = sections.splice(dinkesIndex, 1);
         sections.splice(1, 0, dinkesSection);
       }
+      return sections.filter((s) => s.title !== 'KEAMANAN & ATURAN');
+    }
+
+    // Untuk Kepala Puskesmas, sembunyikan group AKUN & HAK AKSES, KEAMANAN & ATURAN, dan SISTEM & KONEKSI
+    if (roleId === 'KEPALA_PUSKESMAS') {
+      const hiddenGroups = ['AKUN & HAK AKSES', 'KEAMANAN & ATURAN', 'KEAMANAN & HAK AKSES', 'SISTEM & KONEKSI', 'SISTEM & KOREKSI'];
+      return sections.filter((s) => !hiddenGroups.includes(s.title));
     }
 
     return sections;

@@ -76,11 +76,11 @@ export const DailyPriorityQueuePage: React.FC = () => {
             </span>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold text-black tracking-tight">Prioritas Hari Ini</h1>
+                <h1 className="text-xl font-bold text-black tracking-tight">Prioritas Tugas Hari Ini</h1>
                 <DocBadge code="SCR-PKM-B01" size="xs" />
               </div>
               <p className="text-xs text-[#60716D]">
-                Antrean kerja operasional terprioritas berdasarkan stratifikasi risiko CRS v0.9 Kabupaten Pulau Taliabu.
+                Daftar warga yang perlu segera ditindaklanjuti berdasarkan tingkat keparahan risiko kesehatan di wilayah kerja Anda.
               </p>
             </div>
           </div>

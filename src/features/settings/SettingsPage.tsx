@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, RefreshCw, Database, Radio, Globe, Shield, AlertTriangle } from 'lucide-react';
+import { Settings, RefreshCw, Database, Radio, Globe, Shield, AlertTriangle, BookOpen } from 'lucide-react';
 import { Card } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
@@ -9,6 +9,7 @@ import { useToast } from '../../context/ToastContext';
 import { useModal } from '../../context/ModalContext';
 import { rawStorage } from '../../repositories/storage';
 import { NetworkMode } from '../../types';
+import { MedicalGlossaryTable } from './components/MedicalGlossaryTable';
 
 export const SettingsPage: React.FC = () => {
   const { settings, updateSettings, networkMode, setNetworkMode } = useNetwork();
@@ -68,16 +69,19 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 max-w-5xl">
       {/* Header */}
       <div className="bg-white p-4 rounded-xl border border-[#D8E5E2] flex items-center justify-between">
         <div>
-          <h3 className="text-base font-bold text-black">Pengaturan Platform & Lingkungan Sistem</h3>
+          <h3 className="text-base font-bold text-black">Pengaturan Platform, Glosarium & Lingkungan Sistem</h3>
           <p className="text-xs text-[#60716D] mt-0.5">
-            Konfigurasi parameter wilayah, zona waktu operasional, dan simulasi jaringan lapangan.
+            Konfigurasi parameter wilayah, kamus istilah medis untuk staf non-medis, dan simulasi jaringan kepulauan.
           </p>
         </div>
       </div>
+
+      {/* Medical Glossary Table for Non-Medical Staff */}
+      <MedicalGlossaryTable />
 
       {/* General Settings */}
       <Card>
