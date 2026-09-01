@@ -7,7 +7,6 @@ export type RoleId =
   | 'KEPALA_DINAS'
   | 'ANALYST_DINKES'
   | 'KEPALA_PUSKESMAS'
-  | 'PJ_CKG'
   | 'DOCTOR'
   | 'NURSE_MIDWIFE'
   | 'PHARMACY_OFFICER'

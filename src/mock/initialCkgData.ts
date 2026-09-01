@@ -309,7 +309,7 @@ export const INITIAL_AREA_HISTORIES: CitizenAreaHistory[] = [
     validTo: d(2026, 5, 1),
     changeReason: 'Pindah domisili ke Desa Wayo karena penugasan kerja',
     confirmedByUserId: 'USR-PKM-001',
-    confirmedByUserName: 'dr. Siti Rahmawati (PJ CKG)',
+    confirmedByUserName: 'dr. Fauzi Akbar Sanusi (Dokter Puskesmas)',
   },
   {
     id: 'AH-002',
@@ -320,7 +320,7 @@ export const INITIAL_AREA_HISTORIES: CitizenAreaHistory[] = [
     facilityName: 'Puskesmas Bobong',
     validFrom: d(2026, 5, 1),
     confirmedByUserId: 'USR-PKM-001',
-    confirmedByUserName: 'dr. Siti Rahmawati (PJ CKG)',
+    confirmedByUserName: 'dr. Fauzi Akbar Sanusi (Dokter Puskesmas)',
   },
 ];
 
@@ -928,7 +928,7 @@ export const INITIAL_DATA_QUALITY_ISSUES: DataQualityIssue[] = [
     createdAt: d(2026, 8, 21),
     resolvedAt: d(2026, 8, 22),
     resolvedByUserId: 'USR-PKM-001',
-    resolvedByUserName: 'dr. Siti Rahmawati',
+    resolvedByUserName: 'dr. Fauzi Akbar Sanusi',
     resolutionNotes: 'Koreksi salah ketik nakes: nilai sebenarnya 180 mmHg.',
     rawRecord: {
       source_nik: '8208018506120033',
@@ -986,7 +986,7 @@ export const INITIAL_MERGE_HISTORIES: IdentityMergeHistory[] = [
     targetCitizenName: 'Nuraini binti Hasan',
     reason: 'Penggabungan entri ganda saat skrining Posyandu Lansia Melati Desa Bobong.',
     mergedByUserId: 'USR-PKM-001',
-    mergedByUserName: 'dr. Siti Rahmawati (PJ CKG)',
+    mergedByUserName: 'dr. Fauzi Akbar Sanusi (Dokter Puskesmas)',
     mergedAt: d(2026, 7, 10),
     isUnmerged: false,
   },
@@ -1102,7 +1102,7 @@ export const INITIAL_IMPORT_HISTORIES: ImportFileHistory[] = [
     fileSize: 24200,
     uploadedAt: d(2026, 8, 20),
     uploadedByUserId: 'USR-PKM-001',
-    uploadedByUserName: 'dr. Siti Rahmawati (PJ CKG)',
+    uploadedByUserName: 'dr. Fauzi Akbar Sanusi (Dokter Puskesmas)',
     sourceSystem: 'SIMULASI_FILE_IMPORT',
     totalRows: 50,
     acceptedCount: 46,

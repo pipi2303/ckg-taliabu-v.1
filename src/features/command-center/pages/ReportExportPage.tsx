@@ -48,7 +48,8 @@ export const ReportExportPage: React.FC = () => {
 
   useEffect(() => {
     loadData();
-  }, [activeUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeUser?.id]);
 
   const handleExportPDF = async () => {
     setIsExportingPDF(true);
@@ -380,7 +381,7 @@ export const ReportExportPage: React.FC = () => {
             <p>Bobong, {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             <p className="font-medium mt-1">Kepala Dinas Kesehatan</p>
             <div className="h-16" />
-            <p className="font-bold underline text-white print:text-black">dr. Hj. Nur Aini, M.Kes</p>
+            <p className="font-bold underline text-white print:text-black">Nurbintang Talaohu, S.KM., M.Kes</p>
             <p className="text-[10px]">NIP. 19780512 200501 2 008</p>
           </div>
         </div>

@@ -38,7 +38,7 @@ export const ClinicalRiskBadge: React.FC<ClinicalRiskBadgeProps> = ({
         className={`inline-flex items-center gap-1 font-semibold rounded-md border border-slate-300 bg-slate-100 text-slate-700 select-none ${
           size === 'xs' ? 'px-1.5 py-0.5 text-[10px]' : 'px-2.5 py-1 text-xs'
         } ${className}`}
-        title="Klasifikasi risiko klinis terproteksi (S3 Ceiling) — Tersedia untuk Nakes / PJ CKG"
+        title="Klasifikasi risiko klinis terproteksi (S3 Ceiling) — Tersedia untuk Tenaga Medis / Faskes"
       >
         <Lock className="w-3 h-3 text-slate-500 shrink-0" />
         <span className="whitespace-nowrap">Klinis (Terproteksi)</span>

@@ -183,7 +183,7 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
   const isBupati = user?.roleId === 'BUPATI';
 
   const handleDropoutDrilldown = () => {
-    setDrilldownTitle('Penelusuran: Drop-out Kaskade Tindak Lanjut');
+    setDrilldownTitle('Penelusuran: Drop-out Tindak Lanjut');
     setDrilldownDescription('Warga yang hadir di faskes namun belum tuntas menerima tata laksana (belum dalam status Dalam Tata Laksana).');
     const count = Math.max(0, (cascade?.stages[3]?.count || 0) - (cascade?.stages[5]?.count || 0));
     const sampleItems = Array.from({ length: Math.min(15, count || 3) }).map((_, i) => ({
@@ -738,7 +738,7 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-base font-bold text-stone-900 tracking-tight">
-                    Kaskade Tindak Lanjut
+                    Tindak Lanjut
                   </h3>
                   <p className="text-xs text-stone-600 mt-0.5">
                     Mitigasi risiko drop-out dan kesinambungan rawat.

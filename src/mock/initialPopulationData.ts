@@ -237,7 +237,7 @@ export const INITIAL_POPULATION_INTERVENTIONS: PopulationIntervention[] = [
       {
         id: 'pnote-2',
         timestamp: '2026-08-18T14:30:00Z',
-        authorName: 'Dr. Hendra Wijaya',
+        authorName: 'Anriyanti, A.Md.Kep.',
         note: 'Kehadiran kontrol hari Rabu meningkat signifikan dari rata-rata 4 pasien menjadi 12 pasien per sesi.',
       },
     ],

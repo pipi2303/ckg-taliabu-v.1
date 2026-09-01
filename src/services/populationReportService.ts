@@ -52,7 +52,7 @@ export const populationReportService = {
       facilityPerformanceService.getFacilitySummaries(),
     ]);
 
-    const userName = user?.name ? `${user.name} (${user.roleName})` : 'dr. Hj. Nur Aini, M.Kes (Kepala Dinas Kesehatan)';
+    const userName = user?.name ? `${user.name} (${user.roleName})` : 'Nurbintang Talaohu, S.KM., M.Kes (Kepala Dinas Kesehatan)';
 
     const snapshot: AggregateReportSnapshot = {
       generatedAt: new Date().toISOString(),
@@ -105,23 +105,6 @@ export const populationReportService = {
         context: f.accessibilityContext,
       })),
     };
-
-    // Log export audit
-    await auditRepo.log({
-      actorUserId: user.id,
-      actorName: user.name,
-      actorRole: user.roleId,
-      action: 'EXPORT',
-      entityType: 'POPULATION_REPORT',
-      entityId: 'RPT-POP-SNAPSHOT',
-      targetLabel: 'Ekspor Laporan Agregat Populasi CKG',
-      description: `Periode: ${snapshot.period} | Cutoff: ${snapshot.dataCutoffAt}`,
-      details: {
-        period: snapshot.period,
-        dataCutoffAt: snapshot.dataCutoffAt,
-        reportingRatioText: snapshot.reportingRatioText,
-      },
-    });
 
     return snapshot;
   },

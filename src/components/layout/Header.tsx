@@ -7,7 +7,7 @@ import {
   Shield,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { INITIAL_USERS } from '../../mock/initialData';
+import { getDemoAccounts } from '../../mock/initialData';
 
 interface HeaderProps {
   onToggleMobileSidebar: () => void;
@@ -23,8 +23,8 @@ export const Header: React.FC<HeaderProps> = ({
   const { currentUser, logout, switchDemoUser } = useAuth();
   const [isRoleSwitcherOpen, setIsRoleSwitcherOpen] = useState(false);
 
-  // Demo users list for quick prototyping across all roles
-  const demoProfiles = INITIAL_USERS.filter((p) => p.roleId !== 'PHARMACY_OFFICER');
+  // Curated demo accounts aligned with login page (Akses Cepat Demo Peran)
+  const demoAccounts = getDemoAccounts();
 
   return (
     <header className="sticky top-0 z-20 h-16 bg-white border-b border-[#D8E5E2] px-4 lg:px-6 flex items-center justify-between shadow-2xs">
@@ -55,52 +55,84 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Zone 2 & 3: Controls & Direct Logout */}
       <div id="tour-role-network-bar" className="flex items-center gap-2 sm:gap-3">
-        {/* Quick Role Switcher for Testing — always available, including while previewing
-            the Citizen role/screens, so testers are never stranded without logging out. */}
-        <div className="relative">
+        {/* Quick Role Switcher for Testing & Permission Flow Validation */}
+        <div className="relative" id="quick-role-switcher">
           <button
+            id="quick-role-switcher-btn"
+            data-testid="quick-role-switcher"
+            aria-expanded={isRoleSwitcherOpen}
+            aria-haspopup="true"
             onClick={() => setIsRoleSwitcherOpen(!isRoleSwitcherOpen)}
             className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 bg-[#F0F5F4] hover:bg-[#E2ECE9] text-black border border-[#D8E5E2] rounded-lg transition-colors cursor-pointer"
-            title="Beralih peran akun pengguna"
+            title="Quick Role Switcher: Ganti Peran Demo untuk Uji Hak Akses & Alur Navigasi"
           >
             <Shield className="w-3.5 h-3.5 text-[#2E7D5B]" />
             <span className="hidden sm:inline">Ganti Peran</span>
-            <ChevronDown className="w-3 h-3" />
+            <ChevronDown className={`w-3 h-3 text-[#60716D] transition-transform duration-150 ${isRoleSwitcherOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {isRoleSwitcherOpen && (
-            <div
-              className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-[#D8E5E2] py-2 z-50 animate-in fade-in zoom-in-95 duration-150"
-              onMouseLeave={() => setIsRoleSwitcherOpen(false)}
-            >
-              <div className="px-3 py-1.5 border-b border-[#D8E5E2] text-xs text-[#60716D]">
-                <strong className="text-black block">Pilih Akun Pengguna</strong>
-                Beralih profil untuk menguji hak akses peran pengguna
+            <>
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setIsRoleSwitcherOpen(false)}
+              />
+              <div
+                id="quick-role-switcher-menu"
+                role="menu"
+                className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-[#D8E5E2] py-2 z-50 animate-in fade-in zoom-in-95 duration-150"
+              >
+                <div className="px-3.5 py-2 border-b border-[#D8E5E2] bg-[#F8FBFA] rounded-t-lg">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-black">
+                    <Shield className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                    <span>Quick Role Switcher</span>
+                  </div>
+                  <p className="text-[10.5px] text-[#60716D] mt-0.5">
+                    Pilih akun demo untuk menguji wewenang, hak akses & alur navigasi tanpa harus keluar (logout)
+                  </p>
+                </div>
+                <div className="p-2 space-y-1 max-h-80 overflow-y-auto">
+                  {demoAccounts.map(({ label, user }) => {
+                    const isCurrent =
+                      currentUser?.id === user.id ||
+                      (currentUser?.roleId === user.roleId && (user.roleId !== 'CITIZEN' || currentUser?.id === user.id));
+                    const isSystemAdmin = user.id === 'usr-1' || user.name === label;
+                    return (
+                      <button
+                        key={user.id || label}
+                        role="menuitem"
+                        onClick={async () => {
+                          setIsRoleSwitcherOpen(false);
+                          await switchDemoUser(user.id);
+                        }}
+                        className={`w-full text-left px-3 py-2 rounded-lg border transition-all text-xs flex items-center justify-between gap-2 cursor-pointer ${
+                          isCurrent
+                            ? 'bg-[#E1F5FE] border-[#BDE3F5] text-black font-semibold shadow-2xs'
+                            : 'bg-white hover:bg-[#F8FBFA] border-transparent hover:border-[#D8E5E2] text-black'
+                        }`}
+                      >
+                        <div className="min-w-0">
+                          <span className="font-bold text-black block truncate text-xs">
+                            {label}
+                          </span>
+                          {!isSystemAdmin && (
+                            <span className="text-[11px] text-[#60716D] block truncate">
+                              {user.name}
+                            </span>
+                          )}
+                        </div>
+                        {isCurrent && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#0288D1] bg-white px-1.5 py-0.5 rounded border border-[#B3E5FC] shrink-0">
+                            <UserCheck className="w-3 h-3 text-[#0288D1]" />
+                            Aktif
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="max-h-64 overflow-y-auto py-1">
-                {demoProfiles.map((p) => {
-                  const isCurrent = currentUser?.id === p.id;
-                  return (
-                    <button
-                      key={p.id}
-                      onClick={async () => {
-                        setIsRoleSwitcherOpen(false);
-                        await switchDemoUser(p.id);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-xs hover:bg-[#F0F7F5] flex items-start justify-between gap-2 transition-colors ${
-                        isCurrent ? 'bg-[#E1F5FE] font-bold' : ''
-                      }`}
-                    >
-                      <div className="min-w-0">
-                        <p className="font-semibold text-black truncate">{p.name}</p>
-                        <p className="text-[11px] text-[#60716D] truncate">{p.roleName}</p>
-                      </div>
-                      {isCurrent && <UserCheck className="w-4 h-4 text-[#2E7D5B] shrink-0 mt-0.5" />}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            </>
           )}
         </div>
 

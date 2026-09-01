@@ -104,7 +104,7 @@ export const CascadePage: React.FC = () => {
     return (
       <div className="p-8 text-center text-gray-600 space-y-3">
         <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xs">Memuat Kaskade Tindak Lanjut...</p>
+        <p className="text-xs">Memuat Tindak Lanjut...</p>
       </div>
     );
   }
@@ -121,7 +121,7 @@ export const CascadePage: React.FC = () => {
             CARE CONTINUUM ANALYTICS
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl font-bold text-black tracking-tight">Kaskade Tindak Lanjut Dinas Kesehatan</h1>
+            <h1 className="text-2xl font-bold text-black tracking-tight">Tindak Lanjut Dinas Kesehatan</h1>
             <DocBadge code="SCR-DNK-B02" size="sm" />
           </div>
           <p className="text-xs text-gray-600 mt-1">
@@ -182,7 +182,7 @@ export const CascadePage: React.FC = () => {
       <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-6">
         <div className="flex items-center justify-between border-b border-slate-800 pb-4">
           <div>
-            <h3 className="text-sm font-semibold text-white">Funnel Kaskade Tindak Lanjut CKG</h3>
+            <h3 className="text-sm font-semibold text-white">Funnel Tindak Lanjut CKG</h3>
             <p className="text-xs text-slate-400 mt-0.5">
               Setiap baris menampilkan jumlah absolut, persentase terhadap skrining awal, dan tingkat penyusutan (drop-off).
             </p>

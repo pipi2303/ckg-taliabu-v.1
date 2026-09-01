@@ -95,7 +95,7 @@ export const CRS_CKG_V0_9: ClinicalRulePackage = {
         {
           actionType: 'PERIODIC_SCREENING',
           actionText: 'Skrining kesehatan berkala 1 tahun sekali pada posyandu/faskes.',
-          suggestedRole: 'Kader / PJ CKG',
+          suggestedRole: 'Kader / Tenaga Faskes',
           intervalValue: 12,
           intervalUnit: 'MONTHS',
         },
@@ -120,7 +120,7 @@ export const CRS_CKG_V0_9: ClinicalRulePackage = {
         {
           actionType: 'LIFESTYLE_COUNSELING',
           actionText: 'Konseling pembatasan konsumsi garam, aktivitas fisik teratur, dan kontrol tensi ulang dalam 6 bulan.',
-          suggestedRole: 'PJ CKG / Perawat',
+          suggestedRole: 'Perawat / Bidan',
           intervalValue: 6,
           intervalUnit: 'MONTHS',
         },
@@ -145,7 +145,7 @@ export const CRS_CKG_V0_9: ClinicalRulePackage = {
         {
           actionType: 'CLINICAL_CONFIRMATION',
           actionText: 'Pengukuran konfirmasi tekanan darah ulang di FKTP dan penetapan tata laksana farmakoterapi standar.',
-          suggestedRole: 'Dokter / PJ CKG',
+          suggestedRole: 'Dokter / Perawat',
           intervalValue: 14,
           intervalUnit: 'DAYS',
         },
@@ -224,7 +224,7 @@ export const CRS_CKG_V0_9: ClinicalRulePackage = {
         {
           actionType: 'PERIODIC_SCREENING',
           actionText: 'Skrining kadar gula darah berkala 1 tahun sekali.',
-          suggestedRole: 'Kader / PJ CKG',
+          suggestedRole: 'Kader / Perawat',
           intervalValue: 12,
           intervalUnit: 'MONTHS',
         },
@@ -249,7 +249,7 @@ export const CRS_CKG_V0_9: ClinicalRulePackage = {
         {
           actionType: 'PREDIABETES_INTERVENTION',
           actionText: 'Konseling gizi pengendalian asupan karbohidrat sederhana, aktivitas aerobik, dan evaluasi ulang dalam 3-6 bulan.',
-          suggestedRole: 'Nutrisionis / PJ CKG',
+          suggestedRole: 'Nutrisionis / Perawat',
           intervalValue: 3,
           intervalUnit: 'MONTHS',
         },
@@ -373,7 +373,7 @@ export const CRS_CKG_V0_9: ClinicalRulePackage = {
         {
           actionType: 'WEIGHT_CONTROL',
           actionText: 'Edukasi defisit kalori ringan 300-500 kkal/hari dan peningkatan aktivitas fisik 150 menit/minggu.',
-          suggestedRole: 'PJ CKG / Kader',
+          suggestedRole: 'Perawat / Kader',
           intervalValue: 6,
           intervalUnit: 'MONTHS',
         },

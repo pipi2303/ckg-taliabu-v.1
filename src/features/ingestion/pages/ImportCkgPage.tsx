@@ -418,7 +418,7 @@ export const ImportCkgPage: React.FC<{ onNavigate?: (navId: string) => void }> =
                 3. Data Quality Queue
               </span>
               <p className="text-2xl font-bold text-[#C99720]">{executionResult.qualityQueueCount}</p>
-              <p className="text-[11px] text-[#334643]">Menunggu verifikasi PJ CKG</p>
+              <p className="text-[11px] text-[#334643]">Menunggu verifikasi Tenaga Faskes</p>
             </div>
           </div>
 

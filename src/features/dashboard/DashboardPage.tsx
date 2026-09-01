@@ -32,6 +32,7 @@ import { useNetwork } from '../../context/NetworkContext';
 import { permissionService } from '../../services/permissionService';
 import { AuditEvent } from '../../types';
 import { ExecutiveDinkesDashboardView } from './components/ExecutiveDinkesDashboardView';
+import { DashboardPustuPage } from './DashboardPustuPage';
 import { AdminRiskOutcomeComparisonChart } from './components/AdminRiskOutcomeComparisonChart';
 import { AdminScreeningAreaGrowthChart } from './components/AdminScreeningAreaGrowthChart';
 import { AdminFollowupAnalytics } from './components/AdminFollowupAnalytics';
@@ -147,6 +148,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         <ExecutiveDinkesDashboardView onNavigate={onNavigate} />
       </div>
     );
+  }
+
+  // For Petugas Pustu, render the dedicated village-level Pustu Dashboard
+  if (currentUser?.roleId === 'PUSTU') {
+    return <DashboardPustuPage onNavigate={onNavigate} currentUser={currentUser} />;
   }
 
   const isPosyanduOrKader = roleId === 'POSYANDU' || roleId === 'KADER';

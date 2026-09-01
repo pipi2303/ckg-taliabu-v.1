@@ -376,7 +376,7 @@ export const UsersPage: React.FC = () => {
               <Input
                 label="Nama Lengkap & Gelar"
                 required
-                placeholder="Contoh: dr. Siti Rahmawati, Sp.PD"
+                placeholder="Contoh: dr. Fauzi Akbar Sanusi"
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
               />

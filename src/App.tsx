@@ -12,6 +12,7 @@ import { permissionService } from './services/permissionService';
 
 // Feature Views - Overview & Core
 import { DashboardPage } from './features/dashboard/DashboardPage';
+import { DashboardPustuPage } from './features/dashboard/DashboardPustuPage';
 import { WilayahPage } from './features/organization/WilayahPage';
 import { FacilityPage } from './features/organization/FacilityPage';
 import { FacilityLogisticsPage } from './features/organization/pages/FacilityLogisticsPage';
@@ -288,6 +289,9 @@ const MainAppContent: React.FC = () => {
 
     switch (activeNav) {
       case 'dashboard':
+        if (currentUser?.roleId === 'PUSTU') {
+          return <DashboardPustuPage onNavigate={setActiveNav} currentUser={currentUser} />;
+        }
         return <DashboardPage onNavigate={setActiveNav} />;
       case 'prioritas-harian':
         return <DailyPriorityQueuePage />;

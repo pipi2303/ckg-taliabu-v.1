@@ -70,20 +70,6 @@ export const INITIAL_ROLES: RoleDefinition[] = [
     isPredefined: true,
   },
   {
-    id: 'PJ_CKG',
-    name: 'Penanggung Jawab CKG Puskesmas',
-    category: 'PUSKESMAS',
-    description: 'Koordinator operasional tindak lanjut Cek Kesehatan Gratis tingkat Puskesmas dan jaringan desa.',
-    dataCeiling: 'S3',
-    canManageUsers: false,
-    canManageFacilities: false,
-    canManageRegions: false,
-    canViewAudit: false,
-    canManageRuleVersions: false,
-    canAccessClinicalData: true,
-    isPredefined: true,
-  },
-  {
     id: 'DOCTOR',
     name: 'Dokter Puskesmas',
     category: 'PUSKESMAS',
@@ -209,7 +195,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'LIMITED',
       ANALYST_DINKES: 'LIMITED',
       KEPALA_PUSKESMAS: 'DENIED',
-      PJ_CKG: 'DENIED',
       DOCTOR: 'DENIED',
       NURSE_MIDWIFE: 'DENIED',
       PHARMACY_OFFICER: 'DENIED',
@@ -231,7 +216,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'LIMITED',
       ANALYST_DINKES: 'LIMITED',
       KEPALA_PUSKESMAS: 'LIMITED',
-      PJ_CKG: 'DENIED',
       DOCTOR: 'DENIED',
       NURSE_MIDWIFE: 'DENIED',
       PHARMACY_OFFICER: 'DENIED',
@@ -253,7 +237,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'DENIED',
       ANALYST_DINKES: 'DENIED',
       KEPALA_PUSKESMAS: 'DENIED',
-      PJ_CKG: 'DENIED',
       DOCTOR: 'DENIED',
       NURSE_MIDWIFE: 'DENIED',
       PHARMACY_OFFICER: 'DENIED',
@@ -275,7 +258,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'DENIED',
       ANALYST_DINKES: 'DENIED',
       KEPALA_PUSKESMAS: 'ALLOW',
-      PJ_CKG: 'DENIED',
       DOCTOR: 'DENIED',
       NURSE_MIDWIFE: 'DENIED',
       PHARMACY_OFFICER: 'DENIED',
@@ -297,7 +279,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'LIMITED',
       ANALYST_DINKES: 'LIMITED',
       KEPALA_PUSKESMAS: 'ALLOW',
-      PJ_CKG: 'ALLOW',
       DOCTOR: 'ALLOW',
       NURSE_MIDWIFE: 'ALLOW',
       PHARMACY_OFFICER: 'LIMITED',
@@ -319,7 +300,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'ALLOW',
       ANALYST_DINKES: 'ALLOW',
       KEPALA_PUSKESMAS: 'ALLOW',
-      PJ_CKG: 'ALLOW',
       DOCTOR: 'ALLOW',
       NURSE_MIDWIFE: 'ALLOW',
       PHARMACY_OFFICER: 'LIMITED',
@@ -341,7 +321,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'LIMITED',
       ANALYST_DINKES: 'DENIED',
       KEPALA_PUSKESMAS: 'ALLOW',
-      PJ_CKG: 'ALLOW',
       DOCTOR: 'ALLOW',
       NURSE_MIDWIFE: 'ALLOW',
       PHARMACY_OFFICER: 'ALLOW',
@@ -363,7 +342,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'LIMITED',
       ANALYST_DINKES: 'LIMITED',
       KEPALA_PUSKESMAS: 'DENIED',
-      PJ_CKG: 'DENIED',
       DOCTOR: 'DENIED',
       NURSE_MIDWIFE: 'DENIED',
       PHARMACY_OFFICER: 'DENIED',
@@ -385,7 +363,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'ALLOW',
       ANALYST_DINKES: 'ALLOW',
       KEPALA_PUSKESMAS: 'LIMITED',
-      PJ_CKG: 'DENIED',
       DOCTOR: 'DENIED',
       NURSE_MIDWIFE: 'DENIED',
       PHARMACY_OFFICER: 'DENIED',
@@ -407,7 +384,6 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
       KEPALA_DINAS: 'DENIED',
       ANALYST_DINKES: 'DENIED',
       KEPALA_PUSKESMAS: 'ALLOW',
-      PJ_CKG: 'ALLOW',
       DOCTOR: 'ALLOW',
       NURSE_MIDWIFE: 'ALLOW',
       PHARMACY_OFFICER: 'ALLOW',
@@ -737,7 +713,7 @@ export const INITIAL_USERS: User[] = [
   },
   {
     id: 'usr-2',
-    name: 'H. Ahmad Yani, SKM., M.Kes',
+    name: 'Nurbintang Talaohu, S.KM., M.Kes',
     username: 'kadis.taliabu',
     email: 'kadis@dinkes.taliabukab.go.id',
     phone: '0811-4321-7788',
@@ -771,9 +747,9 @@ export const INITIAL_USERS: User[] = [
   },
   {
     id: 'usr-4',
-    name: 'Dr. Hendra Wijaya',
+    name: 'Anriyanti, A.Md.Kep.',
     username: 'kapus.bobong',
-    email: 'hendra.w@pkm-bobong.id',
+    email: 'anriyanti@pkm-bobong.id',
     phone: '0812-8877-6655',
     roleId: 'KEPALA_PUSKESMAS',
     roleName: 'Kepala Puskesmas',
@@ -789,11 +765,11 @@ export const INITIAL_USERS: User[] = [
   {
     id: 'usr-5',
     name: 'Ns. Fahmi Hidayat, S.Kep',
-    username: 'pjckg.bobong',
+    username: 'perawat.fahmi',
     email: 'fahmi.h@pkm-bobong.id',
     phone: '0821-9988-7711',
-    roleId: 'PJ_CKG',
-    roleName: 'PJ CKG Puskesmas',
+    roleId: 'NURSE_MIDWIFE',
+    roleName: 'Perawat / Bidan',
     facilityId: 'faskes-1',
     facilityName: 'Puskesmas Bobong',
     areaScopes: ['kec-1'],
@@ -805,9 +781,9 @@ export const INITIAL_USERS: User[] = [
   },
   {
     id: 'usr-6',
-    name: 'dr. Siti Rahmawati, Sp.PD',
-    username: 'dr.siti',
-    email: 'siti.rahmawati@pkm-bobong.id',
+    name: 'dr. Fauzi Akbar Sanusi',
+    username: 'dr.fauzi',
+    email: 'fauzi.sanusi@pkm-bobong.id',
     phone: '0812-7711-2233',
     roleId: 'DOCTOR',
     roleName: 'Dokter Puskesmas',
@@ -875,9 +851,9 @@ export const INITIAL_USERS: User[] = [
   },
   {
     id: 'usr-11',
-    name: 'Ns. Ilham Syah, S.Kep',
-    username: 'pustu.wayo',
-    email: 'ilham.pustu@gmail.com',
+    name: 'Nursiti Bongso Rajab',
+    username: 'pustu.nursiti',
+    email: 'nursiti.bongso@pustu-taliabu.id',
     phone: '0812-3344-5566',
     roleId: 'PUSTU',
     roleName: 'Petugas Pustu',
@@ -926,7 +902,7 @@ export const INITIAL_USERS: User[] = [
   },
   {
     id: 'usr-16',
-    name: 'dr. Yusuf Rahman, Sp.PD',
+    name: 'dr. Alit Darma Asmara',
     username: 'direktur.rsud',
     email: 'direktur@rsudbobong.taliabukab.go.id',
     phone: '0811-2200-7744',
@@ -942,6 +918,33 @@ export const INITIAL_USERS: User[] = [
     updatedAt: '2026-08-31T07:30:00Z',
   },
 ];
+
+export interface DemoAccountConfig {
+  label: string;
+  user: (typeof INITIAL_USERS)[number];
+}
+
+export const getDemoAccounts = (): DemoAccountConfig[] => {
+  const kadisUser = INITIAL_USERS.find((u) => u.roleId === 'KEPALA_DINAS') || INITIAL_USERS[1];
+  const adminUser = INITIAL_USERS.find((u) => u.roleId === 'ADMIN_DINKES') || INITIAL_USERS[0];
+  const rsudUser = INITIAL_USERS.find((u) => u.roleId === 'DIR_RSUD' || u.id === 'usr-16' || u.username === 'direktur.rsud');
+  const kapusUser = INITIAL_USERS.find((u) => u.roleId === 'KEPALA_PUSKESMAS') || INITIAL_USERS[3];
+  const doctorUser = INITIAL_USERS.find((u) => u.roleId === 'DOCTOR') || INITIAL_USERS[5];
+  const pustuUser = INITIAL_USERS.find((u) => u.roleId === 'PUSTU') || INITIAL_USERS.find((u) => u.id === 'usr-11');
+  const kaderUser = INITIAL_USERS.find((u) => u.roleId === 'KADER') || INITIAL_USERS[8];
+  const citizenUser = INITIAL_USERS.find((u) => u.roleId === 'CITIZEN') || INITIAL_USERS[INITIAL_USERS.length - 1];
+
+  return [
+    { label: 'Kepala Dinas (Dinkes)', user: kadisUser },
+    { label: 'Direktur RSUD', user: rsudUser },
+    { label: 'Kepala Puskesmas', user: kapusUser },
+    { label: 'Dokter Puskesmas', user: doctorUser },
+    { label: 'Petugas Pustu (Puskesmas Pembantu)', user: pustuUser },
+    { label: 'Kader Posyandu', user: kaderUser },
+    { label: 'Warga / Sasaran', user: citizenUser },
+    { label: 'Admin System', user: adminUser },
+  ].filter((item) => !!item.user) as DemoAccountConfig[];
+};
 
 export const INITIAL_CONSENT_RECORDS: ConsentRecord[] = [
   {
@@ -997,7 +1000,7 @@ export const INITIAL_CONSENT_RECORDS: ConsentRecord[] = [
     scope: 'FOLLOW_UP_PROCESSING',
     grantedAt: '2026-08-23T11:00:00Z',
     assistedByUserId: 'usr-4',
-    assistedByUserName: 'Dr. Hendra Wijaya',
+    assistedByUserName: 'Anriyanti, A.Md.Kep.',
     status: 'PENDING_SYNC',
     notes: 'Sinkronisasi persetujuan satu data kesehatan nasional SATUSEHAT.',
   },
@@ -1012,7 +1015,7 @@ export const INITIAL_RULE_VERSIONS: RuleVersion[] = [
     effectiveDate: '2025-01-01',
     publishedAt: '2025-01-02T08:00:00Z',
     publishedBy: 'Admin System',
-    approvedBy: 'H. Ahmad Yani, SKM., M.Kes (Kadinkes)',
+    approvedBy: 'Nurbintang Talaohu, S.KM., M.Kes (Kadinkes)',
     notes: 'Versi rujukan awal klasifikasi risiko PTM dan stratifikasi usia produktif.',
     rulesCount: 18,
     checksum: 'a8f9c12b74e6d302',
@@ -1027,7 +1030,7 @@ export const INITIAL_RULE_VERSIONS: RuleVersion[] = [
     effectiveDate: '2026-01-15',
     publishedAt: '2026-01-15T09:00:00Z',
     publishedBy: 'Admin System',
-    approvedBy: 'H. Ahmad Yani, SKM., M.Kes (Kadinkes)',
+    approvedBy: 'Nurbintang Talaohu, S.KM., M.Kes (Kadinkes)',
     notes: 'Penyesuaian batas cut-off risiko kardiovaskular wilayah kepulauan dan penugasan pendampingan kader desa binaan.',
     rulesCount: 24,
     checksum: 'f4e2b8109d7a315c',
@@ -1064,7 +1067,7 @@ export const INITIAL_AUDIT_LOGS: AuditEvent[] = [
   {
     id: 'aud-002',
     actorUserId: 'usr-4',
-    actorName: 'Dr. Hendra Wijaya',
+    actorName: 'Anriyanti, A.Md.Kep.',
     actorRole: 'KEPALA_PUSKESMAS',
     action: 'CREATE',
     entityType: 'USER',
@@ -1118,7 +1121,7 @@ export const INITIAL_AUDIT_LOGS: AuditEvent[] = [
     targetLabel: 'Versi Aturan Klinis v1.1.0-CKG-TALIABU-2026',
     occurredAt: '2026-01-15T09:00:00Z',
     purposeCode: 'GOVERNANCE_RULE_PUBLISH',
-    details: { approvedBy: 'H. Ahmad Yani, SKM., M.Kes', rulesCount: 24 },
+    details: { approvedBy: 'Nurbintang Talaohu, S.KM., M.Kes', rulesCount: 24 },
   },
 ];
 

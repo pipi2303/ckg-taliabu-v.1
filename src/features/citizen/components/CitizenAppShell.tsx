@@ -17,10 +17,12 @@ import {
   ArrowLeft,
   LayoutDashboard,
   LogOut,
+  Shield,
+  UserCheck,
 } from 'lucide-react';
 import { useCitizen, CitizenDemoMode } from '../context/CitizenContext';
 import { useAuth } from '../../../context/AuthContext';
-import { INITIAL_USERS } from '../../../mock/initialData';
+import { getDemoAccounts } from '../../../mock/initialData';
 import { CitizenConsentModal } from './CitizenConsentModal';
 import { CitizenScreenMatrixModal, ScreenDocItem } from './CitizenScreenMatrixModal';
 import { DocBadge } from './DocBadge';
@@ -57,7 +59,7 @@ export const CitizenAppShell: React.FC<CitizenAppShellProps> = ({
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
   const [showMatrixModal, setShowMatrixModal] = useState(false);
 
-  const demoProfiles = INITIAL_USERS.filter((p) => p.roleId !== 'PHARMACY_OFFICER');
+  const demoAccounts = getDemoAccounts();
 
   const demoScenarios: { id: CitizenDemoMode; label: string; desc: string }[] = [
     { id: 'ACTION_REQUIRED', label: '1. Hamid La Ode (Perlu Jadwal)', desc: 'Tindakan: Pilih jadwal tindak lanjut' },
@@ -223,42 +225,56 @@ export const CitizenAppShell: React.FC<CitizenAppShellProps> = ({
                       className="fixed inset-0 z-40"
                       onClick={() => setShowRoleSwitcher(false)}
                     />
-                    <div className="absolute right-0 mt-2 w-72 bg-white text-black rounded-xl shadow-2xl border border-[#D8E5E2] z-50 p-2 text-xs divide-y divide-gray-100">
-                      <div className="px-3 py-2 text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">
-                        <span>Beralih Akun / Peran</span>
+                    <div className="absolute right-0 mt-2 w-80 bg-white text-black rounded-xl shadow-2xl border border-[#D8E5E2] z-50 p-2 text-xs">
+                      <div className="px-3 py-2 border-b border-[#D8E5E2] bg-[#F8FBFA] rounded-t-lg flex items-center justify-between mb-1.5">
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-black">
+                          <Shield className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                          <span>Akses Cepat Demo Peran</span>
+                        </div>
                         {onExitToWebApp && (
                           <button
                             onClick={() => {
                               setShowRoleSwitcher(false);
                               onExitToWebApp();
                             }}
-                            className="text-[10px] text-teal-700 hover:text-teal-900 font-bold flex items-center gap-1"
+                            className="text-[10px] text-teal-700 hover:text-teal-900 font-bold flex items-center gap-1 cursor-pointer"
                           >
                             <LayoutDashboard className="w-3 h-3" />
                             Portal Web
                           </button>
                         )}
                       </div>
-                      <div className="py-1 max-h-60 overflow-y-auto space-y-1">
-                        {demoProfiles.map((p) => {
-                          const isCurrent = currentUser?.id === p.id;
+                      <div className="py-1 max-h-72 overflow-y-auto space-y-1">
+                        {demoAccounts.map(({ label, user }) => {
+                          const isCurrent =
+                            currentUser?.id === user.id ||
+                            (currentUser?.roleId === user.roleId && (user.roleId !== 'CITIZEN' || currentUser?.id === user.id));
+                          const isSystemAdmin = user.id === 'usr-1' || user.name === label;
                           return (
                             <button
-                              key={p.id}
+                              key={user.id || label}
                               onClick={async () => {
                                 setShowRoleSwitcher(false);
-                                await switchDemoUser(p.id);
+                                await switchDemoUser(user.id);
                               }}
-                              className={`w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center justify-between gap-2 ${
+                              className={`w-full text-left px-3 py-2 rounded-lg border transition-all flex items-center justify-between gap-2 cursor-pointer ${
                                 isCurrent
-                                  ? 'bg-[#E1F5FE] text-black font-bold'
-                                  : 'hover:bg-gray-50 text-gray-700'
+                                  ? 'bg-[#E1F5FE] border-[#BDE3F5] text-black font-semibold shadow-2xs'
+                                  : 'bg-white hover:bg-[#F8FBFA] border-transparent hover:border-[#D8E5E2] text-black'
                               }`}
                             >
                               <div className="min-w-0">
-                                <div className="font-semibold text-xs truncate">{p.name}</div>
-                                <div className="text-[10px] text-gray-500 truncate">{p.roleName}</div>
+                                <div className="font-bold text-xs truncate text-black">{label}</div>
+                                {!isSystemAdmin && (
+                                  <div className="text-[10px] text-[#60716D] truncate">{user.name}</div>
+                                )}
                               </div>
+                              {isCurrent && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#0288D1] bg-white px-1.5 py-0.5 rounded border border-[#B3E5FC] shrink-0">
+                                  <UserCheck className="w-3 h-3 text-[#0288D1]" />
+                                  Aktif
+                                </span>
+                              )}
                             </button>
                           );
                         })}

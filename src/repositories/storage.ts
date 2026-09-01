@@ -297,11 +297,27 @@ export const rawStorage = {
       users = users.filter((u) => !excludedIds.includes(u.id));
       changed = true;
     }
-    // Ensure new initial users (like usr-16 DIR_RSUD) are merged in if missing from cached localStorage
+    // Ensure new initial users are merged in and core demo user names/credentials are updated
     for (const initUser of INITIAL_USERS) {
-      if (!users.some((u) => u.id === initUser.id)) {
+      const idx = users.findIndex((u) => u.id === initUser.id);
+      if (idx === -1) {
         users.push(initUser);
         changed = true;
+      } else {
+        // Sync system demo names and usernames if updated in INITIAL_USERS
+        if (
+          ['usr-2', 'usr-4', 'usr-6', 'usr-11', 'usr-16'].includes(initUser.id) &&
+          (users[idx].name !== initUser.name || users[idx].username !== initUser.username || users[idx].email !== initUser.email)
+        ) {
+          users[idx] = {
+            ...users[idx],
+            name: initUser.name,
+            username: initUser.username,
+            email: initUser.email,
+            roleName: initUser.roleName,
+          };
+          changed = true;
+        }
       }
     }
     if (changed) {

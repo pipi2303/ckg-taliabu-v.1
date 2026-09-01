@@ -177,7 +177,7 @@ export const StratificationRegistryView: React.FC = () => {
 
   const isNakes =
     currentUser?.roleId === 'DOCTOR' ||
-    currentUser?.roleId === 'PJ_CKG' ||
+    currentUser?.roleId === 'NURSE_MIDWIFE' ||
     currentUser?.roleId === 'ADMIN_DINKES';
 
   return (

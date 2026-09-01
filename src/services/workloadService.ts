@@ -100,7 +100,6 @@ export const workloadService = {
 
     const staffUsers = allUsers.filter(
       (u) =>
-        u.roleId === 'PJ_CKG' ||
         u.roleId === 'DOCTOR' ||
         u.roleId === 'NURSE_MIDWIFE' ||
         u.roleId === 'KEPALA_PUSKESMAS'

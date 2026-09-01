@@ -48,7 +48,6 @@ export const StratificationDetailModal: React.FC<StratificationDetailModalProps>
 
   const canOverride =
     currentUser?.roleId === 'DOCTOR' ||
-    currentUser?.roleId === 'PJ_CKG' ||
     currentUser?.roleId === 'ADMIN_DINKES';
 
   const handleOpenOverride = () => {

@@ -70,6 +70,41 @@ export const DIR_RSUD_NAVIGATION_PERMISSIONS: readonly string[] = [
 ];
 
 /**
+ * Explicit definition and registered navigation permissions for Petugas Pustu (PUSTU - Puskesmas Pembantu).
+ * Scoped to village-level healthcare delivery, care task follow-ups, and field coordination.
+ */
+export const PUSTU_ROLE_ID: RoleId = 'PUSTU';
+export const PUSTU_ROLE_NAME = 'Petugas Pustu (Puskesmas Pembantu)';
+
+export const PUSTU_NAVIGATION_PERMISSIONS: readonly string[] = [
+  'dashboard',
+  'dinkes-ringkasan',
+  'prioritas-harian',
+  'care-task',
+  'clinical-followup',
+  'outreach',
+  'penugasan-lapangan',
+  'kader-app',
+  'jadwal-kuota',
+  'kandidat-putus',
+  'pemantauan-aktif',
+  'kontrol-harian',
+  'menunggu-evaluasi',
+  'kepatuhan-kendala',
+  'kohort-kondisi',
+  'tren-outcome',
+  'risiko-putus',
+  'registry',
+  'stratifikasi',
+  'wilayah',
+  'faskes',
+  'ai-kepatuhan-obat',
+  'ai-nudge-budaya',
+  'ai-rute-maritim',
+  'sinkronisasi',
+];
+
+/**
  * Consolidated master list of all registered system roles including Direktur RSUD.
  */
 export const ALL_REGISTERED_ROLES: RoleDefinition[] = [
@@ -103,9 +138,6 @@ export function normalizeRoleId(roleId: string | RoleId): RoleId {
   if (clean === 'KEPALA_PUSKESMAS' || clean === 'KAPUS' || clean === 'KAPUS_BOBONG') {
     return 'KEPALA_PUSKESMAS';
   }
-  if (clean === 'PJ_CKG' || clean === 'PJCKG') {
-    return 'PJ_CKG';
-  }
   if (clean === 'DOCTOR' || clean === 'DOKTER') {
     return 'DOCTOR';
   }
@@ -117,6 +149,16 @@ export function normalizeRoleId(roleId: string | RoleId): RoleId {
   }
   if (clean === 'KADER' || clean === 'KADER_POSYANDU') {
     return 'KADER';
+  }
+  if (
+    clean === 'PUSTU' ||
+    clean === 'PETUGAS_PUSTU' ||
+    clean === 'PUSKESMAS_PEMBANTU' ||
+    clean === 'PUSTU_PEMBANTU' ||
+    clean === 'BIDAN_PUSTU' ||
+    clean === 'PERAWAT_PUSTU'
+  ) {
+    return 'PUSTU';
   }
   if (clean === 'CITIZEN' || clean === 'WARGA') {
     return 'CITIZEN';
@@ -276,19 +318,6 @@ export const permissionService = {
           'future-facility',
         ];
 
-      case 'PJ_CKG':
-        return [
-          'dashboard',
-          'dinkes-ringkasan',
-          'prioritas-harian', 'care-task', 'clinical-followup', 'outreach', 'penugasan-lapangan', 'jadwal-kuota', 'kandidat-putus', 'beban-kerja',
-          'ai-prediksi-dropout', 'ai-digital-twin', 'ai-proyeksi-beban', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-nudge-budaya', 'ai-rute-maritim',
-          'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'integritas-monitoring', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',
-          'registry', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history',
-          'stratifikasi',
-          'future-facility',
-          'sinkronisasi',
-        ];
-
       case 'DOCTOR':
         return [
           'dashboard',
@@ -341,13 +370,8 @@ export const permissionService = {
         ];
 
       case 'PUSTU':
-        return [
-          'dashboard',
-          'dinkes-ringkasan',
-          'prioritas-harian', 'outreach', 'penugasan-lapangan', 'kader-app',
-          'ai-nudge-budaya', 'ai-rute-maritim',
-          'sinkronisasi',
-        ];
+        // Explicit registered navigation permissions for Petugas Pustu (Puskesmas Pembantu)
+        return [...PUSTU_NAVIGATION_PERMISSIONS];
 
       case 'POSYANDU':
         return [
@@ -387,7 +411,6 @@ export const permissionService = {
       case 'DOCTOR':
       case 'NURSE_MIDWIFE':
       case 'PUSTU':
-      case 'PJ_CKG':
         return 'prioritas-harian';
       case 'PHARMACY_OFFICER':
         return 'care-task';

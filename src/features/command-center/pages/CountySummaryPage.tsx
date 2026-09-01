@@ -191,7 +191,7 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
             <div>
               <h3 className="text-sm font-bold text-black flex items-center gap-2">
                 <Layers className="w-4 h-4 text-sky-700" />
-                Ringkasan Kaskade Tindak Lanjut
+                Ringkasan Tindak Lanjut
               </h3>
               <p className="text-xs text-stone-600 mt-0.5">Perjalanan warga dari temuan awal hingga tata laksana</p>
             </div>

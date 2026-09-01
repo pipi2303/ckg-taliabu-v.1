@@ -202,7 +202,7 @@ export const DataQualityPage: React.FC = () => {
             <AlertTriangle className="w-4 h-4 text-[#C99720]" />
           </div>
           <p className="text-2xl font-bold text-[#C99720]">{stats.totalOpen}</p>
-          <p className="text-[11px] text-[#60716D] mt-0.5">Menunggu keputusan PJ CKG</p>
+          <p className="text-[11px] text-[#60716D] mt-0.5">Menunggu keputusan Petugas Faskes</p>
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-[#D8E5E2] shadow-2xs">

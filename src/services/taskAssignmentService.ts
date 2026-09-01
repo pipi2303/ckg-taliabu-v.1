@@ -38,7 +38,6 @@ export const taskAssignmentService = {
       // Filter by role appropriateness
       const isField = user.roleId === 'KADER' || user.roleId === 'PUSTU' || user.roleId === 'POSYANDU';
       const isClinicalOrAdmin =
-        user.roleId === 'PJ_CKG' ||
         user.roleId === 'DOCTOR' ||
         user.roleId === 'NURSE_MIDWIFE' ||
         user.roleId === 'KEPALA_PUSKESMAS';

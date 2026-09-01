@@ -178,7 +178,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white">
-                Executive Dashboard — {currentUser?.name || 'H. Ahmad Yani, SKM., M.Kes'}
+                Executive Dashboard — {currentUser?.name || 'Nurbintang Talaohu, S.KM., M.Kes'}
               </h1>
               <DocBadge code="SCR-DNK-A01" size="sm" />
             </div>

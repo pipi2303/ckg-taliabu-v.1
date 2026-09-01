@@ -132,7 +132,7 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
               {isKadis ? 'Arahan Resmi Berhasil Dikirim' : isAnalyst ? 'Rekomendasi Analis Berhasil Terkirim' : 'Sinyal Perhatian Berhasil Dikirim'}
             </h4>
             <p className="text-xs text-stone-600">
-              Notifikasi telah diteruskan ke dashboard Kepala Puskesmas & PJ CKG terkait.
+              Notifikasi telah diteruskan ke dashboard Kepala Puskesmas & Tim Puskesmas terkait.
             </p>
           </div>
         ) : (

@@ -128,7 +128,7 @@ export const PredictiveDropoutPage: React.FC = () => {
         </div>
         <p className="text-stone-600 leading-relaxed">
           1. <strong>Tanpa Degradasi Layanan:</strong> Prediksi risiko rendah (<span className="text-emerald-800 font-bold">LOW</span>) memberikan kontribusi prioritas +0 (tidak pernah mengurangi kontak wajib penjangkauan atau menutup CareTask).<br />
-          2. <strong>Koreksi Faktor Manusia:</strong> Tenaga faskes atau PJ CKG dapat menandai ketidaksesuaian prediksi tanpa mengubah rekam medis riil warga.<br />
+          2. <strong>Koreksi Faktor Manusia:</strong> Dokter atau Tenaga Faskes dapat menandai ketidaksesuaian prediksi tanpa mengubah rekam medis riil warga.<br />
           3. <strong>Bukan Diagnosis:</strong> Skor ini semata-mata estimasi kesinambungan operasional faskes terhadap jadwal kontrol.
         </p>
       </div>

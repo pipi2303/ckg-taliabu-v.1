@@ -939,7 +939,7 @@ export const clinicalRuleEngine = {
           classificationId,
           actionType: 'CLINICAL_REPEAT_MEASUREMENT',
           actionText: `Pengukuran konfirmasi ulang ${dom.domainName} diperlukan di FPKTP dalam 14 hari sebelum penetapan diagnosis definitif.`,
-          suggestedRole: 'PJ CKG / Perawat FPKTP',
+          suggestedRole: 'Perawat FPKTP / Dokter',
           intervalValue: 14,
           intervalUnit: 'DAYS',
           sourceRuleCode: dom.ruleCode || 'CR-CONFIRM',

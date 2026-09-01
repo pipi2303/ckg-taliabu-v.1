@@ -228,7 +228,7 @@ export const commandCenterExportService = {
     doc.text('Kepala Dinas Kesehatan Kab. Pulau Taliabu', 140, signY + 4);
 
     doc.setFont('helvetica', 'bold');
-    doc.text('dr. Hj. Nur Aini, M.Kes', 140, signY + 22);
+    doc.text('Nurbintang Talaohu, S.KM., M.Kes', 140, signY + 22);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);
     doc.text('NIP. 19780512 200501 2 008', 140, signY + 26);
@@ -341,7 +341,7 @@ export const commandCenterExportService = {
 
     await auditRepo.log({
       actorUserId: user?.id || 'usr-kadinkes',
-      actorName: user?.name || 'dr. Hj. Nur Aini, M.Kes',
+      actorName: user?.name || 'Nurbintang Talaohu, S.KM., M.Kes',
       actorRole: user?.roleId || 'KEPALA_DINAS',
       action: 'EXPORT',
       entityType: 'POPULATION_REPORT',
@@ -524,7 +524,7 @@ export const commandCenterExportService = {
     // Audit log
     await auditRepo.log({
       actorUserId: user?.id || 'usr-kadinkes',
-      actorName: user?.name || 'dr. Hj. Nur Aini, M.Kes',
+      actorName: user?.name || 'Nurbintang Talaohu, S.KM., M.Kes',
       actorRole: user?.roleId || 'KEPALA_DINAS',
       action: 'EXPORT',
       entityType: 'POPULATION_REPORT',
