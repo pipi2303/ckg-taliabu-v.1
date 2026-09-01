@@ -37,7 +37,7 @@ import {
 } from 'lucide-react';
 import { useTour } from '../../context/TourContext';
 import { useAuth } from '../../context/AuthContext';
-import { permissionService } from '../../services/permissionService';
+import { permissionService, normalizeRoleId } from '../../services/permissionService';
 
 export interface NavItem {
   id: string;
@@ -69,6 +69,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const { startTour } = useTour();
   const { currentUser } = useAuth();
   const roleId = currentUser?.roleId || 'ADMIN_DINKES';
+  const isDirRsud = normalizeRoleId(roleId) === 'DIR_RSUD';
 
   const navigationSections: NavSection[] = [
     {
@@ -120,7 +121,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       title: 'DINKES COMMAND CENTER',
       items: [
-        { id: 'dinkes-ringkasan', label: 'Ringkasan Dinas Kesehatan', icon: <Sparkles className="w-4 h-4 text-teal-400" />, badge: 'SCR-DNK-A02', docSpec: 'Command Center Dinas Kesehatan · F1 · Plafon S3 Agregat · UC DNK-01', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'dinkes-ringkasan', label: isDirRsud ? 'Ringkasan' : 'Ringkasan Dinas Kesehatan', icon: <Sparkles className="w-4 h-4 text-teal-400" />, badge: 'SCR-DNK-A02', docSpec: 'Command Center Dinas Kesehatan · F1 · Plafon S3 Agregat · UC DNK-01', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'dinkes-impact-index', label: 'CKG Impact Index', icon: <Activity className="w-4 h-4 text-emerald-400" />, badge: 'SCR-DNK-B01', docSpec: 'CKG Impact Index (Level 1-3) · F1 (OI-08) · Plafon S3 Agregat · UC DNK-02', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'dinkes-kaskade', label: 'Tindak Lanjut', icon: <Layers className="w-4 h-4 text-sky-400" />, badge: 'SCR-DNK-B02', docSpec: 'Rel Kaskade & Analisis Drop-off · F1 · Plafon S3 Agregat · UC DNK-02/05', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'dinkes-wilayah', label: 'Analisis Wilayah', icon: <MapPin className="w-4 h-4 text-teal-300" />, badge: 'SCR-DNK-C01', docSpec: 'Peta Risiko Desa & Kecamatan · F1 (DS-OI-06) · Plafon S3 Agregat · UC DNK-03', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
