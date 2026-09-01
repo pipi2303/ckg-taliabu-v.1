@@ -278,7 +278,7 @@ export const permissionService = {
           'wilayah', 'faskes', 'layanan',
           'pengguna', 'peran', 'cakupan',
           'persetujuan', 'versi-aturan', 'audit-log',
-          'sinkronisasi', 'integrasi', 'pengaturan',
+          'kader-app', 'sinkronisasi', 'integrasi', 'pengaturan',
           'ai-tata-kelola', 'ai-kinerja-model',
           'stratifikasi',
           'data-quality', 'duplicate-review', 'import-ckg', 'ingestion-monitor', 'import-history', 'source-mapping',

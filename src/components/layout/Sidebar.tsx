@@ -92,7 +92,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'clinical-followup', label: 'Pemeriksaan Dokter di Puskesmas', icon: <Stethoscope className="w-4 h-4 text-teal-400" />, badge: 'SCR-PKM-D01', docSpec: 'Jadwal dan Hasil Pemeriksaan Dokter di Puskesmas', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
         { id: 'outreach', label: 'Catatan Menghubungi Warga', icon: <MessageSquare className="w-4 h-4" />, badge: 'SCR-PKM-B03', docSpec: 'Catatan Petugas Saat Menghubungi dan Mengingatkan Warga', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
         { id: 'penugasan-lapangan', label: 'Tugas Kunjungan Kader', icon: <MapPin className="w-4 h-4" />, badge: 'SCR-PKM-B02', docSpec: 'Pembagian Tugas Kunjungan Rumah untuk Kader Posyandu', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
-        { id: 'kader-app', label: 'Aplikasi Lapangan Kader', icon: <Smartphone className="w-4 h-4 text-emerald-400" />, badge: 'SCR-KDR-B01', docSpec: 'Aplikasi HP untuk Kader Mencatat Warga Tanpa Perlu Internet', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'citizen-app', label: 'Aplikasi Sahabat Warga', icon: <Smartphone className="w-4 h-4 text-amber-300" />, badge: 'SCR-WRG-B01', docSpec: 'Aplikasi Pendamping Kesehatan Mandiri untuk Warga', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
         { id: 'jadwal-kuota', label: 'Jadwal Pelayanan Puskesmas', icon: <Calendar className="w-4 h-4" />, badge: 'SCR-PKM-G01', docSpec: 'Pengaturan Jadwal dan Kuota Harian Pasien Puskesmas', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
         { id: 'kandidat-putus', label: 'Warga Belum Kontrol Ulang', icon: <UserX className="w-4 h-4" />, badge: 'SCR-PKM-B04', docSpec: 'Daftar Warga yang Sudah Waktunya Periksa Ulang Namun Belum Datang', badgeColor: 'bg-rose-950/90 text-rose-300 border-rose-700/60' },
@@ -193,6 +192,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       title: 'SISTEM & KONEKSI',
       items: [
+        { id: 'kader-app', label: 'Aplikasi Lapangan Kader', icon: <Smartphone className="w-4 h-4 text-emerald-400" />, badge: 'SCR-KDR-B01', docSpec: 'Aplikasi HP untuk Kader Mencatat Warga Tanpa Perlu Internet', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
         { id: 'sinkronisasi', label: 'Kirim Data (Sinkron)', icon: <RefreshCw className="w-4 h-4" />, badge: 'SCR-SYS-01', docSpec: 'Kirim Data dari HP / Laptop Saat Ada Sinyal', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
         { id: 'integrasi', label: 'Koneksi SATUSEHAT', icon: <Share2 className="w-4 h-4" />, badge: 'SCR-SYS-02', docSpec: 'Status Hubungan dengan Server Kemenkes RI', badgeColor: 'bg-sky-950/90 text-sky-300 border-sky-700/60' },
         { id: 'pengaturan', label: 'Pengaturan & Glosarium', icon: <Settings className="w-4 h-4" />, badge: 'SCR-SYS-04', docSpec: 'Pengaturan Sistem & Glosarium Istilah Medis', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
