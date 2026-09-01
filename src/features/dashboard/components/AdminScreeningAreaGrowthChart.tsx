@@ -287,7 +287,7 @@ export const AdminScreeningAreaGrowthChart: React.FC = () => {
   const currentSeriesList = viewMode === 'CUMULATIVE' ? cumulativeSeries : regionalSeries;
 
   return (
-    <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-2xs space-y-4">
+    <div className="bg-[#faf9f6] p-5 rounded-2xl border border-stone-200/90 shadow-2xs space-y-4">
       {/* Header & Controls */}
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3.5 border-b border-gray-100 pb-3.5">
         <div>

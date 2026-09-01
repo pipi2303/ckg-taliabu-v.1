@@ -24,6 +24,7 @@ export const LoginPage: React.FC = () => {
 
   const kadisUser = INITIAL_USERS.find((u) => u.roleId === 'KEPALA_DINAS') || INITIAL_USERS[1];
   const adminUser = INITIAL_USERS.find((u) => u.roleId === 'ADMIN_DINKES') || INITIAL_USERS[0];
+  const rsudUser = INITIAL_USERS.find((u) => u.roleId === 'DIR_RSUD');
   const kapusUser = INITIAL_USERS.find((u) => u.roleId === 'KEPALA_PUSKESMAS') || INITIAL_USERS[3];
   const doctorUser = INITIAL_USERS.find((u) => u.roleId === 'DOCTOR') || INITIAL_USERS[5];
   const kaderUser = INITIAL_USERS.find((u) => u.roleId === 'KADER') || INITIAL_USERS[8];
@@ -32,6 +33,7 @@ export const LoginPage: React.FC = () => {
   const demoAccounts = [
     { label: 'Kepala Dinas (Dinkes)', user: kadisUser },
     { label: 'Admin System', user: adminUser },
+    { label: 'Direktur RSUD', user: rsudUser },
     { label: 'Kepala Puskesmas', user: kapusUser },
     { label: 'Dokter Puskesmas', user: doctorUser },
     { label: 'Kader Posyandu', user: kaderUser },

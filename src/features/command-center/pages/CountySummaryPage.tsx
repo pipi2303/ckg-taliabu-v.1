@@ -167,13 +167,13 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
       {/* 2. CKG Impact Index (Level 1, Level 2, Level 3) */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2 text-sm font-semibold text-white">
-            <Activity className="w-4 h-4 text-teal-400" />
+          <div className="flex items-center gap-2 text-sm font-semibold text-stone-900">
+            <Activity className="w-4 h-4 text-teal-700" />
             CKG Impact Index
           </div>
           <button
             onClick={() => onNavigate?.('dinkes-impact-index')}
-            className="text-xs text-teal-400 hover:text-teal-300 transition flex items-center gap-1"
+            className="text-xs text-teal-700 hover:text-teal-800 font-medium transition flex items-center gap-1"
           >
             <span>Lihat Detail Metrik & Formula</span>
             <ArrowRight className="w-3.5 h-3.5" />

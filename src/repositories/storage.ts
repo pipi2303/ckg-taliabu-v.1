@@ -289,13 +289,23 @@ export async function simulateNetworkDelay(): Promise<void> {
 // Raw storage getters & setters
 export const rawStorage = {
   getUsers: (): User[] => {
-    const users = getItem<User[]>(STORAGE_KEYS.USERS, INITIAL_USERS);
+    let users = getItem<User[]>(STORAGE_KEYS.USERS, INITIAL_USERS);
     // Ensure deleted users (usr-10, usr-14, usr-15) are pruned if previously saved in local storage
     const excludedIds = ['usr-10', 'usr-14', 'usr-15'];
+    let changed = false;
     if (users.some((u) => excludedIds.includes(u.id))) {
-      const filtered = users.filter((u) => !excludedIds.includes(u.id));
-      setItem(STORAGE_KEYS.USERS, filtered);
-      return filtered;
+      users = users.filter((u) => !excludedIds.includes(u.id));
+      changed = true;
+    }
+    // Ensure new initial users (like usr-16 DIR_RSUD) are merged in if missing from cached localStorage
+    for (const initUser of INITIAL_USERS) {
+      if (!users.some((u) => u.id === initUser.id)) {
+        users.push(initUser);
+        changed = true;
+      }
+    }
+    if (changed) {
+      setItem(STORAGE_KEYS.USERS, users);
     }
     return users;
   },

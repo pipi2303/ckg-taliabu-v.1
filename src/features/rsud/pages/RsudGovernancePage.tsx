@@ -147,7 +147,7 @@ export const RsudGovernancePage: React.FC = () => {
 
       {activeTab === 'audit' && (
         <div className="space-y-3">
-          <div className="p-4 bg-slate-900/90 border border-slate-800 rounded-xl text-xs text-slate-300">
+          <div className="p-4 bg-[#faf9f6] border border-stone-200 rounded-xl text-xs text-stone-700 shadow-2xs">
             Direktur RSUD dapat melihat oversight audit — namun tidak otomatis memiliki akses membuka seluruh rekam medis atau data klinis sensitif di luar keperluan sah (Gap Closure §15 Audit Hard Lock).
           </div>
           <div className="bg-white border border-[#D8E5E2] rounded-xl divide-y divide-[#EDF3F1]">

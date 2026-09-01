@@ -216,21 +216,21 @@ export const RsudReferralNetworkPage: React.FC = () => {
       {activeTab === 'sla' && sla && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[sla.responseSla, sla.replySlaRoutine, sla.replySlaHighPriority].map((bucket) => (
-            <div key={bucket.slaCode} className="p-5 bg-slate-900/90 border border-slate-800 rounded-2xl text-slate-200 space-y-2">
-              <p className="text-xs font-bold text-teal-400 uppercase tracking-wider">{bucket.label}</p>
-              <p className="text-[11px] text-slate-400">Target: {bucket.targetHours} jam</p>
+            <div key={bucket.slaCode} className="p-5 bg-[#faf9f6] border border-stone-200 rounded-2xl text-stone-800 space-y-2 shadow-2xs">
+              <p className="text-xs font-bold text-teal-800 uppercase tracking-wider">{bucket.label}</p>
+              <p className="text-[11px] text-stone-500">Target: {bucket.targetHours} jam</p>
               <div className="grid grid-cols-3 gap-2 pt-2 text-center">
-                <div>
-                  <p className="text-xl font-extrabold text-emerald-400">{bucket.onTimeCount}</p>
-                  <p className="text-[10px] text-slate-400">Tepat Waktu</p>
+                <div className="p-2 rounded-xl bg-white border border-stone-200">
+                  <p className="text-xl font-extrabold text-emerald-700">{bucket.onTimeCount}</p>
+                  <p className="text-[10px] text-stone-500">Tepat Waktu</p>
                 </div>
-                <div>
-                  <p className="text-xl font-extrabold text-rose-400">{bucket.breachedCount}</p>
-                  <p className="text-[10px] text-slate-400">Breach SLA</p>
+                <div className="p-2 rounded-xl bg-white border border-stone-200">
+                  <p className="text-xl font-extrabold text-rose-600">{bucket.breachedCount}</p>
+                  <p className="text-[10px] text-stone-500">Breach SLA</p>
                 </div>
-                <div>
-                  <p className="text-xl font-extrabold text-amber-400">{bucket.pendingWithinTargetCount}</p>
-                  <p className="text-[10px] text-slate-400">Berjalan (Dalam Target)</p>
+                <div className="p-2 rounded-xl bg-white border border-stone-200">
+                  <p className="text-xl font-extrabold text-amber-700">{bucket.pendingWithinTargetCount}</p>
+                  <p className="text-[10px] text-stone-500">Dalam Target</p>
                 </div>
               </div>
             </div>

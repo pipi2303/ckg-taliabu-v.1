@@ -95,28 +95,28 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150">
+      <div className="bg-[#faf9f6] border border-stone-300 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col">
         {/* Header */}
-        <div className="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-900">
+        <div className="p-5 border-b border-stone-200 flex items-center justify-between bg-white">
           <div className="flex items-center gap-3">
             <div className={`p-2.5 rounded-xl border ${
               isKadis 
-                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
                 : isAnalyst 
-                ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' 
-                : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                ? 'bg-sky-50 text-sky-700 border-sky-200' 
+                : 'bg-amber-50 text-amber-700 border-amber-200'
             }`}>
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-semibold text-white">{modalTitle}</h3>
-              <p className="text-xs text-slate-400 mt-0.5">{modalSubtitle}</p>
+              <h3 className="text-base font-semibold text-stone-900">{modalTitle}</h3>
+              <p className="text-xs text-stone-500 mt-0.5">{modalSubtitle}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"
+            className="p-2 text-stone-400 hover:text-stone-700 rounded-lg hover:bg-stone-100 transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -125,24 +125,24 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
         {/* Form Body */}
         {isSuccess ? (
           <div className="p-8 text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
-            <h4 className="text-base font-semibold text-white">
+            <h4 className="text-base font-semibold text-stone-900">
               {isKadis ? 'Arahan Resmi Berhasil Dikirim' : isAnalyst ? 'Rekomendasi Analis Berhasil Terkirim' : 'Sinyal Perhatian Berhasil Dikirim'}
             </h4>
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-stone-600">
               Notifikasi telah diteruskan ke dashboard Kepala Puskesmas & PJ CKG terkait.
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs text-slate-300">
+          <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs text-stone-700">
             <div>
-              <label className="block font-medium text-slate-300 mb-1.5">Puskesmas Tujuan:</label>
+              <label className="block font-medium text-stone-800 mb-1.5">Puskesmas Tujuan:</label>
               <select
                 value={targetFacilityId}
                 onChange={(e) => setTargetFacilityId(e.target.value)}
-                className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-stone-900 focus:ring-2 focus:ring-teal-600 focus:outline-none"
               >
                 {puskesmasList.map((pkm) => (
                   <option key={pkm.id} value={pkm.id}>
@@ -154,11 +154,11 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block font-medium text-slate-300 mb-1.5">Kategori Hambatan:</label>
+                <label className="block font-medium text-stone-800 mb-1.5">Kategori Hambatan:</label>
                 <select
                   value={gapType}
                   onChange={(e) => setGapType(e.target.value as any)}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                  className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-stone-900 focus:ring-2 focus:ring-teal-600 focus:outline-none"
                 >
                   <option value="CITIZEN_ACCESS_GAP">Hambatan Akses Warga / Transportasi</option>
                   <option value="CAPACITY_GAP">Kapasitas Faskes / Kuota & Obat</option>
@@ -167,19 +167,19 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-medium text-slate-300 mb-1.5">Estimasi Kasus Terdampak:</label>
+                <label className="block font-medium text-stone-800 mb-1.5">Estimasi Kasus Terdampak:</label>
                 <input
                   type="number"
                   min={1}
                   value={affectedCount}
                   onChange={(e) => setAffectedCount(parseInt(e.target.value) || 1)}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                  className="w-full p-2.5 bg-white border border-stone-300 rounded-xl text-stone-900 focus:ring-2 focus:ring-teal-600 focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block font-medium text-slate-300 mb-1.5">
+              <label className="block font-medium text-stone-800 mb-1.5">
                 {isKadis ? 'Instruksi Arahan Kebijakan Kadis:' : isAnalyst ? 'Catatan Rekomendasi Analis:' : 'Catatan Arahan Dinkes:'}
               </label>
               <textarea
@@ -187,11 +187,11 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
                 placeholder={defaultMsgPlaceholder}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-1 focus:ring-teal-500 focus:outline-none resize-none"
+                className="w-full p-3 bg-white border border-stone-300 rounded-xl text-stone-900 focus:ring-2 focus:ring-teal-600 focus:outline-none resize-none"
               />
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+            <div className="p-3 rounded-xl bg-stone-100 border border-stone-200 text-[11px] text-stone-600 leading-relaxed">
               Catatan: Sinyal ini berfungsi sebagai jembatan komunikasi supervisi Dinkes. Sistem tidak mengubah status tugas operasional puskesmas secara sepihak.
             </div>
 
@@ -199,19 +199,19 @@ export const SendAttentionModal: React.FC<SendAttentionModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
+                className="px-4 py-2 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-300 transition cursor-pointer"
               >
                 Batal
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`px-4 py-2 rounded-xl text-white font-medium transition flex items-center gap-1.5 cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-white font-medium transition flex items-center gap-1.5 cursor-pointer shadow-xs ${
                   isKadis 
-                    ? 'bg-emerald-600 hover:bg-emerald-500' 
+                    ? 'bg-emerald-700 hover:bg-emerald-800' 
                     : isAnalyst 
-                    ? 'bg-sky-600 hover:bg-sky-500' 
-                    : 'bg-teal-600 hover:bg-teal-500'
+                    ? 'bg-sky-700 hover:bg-sky-800' 
+                    : 'bg-teal-700 hover:bg-teal-800'
                 }`}
               >
                 <Send className="w-3.5 h-3.5" />

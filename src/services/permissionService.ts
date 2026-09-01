@@ -1,4 +1,4 @@
-import { RoleId, SensitivityLevel, User } from '../types';
+import { RoleDefinition, RoleId, SensitivityLevel, User } from '../types';
 import { INITIAL_ROLES, PERMISSION_MATRIX_DATA } from '../mock/initialData';
 
 export const SENSITIVITY_ORDER: Record<SensitivityLevel, number> = {
@@ -37,27 +37,123 @@ export const SENSITIVITY_DESCRIPTIONS: Record<SensitivityLevel, { label: string;
   },
 };
 
+/**
+ * Explicit definition and registered navigation permissions for Direktur RSUD (DIR_RSUD).
+ * Conforms to Executive-first, Aggregate-first, Exception-driven governance (§2 Gap Closure).
+ */
+export const DIR_RSUD_ROLE_ID: RoleId = 'DIR_RSUD';
+export const DIR_RSUD_ROLE_NAME = 'Direktur RSUD';
+
+export const DIR_RSUD_ROLE_DEFINITION: RoleDefinition = {
+  id: 'DIR_RSUD',
+  name: 'Direktur RSUD',
+  category: 'RSUD',
+  description: 'Executive-first, aggregate-first, exception-driven: memantau performa rujukan CKG ke RSUD, kesiapan layanan, mutu, dan integrasi secara agregat. Tidak memiliki kewenangan klinis (diagnosis, terapi, resep) dan tidak mengubah RiskClassification/CareTask/LTFU/outcome klinis milik Puskesmas.',
+  dataCeiling: 'S3',
+  canManageUsers: false,
+  canManageFacilities: false,
+  canManageRegions: false,
+  canViewAudit: true,
+  canManageRuleVersions: false,
+  canAccessClinicalData: false,
+  isPredefined: true,
+};
+
+export const DIR_RSUD_NAVIGATION_PERMISSIONS: readonly string[] = [
+  'rsud-executive',
+  'rsud-referral-network',
+  'rsud-service-readiness',
+  'rsud-quality-governance',
+  'rsud-data-integration',
+  'rsud-governance',
+  'dinkes-ringkasan',
+];
+
+/**
+ * Consolidated master list of all registered system roles including Direktur RSUD.
+ */
+export const ALL_REGISTERED_ROLES: RoleDefinition[] = [
+  ...INITIAL_ROLES.filter((r) => r.id !== 'DIR_RSUD'),
+  DIR_RSUD_ROLE_DEFINITION,
+];
+
+/**
+ * Normalizes role ID strings to handle alias variations during role switching and routing.
+ * e.g., 'Dir. RSUD', 'dir_rsud', 'rsud', 'Direktur RSUD' -> 'DIR_RSUD'.
+ */
+export function normalizeRoleId(roleId: string | RoleId): RoleId {
+  if (!roleId) return 'ADMIN_DINKES';
+  const clean = roleId.trim().toUpperCase().replace(/[\.\s\-]/g, '_');
+  if (
+    clean === 'DIR_RSUD' ||
+    clean === 'DIR_RSUD_' ||
+    clean === 'DIREKTUR_RSUD' ||
+    clean === 'DIR_RUMAH_SAKIT' ||
+    clean === 'RSUD' ||
+    clean === 'DIRRSUD'
+  ) {
+    return 'DIR_RSUD';
+  }
+  if (clean === 'KEPALA_DINAS' || clean === 'KADIS' || clean === 'KADIS_DINKES') {
+    return 'KEPALA_DINAS';
+  }
+  if (clean === 'ANALYST_DINKES' || clean === 'ANALIS' || clean === 'ANALIS_DINKES') {
+    return 'ANALYST_DINKES';
+  }
+  if (clean === 'KEPALA_PUSKESMAS' || clean === 'KAPUS' || clean === 'KAPUS_BOBONG') {
+    return 'KEPALA_PUSKESMAS';
+  }
+  if (clean === 'PJ_CKG' || clean === 'PJCKG') {
+    return 'PJ_CKG';
+  }
+  if (clean === 'DOCTOR' || clean === 'DOKTER') {
+    return 'DOCTOR';
+  }
+  if (clean === 'NURSE_MIDWIFE' || clean === 'BIDAN' || clean === 'PERAWAT') {
+    return 'NURSE_MIDWIFE';
+  }
+  if (clean === 'PHARMACY_OFFICER' || clean === 'FARMASI') {
+    return 'PHARMACY_OFFICER';
+  }
+  if (clean === 'KADER' || clean === 'KADER_POSYANDU') {
+    return 'KADER';
+  }
+  if (clean === 'CITIZEN' || clean === 'WARGA') {
+    return 'CITIZEN';
+  }
+  return roleId as RoleId;
+}
+
 export const permissionService = {
-  getRoleDefinition(roleId: RoleId) {
-    return INITIAL_ROLES.find((r) => r.id === roleId) || INITIAL_ROLES[0];
+  getRoleDefinition(roleId: RoleId | string): RoleDefinition {
+    const normalized = normalizeRoleId(roleId);
+    if (normalized === 'DIR_RSUD') {
+      return DIR_RSUD_ROLE_DEFINITION;
+    }
+    return ALL_REGISTERED_ROLES.find((r) => r.id === normalized) || ALL_REGISTERED_ROLES[0];
   },
 
-  getAllRoles() {
-    return INITIAL_ROLES;
+  getAllRoles(): RoleDefinition[] {
+    return ALL_REGISTERED_ROLES;
   },
 
   getPermissionMatrix() {
     return PERMISSION_MATRIX_DATA;
   },
 
+  isRsudExecutive(roleId: RoleId | string): boolean {
+    return normalizeRoleId(roleId) === 'DIR_RSUD';
+  },
+
   // Check if role has access to specific sensitivity level
-  hasSensitivityAccess(roleId: RoleId, requiredLevel: SensitivityLevel): boolean {
-    const roleDef = this.getRoleDefinition(roleId);
+  hasSensitivityAccess(roleId: RoleId | string, requiredLevel: SensitivityLevel): boolean {
+    const normalized = normalizeRoleId(roleId);
+    const roleDef = this.getRoleDefinition(normalized);
     const roleCeilingRank = SENSITIVITY_ORDER[roleDef.dataCeiling];
     const requiredRank = SENSITIVITY_ORDER[requiredLevel];
 
     // HARD RULE: KADER CEILING IS S2. KADER CAN NEVER ACCESS S3 OR S4.
-    if (roleId === 'KADER' && requiredRank > SENSITIVITY_ORDER.S2) {
+    if (normalized === 'KADER' && requiredRank > SENSITIVITY_ORDER.S2) {
       return false;
     }
 
@@ -111,21 +207,23 @@ export const permissionService = {
 
   canViewAuditLogs(actor: User): boolean {
     if (actor.status !== 'ACTIVE') return false;
-    const allowedRoles: RoleId[] = ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES'];
-    return allowedRoles.includes(actor.roleId);
+    const allowedRoles: RoleId[] = ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES', 'DIR_RSUD'];
+    return allowedRoles.includes(normalizeRoleId(actor.roleId));
   },
 
   // Check area scope containment
   isInScope(actor: User, scopeId: string): boolean {
-    if (actor.roleId === 'ADMIN_DINKES' || actor.roleId === 'KEPALA_DINAS' || actor.roleId === 'ANALYST_DINKES' || actor.roleId === 'DIR_RSUD') {
+    const normRole = normalizeRoleId(actor.roleId);
+    if (normRole === 'ADMIN_DINKES' || normRole === 'KEPALA_DINAS' || normRole === 'ANALYST_DINKES' || normRole === 'DIR_RSUD') {
       return true; // Kabupaten wide (DIR_RSUD: jejaring rujukan lintas seluruh Puskesmas pengirim)
     }
     return actor.areaScopes.includes(scopeId) || actor.villageAssignment === scopeId;
   },
 
   // Role Navigation Access Map (Role-Based Menu Matrix)
-  getAllowedNavIds(roleId: RoleId): string[] {
-    switch (roleId) {
+  getAllowedNavIds(roleId: RoleId | string): string[] {
+    const normalized = normalizeRoleId(roleId);
+    switch (normalized) {
       case 'ADMIN_DINKES':
         // Scoped to platform administration only (master data, accounts/roles, rule
         // governance, system config) — matches this role's own description ("Akses penuh
@@ -266,30 +364,22 @@ export const permissionService = {
         ];
 
       case 'DIR_RSUD':
-        // Executive-first, aggregate-first, exception-driven (Gap Closure §2) — tidak ada nav id
-        // yang membuka data klinis individual/diagnosis. "Individual Referral List" hanya lewat
-        // drilldown purpose-gated (populationPrivacyService) di dalam rsud-referral-network.
-        return [
-          'rsud-executive',
-          'rsud-referral-network',
-          'rsud-service-readiness',
-          'rsud-quality-governance',
-          'rsud-data-integration',
-          'rsud-governance',
-        ];
+        // Explicit registered navigation permissions for Direktur RSUD
+        return [...DIR_RSUD_NAVIGATION_PERMISSIONS];
 
       default:
         return ['dashboard', 'prioritas-harian'];
     }
   },
 
-  isNavAllowed(roleId: RoleId, navId: string): boolean {
+  isNavAllowed(roleId: RoleId | string, navId: string): boolean {
     const allowed = this.getAllowedNavIds(roleId);
     return allowed.includes(navId);
   },
 
-  getDefaultNavForRole(roleId: RoleId): string {
-    switch (roleId) {
+  getDefaultNavForRole(roleId: RoleId | string): string {
+    const normalized = normalizeRoleId(roleId);
+    switch (normalized) {
       case 'CITIZEN':
         return 'citizen-app';
       case 'KADER':

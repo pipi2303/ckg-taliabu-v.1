@@ -2,6 +2,8 @@ import { Session, User } from '../types';
 import { userRepo } from '../repositories/userRepo';
 import { auditRepo } from '../repositories/auditRepo';
 import { rawStorage } from '../repositories/storage';
+import { INITIAL_USERS } from '../mock/initialData';
+import { normalizeRoleId } from './permissionService';
 
 const SESSION_STORAGE_KEY = 'ckg_current_session_v1';
 const SESSION_DURATION_HOURS = 8;
@@ -115,8 +117,42 @@ export const authService = {
     localStorage.removeItem(SESSION_STORAGE_KEY);
   },
 
-  async switchRoleForDemo(userId: string): Promise<User> {
-    const user = await userRepo.getUserById(userId);
+  async switchRoleForDemo(userIdOrRoleId: string): Promise<User> {
+    if (!userIdOrRoleId) throw new Error('Pengguna demo tidak ditemukan');
+
+    // 1. Try finding direct by ID in repository
+    let user = await userRepo.getUserById(userIdOrRoleId);
+
+    // 2. If not found by ID, search by normalized Role ID / Username / Name
+    if (!user) {
+      const normalizedRole = normalizeRoleId(userIdOrRoleId);
+      const allUsers = rawStorage.getUsers();
+      user = allUsers.find(
+        (u) =>
+          u.id.toLowerCase() === userIdOrRoleId.toLowerCase() ||
+          u.roleId === normalizedRole ||
+          u.username.toLowerCase() === userIdOrRoleId.toLowerCase()
+      );
+    }
+
+    // 3. Fallback to INITIAL_USERS if missing from current storage cache
+    if (!user) {
+      const normalizedRole = normalizeRoleId(userIdOrRoleId);
+      user = INITIAL_USERS.find(
+        (u) =>
+          u.id.toLowerCase() === userIdOrRoleId.toLowerCase() ||
+          u.roleId === normalizedRole ||
+          u.username.toLowerCase() === userIdOrRoleId.toLowerCase()
+      );
+      if (user) {
+        // Re-seed into storage so user is discoverable
+        const currentUsers = rawStorage.getUsers();
+        if (!currentUsers.some((u) => u.id === user!.id)) {
+          rawStorage.setUsers([...currentUsers, user]);
+        }
+      }
+    }
+
     if (!user) throw new Error('Pengguna demo tidak ditemukan');
     if (user.status !== 'ACTIVE') throw new Error('Akun ini sedang nonaktif.');
 

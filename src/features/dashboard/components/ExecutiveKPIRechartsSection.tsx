@@ -675,13 +675,13 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
       className={`p-5 rounded-2xl border shadow-xs space-y-5 transition-colors ${
         isDark
           ? 'bg-slate-900/90 border-slate-800 text-white'
-          : 'bg-white border-[#D8E5E2] text-black'
+          : 'bg-[#faf9f6] border-stone-200/90 text-black'
       }`}
     >
       {/* 1. Header with Mode Selectors & Filters */}
       <div
         className={`flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b ${
-          isDark ? 'border-slate-800' : 'border-[#D8E5E2]'
+          isDark ? 'border-slate-800' : 'border-stone-200'
         }`}
       >
         <div className="space-y-1">
@@ -885,8 +885,8 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         {/* A. GRAFIK BATANG (BAR CHART RECHARTS) — KOMPARASI 8 PUSKESMAS & TARGET   */}
         {/* ========================================================================= */}
         <div
-          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
-            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
+          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-xs flex flex-col justify-between space-y-4 ${
+            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-stone-200/90'
           }`}
         >
             {/* Bar Chart Header Controls */}
@@ -1120,8 +1120,8 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         {/* B. GRAFIK AREA (AREA CHART RECHARTS) — TREN LONGITUDINAL 6 BULAN (6 KPI) */}
         {/* ========================================================================= */}
         <div
-          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-md backdrop-blur-xs flex flex-col justify-between space-y-4 ${
-            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-[#FAFDFB] border-[#D8E5E2]'
+          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-xs flex flex-col justify-between space-y-4 ${
+            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-stone-200/90'
           }`}
         >
             {/* Area Chart Header Controls */}

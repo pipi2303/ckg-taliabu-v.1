@@ -97,7 +97,7 @@ export const AdminRiskStratificationMatrix: React.FC = () => {
   const totalCitizens = RISK_STRATA.reduce((sum, s) => sum + s.count, 0);
 
   return (
-    <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-2xs space-y-4">
+    <div className="bg-[#faf9f6] p-5 rounded-2xl border border-stone-200/90 shadow-2xs space-y-4">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-3.5">
         <div>

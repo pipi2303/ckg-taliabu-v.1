@@ -151,13 +151,13 @@ export const RsudServiceReadinessPage: React.FC = () => {
       {activeTab === 'critical' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {readiness.map((s) => (
-            <div key={s.id} className="p-5 bg-slate-900/90 border border-slate-800 rounded-2xl text-slate-200 space-y-2">
-              <p className="text-sm font-bold text-white">{s.serviceName}</p>
+            <div key={s.id} className="p-5 bg-[#faf9f6] border border-stone-200 rounded-2xl text-stone-800 space-y-2 shadow-2xs">
+              <p className="text-sm font-bold text-black">{s.serviceName}</p>
               <Badge variant={CAPABILITY_VARIANT[s.capabilityStatus]}>{CAPABILITY_LABEL[s.capabilityStatus]}</Badge>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-stone-600 leading-relaxed">
                 Readiness mempertimbangkan: ruang, staf, alat, obat, diagnostik, dan SOP — bukan sekadar kapasitas jadwal.
               </p>
-              <p className="text-[10px] text-slate-500">Cut-off: {new Date(s.dataCutoffAt).toLocaleString('id-ID')}</p>
+              <p className="text-[10px] text-stone-500">Cut-off: {new Date(s.dataCutoffAt).toLocaleString('id-ID')}</p>
             </div>
           ))}
         </div>

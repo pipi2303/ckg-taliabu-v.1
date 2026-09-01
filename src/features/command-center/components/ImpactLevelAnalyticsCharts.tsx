@@ -422,7 +422,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
           <div className="flex flex-wrap items-center gap-2">
             {/* Geo Filter Toggle */}
-            <div className="flex items-center bg-stone-200/80 rounded-xl p-1 border border-stone-300/80 text-xs">
+            <div className="flex items-center bg-[#f0eee6] rounded-xl p-1 border border-stone-300/80 text-xs">
               <button
                 type="button"
                 onClick={() => setGeoFilter('ALL')}
@@ -456,7 +456,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             <button
               type="button"
               onClick={handleExportCSV}
-              className="px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs"
+              className="px-3 py-1.5 rounded-xl bg-[#faf9f6] hover:bg-[#f0eee6] text-stone-800 border border-stone-300 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs"
               title="Unduh Data Ringkasan Level 1, 2, 3 ke CSV"
             >
               <Download className="w-3.5 h-3.5 text-stone-600" />
@@ -473,7 +473,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'ALL'
                 ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-stone-200/80 text-stone-700 hover:bg-stone-300 hover:text-stone-900'
+                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -486,7 +486,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'BAR'
                 ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-stone-200/80 text-stone-700 hover:bg-stone-300 hover:text-stone-900'
+                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
@@ -499,7 +499,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'AREA'
                 ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-stone-200/80 text-stone-700 hover:bg-stone-300 hover:text-stone-900'
+                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
             }`}
           >
             <AreaChartIcon className="w-3.5 h-3.5" />
@@ -512,7 +512,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'COMPOSED'
                 ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-stone-200/80 text-stone-700 hover:bg-stone-300 hover:text-stone-900'
+                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
             }`}
           >
             <TrendingUp className="w-3.5 h-3.5" />
@@ -525,7 +525,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'COHORT'
                 ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-stone-200/80 text-stone-700 hover:bg-stone-300 hover:text-stone-900'
+                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
             }`}
           >
             <PieChartIcon className="w-3.5 h-3.5" />
@@ -549,7 +549,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             </div>
 
             <div className="flex items-center gap-2 self-start sm:self-center">
-              <div className="flex items-center bg-stone-200/80 rounded-xl p-1 border border-stone-300/80 text-xs">
+              <div className="flex items-center bg-[#f0eee6] rounded-xl p-1 border border-stone-300/80 text-xs">
                 <button
                   type="button"
                   onClick={() => setBarSubMode('VOLUME')}
@@ -573,7 +573,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           {/* Bar Chart Container */}
-          <div className="h-80 w-full pt-2">
+          <div className="h-80 w-full pt-2 rounded-xl bg-[#faf9f6]">
             <ResponsiveContainer width="100%" height="100%">
               {barSubMode === 'VOLUME' ? (
                 <BarChart data={filteredFacilities} margin={{ top: 10, right: 20, left: 0, bottom: 25 }}>
@@ -590,12 +590,12 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                   <YAxis stroke="#475569" fontSize={11} tickLine={false} unit=" jiwa" />
                   <RechartsTooltip
                     contentStyle={{
-                      backgroundColor: '#ffffff',
+                      backgroundColor: '#faf9f6',
                       borderColor: '#cbd5e1',
                       borderRadius: '0.75rem',
                       color: '#0f172a',
                       fontSize: '12px',
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
                     }}
                     formatter={(val: number, name: string) => [
                       `${val.toLocaleString('id-ID')} jiwa`,
@@ -627,12 +627,12 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                   <YAxis stroke="#475569" fontSize={11} tickLine={false} unit=" jiwa" />
                   <RechartsTooltip
                     contentStyle={{
-                      backgroundColor: '#ffffff',
+                      backgroundColor: '#faf9f6',
                       borderColor: '#cbd5e1',
                       borderRadius: '0.75rem',
                       color: '#0f172a',
                       fontSize: '12px',
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
                     }}
                     formatter={(val: number, name: string) => [
                       `${val.toLocaleString('id-ID')} warga`,
@@ -653,7 +653,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             </ResponsiveContainer>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-stone-100/90 border border-stone-200 text-xs text-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 text-xs text-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
             <div className="flex items-center gap-2">
               <Info className="w-4 h-4 text-teal-700 shrink-0" />
               <span>
@@ -687,7 +687,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="flex items-center bg-stone-200/80 rounded-xl p-1 border border-stone-300/80 text-xs">
+              <div className="flex items-center bg-[#f0eee6] rounded-xl p-1 border border-stone-300/80 text-xs">
                 <button
                   type="button"
                   onClick={() => setAreaSubMode('CUMULATIVE')}
@@ -711,7 +711,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           {/* Area Chart Container */}
-          <div className="h-80 w-full pt-2">
+          <div className="h-80 w-full pt-2 rounded-xl bg-[#faf9f6]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={MONTHLY_TREND_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                 <defs>
@@ -737,12 +737,12 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 <YAxis stroke="#475569" fontSize={11} tickLine={false} unit=" jiwa" />
                 <RechartsTooltip
                   contentStyle={{
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#faf9f6',
                     borderColor: '#cbd5e1',
                     borderRadius: '0.75rem',
                     color: '#0f172a',
                     fontSize: '12px',
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
                   }}
                   formatter={(val: number, name: string) => [`${val.toLocaleString('id-ID')} jiwa`, name]}
                 />
@@ -791,17 +791,17 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div className="p-3.5 rounded-xl bg-stone-100/90 border border-stone-200 space-y-1">
+            <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs">
               <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Akselerasi Skrining (L1)</span>
               <p className="font-bold text-teal-800 text-sm">+768 warga diskrining sejak Jan 2026</p>
               <p className="text-[11px] text-stone-600">Rata-rata 109 warga/bulan terlayani</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-stone-100/90 border border-stone-200 space-y-1">
+            <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs">
               <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Tindak Lanjut Faskes (L2)</span>
               <p className="font-bold text-sky-800 text-sm">268 pasien berisiko telah tertata laksana</p>
               <p className="text-[11px] text-stone-600">61.3% tingkat kontinuitas kabupaten</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-stone-100/90 border border-stone-200 space-y-1">
+            <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs">
               <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Jalur Outcome Terkendali (L3)</span>
               <p className="font-bold text-amber-800 text-sm">290 pasien dalam kohort 90-hari</p>
               <p className="text-[11px] text-stone-600">Menunggu audit validasi CR-OC (OI-08)</p>
@@ -831,7 +831,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             </div>
           </div>
 
-          <div className="h-80 w-full pt-2">
+          <div className="h-80 w-full pt-2 rounded-xl bg-[#faf9f6]">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={MONTHLY_TREND_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.8} />
@@ -840,12 +840,12 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 <YAxis yAxisId="right" orientation="right" stroke="#059669" fontSize={11} tickLine={false} domain={[0, 100]} unit="%" />
                 <RechartsTooltip
                   contentStyle={{
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#faf9f6',
                     borderColor: '#cbd5e1',
                     borderRadius: '0.75rem',
                     color: '#0f172a',
                     fontSize: '12px',
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
                   }}
                   formatter={(val: number, name: string) => [
                     name.includes('%') ? `${val}%` : `${val.toLocaleString('id-ID')} jiwa`,
@@ -901,7 +901,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-7 h-72 w-full pt-1">
+            <div className="lg:col-span-7 h-72 w-full pt-1 rounded-xl bg-[#faf9f6]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -914,17 +914,17 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                     dataKey="value"
                   >
                     {LEVEL3_COHORT_DATA.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} stroke="#ffffff" strokeWidth={2} />
+                      <Cell key={`cell-${index}`} fill={entry.color} stroke="#faf9f6" strokeWidth={2} />
                     ))}
                   </Pie>
                   <RechartsTooltip
                     contentStyle={{
-                      backgroundColor: '#ffffff',
+                      backgroundColor: '#faf9f6',
                       borderColor: '#cbd5e1',
                       borderRadius: '0.75rem',
                       fontSize: '11px',
                       color: '#0f172a',
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
                     }}
                     formatter={(val: number, name: string) => [
                       `${val} warga (${Math.round((val / 290) * 100)}%)`,
@@ -941,7 +941,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 {LEVEL3_COHORT_DATA.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-2.5 rounded-xl bg-stone-100/90 border border-stone-200 flex items-center justify-between text-xs"
+                    className="p-2.5 rounded-xl bg-[#faf9f6] border border-stone-200 flex items-center justify-between text-xs shadow-xs"
                   >
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
@@ -952,7 +952,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 ))}
               </div>
 
-              <div className="p-3.5 rounded-xl bg-amber-50/90 border border-amber-200 text-xs text-amber-900 space-y-1">
+              <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-amber-300/80 text-xs text-amber-900 space-y-1 shadow-xs">
                 <div className="flex items-center gap-1.5 font-bold text-amber-900">
                   <ShieldCheck className="w-4 h-4 text-amber-700" />
                   <span>Tata Kelola Data Klinis (OI-08):</span>
