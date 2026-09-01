@@ -196,7 +196,7 @@ export const CitizenAccountPage: React.FC<CitizenAccountPageProps> = ({ onExitTo
             },
             {
               title: 'Riwayat Kesehatan Longitudinal CKG',
-              desc: 'Grafik perkembangan tekanan darah dan gula darah berkala.',
+              desc: 'Perkembangan tekanan darah dan gula darah berkala.',
               icon: Clock,
             },
           ].map((item, i) => {

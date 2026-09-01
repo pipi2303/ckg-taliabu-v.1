@@ -7,8 +7,15 @@ import { Button } from '../../../components/common/Button';
 import { Input } from '../../../components/common/Input';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
-import { rsudExecutiveService, ExecutiveAlert } from '../../../services/rsudExecutiveService';
-import { QualifiedMetric, RsudExecutiveAction } from '../../../types';
+import {
+  rsudExecutiveService,
+  ExecutiveAlert,
+  ReferralCascadeSummary,
+  SourcePuskesmasRow,
+  RejectionRow,
+} from '../../../services/rsudExecutiveService';
+import { QualifiedMetric, RsudExecutiveAction, RsudServiceReadiness } from '../../../types';
+import { RsudExecutiveSummaryCharts } from '../components/RsudExecutiveSummaryCharts';
 
 const alertStyles: Record<ExecutiveAlert['severity'], string> = {
   CRITICAL: 'bg-rose-50 border-rose-300 text-rose-900',
@@ -24,21 +31,36 @@ export const RsudExecutivePage: React.FC = () => {
   const [closedLoopRate, setClosedLoopRate] = useState<QualifiedMetric | null>(null);
   const [alerts, setAlerts] = useState<ExecutiveAlert[]>([]);
   const [actions, setActions] = useState<RsudExecutiveAction[]>([]);
+  const [cascade, setCascade] = useState<ReferralCascadeSummary | null>(null);
+  const [sla, setSla] = useState<Awaited<ReturnType<typeof rsudExecutiveService.getReferralSla>> | null>(null);
+  const [sourceRows, setSourceRows] = useState<SourcePuskesmasRow[]>([]);
+  const [readiness, setReadiness] = useState<RsudServiceReadiness[]>([]);
+  const [rejections, setRejections] = useState<RejectionRow[]>([]);
   const [formOpen, setFormOpen] = useState(false);
   const [form, setForm] = useState({ title: '', decisionNote: '', picUserName: '', dueDate: '' });
 
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const [kpis, rate, actionList] = await Promise.all([
+      const [kpis, rate, actionList, cascadeData, slaData, sourceData, readinessData, rejectionData] = await Promise.all([
         rsudExecutiveService.getExecutiveKpis(),
         rsudExecutiveService.getClosedLoopRate(),
         rsudExecutiveService.getExecutiveActions(),
+        rsudExecutiveService.getReferralCascade(),
+        rsudExecutiveService.getReferralSla(),
+        rsudExecutiveService.getSourcePuskesmasAnalysis(),
+        rsudExecutiveService.getServiceReadiness(),
+        rsudExecutiveService.getRejectionAnalysis(),
       ]);
       setMetrics(kpis.metrics);
       setAlerts(kpis.alerts);
       setClosedLoopRate(rate);
       setActions(actionList);
+      setCascade(cascadeData);
+      setSla(slaData);
+      setSourceRows(sourceData);
+      setReadiness(readinessData);
+      setRejections(rejectionData);
     } finally {
       setIsLoading(false);
     }
@@ -126,6 +148,16 @@ export const RsudExecutivePage: React.FC = () => {
               <QualifiedMetricCard metric={closedLoopRate} levelBadge="Closed-Loop Rate" />
             </div>
           )}
+
+          {/* Dedicated Visual Recharts Charts for Each Executive Section */}
+          <RsudExecutiveSummaryCharts
+            cascade={cascade}
+            sla={sla}
+            sourceRows={sourceRows}
+            readiness={readiness}
+            rejections={rejections}
+            onNavigateTab={setActiveTab}
+          />
         </div>
       )}
 

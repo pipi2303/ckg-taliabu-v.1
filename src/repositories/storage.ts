@@ -183,7 +183,7 @@ const STORAGE_KEYS = {
   CLASSIFICATION_REVIEWS: 'ckg_classification_reviews_v3',
   CLASSIFICATION_BATCHES: 'ckg_classification_batches_v3',
   // MVP 4 Storage Keys
-  CARE_TASKS: 'ckg_care_tasks_v4',
+  CARE_TASKS: 'ckg_care_tasks_v13',
   TASK_ASSIGNMENTS: 'ckg_task_assignments_v4',
   CONTACT_ATTEMPTS: 'ckg_contact_attempts_v4',
   APPOINTMENTS: 'ckg_appointments_v4',

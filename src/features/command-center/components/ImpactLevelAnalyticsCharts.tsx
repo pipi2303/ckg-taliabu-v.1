@@ -414,7 +414,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 <BarChart3 className="w-4 h-4" />
               </span>
               <h3 className="text-base font-bold text-stone-900 tracking-tight">
-                Visualisasi Grafik Interaktif CKG Impact Index
+                Analisis Interaktif CKG Impact Index
               </h3>
               <DocBadge code="SCR-DNK-B01" size="sm" />
             </div>
@@ -480,7 +480,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>Semua Visualisasi (Overview Lengkap)</span>
+            <span>Semua Analisis (Overview Lengkap)</span>
           </button>
 
           <button
@@ -493,7 +493,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
-            <span>Grafik Batang (Komparasi 8 Faskes)</span>
+            <span>Komparasi 8 Faskes</span>
           </button>
 
           <button
@@ -506,7 +506,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             }`}
           >
             <AreaChartIcon className="w-3.5 h-3.5" />
-            <span>Grafik Area (Tren Kumulatif Longitudinal)</span>
+            <span>Tren Kumulatif Longitudinal</span>
           </button>
 
           <button
@@ -519,7 +519,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             }`}
           >
             <TrendingUp className="w-3.5 h-3.5" />
-            <span>Grafik Batang + Garis SPM (Dual Axis)</span>
+            <span>Komposisi SPM (Dual Axis)</span>
           </button>
 
           <button
@@ -532,7 +532,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             }`}
           >
             <PieChartIcon className="w-3.5 h-3.5" />
-            <span>Grafik Donut & Kohort Level 3 (Outcome)</span>
+            <span>Distribusi Kohort Level 3 (Outcome)</span>
           </button>
         </div>
       </div>
@@ -547,7 +547,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-teal-700" />
-                Grafik Batang: Komparasi Capaian Level 1 & Level 2 per Puskesmas
+                Komparasi Capaian Level 1 & Level 2 per Puskesmas
               </h4>
               <p className="text-xs text-stone-600 mt-0.5">
                 Membandingkan volume sasaran, skrining selesai (L1), tindak lanjut faskes (L2), dan kesenjangan kasus di tiap Puskesmas.
@@ -684,7 +684,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
         </div>
       )}
 
-      {/* 2. GRAFIK AREA SECTION (Area Chart) */}
+      {/* 2. AREA SECTION (Area Chart) */}
       {(activeTab === 'ALL' || activeTab === 'AREA') && (
         <div
           className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
@@ -694,7 +694,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
                 <AreaChartIcon className="w-4 h-4 text-sky-700" />
-                Grafik Area: Pertumbuhan Longitudinal & Jalur Kaskade Level 1 s.d 3
+                Pertumbuhan Longitudinal & Jalur Kaskade Level 1 s.d 3
               </h4>
               <p className="text-xs text-stone-600 mt-0.5">
                 Mengamati akselerasi kumulatif skrining sasaran (L1), rujukan tertangani (L2), dan kohort pemantauan kendali (L3).
@@ -837,7 +837,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
         </div>
       )}
 
-      {/* 3. GRAFIK KOMPOSISI DUAL AXIS SECTION (Composed Chart) */}
+      {/* 3. KOMPOSISI DUAL AXIS SECTION (Composed Chart) */}
       {(activeTab === 'ALL' || activeTab === 'COMPOSED') && (
         <div
           className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
@@ -847,7 +847,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-emerald-700" />
-                Grafik Batang + Garis Komposisi: Volume vs Persentase Kontinuitas SPM
+                Volume vs Persentase Kontinuitas SPM
               </h4>
               <p className="text-xs text-stone-600 mt-0.5">
                 Mengevaluasi apakah lonjakan volume skrining berbanding lurus dengan kepatuhan standar SPM (Standar Kemenkes ≥50% & Target Prima ≥80%).
@@ -915,7 +915,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
         </div>
       )}
 
-      {/* 4. GRAFIK DONUT COHORT LEVEL 3 SECTION */}
+      {/* 4. DONUT COHORT LEVEL 3 SECTION */}
       {(activeTab === 'ALL' || activeTab === 'COHORT') && (
         <div
           className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
@@ -925,7 +925,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
                 <PieChartIcon className="w-4 h-4 text-amber-700" />
-                Grafik Donut: Distribusi Pasien Kohort Pemantauan Level 3
+                Distribusi Pasien Kohort Pemantauan Level 3
               </h4>
               <p className="text-xs text-stone-600 mt-0.5">
                 Sebaran 290 pasien dalam siklus evaluasi 90-hari menuju verifikasi terkendali CR-OC.

@@ -270,7 +270,7 @@ export const DinkesRoleComparisonInfographic: React.FC = () => {
                     <strong>Rangkuman Eksekutif</strong> (Layar ringkas berisi kondisi kesehatan umum & hal yang butuh tindakan cepat)
                   </td>
                   <td className="px-4 py-3 bg-teal-50/40 text-teal-950">
-                    <strong>Pusat Data Lengkap</strong> (Grafik detail per desa, tabel tren, dan data lengkap per Puskesmas)
+                    <strong>Pusat Data Lengkap</strong> (Data detail per desa, tabel tren, dan data lengkap per Puskesmas)
                   </td>
                 </tr>
 

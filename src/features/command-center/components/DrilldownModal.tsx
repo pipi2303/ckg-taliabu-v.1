@@ -86,12 +86,12 @@ export const DrilldownModal: React.FC<DrilldownModalProps> = ({
         {/* Content */}
         <div className="p-6 overflow-y-auto space-y-5 text-sm text-slate-300">
           {isBupati ? (
-            <div className="p-5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 space-y-2">
-              <div className="flex items-center gap-2 font-semibold text-amber-300">
-                <Lock className="w-5 h-5" />
+            <div className="p-5 rounded-xl bg-amber-50 border border-amber-300 text-stone-900 space-y-2">
+              <div className="flex items-center gap-2 font-bold text-amber-950">
+                <Lock className="w-5 h-5 text-amber-800" />
                 Akses Penelusuran Individual Dibatasi
               </div>
-              <p className="text-xs text-amber-200/90 leading-relaxed">
+              <p className="text-xs text-stone-800 leading-relaxed">
                 Sesuai batasan kewenangan privasi akun Anda, penelusuran data tingkat individual/warga tidak diperkenankan. Anda dapat menggunakan Ringkasan Wilayah untuk melihat gambaran makro.
               </p>
             </div>

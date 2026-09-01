@@ -222,7 +222,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
         </div>
       </div>
 
-      {/* 2. Executive KPI Recharts Analytics (Grafik Batang & Grafik Area 6 KPI) */}
+      {/* 2. Executive KPI Recharts Analytics (6 KPI Strategis) */}
       <ExecutiveKPIRechartsSection onNavigate={onNavigate} />
 
       {/* 3. Strategic Performance Matrix: Evaluasi & Grafik 8 Puskesmas Se-Kabupaten */}
@@ -298,16 +298,16 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
               <h4 className="text-xs sm:text-sm font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
                 <BarChart3 className="w-4 h-4 text-teal-700" />
                 {pkmViewMode === 'VOLUME'
-                  ? 'Grafik Komparasi Beban Skrining, Warga Ditangani & Kesenjangan Kasus'
-                  : 'Grafik Capaian Kontinuitas Layanan Puskesmas Terhadap Standar Pelayanan Minimal (50%)'}
+                  ? 'Komparasi Beban Skrining, Warga Ditangani & Kesenjangan Kasus'
+                  : 'Capaian Kontinuitas Layanan Puskesmas Terhadap Standar Pelayanan Minimal (50%)'}
               </h4>
               <p className="text-[11px] text-[#60716D] mt-0.5">
                 {pkmViewMode === 'VOLUME'
                   ? chartType === 'STACKED_LINE'
-                    ? 'Visualisasi Stacked Bar (Ditangani + Kesenjangan = Total Beban) dipadukan Line Chart Rasio Capaian (%) untuk evaluasi efektivitas intervensi.'
+                    ? 'Komposisi Ditangani + Kesenjangan = Total Beban dipadukan Rasio Capaian (%) untuk evaluasi efektivitas intervensi.'
                     : chartType === 'DUMBBELL'
-                    ? 'Visualisasi Dumbbell Gap Chart menampilkan rentang defisit antara Warga Ditangani (titik hijau) dan Beban Sasaran (titik biru).'
-                    : 'Grafik batang berdampingan membandingkan langsung beban skrining dengan realisasi warga tertangani untuk mendeteksi faskes prioritas bantuan.'
+                    ? 'Rentang defisit antara Warga Ditangani (titik hijau) dan Beban Sasaran (titik biru).'
+                    : 'Perbandingan langsung beban skrining dengan realisasi warga tertangani untuk mendeteksi faskes prioritas bantuan.'
                   : 'Garis merah putus-putus menunjukkan batas target SPM kontinuitas pelayanan primer (50%).'}
               </p>
             </div>

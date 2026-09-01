@@ -263,13 +263,13 @@ export const ReportExportPage: React.FC = () => {
         </div>
 
         {/* Caveats & Integrity Notes */}
-        <div className="p-4 rounded-xl bg-amber-500/10 print:bg-gray-50 border border-amber-500/30 print:border-gray-300 text-xs space-y-1 text-amber-200 print:text-gray-800">
-          <div className="font-bold flex items-center gap-1.5 uppercase text-[11px]">
-            <AlertTriangle className="w-3.5 h-3.5 print:hidden" />
+        <div className="p-4 rounded-xl bg-amber-500/10 print:bg-gray-50 border border-amber-500/30 print:border-gray-300 text-xs space-y-1 text-black print:text-black">
+          <div className="font-bold flex items-center gap-1.5 uppercase text-[11px] text-amber-950">
+            <AlertTriangle className="w-3.5 h-3.5 print:hidden text-amber-900" />
             <span>Catatan Kepatuhan & Batasan Integritas Data:</span>
           </div>
           {snapshot.caveats.map((c, i) => (
-            <p key={i} className="leading-relaxed">
+            <p key={i} className="leading-relaxed text-black">
               • {c}
             </p>
           ))}

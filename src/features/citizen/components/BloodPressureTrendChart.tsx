@@ -274,7 +274,7 @@ export const BloodPressureTrendChart: React.FC<BloodPressureTrendChartProps> = (
               </h3>
             </div>
             <p className="text-[11px] text-gray-500 mt-0.5">
-              Grafik perkembangan riwayat tekanan darah dari setiap kunjungan/skrining
+              Perkembangan riwayat tekanan darah dari setiap kunjungan/skrining
             </p>
           </div>
 

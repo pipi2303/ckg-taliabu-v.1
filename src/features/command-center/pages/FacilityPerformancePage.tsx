@@ -211,10 +211,10 @@ export const FacilityPerformancePage: React.FC = () => {
                         ? 'bg-teal-600 text-white border-teal-500 shadow-xs'
                         : 'bg-slate-800 hover:bg-slate-700 text-teal-300 border-slate-700'
                     }`}
-                    title="Buka / Tutup Grafik Tren Bulanan"
+                    title="Buka / Tutup Tren Bulanan"
                   >
                     <LineChartIcon className="w-3.5 h-3.5" />
-                    <span>{isTrendExpanded ? 'Tutup Tren' : 'Grafik Tren Bulanan'}</span>
+                    <span>{isTrendExpanded ? 'Tutup Tren' : 'Tren Bulanan'}</span>
                     {isTrendExpanded ? (
                       <ChevronUp className="w-3.5 h-3.5" />
                     ) : (

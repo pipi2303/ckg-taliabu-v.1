@@ -6,7 +6,6 @@ import {
   HeartHandshake,
   ShieldCheck,
   FileCheck2,
-  GitBranch,
   History,
   RefreshCw,
   UserPlus,
@@ -33,10 +32,8 @@ import { permissionService } from '../../services/permissionService';
 import { AuditEvent } from '../../types';
 import { ExecutiveDinkesDashboardView } from './components/ExecutiveDinkesDashboardView';
 import { DashboardPustuPage } from './DashboardPustuPage';
-import { AdminRiskOutcomeComparisonChart } from './components/AdminRiskOutcomeComparisonChart';
 import { AdminScreeningAreaGrowthChart } from './components/AdminScreeningAreaGrowthChart';
 import { AdminFollowupAnalytics } from './components/AdminFollowupAnalytics';
-import { AdminRiskStratificationMatrix } from './components/AdminRiskStratificationMatrix';
 
 interface DashboardPageProps {
   onNavigate: (navId: string) => void;
@@ -285,78 +282,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         {/* Dedicated Follow-up & SLA Aging Analytics */}
         <div className="mt-4">
           <AdminFollowupAnalytics onNavigate={onNavigate} />
-        </div>
-      </div>
-
-      {/* Highlights: Kategori Risiko & Langkah Penanganan */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-[#60716D]">
-            Hasil Pemeriksaan & Tingkat Risiko Warga
-          </h3>
-          <span className="text-xs text-[#2E7D5B] font-semibold flex items-center gap-1">
-            <Activity className="w-3.5 h-3.5" /> Pedoman Pemeriksaan Aktif
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-          <div
-            {...cardProps('stratifikasi')}
-          >
-            <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Sudah Diperiksa</span>
-              <div className="p-2 rounded-lg bg-[#EBF7F2] text-[#2E7D5B] group-hover:bg-[#2E7D5B] group-hover:text-white transition-colors">
-                <Activity className="w-4 h-4" />
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-black tracking-tight">{stats.totalClassifications}</p>
-            <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">Hasil periksa tersimpan lengkap</p>
-          </div>
-
-          <div
-            {...cardProps('stratifikasi')}
-          >
-            <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Kondisi Darurat</span>
-              <div className="p-2 rounded-lg bg-red-50 text-red-700 group-hover:bg-red-700 group-hover:text-white transition-colors">
-                <Activity className="w-4 h-4" />
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-red-700 tracking-tight">{stats.criticalCount}</p>
-            <p className="text-[11px] text-red-700 font-medium mt-1">Butuh tindakan dokter segera</p>
-          </div>
-
-          <div
-            {...cardProps('stratifikasi')}
-          >
-            <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Risiko Tinggi (Perlu Dirujuk)</span>
-              <div className="p-2 rounded-lg bg-orange-50 text-orange-700 group-hover:bg-orange-700 group-hover:text-white transition-colors">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-orange-700 tracking-tight">{stats.highRiskCount}</p>
-            <p className="text-[11px] text-orange-700 font-medium mt-1">Rujukan ke Puskesmas atau RS</p>
-          </div>
-
-          <div
-            {...cardProps('stratifikasi')}
-          >
-            <div className="flex items-center justify-between text-[#60716D] mb-2">
-              <span className="text-xs font-semibold">Pedoman Pemeriksaan</span>
-              <div className="p-2 rounded-lg bg-[#F0F5F4] text-black group-hover:bg-[#00201C] group-hover:text-white transition-colors">
-                <GitBranch className="w-4 h-4" />
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-[#2E7D5B] tracking-tight">Kemenkes 2026</p>
-            <p className="text-[11px] text-[#60716D] font-medium mt-1">5 Standar Tes Kesehatan</p>
-          </div>
-        </div>
-
-        {/* Dedicated Monthly Comparison Recharts & Risk Matrix */}
-        <div className="mt-4 space-y-4">
-          <AdminRiskOutcomeComparisonChart />
-          <AdminRiskStratificationMatrix />
         </div>
       </div>
 

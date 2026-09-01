@@ -120,18 +120,18 @@ export const KaderPayloadPreviewModal: React.FC<KaderPayloadPreviewModalProps> =
               <EyeOff className="w-4 h-4 text-slate-500" />
               Elemen Klinis yang Dikecualikan dari Kader:
             </span>
-            <div className="grid grid-cols-2 gap-1.5 text-[11px] text-slate-600">
-              <div className="flex items-center gap-1.5 line-through text-slate-400">
-                <Lock className="w-3 h-3" /> Nilai Tensi (Sistol/Diastol)
+            <div className="grid grid-cols-2 gap-1.5 text-[11px] text-black">
+              <div className="flex items-center gap-1.5 line-through text-black">
+                <Lock className="w-3 h-3 text-slate-700" /> Nilai Tensi (Sistol/Diastol)
               </div>
-              <div className="flex items-center gap-1.5 line-through text-slate-400">
-                <Lock className="w-3 h-3" /> Kadar Gula Darah & HbA1c
+              <div className="flex items-center gap-1.5 line-through text-black">
+                <Lock className="w-3 h-3 text-slate-700" /> Kadar Gula Darah & HbA1c
               </div>
-              <div className="flex items-center gap-1.5 line-through text-slate-400">
-                <Lock className="w-3 h-3" /> Diagnosis & ICD-10
+              <div className="flex items-center gap-1.5 line-through text-black">
+                <Lock className="w-3 h-3 text-slate-700" /> Diagnosis & ICD-10
               </div>
-              <div className="flex items-center gap-1.5 line-through text-slate-400">
-                <Lock className="w-3 h-3" /> Warna Kategori Risiko CRS
+              <div className="flex items-center gap-1.5 line-through text-black">
+                <Lock className="w-3 h-3 text-slate-700" /> Warna Kategori Risiko CRS
               </div>
             </div>
           </div>

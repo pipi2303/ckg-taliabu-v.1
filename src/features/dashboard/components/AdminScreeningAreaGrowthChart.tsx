@@ -306,7 +306,7 @@ export const AdminScreeningAreaGrowthChart: React.FC = () => {
                 </span>
               </div>
               <p className="text-xs text-gray-500 mt-0.5">
-                Visualisasi tren pertumbuhan kumulatif pemeriksaan kesehatan CKG dan kontribusi puskesmas se-Pulau Taliabu
+                Tren pertumbuhan kumulatif pemeriksaan kesehatan CKG dan kontribusi puskesmas se-Pulau Taliabu
               </p>
             </div>
           </div>
@@ -331,7 +331,7 @@ export const AdminScreeningAreaGrowthChart: React.FC = () => {
 
           {/* View Mode Switcher */}
           <div className="flex rounded-lg bg-gray-100 p-0.5 text-xs font-bold">
-            <UiTooltip content="Grafik area kumulatif: Warga terdaftar, pemeriksaan lengkap, dan target populasi" position="bottom">
+            <UiTooltip content="Tren kumulatif: Warga terdaftar, pemeriksaan lengkap, dan target populasi" position="bottom">
               <button
                 type="button"
                 onClick={() => setViewMode('CUMULATIVE')}
@@ -344,7 +344,7 @@ export const AdminScreeningAreaGrowthChart: React.FC = () => {
                 Tren Cakupan Kumulatif
               </button>
             </UiTooltip>
-            <UiTooltip content="Grafik area bertumpuk (stacked): Distribusi kontribusi pemeriksaan tiap wilayah Puskesmas" position="bottom">
+            <UiTooltip content="Distribusi bertumpuk (stacked): Kontribusi pemeriksaan tiap wilayah Puskesmas" position="bottom">
               <button
                 type="button"
                 onClick={() => setViewMode('REGIONAL_STACK')}

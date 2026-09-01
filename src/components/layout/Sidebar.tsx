@@ -76,10 +76,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         {
           id: 'dashboard',
-          label: roleId === 'KEPALA_DINAS' ? 'Dashboard Eksekutif' : 'Beranda Puskesmas',
+          label: roleId === 'KEPALA_DINAS' ? 'Dashboard Eksekutif' : 'Beranda',
           icon: <LayoutDashboard className="w-4 h-4" />,
           badge: roleId === 'KEPALA_DINAS' ? 'SCR-DNK-A02' : 'SCR-PKM-A02',
-          docSpec: roleId === 'KEPALA_DINAS' ? 'Command Center Dinas Kesehatan · F1 · Plafon S3 Agregat · UC DNK-01' : 'Beranda Puskesmas · F1 · Plafon S3 · UC PKM-21, PKM-06',
+          docSpec: roleId === 'KEPALA_DINAS' ? 'Command Center Dinas Kesehatan · F1 · Plafon S3 Agregat · UC DNK-01' : 'Beranda · F1 · Plafon S3 · UC PKM-21, PKM-06',
           badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60',
         },
       ],
@@ -142,7 +142,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'integritas-monitoring', label: 'Audit Kepatuhan Puskesmas', icon: <ShieldCheck className="w-4 h-4 text-sky-400" />, badge: 'SCR-PKM-G06', docSpec: 'Pemeriksaan Integritas & Standar Pelayanan', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
         { id: 'kepatuhan-kendala', label: 'Kepatuhan & Kendala Obat', icon: <HeartHandshake className="w-4 h-4 text-teal-300" />, badge: 'SCR-PKM-F03', docSpec: 'Pencatatan Kepatuhan Minum Obat & Kendala Warga', badgeColor: 'bg-amber-950/90 text-amber-300 border-amber-700/60' },
         { id: 'kohort-kondisi', label: 'Kelompok Penyakit (Hipertensi/DM)', icon: <Layers className="w-4 h-4 text-indigo-400" />, badge: 'SCR-PKM-F06', docSpec: 'Daftar Pasien per Jenis Penyakit', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
-        { id: 'tren-outcome', label: 'Perkembangan Hasil Terapi', icon: <TrendingUp className="w-4 h-4 text-emerald-300" />, badge: 'SCR-PKM-F07', docSpec: 'Grafik Perbaikan Tekanan Darah & Gula Darah', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
+        { id: 'tren-outcome', label: 'Perkembangan Hasil Terapi', icon: <TrendingUp className="w-4 h-4 text-emerald-300" />, badge: 'SCR-PKM-F07', docSpec: 'Perbaikan Tekanan Darah & Gula Darah', badgeColor: 'bg-blue-950/90 text-blue-300 border-blue-700/60' },
         { id: 'risiko-putus', label: 'Cegah Putus Berobat', icon: <AlertTriangle className="w-4 h-4 text-rose-400" />, badge: 'SCR-PKM-B04', docSpec: 'Peringatan Dini Warga Berisiko Berhenti Minum Obat', badgeColor: 'bg-rose-950/90 text-rose-300 border-rose-700/60' },
       ],
     },

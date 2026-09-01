@@ -330,7 +330,7 @@ export const RegistryPage: React.FC<{ onNavigate?: (navId: string) => void }> = 
             size="sm"
             onClick={() => setShowAnalyticsChart(!showAnalyticsChart)}
             icon={<TrendingUp className="w-4 h-4" />}
-            tooltip={showAnalyticsChart ? 'Sembunyikan Grafik Tren Cakupan' : 'Tampilkan Grafik Tren Cakupan Wilayah'}
+            tooltip={showAnalyticsChart ? 'Sembunyikan Tren Cakupan' : 'Tampilkan Tren Cakupan Wilayah'}
             tooltipPosition="bottom"
           />
           {onNavigate && (
@@ -403,7 +403,7 @@ export const RegistryPage: React.FC<{ onNavigate?: (navId: string) => void }> = 
         </div>
       </div>
 
-      {/* Visualisasi Grafik Area Tren Pertumbuhan Cakupan Pemeriksaan */}
+      {/* Tren Pertumbuhan Cakupan Pemeriksaan */}
       {showAnalyticsChart && (
         <div className="transition-all duration-300">
           <AdminScreeningAreaGrowthChart />

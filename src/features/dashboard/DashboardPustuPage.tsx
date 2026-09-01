@@ -46,7 +46,7 @@ import { Badge, getStatusBadgeVariant } from '../../components/common/Badge';
 import { DocBadge } from '../../components/common/DocBadge';
 import { DaftarTugasPustu } from './components/DaftarTugasPustu';
 import { StatistikKinerjaPustu } from './components/StatistikKinerjaPustu';
-import { PetaDistribusiKunjunganPustu } from './components/PetaDistribusiKunjunganPustu';
+import { GrafikDistribusiKunjunganPustu } from './components/GrafikDistribusiKunjunganPustu';
 import { useAuth } from '../../context/AuthContext';
 import { useNetwork } from '../../context/NetworkContext';
 import { rawStorage, subscribeToStorage } from '../../repositories/storage';
@@ -120,7 +120,7 @@ export const DashboardPustuPage: React.FC<DashboardPustuPageProps> = ({
   const [kaderList, setKaderList] = useState<AppUser[]>([]);
 
   // Tab & Filters
-  const [activeTab, setActiveTab] = useState<'CHECKINS' | 'OUTREACH' | 'MAP' | 'BUFFER_STOCK' | 'KADER'>(
+  const [activeTab, setActiveTab] = useState<'CHECKINS' | 'OUTREACH' | 'GRAFIK' | 'BUFFER_STOCK' | 'KADER'>(
     'CHECKINS'
   );
   const [searchQuery, setSearchQuery] = useState('');
@@ -799,15 +799,15 @@ export const DashboardPustuPage: React.FC<DashboardPustuPageProps> = ({
           </button>
 
           <button
-            onClick={() => setActiveTab('MAP')}
+            onClick={() => setActiveTab('GRAFIK')}
             className={`px-4 py-2.5 text-xs font-bold border-b-2 flex items-center gap-2 transition-all cursor-pointer ${
-              activeTab === 'MAP'
+              activeTab === 'GRAFIK'
                 ? 'border-emerald-700 text-emerald-900 bg-emerald-50/50'
                 : 'border-transparent text-[#60716D] hover:text-black'
             }`}
           >
-            <Compass className="w-4 h-4 text-emerald-700" />
-            <span>Peta Distribusi Spasial Warga</span>
+            <TrendingUp className="w-4 h-4 text-emerald-700" />
+            <span>Distribusi Kunjungan</span>
           </button>
 
           <button
@@ -1049,25 +1049,15 @@ export const DashboardPustuPage: React.FC<DashboardPustuPageProps> = ({
         </div>
       )}
 
-      {/* TAB 2: PENDING OUTREACH TASKS FOR VILLAGE COVERAGE (Peta Distribusi Spasial & Daftar Tugas Pustu) */}
+      {/* TAB 2: PENDING OUTREACH TASKS FOR VILLAGE COVERAGE (Grafik Distribusi & Daftar Tugas Pustu) */}
       {activeTab === 'OUTREACH' && (
         <div className="space-y-4">
-          {/* Komponen Visual Peta Distribusi Spasial Warga Butuh Kunjungan */}
-          <PetaDistribusiKunjunganPustu
+          {/* Komponen Visual Grafik Distribusi Beban Kunjungan */}
+          <GrafikDistribusiKunjunganPustu
             tasks={careTasks}
             kaderList={kaderList}
             villageName={villageName}
             assignedDesaList={assignedDesaList}
-            onSelectTask={(task) => {
-              // Open action for the task
-              setSelectedTaskForAction(task);
-            }}
-            onQuickAssign={(task) => {
-              setSelectedTaskForAction(task);
-              setSelectedKaderId(task.assignedToUserId || kaderList[0]?.id || '');
-              setIsDelegateModalOpen(true);
-            }}
-            onCompleteTask={handleCompleteTask}
           />
 
           {/* Komponen Daftar Tugas Antrean Kunjungan Pustu dengan Filter Lanjutan & Pengelompokan */}
@@ -1082,23 +1072,14 @@ export const DashboardPustuPage: React.FC<DashboardPustuPageProps> = ({
         </div>
       )}
 
-      {/* TAB 2B: DEDICATED FULL-VIEW PETA DISTRIBUSI SPASIAL WARGA */}
-      {activeTab === 'MAP' && (
+      {/* TAB 2B: DEDICATED FULL-VIEW GRAFIK DISTRIBUSI KUNJUNGAN */}
+      {activeTab === 'GRAFIK' && (
         <div className="space-y-4">
-          <PetaDistribusiKunjunganPustu
+          <GrafikDistribusiKunjunganPustu
             tasks={careTasks}
             kaderList={kaderList}
             villageName={villageName}
             assignedDesaList={assignedDesaList}
-            onSelectTask={(task) => {
-              setSelectedTaskForAction(task);
-            }}
-            onQuickAssign={(task) => {
-              setSelectedTaskForAction(task);
-              setSelectedKaderId(task.assignedToUserId || kaderList[0]?.id || '');
-              setIsDelegateModalOpen(true);
-            }}
-            onCompleteTask={handleCompleteTask}
           />
         </div>
       )}

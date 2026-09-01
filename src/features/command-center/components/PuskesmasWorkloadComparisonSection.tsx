@@ -177,7 +177,7 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="text-base sm:text-lg font-bold text-black tracking-tight">
-                Grafik Komparasi Beban Skrining, Warga Ditangani & Kesenjangan Kasus
+                Komparasi Beban Skrining, Warga Ditangani & Kesenjangan Kasus
               </h3>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-teal-900 border border-teal-200">
                 8 Puskesmas
@@ -269,10 +269,10 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
               type="button"
               onClick={() => onFacilityClick('faskes-1')}
               className="px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-300 transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-              title="Buka Grafik Tren Bulanan (Line Chart)"
+              title="Buka Tren Bulanan"
             >
               <TrendingDown className="w-3.5 h-3.5 rotate-180 text-teal-700" />
-              <span>Detail Tren Bulanan (Line Chart)</span>
+              <span>Detail Tren Bulanan</span>
             </button>
           )}
         </div>
@@ -373,13 +373,13 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
             className={`px-2 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition cursor-pointer border ${
               activeSeries.screened
                 ? 'bg-sky-50 text-sky-900 border-sky-300 hover:bg-sky-100 shadow-2xs'
-                : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
             }`}
             title="Klik untuk menyembunyikan / menampilkan Beban Skrining Sasaran"
           >
-            <span className={`w-2.5 h-2.5 rounded-xs ${activeSeries.screened ? 'bg-sky-600' : 'bg-stone-400'}`} />
+            <span className={`w-2.5 h-2.5 rounded-xs ${activeSeries.screened ? 'bg-sky-600' : 'bg-stone-600'}`} />
             <span>Beban Skrining</span>
-            {activeSeries.screened ? <Eye className="w-3 h-3 text-sky-700" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+            {activeSeries.screened ? <Eye className="w-3 h-3 text-sky-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
           </button>
 
           {/* Series 2: Warga Ditangani */}
@@ -389,13 +389,13 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
             className={`px-2 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition cursor-pointer border ${
               activeSeries.attended
                 ? 'bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100 shadow-2xs'
-                : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
             }`}
             title="Klik untuk menyembunyikan / menampilkan Warga Berhasil Ditangani"
           >
-            <span className={`w-2.5 h-2.5 rounded-xs ${activeSeries.attended ? 'bg-emerald-600' : 'bg-stone-400'}`} />
+            <span className={`w-2.5 h-2.5 rounded-xs ${activeSeries.attended ? 'bg-emerald-600' : 'bg-stone-600'}`} />
             <span>Warga Ditangani</span>
-            {activeSeries.attended ? <Eye className="w-3 h-3 text-emerald-700" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+            {activeSeries.attended ? <Eye className="w-3 h-3 text-emerald-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
           </button>
 
           {/* Series 3: Kesenjangan Kasus (Gap) */}
@@ -405,13 +405,13 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
             className={`px-2 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition cursor-pointer border ${
               activeSeries.gap
                 ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 shadow-2xs'
-                : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
             }`}
             title="Klik untuk menyembunyikan / menampilkan Kesenjangan Kasus"
           >
-            <span className={`w-2.5 h-2.5 rounded-xs ${activeSeries.gap ? 'bg-amber-600' : 'bg-stone-400'}`} />
+            <span className={`w-2.5 h-2.5 rounded-xs ${activeSeries.gap ? 'bg-amber-600' : 'bg-stone-600'}`} />
             <span>Kesenjangan Kasus</span>
-            {activeSeries.gap ? <Eye className="w-3 h-3 text-amber-700" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+            {activeSeries.gap ? <Eye className="w-3 h-3 text-amber-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
           </button>
 
           {/* Series 4: Rasio Capaian % (Hanya untuk Stacked Mode) */}
@@ -422,13 +422,13 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
               className={`px-2 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition cursor-pointer border ${
                 activeSeries.rate
                   ? 'bg-teal-50 text-teal-900 border-teal-300 hover:bg-teal-100 shadow-2xs'
-                  : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                  : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
               }`}
               title="Klik untuk menyembunyikan / menampilkan Garis Tren Capaian %"
             >
-              <span className={`w-2.5 h-1 rounded-full ${activeSeries.rate ? 'bg-teal-700' : 'bg-stone-400'}`} />
+              <span className={`w-2.5 h-1 rounded-full ${activeSeries.rate ? 'bg-teal-700' : 'bg-stone-600'}`} />
               <span>Rasio %</span>
-              {activeSeries.rate ? <Eye className="w-3 h-3 text-teal-700" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+              {activeSeries.rate ? <Eye className="w-3 h-3 text-teal-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
             </button>
           )}
 

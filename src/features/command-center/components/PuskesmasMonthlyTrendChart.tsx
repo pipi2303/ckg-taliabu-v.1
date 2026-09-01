@@ -209,7 +209,7 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
               }`}
             >
               <LineChartIcon className="w-3.5 h-3.5" />
-              <span>Grafik Tren</span>
+              <span>Tren Longitudinal</span>
             </button>
             <button
               type="button"
@@ -375,14 +375,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('continuity')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.continuity
-                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                    ? 'bg-emerald-50 text-emerald-900 border-emerald-300'
+                    : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
                 }`}
                 title="Toggle Garis Capaian Kontinuitas %"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.continuity ? 'bg-emerald-600' : 'bg-stone-400'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.continuity ? 'bg-emerald-600' : 'bg-stone-600'}`} />
                 <span>Capaian %</span>
-                {activeLines.continuity ? <Eye className="w-3 h-3 text-emerald-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+                {activeLines.continuity ? <Eye className="w-3 h-3 text-emerald-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
               </button>
             )}
 
@@ -393,14 +393,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('screened')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.screened
-                    ? 'bg-sky-50 text-sky-800 border-sky-300'
-                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                    ? 'bg-sky-50 text-sky-900 border-sky-300'
+                    : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
                 }`}
                 title="Toggle Garis Beban Skrining Sasaran"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.screened ? 'bg-sky-600' : 'bg-stone-400'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.screened ? 'bg-sky-600' : 'bg-stone-600'}`} />
                 <span>Beban Sasaran</span>
-                {activeLines.screened ? <Eye className="w-3 h-3 text-sky-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+                {activeLines.screened ? <Eye className="w-3 h-3 text-sky-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
               </button>
             )}
 
@@ -411,14 +411,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('attended')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.attended
-                    ? 'bg-teal-50 text-teal-800 border-teal-300'
-                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                    ? 'bg-teal-50 text-teal-900 border-teal-300'
+                    : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
                 }`}
                 title="Toggle Garis Realisasi Warga Ditangani"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.attended ? 'bg-teal-600' : 'bg-stone-400'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.attended ? 'bg-teal-600' : 'bg-stone-600'}`} />
                 <span>Ditangani</span>
-                {activeLines.attended ? <Eye className="w-3 h-3 text-teal-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+                {activeLines.attended ? <Eye className="w-3 h-3 text-teal-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
               </button>
             )}
 
@@ -429,14 +429,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('gap')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.gap
-                    ? 'bg-amber-50 text-amber-800 border-amber-300'
-                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                    ? 'bg-amber-50 text-amber-900 border-amber-300'
+                    : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
                 }`}
                 title="Toggle Garis Kesenjangan Kasus (Gap)"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.gap ? 'bg-amber-600' : 'bg-stone-400'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.gap ? 'bg-amber-600' : 'bg-stone-600'}`} />
                 <span>Gap Kasus</span>
-                {activeLines.gap ? <Eye className="w-3 h-3 text-amber-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+                {activeLines.gap ? <Eye className="w-3 h-3 text-amber-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
               </button>
             )}
 
@@ -447,14 +447,14 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
                 onClick={() => toggleLine('sla')}
                 className={`px-2 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer border ${
                   activeLines.sla
-                    ? 'bg-indigo-50 text-indigo-800 border-indigo-300'
-                    : 'bg-stone-100 text-stone-400 border-stone-200 line-through opacity-60'
+                    ? 'bg-indigo-50 text-indigo-900 border-indigo-300'
+                    : 'bg-stone-100 text-stone-800 border-stone-300 line-through opacity-70'
                 }`}
                 title="Toggle Garis Waktu Tanggap / SLA (Hari)"
               >
-                <span className={`w-2.5 h-1 rounded-full ${activeLines.sla ? 'bg-indigo-600' : 'bg-stone-400'}`} />
+                <span className={`w-2.5 h-1 rounded-full ${activeLines.sla ? 'bg-indigo-600' : 'bg-stone-600'}`} />
                 <span>SLA (Hari)</span>
-                {activeLines.sla ? <Eye className="w-3 h-3 text-indigo-600" /> : <EyeOff className="w-3 h-3 text-stone-400" />}
+                {activeLines.sla ? <Eye className="w-3 h-3 text-indigo-700" /> : <EyeOff className="w-3 h-3 text-stone-700" />}
               </button>
             )}
           </div>

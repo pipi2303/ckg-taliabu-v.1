@@ -419,11 +419,11 @@ export const CommandCenterOverviewPage: React.FC<CommandCenterOverviewPageProps>
         </div>
       </div>
 
-      {/* Visualisasi 6 KPI Strategis Recharts (Grafik Batang & Grafik Area) */}
+      {/* 6 KPI Strategis Recharts */}
       <ExecutiveKPIRechartsSection
         theme="light"
-        title="Visualisasi Recharts 6 KPI Strategis Dinas Kesehatan"
-        subtitle="Komparasi capaian 8 Puskesmas (Grafik Batang) dan tren longitudinal 6 bulan (Grafik Area) untuk Total Warga Diperiksa, Sudah Ditangani, Penurunan Risiko, Puskesmas Capai Target, Kesenjangan Rujukan, serta Kondisi Kesehatan Terkontrol."
+        title="6 KPI Strategis Dinas Kesehatan"
+        subtitle="Komparasi capaian 8 Puskesmas dan tren longitudinal 6 bulan untuk Total Warga Diperiksa, Sudah Ditangani, Penurunan Risiko, Puskesmas Capai Target, Kesenjangan Rujukan, serta Kondisi Kesehatan Terkontrol."
         docBadgeCode="SCR-DNK-A03-RECHARTS"
         onNavigate={onNavigate}
       />

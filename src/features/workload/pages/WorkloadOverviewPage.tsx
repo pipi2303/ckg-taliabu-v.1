@@ -127,7 +127,7 @@ export const WorkloadOverviewPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Visualisasi Distribusi Beban Kerja (Stacked Bar & Dumbbell Gap) */}
+      {/* Distribusi Beban Kerja (Stacked Bar & Dumbbell Gap) */}
       <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-xs space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D8E5E2]">
           <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export const WorkloadOverviewPage: React.FC = () => {
                 Distribusi & Kesenjangan Beban Petugas Faskes
               </h3>
               <p className="text-xs text-[#60716D]">
-                Visualisasi perbandingan tugas on-track vs terlambat serta kapasitas penanganan per faskes.
+                Perbandingan tugas on-track vs terlambat serta kapasitas penanganan per faskes.
               </p>
             </div>
           </div>

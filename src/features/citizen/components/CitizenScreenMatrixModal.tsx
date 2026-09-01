@@ -209,7 +209,7 @@ export const CITIZEN_SCREEN_REGISTRY: ScreenDocItem[] = [
       'Tren ditampilkan berdampingan dengan terapi pengobatan dan intervensi pada periode tersebut.',
       'Nilai dari sumber berbeda (faskes vs mandiri) diberi label dan pembeda visual tegas.',
     ],
-    description: 'Grafik Garis Sistole dan Garis Diastole vs Catatan Waktu untuk pemantauan tren tekanan darah longitudinal.',
+    description: 'Pemantauan longitudinal Sistole dan Diastole vs Catatan Waktu untuk riwayat tekanan darah.',
   },
   {
     code: 'SCR-WRG-D03',

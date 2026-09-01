@@ -33,7 +33,7 @@ export const SCR_SPEC_REGISTRY: Record<string, DocBadgeInfo> = {
   },
   'SCR-PKM-A02': {
     code: 'SCR-PKM-A02',
-    title: 'Beranda Puskesmas',
+    title: 'Beranda',
     phase: 'F1',
     plafon: 'S3',
     useCase: 'UC PKM-21, PKM-06',

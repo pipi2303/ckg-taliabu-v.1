@@ -125,7 +125,7 @@ export const CascadePage: React.FC = () => {
             <DocBadge code="SCR-DNK-B02" size="sm" />
           </div>
           <p className="text-xs text-gray-600 mt-1">
-            Visualisasi aliran penurunan kasus dari tahap pemeriksaan awal hingga kepatuhan kontrol jangka panjang.
+            Aliran penurunan kasus dari tahap pemeriksaan awal hingga kepatuhan kontrol jangka panjang.
           </p>
         </div>
 
@@ -294,16 +294,16 @@ export const CascadePage: React.FC = () => {
       {/* Side Partitions: Awaiting Confirmation, Exits, and Quality Signal */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Awaiting Confirmation */}
-        <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 shadow-lg space-y-3">
-          <div className="flex items-center gap-2 text-amber-400 font-semibold text-xs uppercase tracking-wider">
-            <Clock className="w-4 h-4" />
+        <div className="p-5 rounded-2xl bg-amber-50 border border-amber-300 text-stone-900 shadow-lg space-y-3">
+          <div className="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wider">
+            <Clock className="w-4 h-4 text-amber-800" />
             Menunggu Konfirmasi Klinis
           </div>
-          <div className="text-3xl font-black text-white">
+          <div className="text-3xl font-black text-black">
             {cascade.awaitingConfirmationCount}{' '}
-            <span className="text-xs font-normal text-amber-200">warga</span>
+            <span className="text-xs font-normal text-stone-800">warga</span>
           </div>
-          <p className="text-xs text-amber-200/90 leading-relaxed">
+          <p className="text-xs text-stone-800 leading-relaxed">
             Warga yang telah hadir di faskes namun hasil diagnosa atau input resume medisnya masih dalam proses konfirmasi oleh tim dokter penanggung jawab.
           </p>
         </div>
