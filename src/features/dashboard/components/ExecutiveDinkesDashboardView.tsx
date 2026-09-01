@@ -187,8 +187,8 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
             </p>
           </div>
 
-          {/* Quick Action Buttons */}
-          <div className="flex flex-wrap gap-2 shrink-0">
+          {/* Quick Action Buttons (Right-aligned Icons with Tooltips) */}
+          <div className="flex items-center justify-end gap-2 shrink-0 ml-auto">
             <ActionIconButton
               variant="teal"
               size="sm"
@@ -280,14 +280,14 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
               </select>
             </div>
 
-            <Button
+            <ActionIconButton
               variant="outline"
               size="sm"
               onClick={() => onNavigate('dinkes-kinerja-pkm')}
-              rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
-            >
-              Analisis Lengkap
-            </Button>
+              icon={<ArrowRight className="w-4 h-4 text-teal-700" />}
+              tooltip="Buka Analisis Kinerja & Kesiapan 8 Puskesmas Se-Kabupaten (SCR-DNK-B01)"
+              tooltipPosition="left"
+            />
           </div>
         </div>
 

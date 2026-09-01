@@ -178,7 +178,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2 shrink-0">
+        <div className="flex items-center justify-end gap-2 shrink-0 ml-auto">
           {can('prioritas-harian') && (
             <ActionIconButton
               variant="secondary"

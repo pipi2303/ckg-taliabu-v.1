@@ -42,6 +42,7 @@ import {
 } from 'lucide-react';
 import { Card } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
+import { ActionIconButton } from '../../components/common/ActionIconButton';
 import { Badge, getStatusBadgeVariant } from '../../components/common/Badge';
 import { DocBadge } from '../../components/common/DocBadge';
 import { DaftarTugasPustu } from './components/DaftarTugasPustu';
@@ -591,37 +592,37 @@ export const DashboardPustuPage: React.FC<DashboardPustuPageProps> = ({
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-wrap lg:flex-col gap-2 shrink-0 w-full sm:w-auto">
-          <Button
-            variant="primary"
+        {/* Action Buttons (Right-aligned Icons with Tooltips) */}
+        <div className="flex items-center justify-end gap-2 shrink-0 ml-auto">
+          <ActionIconButton
+            variant="teal"
             size="sm"
             onClick={() => setIsCheckInModalOpen(true)}
-            className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-xs cursor-pointer"
-          >
-            <UserPlus className="w-4 h-4" />
-            <span>Catat Pasien Datang (Check-In)</span>
-          </Button>
+            icon={<UserPlus className="w-4 h-4 text-slate-950 font-bold" />}
+            tooltip="Catat Pasien Datang / Check-In Langsung di Pustu"
+            tooltipPosition="bottom"
+            className="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold border-0 shadow-xs"
+          />
 
-          <Button
+          <ActionIconButton
             variant="outline"
             size="sm"
             onClick={() => onNavigate('prioritas-harian')}
-            className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20 cursor-pointer"
-          >
-            <Activity className="w-4 h-4 text-emerald-300" />
-            <span>Daftar Prioritas Harian</span>
-          </Button>
+            icon={<Activity className="w-4 h-4 text-emerald-300" />}
+            tooltip="Buka Antrean & Daftar Prioritas Tindak Lanjut Warga (SCR-PKM-B01)"
+            tooltipPosition="bottom"
+            className="text-white bg-white/10 hover:bg-white/20 border-white/20"
+          />
 
-          <Button
+          <ActionIconButton
             variant="outline"
             size="sm"
             onClick={() => onNavigate('sinkronisasi')}
-            className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20 cursor-pointer"
-          >
-            <RefreshCw className="w-4 h-4 text-cyan-300" />
-            <span>Sinkronisasi Offline</span>
-          </Button>
+            icon={<RefreshCw className="w-4 h-4 text-cyan-300" />}
+            tooltip="Buka Panel Sinkronisasi Data Offline & Antrean Unggah (SCR-OFF-01)"
+            tooltipPosition="bottom"
+            className="text-white bg-white/10 hover:bg-white/20 border-white/20"
+          />
         </div>
       </div>
 

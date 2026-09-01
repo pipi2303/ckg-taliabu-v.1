@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { LayoutDashboard, AlertTriangle, ShieldAlert, ClipboardList, TrendingUp, PlusCircle } from 'lucide-react';
+import { LayoutDashboard, AlertTriangle, ShieldAlert, ClipboardList, TrendingUp, PlusCircle, ArrowRight, Check } from 'lucide-react';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { Tabs, TabItem } from '../../../components/common/Tabs';
 import { QualifiedMetricCard } from '../../../features/command-center/components/QualifiedMetricCard';
 import { Button } from '../../../components/common/Button';
+import { ActionIconButton } from '../../../components/common/ActionIconButton';
 import { Input } from '../../../components/common/Input';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
@@ -219,9 +220,15 @@ export const RsudExecutivePage: React.FC = () => {
                     {a.status}
                   </span>
                   {a.status !== 'COMPLETED' && (
-                    <Button size="sm" variant="outline" onClick={() => handleAdvanceAction(a)}>
-                      Majukan Status
-                    </Button>
+                    <ActionIconButton
+                      icon={<ArrowRight className="w-4 h-4 text-teal-700" />}
+                      tooltip="Majukan Status Tindakan Eksekutif (In Progress / Completed)"
+                      tooltipPosition="left"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleAdvanceAction(a)}
+                      className="hover:bg-teal-50 hover:border-teal-300"
+                    />
                   )}
                 </div>
               </div>

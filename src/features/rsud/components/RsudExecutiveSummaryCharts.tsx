@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import { DocBadge } from '../../../components/common/DocBadge';
 import { Tooltip as UiTooltip } from '../../../components/common/Tooltip';
+import { ActionIconButton } from '../../../components/common/ActionIconButton';
 import {
   ReferralCascadeSummary,
   SourcePuskesmasRow,
@@ -252,14 +253,15 @@ export const RsudExecutiveSummaryCharts: React.FC<RsudExecutiveSummaryChartsProp
               </button>
             </div>
             {onNavigateTab && (
-              <button
-                type="button"
+              <ActionIconButton
+                icon={<ArrowUpRight className="w-4 h-4 text-teal-700" />}
+                tooltip="Buka Analisis Detail Kaskade & Kontinuitas Rujukan (SCR-RSD-B01)"
+                tooltipPosition="left"
+                size="sm"
+                variant="outline"
                 onClick={() => onNavigateTab('cascade')}
-                className="px-2.5 py-1 text-xs font-semibold text-teal-700 hover:text-teal-900 bg-teal-50 hover:bg-teal-100 rounded-lg transition flex items-center gap-1 border border-teal-200"
-              >
-                <span>Detail</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
+                className="bg-teal-50 hover:bg-teal-100 border-teal-200"
+              />
             )}
           </div>
         </div>
@@ -386,14 +388,15 @@ export const RsudExecutiveSummaryCharts: React.FC<RsudExecutiveSummaryChartsProp
           </div>
 
           {onNavigateTab && (
-            <button
-              type="button"
+            <ActionIconButton
+              icon={<ArrowUpRight className="w-4 h-4 text-blue-700" />}
+              tooltip="Buka Analisis Detail Standar SLA & Kepatuhan Waktu Tanggap (SCR-RSD-A02)"
+              tooltipPosition="left"
+              size="sm"
+              variant="outline"
               onClick={() => onNavigateTab('sla')}
-              className="px-2.5 py-1 text-xs font-semibold text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 rounded-lg transition flex items-center gap-1 border border-blue-200"
-            >
-              <span>Detail SLA</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
+              className="bg-blue-50 hover:bg-blue-100 border-blue-200"
+            />
           )}
         </div>
 
@@ -495,14 +498,15 @@ export const RsudExecutiveSummaryCharts: React.FC<RsudExecutiveSummaryChartsProp
           </div>
 
           {onNavigateTab && (
-            <button
-              type="button"
+            <ActionIconButton
+              icon={<ArrowUpRight className="w-4 h-4 text-indigo-700" />}
+              tooltip="Buka Analisis Jejaring Rujukan Lengkap 8 Puskesmas (SCR-RSD-B02)"
+              tooltipPosition="left"
+              size="sm"
+              variant="outline"
               onClick={() => onNavigateTab('network')}
-              className="px-2.5 py-1 text-xs font-semibold text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition flex items-center gap-1 border border-indigo-200"
-            >
-              <span>Jejaring Lengkap</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
+              className="bg-indigo-50 hover:bg-indigo-100 border-indigo-200"
+            />
           )}
         </div>
 
