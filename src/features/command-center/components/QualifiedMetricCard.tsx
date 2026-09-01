@@ -100,8 +100,12 @@ export const QualifiedMetricCard: React.FC<QualifiedMetricCardProps> = ({
       {/* Footer Info & Action */}
       <div className="mt-4 pt-3 border-t border-stone-200 flex items-center justify-between text-[11px]">
         <div className="flex items-center gap-1.5 text-stone-400 font-mono">
-          <span>{metric.definitionVersion}</span>
-          <span>•</span>
+          {metric.definitionVersion && (
+            <>
+              <span>{metric.definitionVersion}</span>
+              <span>•</span>
+            </>
+          )}
           <span className={isPartial ? 'text-amber-700 font-sans' : 'text-stone-600 font-sans'}>
             {metric.completeness}
           </span>

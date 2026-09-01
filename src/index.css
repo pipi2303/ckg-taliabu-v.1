@@ -44,3 +44,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #9DB4AF;
 }
+
+/* Bone white utility class */
+.bone-white-bg {
+  background-color: #FAF9F6 !important;
+}

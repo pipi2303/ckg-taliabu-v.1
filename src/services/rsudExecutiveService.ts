@@ -111,7 +111,7 @@ export const rsudExecutiveService = {
       periodStart: '2026-08-01',
       periodEnd: '2026-08-31',
       dataCutoffAt,
-      definitionVersion: 'v1.0.0-RSUD-DEF-2026',
+      definitionVersion: '',
       completeness: denominator > 0 ? 'COMPLETE' : 'NOT_ASSESSABLE',
       qualificationMessages: [],
       suppressed: false,
@@ -261,7 +261,7 @@ export const rsudExecutiveService = {
       periodStart: '2026-08-01',
       periodEnd: '2026-08-31',
       dataCutoffAt,
-      definitionVersion: 'v1.0.0-RSUD-DEF-2026',
+      definitionVersion: '',
       completeness: eligible.length > 0 ? 'COMPLETE' : 'NOT_ASSESSABLE',
       qualificationMessages: [
         'Closed-loop = balasan klinis diterima FKTP (replyReceivedAt) DAN ditinjau Puskesmas (reviewedByPuskesmasAt).',

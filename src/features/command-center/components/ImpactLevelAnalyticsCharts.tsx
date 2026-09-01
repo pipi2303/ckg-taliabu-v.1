@@ -403,7 +403,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
   return (
     <div className="space-y-6 pt-2">
       {/* Top Header Card - Bone White Theme */}
-      <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4">
+      <div
+        className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
+        style={{ backgroundColor: '#faf9f6' }}
+      >
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -536,7 +539,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 1. GRAFIK BATANG SECTION (Bar Chart) */}
       {(activeTab === 'ALL' || activeTab === 'BAR') && (
-        <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4">
+        <div
+          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
+          style={{ backgroundColor: '#faf9f6' }}
+        >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
@@ -573,7 +579,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           {/* Bar Chart Container */}
-          <div className="h-80 w-full pt-2 rounded-xl bg-[#faf9f6]">
+          <div
+            className="bone-white-bg h-80 w-full pt-2 rounded-xl bg-[#faf9f6]"
+            style={{ backgroundColor: '#faf9f6' }}
+          >
             <ResponsiveContainer width="100%" height="100%">
               {barSubMode === 'VOLUME' ? (
                 <BarChart data={filteredFacilities} margin={{ top: 10, right: 20, left: 0, bottom: 25 }}>
@@ -653,7 +662,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             </ResponsiveContainer>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 text-xs text-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+          <div
+            className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 text-xs text-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs"
+            style={{ backgroundColor: '#faf9f6' }}
+          >
             <div className="flex items-center gap-2">
               <Info className="w-4 h-4 text-teal-700 shrink-0" />
               <span>
@@ -674,7 +686,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 2. GRAFIK AREA SECTION (Area Chart) */}
       {(activeTab === 'ALL' || activeTab === 'AREA') && (
-        <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4">
+        <div
+          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
+          style={{ backgroundColor: '#faf9f6' }}
+        >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
@@ -711,7 +726,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           {/* Area Chart Container */}
-          <div className="h-80 w-full pt-2 rounded-xl bg-[#faf9f6]">
+          <div
+            className="bone-white-bg h-80 w-full pt-2 rounded-xl bg-[#faf9f6]"
+            style={{ backgroundColor: '#faf9f6' }}
+          >
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={MONTHLY_TREND_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                 <defs>
@@ -791,17 +809,26 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs">
+            <div
+              className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs"
+              style={{ backgroundColor: '#faf9f6' }}
+            >
               <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Akselerasi Skrining (L1)</span>
               <p className="font-bold text-teal-800 text-sm">+768 warga diskrining sejak Jan 2026</p>
               <p className="text-[11px] text-stone-600">Rata-rata 109 warga/bulan terlayani</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs">
+            <div
+              className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs"
+              style={{ backgroundColor: '#faf9f6' }}
+            >
               <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Tindak Lanjut Faskes (L2)</span>
               <p className="font-bold text-sky-800 text-sm">268 pasien berisiko telah tertata laksana</p>
               <p className="text-[11px] text-stone-600">61.3% tingkat kontinuitas kabupaten</p>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs">
+            <div
+              className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs"
+              style={{ backgroundColor: '#faf9f6' }}
+            >
               <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Jalur Outcome Terkendali (L3)</span>
               <p className="font-bold text-amber-800 text-sm">290 pasien dalam kohort 90-hari</p>
               <p className="text-[11px] text-stone-600">Menunggu audit validasi CR-OC (OI-08)</p>
@@ -812,7 +839,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 3. GRAFIK KOMPOSISI DUAL AXIS SECTION (Composed Chart) */}
       {(activeTab === 'ALL' || activeTab === 'COMPOSED') && (
-        <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4">
+        <div
+          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
+          style={{ backgroundColor: '#faf9f6' }}
+        >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
@@ -831,7 +861,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             </div>
           </div>
 
-          <div className="h-80 w-full pt-2 rounded-xl bg-[#faf9f6]">
+          <div
+            className="bone-white-bg h-80 w-full pt-2 rounded-xl bg-[#faf9f6]"
+            style={{ backgroundColor: '#faf9f6' }}
+          >
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={MONTHLY_TREND_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.8} />
@@ -884,7 +917,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 4. GRAFIK DONUT COHORT LEVEL 3 SECTION */}
       {(activeTab === 'ALL' || activeTab === 'COHORT') && (
-        <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4">
+        <div
+          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
+          style={{ backgroundColor: '#faf9f6' }}
+        >
           <div className="border-b border-stone-200 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
@@ -901,7 +937,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-7 h-72 w-full pt-1 rounded-xl bg-[#faf9f6]">
+            <div
+              className="bone-white-bg lg:col-span-7 h-72 w-full pt-1 rounded-xl bg-[#faf9f6]"
+              style={{ backgroundColor: '#faf9f6' }}
+            >
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -941,7 +980,8 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 {LEVEL3_COHORT_DATA.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-2.5 rounded-xl bg-[#faf9f6] border border-stone-200 flex items-center justify-between text-xs shadow-xs"
+                    className="bone-white-bg p-2.5 rounded-xl bg-[#faf9f6] border border-stone-200 flex items-center justify-between text-xs shadow-xs"
+                    style={{ backgroundColor: '#faf9f6' }}
                   >
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
@@ -952,7 +992,10 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 ))}
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-amber-300/80 text-xs text-amber-900 space-y-1 shadow-xs">
+              <div
+                className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-amber-300/80 text-xs text-amber-900 space-y-1 shadow-xs"
+                style={{ backgroundColor: '#faf9f6' }}
+              >
                 <div className="flex items-center gap-1.5 font-bold text-amber-900">
                   <ShieldCheck className="w-4 h-4 text-amber-700" />
                   <span>Tata Kelola Data Klinis (OI-08):</span>
