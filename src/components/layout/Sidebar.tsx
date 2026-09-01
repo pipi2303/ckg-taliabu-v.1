@@ -198,6 +198,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'pengaturan', label: 'Pengaturan & Glosarium', icon: <Settings className="w-4 h-4" />, badge: 'SCR-SYS-04', docSpec: 'Pengaturan Sistem & Glosarium Istilah Medis', badgeColor: 'bg-slate-900 text-slate-300 border-slate-700' },
       ],
     },
+    {
+      title: 'RSUD COMMAND CENTER',
+      items: [
+        { id: 'rsud-executive', label: 'Ringkasan Eksekutif RSUD', icon: <LayoutDashboard className="w-4 h-4" />, badge: 'SCR-RSD-A01', docSpec: 'Executive Dashboard, Alerts & Action Tracker RSUD · Plafon S3 Agregat', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'rsud-referral-network', label: 'Referral Network', icon: <GitBranch className="w-4 h-4" />, badge: 'SCR-RSD-B01', docSpec: 'Referral Cascade, Backlog, SLA & Rejection Analysis · Plafon S3 Agregat', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'rsud-service-readiness', label: 'Service Readiness', icon: <Activity className="w-4 h-4" />, badge: 'SCR-RSD-C01', docSpec: 'Kesiapan Layanan: Capacity, Capability, Spesialis & Farmasi · Plafon S3 Agregat', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'rsud-quality-governance', label: 'Quality & Safety', icon: <ShieldCheck className="w-4 h-4" />, badge: 'SCR-RSD-D01', docSpec: 'Quality Indicators, Risk Register/CAPA & Compliance · Plafon S3 Agregat', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+        { id: 'rsud-data-integration', label: 'Data & Integrasi', icon: <RefreshCw className="w-4 h-4" />, badge: 'SCR-RSD-E01', docSpec: 'SIMRS, SATUSEHAT, Rekonsiliasi & Business Continuity · Plafon S0', badgeColor: 'bg-sky-950/90 text-sky-300 border-sky-700/60' },
+        { id: 'rsud-governance', label: 'Governance & Audit', icon: <FileCheck2 className="w-4 h-4" />, badge: 'SCR-RSD-F01', docSpec: 'Reports, Audit Oversight, Delegation & SLA Governance · Plafon S1', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
+      ],
+    },
   ];
 
   // Filter sections and items based on role access

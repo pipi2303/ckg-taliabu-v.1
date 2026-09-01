@@ -42,6 +42,13 @@ export const APPROVED_DRILLDOWN_PURPOSES: DrilldownPurposeDefinition[] = [
     description: 'Pemeriksaan kluster warga putus kontrol untuk penyiapan posko outreach khusus.',
     allowedRoles: ['ADMIN_DINKES', 'KEPALA_DINAS', 'ANALYST_DINKES'],
   },
+  {
+    id: 'drp-5',
+    code: 'KOORDINASI_RUJUKAN_RSUD',
+    label: 'Koordinasi Rujukan & Closed-Loop RSUD',
+    description: 'Penelusuran daftar rujukan individual (tanpa detail diagnosis) untuk menindaklanjuti backlog, SLA, atau rekonsiliasi data rujukan RSUD-Puskesmas. Direktur RSUD tidak menerima detail diagnosis/terapi lewat jalur ini — hanya status, tahap kaskade, dan fasilitas asal.',
+    allowedRoles: ['DIR_RSUD'],
+  },
 ];
 
 export const INITIAL_METRIC_DEFINITIONS: MetricDefinition[] = [

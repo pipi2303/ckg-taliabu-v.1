@@ -36,7 +36,7 @@ Peran dikelompokkan ke 6 famili yang sama seperti katalog PDF sumber (Warga, Pus
 | Puskesmas | `NURSE_MIDWIFE` | Perawat / Bidan | S3 | 21 | Prioritas Hari Ini |
 | Puskesmas | `PHARMACY_OFFICER` | Petugas Farmasi | S3 | 9 | Papan Tenggat & SLA |
 | Dokter | `DOCTOR` | Dokter Puskesmas | S4 | 22 | Prioritas Hari Ini |
-| Rumah Sakit | *(tidak ada login)* | — sistem eksternal, dijangkau via rujukan | — | — | — |
+| Rumah Sakit | `DIR_RSUD` | Direktur RSUD | S3 | 6 | Ringkasan Eksekutif RSUD |
 | Dinas Kesehatan | `ADMIN_DINKES` | Admin System | S4 | 25 | Beranda Puskesmas |
 | Dinas Kesehatan | `KEPALA_DINAS` | Kepala Dinas Kesehatan | S3 | 25 | Dashboard Eksekutif |
 | Dinas Kesehatan | `ANALYST_DINKES` | Analis Kesehatan Dinkes | S2 | 42 | Ringkasan Kabupaten |
@@ -300,7 +300,21 @@ Tenaga medis klinis penanggung jawab verifikasi diagnosa dan tindakan tindak lan
 
 ## 5. Rumah Sakit
 
-Tidak ada peran login untuk Rumah Sakit — ini keputusan desain yang dinyatakan eksplisit di katalog sumber, bukan kelalaian. RSUD/FKRTL diperlakukan sebagai **sistem eksternal** yang dijangkau lewat rujukan terlacak dari sisi Puskesmas/Dokter (menu *Layanan Klinis & FKTP*, tab Rujukan), dengan field `replyChannel` pada `HospitalReferral` yang mencatat tingkat kematangan interaksinya (Manual → Semi-otomatis → Otomatis).
+Sebelumnya tidak ada peran login untuk Rumah Sakit — RSUD/FKRTL diperlakukan murni sebagai *sistem eksternal* yang dijangkau lewat rujukan terlacak dari sisi Puskesmas/Dokter. Sejak `CKG_Smart_Care_Role_Direktur_RSUD_Gap_Closure.md` diimplementasikan, RSUD kini juga punya satu peran login eksekutif: `DIR_RSUD`.
+
+### `DIR_RSUD` — Direktur RSUD
+Peran **executive-first, aggregate-first, exception-driven**: memantau performa rujukan CKG masuk ke RSUD, kesiapan layanan, mutu/keselamatan, dan integrasi data — tanpa kewenangan klinis apa pun (tidak menegakkan diagnosis, tidak menetapkan terapi/resep, tidak mengubah `RiskClassification`/`CareTask`/LTFU/outcome klinis milik Puskesmas). Plafon **S3 Agregat** — individual referral list hanya lewat drilldown *purpose-gated* beraudit (purpose `KOORDINASI_RUJUKAN_RSUD`), tanpa kolom diagnosis.
+
+| Menu | Kode | Spesifikasi |
+|---|---|---|
+| Ringkasan Eksekutif RSUD | SCR-RSD-A01 | Executive Dashboard, Alerts & Action Tracker · F1 · Plafon S3 Agregat |
+| Referral Network | SCR-RSD-B01 | Referral Cascade, Backlog, SLA & Rejection Analysis · F1 · Plafon S3 Agregat |
+| Service Readiness | SCR-RSD-C01 | Capacity vs Capability, Spesialis, Kredensial, Diagnostik & Farmasi · F1 · Plafon S3 Agregat |
+| Quality & Safety | SCR-RSD-D01 | Quality Indicators, Risk Register/CAPA, Komplain & Compliance · F1 · Plafon S3 Agregat |
+| Data & Integrasi | SCR-RSD-E01 | Status SIMRS/SATUSEHAT, Rekonsiliasi & Business Continuity · F1 · Plafon S0 |
+| Governance & Audit | SCR-RSD-F01 | Reports, Audit & Privacy Oversight, Delegasi, SLA Governance & Escalation Ladder · F1 · Plafon S1 |
+
+RSUD/FKRTL tetap dijangkau lewat rujukan terlacak dari sisi Puskesmas/Dokter (menu *Layanan Klinis & FKTP*, tab Rujukan), dengan field `replyChannel` pada `HospitalReferral` yang mencatat tingkat kematangan interaksinya (Manual → Semi-otomatis → Otomatis). `DIR_RSUD` menambahkan lapisan timestamp cascade (`acceptedAt` s.d. `reviewedByPuskesmasAt`) pada entitas yang sama untuk mengukur closed-loop, backlog per-tahap, dan SLA — tanpa mengubah source-of-truth yang sudah ada (Puskesmas/Dokter tetap yang menerbitkan & memperbarui rujukan; `DIR_RSUD` hanya membaca serta menandai tahap penerimaan sisi RSUD).
 
 ---
 
@@ -438,6 +452,8 @@ Bupati tidak memiliki menu `dashboard` biasa — landing default-nya langsung ke
   - **`KADER` bisa bypass sandbox mobile-nya dan melihat data klinis S4 lintas-Puskesmas.** `KaderAppShell.tsx` punya tombol "Portal" (kembali ke tampilan desktop) yang keluar dari shell mobile sepenuhnya. Begitu di desktop, sidebar menampilkan menu persis sesuai `getAllowedNavIds('KADER')` — termasuk `prioritas-harian` (berlabel **Plafon S4** di badge-nya sendiri) dan `outreach`. Halaman `DailyPriorityQueuePage` yang dirender hanya memfilter berdasarkan `facilityId`, tanpa scoping per-kader atau redaksi field — bertentangan langsung dengan aturan yang tertulis eksplisit di `permissionService.ts`: *"HARD RULE: KADER CEILING IS S2. KADER CAN NEVER ACCESS S3 OR S4."* Diverifikasi langsung: setelah klik "Portal", "Prioritas Hari Ini" & "Hasil Kontak & Outreach" memang muncul dan bisa diklik. **Diperbaiki**: `prioritas-harian` dan `outreach` dicabut dari daftar izin Kader — dikonfirmasi `KaderAppShell.tsx` tidak pernah memakai kedua nav id ini secara internal (fitur setara di dalam shell mobile berdiri sendiri), jadi tidak ada fungsi sah yang hilang.
   - Dibersihkan sekalian: blok `case 'AUDITOR':` duplikat (dead code, tidak pernah tereksekusi karena JS switch hanya mencocokkan blok pertama) dihapus dari `getAllowedNavIds` — berpotensi menyesatkan siapa pun yang mengedit izin Auditor di masa depan.
   - **Temuan arsitektural lebih besar, belum ditindaklanjuti — perlu keputusan terpisah**: `DailyPriorityQueuePage.tsx` (dan kemungkinan besar halaman lain berbadge Plafon tinggi) sama sekali tidak melakukan redaksi field berdasarkan `hasSensitivityAccess()` milik peran yang login — satu-satunya penegakan Plafon S0-S4 di seluruh aplikasi adalah gerbang nav-id per-halaman (semua-atau-tidak-sama-sekali), dan gerbang itu sendiri tidak konsisten dengan Plafon yang tertulis di badge sidebar. `KEPALA_PUSKESMAS`, `PJ_CKG`, `NURSE_MIDWIFE`, `PUSTU` (Plafon S3) dan `POSYANDU` (Plafon S2) semuanya masih memiliki akses `prioritas-harian` yang berlabel Plafon S4 — tanpa aturan keras tertulis seperti milik Kader, jadi belum diperbaiki secara sepihak. Ini pertanyaan cakupan yang lebih besar (redesain halaman untuk redaksi field vs. terima gerbang nav-id sebagai satu-satunya penegakan) — menunggu arahan.
+
+- **Putaran 7** (peran baru `DIR_RSUD` per `CKG_Smart_Care_Role_Direktur_RSUD_Gap_Closure.md`): Ditambahkan role Direktur RSUD ("Rumah Sakit" — sebelumnya keluarga tanpa login sama sekali). 48 leaf-feature di dokumen sumber dikonsolidasikan menjadi 6 halaman (satu per grup menu §9 dokumen sumber: Executive/Referral Network/Service Readiness/Quality & Governance/Data & Integration/Governance), leaf-item menjadi tab di dalamnya — dipetakan eksplisit di dokumen sumbernya sendiri (bagian "DoD Mapping") agar tidak ada satu pun dari 48 poin yang didiamkan. `HospitalReferral` diperluas dengan 8 timestamp cascade opsional (`acceptedAt` s.d. `reviewedByPuskesmasAt`) plus `rejectionReason`/`priorityFlag` — non-breaking terhadap kode existing. Fitur "Individual Referral List ⚠️ Terbatas" dan privacy oversight memakai ulang mekanisme `populationPrivacyService`/`DrilldownModal` yang sudah ada (purpose baru: `KOORDINASI_RUJUKAN_RSUD`, khusus `DIR_RSUD`) alih-alih membangun mesin redaksi baru — konsisten dengan keterbatasan arsitektural gerbang nav-id all-or-nothing yang sudah didokumentasikan di Putaran 5 (belum diperbaiki di peran manapun, termasuk `DIR_RSUD`).
 
 ## Catatan Teknis
 

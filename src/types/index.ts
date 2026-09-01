@@ -16,7 +16,8 @@ export type RoleId =
   | 'POSYANDU'
   | 'CITIZEN'
   | 'AUDITOR'
-  | 'BUPATI';
+  | 'BUPATI'
+  | 'DIR_RSUD';
 
 export type Status = 'ACTIVE' | 'INACTIVE';
 
@@ -25,7 +26,7 @@ export type SensitivityLevel = 'S0' | 'S1' | 'S2' | 'S3' | 'S4';
 export interface RoleDefinition {
   id: RoleId;
   name: string;
-  category: 'DINKES' | 'PUSKESMAS' | 'FIELD' | 'CITIZEN' | 'GOVERNANCE';
+  category: 'DINKES' | 'PUSKESMAS' | 'FIELD' | 'CITIZEN' | 'GOVERNANCE' | 'RSUD';
   description: string;
   dataCeiling: SensitivityLevel;
   canManageUsers: boolean;
@@ -248,7 +249,9 @@ export type AuditEntityType =
   | 'PROLANIS_ENROLLMENT'
   | 'PRESCRIPTION'
   | 'POPULATION_INTERVENTION'
-  | 'POPULATION_REPORT';
+  | 'POPULATION_REPORT'
+  | 'EXECUTIVE_ACTION'
+  | 'RSUD_DELEGATION';
 
 export type VitalStatus = 'ALIVE' | 'DECEASED';
 
@@ -1385,6 +1388,17 @@ export type ReferralReplyChannel =
   | 'DIGITAL_ASSISTED' // Tingkat 2 — kanal digital disepakati (WA/email/portal), dicatat petugas
   | 'SYSTEM_TO_SYSTEM'; // Tingkat 3 — belum untuk pilot: pertukaran otomatis dengan SIMRS RSUD
 
+// Rujukan ditolak RSUD — alasan struktural sisi RSUD, bukan kegagalan pasien (Gap Closure §Domain A item 10)
+export type ReferralRejectionReason =
+  | 'LAYANAN_TIDAK_TERSEDIA'
+  | 'KAPASITAS_PENUH'
+  | 'SPESIALIS_TIDAK_TERSEDIA'
+  | 'ALAT_TIDAK_TERSEDIA'
+  | 'JADWAL_TIDAK_TERSEDIA'
+  | 'BUTUH_FASILITAS_LEBIH_TINGGI'
+  | 'MASALAH_ADMINISTRATIF'
+  | 'LAINNYA';
+
 export interface HospitalReferral {
   id: string; // REF-2026-XXXX
   referralLetterNumber: string;
@@ -1425,6 +1439,18 @@ export interface HospitalReferral {
   prbMedicationRegimen?: string;
   taskId?: string;
   encounterId?: string;
+  // Referral cascade timestamps — RSUD Executive Referral tracking (Gap Closure §2.4 Closed-Loop Referral).
+  // Optional/undefined = tahap belum tercapai, BUKAN nol/gagal (Gap Closure §12).
+  acceptedAt?: string;
+  scheduledAt?: string;
+  attendedAt?: string;
+  serviceCompletedAt?: string;
+  resultReceivedAt?: string;
+  replySentAt?: string;
+  replyReceivedAt?: string;
+  reviewedByPuskesmasAt?: string;
+  rejectionReason?: ReferralRejectionReason;
+  priorityFlag?: 'HIGH' | 'ROUTINE';
   createdAt: string;
   updatedAt: string;
 }
@@ -2588,6 +2614,145 @@ export interface AIGovernanceConfig {
   allowedRolesForClinicalCopilot: RoleId[];
   safetyGuardrailStrictness: 'STRICT_CLINICAL' | 'MODERATE' | 'PERMISSIVE';
   disclaimerText: string;
+}
+
+// ==========================================
+// RSUD Executive Referral & Hospital Readiness (Direktur RSUD role — Gap Closure spec)
+// ==========================================
+
+export type RsudCapabilityStatus = 'READY' | 'LIMITED' | 'TEMPORARILY_UNAVAILABLE' | 'NOT_AVAILABLE';
+
+// Satu row per layanan/spesialisasi RSUD — menggabungkan capacity, capability, specialist
+// availability, credential readiness, diagnostic readiness, pharmacy signal, dan critical-service
+// status (Gap Closure Domain B+C, item 11-14, 21-22, 36-38). Capacity != Capability (§19 Hard Lock).
+export interface RsudServiceReadiness {
+  id: string;
+  serviceId: string;
+  serviceName: string; // e.g. "Penyakit Dalam", "Kardiologi", "Bedah", "Radiologi & Laboratorium"
+  period: string; // e.g. "2026-08"
+  demandCount: number; // referral demand masuk periode ini
+  capacityCount: number; // berapa banyak dapat dilayani
+  utilizationPercent?: number; // undefined jika demand/capacity tidak lengkap — jangan dianggap 0
+  capabilityStatus: RsudCapabilityStatus; // apakah layanan memang dapat diberikan secara aman & sah
+  capabilityNote?: string;
+  specialistsAvailable: number;
+  specialistsTotal: number;
+  plannedAbsenceNote?: string;
+  credentialsExpiringWithin30d: number;
+  credentialsIncomplete: number;
+  diagnosticTurnaroundHours?: number;
+  diagnosticCapacityNote?: string;
+  medicationAvailabilityStatus: 'TERSEDIA' | 'TERBATAS' | 'KOSONG';
+  medicationRecurringGap?: string;
+  // Faktor yang MUNGKIN terkait keterbatasan (belum causally terbukti — Gap Closure item 47)
+  constraintFactors: string[];
+  dataCutoffAt: string;
+  updatedAt: string;
+}
+
+export type RsudQualityEventType = 'QUALITY_INDICATOR' | 'SAFETY_INCIDENT' | 'COMPLAINT';
+
+// Menggabungkan quality indicator, patient-safety incident, dan complaint/patient-experience
+// signal (Gap Closure item 23, 39, 41) — dibedakan lewat eventType, bukan 3 tipe terpisah.
+export interface RsudQualityEvent {
+  id: string;
+  eventType: RsudQualityEventType;
+  category: string; // e.g. "Delayed Service", "Transfer Delay", "Waiting Time", "Communication"
+  relatedServiceId?: string;
+  relatedReferralId?: string;
+  description: string;
+  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  reportedAt: string;
+  reportedByRole: string;
+  status: 'OPEN' | 'UNDER_REVIEW' | 'RESOLVED';
+  linkedRiskCapaId?: string;
+}
+
+export type RsudRiskCapaStatus = 'IDENTIFIED' | 'ASSESSED' | 'ACTION_IN_PROGRESS' | 'IN_REVIEW' | 'CLOSED';
+
+// Risk register + CAPA lifecycle: Risk → Assessment → Action → PIC → Due Date → Evidence →
+// Review → Closed (Gap Closure §40).
+export interface RsudRiskCapaItem {
+  id: string;
+  riskTitle: string;
+  riskDescription: string;
+  relatedQualityEventId?: string;
+  assessmentNote?: string;
+  actionPlan?: string;
+  picUserName?: string;
+  dueDate?: string;
+  evidenceNote?: string;
+  reviewNote?: string;
+  status: RsudRiskCapaStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type RsudIntegrationMode = 'MANUAL' | 'SEMI_AUTOMATIC' | 'AUTOMATIC';
+export type RsudIntegrationStatusValue = 'CONNECTED' | 'DEGRADED' | 'MANUAL_MODE' | 'FAILED';
+
+// SIMRS dan SATUSEHAT (Gap Closure item 24-25); mode fallback §45 Business Continuity.
+export interface RsudIntegrationChannelStatus {
+  id: string;
+  channel: 'SIMRS' | 'SATUSEHAT';
+  mode: RsudIntegrationMode;
+  status: RsudIntegrationStatusValue;
+  lastSuccessfulSyncAt?: string;
+  pendingCount: number;
+  failedCount: number;
+  reconciliationBacklogCount: number;
+  note?: string;
+}
+
+export type RsudReconciliationIssueType = 'MISSING_REFERRAL' | 'DUPLICATE' | 'STATUS_MISMATCH' | 'MISSING_REPLY' | 'STALE_RECORD';
+
+// Puskesmas vs CKG Smart Care vs SIMRS RSUD (Gap Closure item 33, 43).
+export interface RsudReconciliationIssue {
+  id: string;
+  issueType: RsudReconciliationIssueType;
+  referralId?: string;
+  referralLetterNumber?: string;
+  description: string;
+  detectedAt: string;
+  status: 'OPEN' | 'INVESTIGATING' | 'RESOLVED';
+}
+
+export type RsudExecutiveActionStatus = 'OPEN' | 'IN_PROGRESS' | 'COMPLETED';
+
+// Management action Direktur RSUD — eksplisit BUKAN CareTask klinis (Gap Closure item 48 Hard Lock).
+export interface RsudExecutiveAction {
+  id: string;
+  title: string;
+  decisionNote: string;
+  picUserName: string;
+  dueDate: string;
+  progressPercent: number;
+  evidenceNote?: string;
+  reviewNote?: string;
+  status: RsudExecutiveActionStatus;
+  createdByUserName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Governed SLA definitions — versioned, effective-dated, owned, auditable (Gap Closure item 31).
+export interface RsudSlaDefinition {
+  id: string;
+  slaCode: string;
+  label: string;
+  version: string;
+  effectiveDate: string;
+  ownerRoleName: string;
+  targetHours: number;
+  description: string;
+}
+
+// Escalation ladder (Gap Closure item 32) — otomatis hanya memberi alert, bukan aksi otomatis.
+export interface RsudEscalationLevel {
+  level: 0 | 1 | 2 | 3;
+  roleLabel: string;
+  triggerAfterHours: number;
+  description: string;
 }
 
 

@@ -60,6 +60,14 @@ import {
   PopulationDataCompleteness,
   MetricDefinition,
   SmallCellSuppressionPolicy,
+  RsudServiceReadiness,
+  RsudQualityEvent,
+  RsudRiskCapaItem,
+  RsudIntegrationChannelStatus,
+  RsudReconciliationIssue,
+  RsudExecutiveAction,
+  RsudSlaDefinition,
+  RsudEscalationLevel,
 } from '../types';
 import {
   INITIAL_AUDIT_LOGS,
@@ -129,6 +137,16 @@ import {
   INITIAL_HOSPITAL_REFERRALS,
   INITIAL_PROLANIS_ENROLLMENTS,
 } from '../mock/initialClinicalData';
+import {
+  INITIAL_RSUD_SERVICE_READINESS,
+  INITIAL_RSUD_QUALITY_EVENTS,
+  INITIAL_RSUD_RISK_CAPA,
+  INITIAL_RSUD_INTEGRATION_STATUS,
+  INITIAL_RSUD_RECONCILIATION_ISSUES,
+  INITIAL_RSUD_EXECUTIVE_ACTIONS,
+  INITIAL_RSUD_SLA_DEFINITIONS,
+  INITIAL_RSUD_ESCALATION_LEVELS,
+} from '../mock/initialRsudData';
 
 const STORAGE_KEYS = {
   USERS: 'ckg_users_v1',
@@ -196,6 +214,15 @@ const STORAGE_KEYS = {
   POPULATION_COMPLETENESS: 'ckg_population_completeness_v9',
   METRIC_DEFINITIONS: 'ckg_metric_definitions_v9',
   SMALL_CELL_POLICY: 'ckg_small_cell_policy_v9',
+  // RSUD Executive Referral & Hospital Readiness (Direktur RSUD role) Storage Keys
+  RSUD_SERVICE_READINESS: 'ckg_rsud_service_readiness_v11',
+  RSUD_QUALITY_EVENTS: 'ckg_rsud_quality_events_v11',
+  RSUD_RISK_CAPA: 'ckg_rsud_risk_capa_v11',
+  RSUD_INTEGRATION_STATUS: 'ckg_rsud_integration_status_v11',
+  RSUD_RECONCILIATION_ISSUES: 'ckg_rsud_reconciliation_issues_v11',
+  RSUD_EXECUTIVE_ACTIONS: 'ckg_rsud_executive_actions_v11',
+  RSUD_SLA_DEFINITIONS: 'ckg_rsud_sla_definitions_v11',
+  RSUD_ESCALATION_LEVELS: 'ckg_rsud_escalation_levels_v11',
 };
 
 type Listener = () => void;
@@ -502,6 +529,39 @@ export const rawStorage = {
   setSmallCellPolicy: (policy: SmallCellSuppressionPolicy) =>
     setItem(STORAGE_KEYS.SMALL_CELL_POLICY, policy),
 
+  // RSUD Executive Referral & Hospital Readiness Storage (Direktur RSUD role)
+  getRsudServiceReadiness: (): RsudServiceReadiness[] =>
+    getItem(STORAGE_KEYS.RSUD_SERVICE_READINESS, INITIAL_RSUD_SERVICE_READINESS),
+  setRsudServiceReadiness: (r: RsudServiceReadiness[]) => setItem(STORAGE_KEYS.RSUD_SERVICE_READINESS, r),
+
+  getRsudQualityEvents: (): RsudQualityEvent[] =>
+    getItem(STORAGE_KEYS.RSUD_QUALITY_EVENTS, INITIAL_RSUD_QUALITY_EVENTS),
+  setRsudQualityEvents: (e: RsudQualityEvent[]) => setItem(STORAGE_KEYS.RSUD_QUALITY_EVENTS, e),
+
+  getRsudRiskCapa: (): RsudRiskCapaItem[] =>
+    getItem(STORAGE_KEYS.RSUD_RISK_CAPA, INITIAL_RSUD_RISK_CAPA),
+  setRsudRiskCapa: (r: RsudRiskCapaItem[]) => setItem(STORAGE_KEYS.RSUD_RISK_CAPA, r),
+
+  getRsudIntegrationStatus: (): RsudIntegrationChannelStatus[] =>
+    getItem(STORAGE_KEYS.RSUD_INTEGRATION_STATUS, INITIAL_RSUD_INTEGRATION_STATUS),
+  setRsudIntegrationStatus: (s: RsudIntegrationChannelStatus[]) => setItem(STORAGE_KEYS.RSUD_INTEGRATION_STATUS, s),
+
+  getRsudReconciliationIssues: (): RsudReconciliationIssue[] =>
+    getItem(STORAGE_KEYS.RSUD_RECONCILIATION_ISSUES, INITIAL_RSUD_RECONCILIATION_ISSUES),
+  setRsudReconciliationIssues: (i: RsudReconciliationIssue[]) => setItem(STORAGE_KEYS.RSUD_RECONCILIATION_ISSUES, i),
+
+  getRsudExecutiveActions: (): RsudExecutiveAction[] =>
+    getItem(STORAGE_KEYS.RSUD_EXECUTIVE_ACTIONS, INITIAL_RSUD_EXECUTIVE_ACTIONS),
+  setRsudExecutiveActions: (a: RsudExecutiveAction[]) => setItem(STORAGE_KEYS.RSUD_EXECUTIVE_ACTIONS, a),
+
+  getRsudSlaDefinitions: (): RsudSlaDefinition[] =>
+    getItem(STORAGE_KEYS.RSUD_SLA_DEFINITIONS, INITIAL_RSUD_SLA_DEFINITIONS),
+  setRsudSlaDefinitions: (s: RsudSlaDefinition[]) => setItem(STORAGE_KEYS.RSUD_SLA_DEFINITIONS, s),
+
+  getRsudEscalationLevels: (): RsudEscalationLevel[] =>
+    getItem(STORAGE_KEYS.RSUD_ESCALATION_LEVELS, INITIAL_RSUD_ESCALATION_LEVELS),
+  setRsudEscalationLevels: (l: RsudEscalationLevel[]) => setItem(STORAGE_KEYS.RSUD_ESCALATION_LEVELS, l),
+
   getWatermark: (facilityId: string): string => {
     const map = getItem<Record<string, string>>(STORAGE_KEYS.INGESTION_WATERMARK, {
       'FASKES-PKM-01': '2026-08-24T06:30:00.000Z',
@@ -580,6 +640,15 @@ export const rawStorage = {
     localStorage.setItem(STORAGE_KEYS.POPULATION_COMPLETENESS, JSON.stringify(INITIAL_POPULATION_COMPLETENESS));
     localStorage.setItem(STORAGE_KEYS.METRIC_DEFINITIONS, JSON.stringify(INITIAL_METRIC_DEFINITIONS));
     localStorage.setItem(STORAGE_KEYS.SMALL_CELL_POLICY, JSON.stringify(INITIAL_SMALL_CELL_POLICY));
+    // RSUD Resets
+    localStorage.setItem(STORAGE_KEYS.RSUD_SERVICE_READINESS, JSON.stringify(INITIAL_RSUD_SERVICE_READINESS));
+    localStorage.setItem(STORAGE_KEYS.RSUD_QUALITY_EVENTS, JSON.stringify(INITIAL_RSUD_QUALITY_EVENTS));
+    localStorage.setItem(STORAGE_KEYS.RSUD_RISK_CAPA, JSON.stringify(INITIAL_RSUD_RISK_CAPA));
+    localStorage.setItem(STORAGE_KEYS.RSUD_INTEGRATION_STATUS, JSON.stringify(INITIAL_RSUD_INTEGRATION_STATUS));
+    localStorage.setItem(STORAGE_KEYS.RSUD_RECONCILIATION_ISSUES, JSON.stringify(INITIAL_RSUD_RECONCILIATION_ISSUES));
+    localStorage.setItem(STORAGE_KEYS.RSUD_EXECUTIVE_ACTIONS, JSON.stringify(INITIAL_RSUD_EXECUTIVE_ACTIONS));
+    localStorage.setItem(STORAGE_KEYS.RSUD_SLA_DEFINITIONS, JSON.stringify(INITIAL_RSUD_SLA_DEFINITIONS));
+    localStorage.setItem(STORAGE_KEYS.RSUD_ESCALATION_LEVELS, JSON.stringify(INITIAL_RSUD_ESCALATION_LEVELS));
     notifyListeners();
   },
 };

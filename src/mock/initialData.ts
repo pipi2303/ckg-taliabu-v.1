@@ -181,6 +181,20 @@ export const INITIAL_ROLES: RoleDefinition[] = [
     canAccessClinicalData: false,
     isPredefined: true,
   },
+  {
+    id: 'DIR_RSUD',
+    name: 'Direktur RSUD',
+    category: 'RSUD',
+    description: 'Executive-first, aggregate-first, exception-driven: memantau performa rujukan CKG ke RSUD, kesiapan layanan, mutu, dan integrasi secara agregat. Tidak memiliki kewenangan klinis (diagnosis, terapi, resep) dan tidak mengubah RiskClassification/CareTask/LTFU/outcome klinis milik Puskesmas.',
+    dataCeiling: 'S3',
+    canManageUsers: false,
+    canManageFacilities: false,
+    canManageRegions: false,
+    canViewAudit: true,
+    canManageRuleVersions: false,
+    canAccessClinicalData: false,
+    isPredefined: true,
+  },
 ];
 
 export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
@@ -189,6 +203,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Kelola Kecamatan & Desa',
     description: 'Tambah, ubah, dan nonaktifkan data master wilayah kabupaten.',
     permissions: {
+      DIR_RSUD: 'DENIED',
       BUPATI: 'LIMITED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'LIMITED',
@@ -210,6 +225,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Kelola Faskes & Jejaring',
     description: 'Manajemen data Puskesmas, Pustu, Posyandu, dan Rumah Sakit Rujukan.',
     permissions: {
+      DIR_RSUD: 'DENIED',
       BUPATI: 'LIMITED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'LIMITED',
@@ -231,6 +247,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Kelola Akun Dinkes & Kapus',
     description: 'Registrasi dan penonaktifan akun level manajerial & dinas.',
     permissions: {
+      DIR_RSUD: 'DENIED',
       BUPATI: 'DENIED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'DENIED',
@@ -252,6 +269,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Kelola Staf Puskesmas & Kader',
     description: 'Manajemen akun dokter, perawat, petugas faskes, dan kader desa binaan.',
     permissions: {
+      DIR_RSUD: 'DENIED',
       BUPATI: 'DENIED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'DENIED',
@@ -273,6 +291,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Akses Identitas Warga (S1)',
     description: 'Melihat NIK, Nama, Telepon, dan Alamat sasaran CKG.',
     permissions: {
+      DIR_RSUD: 'LIMITED',
       BUPATI: 'DENIED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'LIMITED',
@@ -294,6 +313,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Akses Data Operasional Kunjungan (S2)',
     description: 'Melihat jadwal follow-up, status penugasan, dan ringkasan tugas outreach.',
     permissions: {
+      DIR_RSUD: 'LIMITED',
       BUPATI: 'LIMITED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'ALLOW',
@@ -315,6 +335,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Akses Data Klinis & Lab (S3/S4)',
     description: 'Melihat hasil tensi, gula darah, resiko klinis, diagnosa & resep. (Kader DIBLOKIR keras).',
     permissions: {
+      DIR_RSUD: 'DENIED',
       BUPATI: 'DENIED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'LIMITED',
@@ -336,6 +357,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Kelola Versi Aturan Klinis',
     description: 'Membuat draft, review, approve, dan publish aturan stratifikasi CKG.',
     permissions: {
+      DIR_RSUD: 'DENIED',
       BUPATI: 'LIMITED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'LIMITED',
@@ -357,6 +379,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Audit Log & Jejak Aktivitas',
     description: 'Meninjau rekaman aktivitas seluruh sistem secara append-only.',
     permissions: {
+      DIR_RSUD: 'LIMITED',
       BUPATI: 'LIMITED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'ALLOW',
@@ -378,6 +401,7 @@ export const PERMISSION_MATRIX_DATA: PermissionMatrixRow[] = [
     capability: 'Akses Paket Sinkronisasi Luring',
     description: 'Mengunduh paket data lokal faskes & antrian sinkronisasi idempotency.',
     permissions: {
+      DIR_RSUD: 'DENIED',
       BUPATI: 'DENIED',
       ADMIN_DINKES: 'ALLOW',
       KEPALA_DINAS: 'DENIED',
@@ -899,6 +923,23 @@ export const INITIAL_USERS: User[] = [
     lastLogin: '2026-08-20T16:00:00Z',
     createdAt: '2026-03-01T08:00:00Z',
     updatedAt: '2026-08-20T16:00:00Z',
+  },
+  {
+    id: 'usr-16',
+    name: 'dr. Yusuf Rahman, Sp.PD',
+    username: 'direktur.rsud',
+    email: 'direktur@rsudbobong.taliabukab.go.id',
+    phone: '0811-2200-7744',
+    roleId: 'DIR_RSUD',
+    roleName: 'Direktur RSUD',
+    facilityId: 'faskes-8',
+    facilityName: 'RSUD Bobong (Rujukan Kabupaten)',
+    areaScopes: ['kec-1', 'kec-2', 'kec-3', 'kec-4', 'kec-5', 'kec-6', 'kec-7', 'kec-8'],
+    areaScopeNames: ['Jejaring Rujukan Kabupaten Pulau Taliabu'],
+    status: 'ACTIVE',
+    lastLogin: '2026-08-31T07:30:00Z',
+    createdAt: '2026-07-01T08:00:00Z',
+    updatedAt: '2026-08-31T07:30:00Z',
   },
 ];
 

@@ -117,8 +117,8 @@ export const permissionService = {
 
   // Check area scope containment
   isInScope(actor: User, scopeId: string): boolean {
-    if (actor.roleId === 'ADMIN_DINKES' || actor.roleId === 'KEPALA_DINAS' || actor.roleId === 'ANALYST_DINKES') {
-      return true; // Kabupaten wide
+    if (actor.roleId === 'ADMIN_DINKES' || actor.roleId === 'KEPALA_DINAS' || actor.roleId === 'ANALYST_DINKES' || actor.roleId === 'DIR_RSUD') {
+      return true; // Kabupaten wide (DIR_RSUD: jejaring rujukan lintas seluruh Puskesmas pengirim)
     }
     return actor.areaScopes.includes(scopeId) || actor.villageAssignment === scopeId;
   },
@@ -265,6 +265,19 @@ export const permissionService = {
           'dinkes-ringkasan',
         ];
 
+      case 'DIR_RSUD':
+        // Executive-first, aggregate-first, exception-driven (Gap Closure §2) — tidak ada nav id
+        // yang membuka data klinis individual/diagnosis. "Individual Referral List" hanya lewat
+        // drilldown purpose-gated (populationPrivacyService) di dalam rsud-referral-network.
+        return [
+          'rsud-executive',
+          'rsud-referral-network',
+          'rsud-service-readiness',
+          'rsud-quality-governance',
+          'rsud-data-integration',
+          'rsud-governance',
+        ];
+
       default:
         return ['dashboard', 'prioritas-harian'];
     }
@@ -292,6 +305,8 @@ export const permissionService = {
         return 'dashboard';
       case 'ANALYST_DINKES':
         return 'dinkes-ringkasan';
+      case 'DIR_RSUD':
+        return 'rsud-executive';
       case 'ADMIN_DINKES':
       case 'KEPALA_PUSKESMAS':
       default:

@@ -98,6 +98,14 @@ import { ModelPerformanceFairnessPage } from './features/ai-intelligence/pages/M
 import { PreventionPriorityPage } from './features/ai-intelligence/pages/PreventionPriorityPage';
 import { RegionalPtmForecastPage } from './features/ai-intelligence/pages/RegionalPtmForecastPage';
 
+// Direktur RSUD Feature Views (RSUD Command Center)
+import { RsudExecutivePage } from './features/rsud/pages/RsudExecutivePage';
+import { RsudReferralNetworkPage } from './features/rsud/pages/RsudReferralNetworkPage';
+import { RsudServiceReadinessPage } from './features/rsud/pages/RsudServiceReadinessPage';
+import { RsudQualityGovernancePage } from './features/rsud/pages/RsudQualityGovernancePage';
+import { RsudDataIntegrationPage } from './features/rsud/pages/RsudDataIntegrationPage';
+import { RsudGovernancePage } from './features/rsud/pages/RsudGovernancePage';
+
 const MainAppContent: React.FC = () => {
   const { currentUser, isLoading, switchDemoUser } = useAuth();
   const [activeNav, setActiveNav] = useState<string>('dashboard');
@@ -243,6 +251,13 @@ const MainAppContent: React.FC = () => {
     sinkronisasi: { title: 'Kirim Data (Sinkronisasi Offline)', breadcrumbs: ['Sistem', 'Kirim Data'] },
     integrasi: { title: 'Status Sambungan SATUSEHAT Kemenkes', breadcrumbs: ['Sistem', 'SATUSEHAT'] },
     pengaturan: { title: 'Pengaturan Sistem & Glosarium Medis', breadcrumbs: ['Sistem', 'Pengaturan & Glosarium'] },
+    // RSUD Command Center Meta (Direktur RSUD)
+    'rsud-executive': { title: 'Ringkasan Eksekutif RSUD', breadcrumbs: ['RSUD Command Center', 'Executive'] },
+    'rsud-referral-network': { title: 'Referral Network RSUD', breadcrumbs: ['RSUD Command Center', 'Referral Network'] },
+    'rsud-service-readiness': { title: 'Service Readiness RSUD', breadcrumbs: ['RSUD Command Center', 'Service Readiness'] },
+    'rsud-quality-governance': { title: 'Quality & Safety RSUD', breadcrumbs: ['RSUD Command Center', 'Quality & Safety'] },
+    'rsud-data-integration': { title: 'Data & Integrasi RSUD', breadcrumbs: ['RSUD Command Center', 'Data & Integrasi'] },
+    'rsud-governance': { title: 'Governance & Audit RSUD', breadcrumbs: ['RSUD Command Center', 'Governance'] },
   };
 
   const currentMeta = pageMeta[activeNav] || { title: 'CKG Smart Care', breadcrumbs: ['Beranda'] };
@@ -421,6 +436,19 @@ const MainAppContent: React.FC = () => {
         return <IntegrasiPage />;
       case 'pengaturan':
         return <SettingsPage />;
+      // RSUD Command Center Routes (Direktur RSUD)
+      case 'rsud-executive':
+        return <RsudExecutivePage />;
+      case 'rsud-referral-network':
+        return <RsudReferralNetworkPage />;
+      case 'rsud-service-readiness':
+        return <RsudServiceReadinessPage />;
+      case 'rsud-quality-governance':
+        return <RsudQualityGovernancePage />;
+      case 'rsud-data-integration':
+        return <RsudDataIntegrationPage />;
+      case 'rsud-governance':
+        return <RsudGovernancePage />;
       default:
         return <DashboardPage onNavigate={setActiveNav} />;
     }
