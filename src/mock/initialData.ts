@@ -46,7 +46,7 @@ export const INITIAL_ROLES: RoleDefinition[] = [
     name: 'Analis Kesehatan Dinkes',
     category: 'DINKES',
     description: 'Akses analitik agregat, monitoring master data, dan audit kepatuhan tanpa hak mengubah konfigurasi master.',
-    dataCeiling: 'S2',
+    dataCeiling: 'S3',
     canManageUsers: false,
     canManageFacilities: false,
     canManageRegions: false,
