@@ -375,9 +375,12 @@ export const permissionService = {
         return [...PUSTU_NAVIGATION_PERMISSIONS];
 
       case 'POSYANDU':
+        // 'prioritas-harian' (Plafon S4) and 'outreach' are excluded for the same reason as
+        // KADER above: POSYANDU shares the same S2 ceiling, and DailyPriorityQueuePage /
+        // OutreachQueuePage have no per-posyandu filtering.
         return [
           'dashboard',
-          'prioritas-harian', 'outreach', 'penugasan-lapangan', 'kader-app',
+          'penugasan-lapangan', 'kader-app',
           'sinkronisasi',
         ];
 
