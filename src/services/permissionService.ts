@@ -359,10 +359,11 @@ export const permissionService = {
         // the desktop Sidebar via the "Portal" switch button — where these would render the
         // unscoped, facility-wide DailyPriorityQueuePage/OutreachQueuePage (no per-kader
         // filtering), violating the hard S2 ceiling enforced elsewhere in this file.
+        // 'dinkes-ringkasan' (Plafon S3 Agregat, CountySummaryPage) is excluded for the same
+        // reason — that page has no internal sensitivity filtering.
         // 'citizen-app' is strictly reserved for CITIZEN role only.
         return [
           'kader-app',
-          'dinkes-ringkasan',
           'penugasan-lapangan',
           'ai-nudge-budaya',
           'ai-rute-maritim',
@@ -376,7 +377,6 @@ export const permissionService = {
       case 'POSYANDU':
         return [
           'dashboard',
-          'dinkes-ringkasan',
           'prioritas-harian', 'outreach', 'penugasan-lapangan', 'kader-app',
           'sinkronisasi',
         ];
@@ -384,7 +384,6 @@ export const permissionService = {
       case 'CITIZEN':
         return [
           'citizen-app',
-          'dinkes-ringkasan',
         ];
 
       case 'DIR_RSUD':
