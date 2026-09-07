@@ -288,8 +288,7 @@ export const permissionService = {
       case 'KEPALA_DINAS':
         return [
           'dashboard',
-          'dinkes-ringkasan', 'dinkes-impact-index', 'dinkes-kaskade', 'dinkes-wilayah', 'dinkes-gap', 'dinkes-kinerja-pkm', 'dinkes-penyebab-kendala', 'dinkes-intervensi-populasi', 'dinkes-perbandingan-periode', 'dinkes-laporan',
-          'ai-scenario-lab',
+          'dinkes-ringkasan', 'dinkes-impact-index', 'dinkes-kaskade', 'dinkes-wilayah', 'dinkes-gap', 'dinkes-kinerja-pkm', 'dinkes-penyebab-kendala', 'dinkes-perbandingan-periode', 'dinkes-laporan',
           'stratifikasi',
           'wilayah', 'faskes',
         ];

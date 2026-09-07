@@ -128,25 +128,31 @@ Aplikasi CKG Smart Care mendefinisikan **14 Peran Pengguna** yang terbagi dalam 
 - **Tanggung Jawab**: Pengambilan keputusan strategis tingkat kabupaten, monitoring performa 8 Puskesmas, evaluasi CKG Impact Index (Level 1 Cakupan, Level 2 Kontinuitas, Level 3 Pengendalian Klinis), identifikasi kesenjangan akses maritim kepulauan, dan persetujuan penerbitan laporan resmi untuk Kemenkes/Bupati.
 - **Default Landing**: `dashboard` (Command Center Eksekutif Kadinkes)
 - **Karakteristik Tampilan**:
-  - Menu `DINKES COMMAND CENTER` diposisikan di urutan paling atas tepat di bawah Overview.
-  - Menu internal teknis/keamanan seperti manajemen akun dan pengaturan teknis disembunyikan.
+  - Menu sidebar direkonstruksi menjadi **4 Group Eksekutif & Pengambilan Kebijakan**:
+    1. **1. KONTROL EKSEKUTIF & COMMAND CENTER** (`dashboard`, `dinkes-ringkasan`, `dinkes-impact-index`, `dinkes-kaskade`)
+    2. **2. EVALUASI WILAYAH & 8 PUSKESMAS** (`dinkes-wilayah`, `dinkes-gap`, `dinkes-kinerja-pkm`, `dinkes-penyebab-kendala`)
+    3. **3. TREN STRATEGIS & PELAPORAN RESMI** (`dinkes-perbandingan-periode`, `dinkes-laporan`)
+    4. **4. DATA REFERENSI & JEJARING FASKES** (`stratifikasi`, `wilayah`, `faskes`)
+  - Menu teknis/keamanan internal (`KEAMANAN & ATURAN`) serta grup `ADVANCED AI INTELLIGENCE` disembunyikan agar pimpinan fokus pada kebijakan eksekutif, disparitas wilayah, dan pelaporan strategis.
   - Dilengkapi fitur ekspor laporan eksekutif PDF & Excel ber-Kop Surat Dinas Kesehatan dengan tanda tangan digital resmi Kadinkes.
-- **Menu yang Dapat Diakses**:
-  1. `dashboard` — Dashboard Eksekutif Kadinkes (`SCR-DNK-A02`)
-  2. `dinkes-ringkasan` — Ringkasan Dinas Kesehatan (`SCR-DNK-A02`)
-  3. `dinkes-impact-index` — CKG Impact Index Level 1-3 (`SCR-DNK-B01`)
-  4. `dinkes-kaskade` — Kaskade Kontinuitas & Drop-off (`SCR-DNK-B02`)
-  5. `dinkes-wilayah` — Analisis Wilayah & Peta Risiko Kepulauan (`SCR-DNK-C01`)
-  6. `dinkes-gap` — Disparitas & Kesenjangan Tindak Lanjut (`SCR-DNK-C02`)
-  7. `dinkes-kinerja-pkm` — Kinerja Tindak Lanjut 8 Puskesmas (`SCR-DNK-D01`)
-  8. `dinkes-penyebab-kendala` — Penyebab & Kendala Hambatan Maritim CMP-07 (`SCR-DNK-D02`)
-  9. `dinkes-intervensi-populasi` — Penetapan Intervensi Kebijakan Populasi (`SCR-DNK-E01`)
-  10. `dinkes-perbandingan-periode` — Perbandingan Tren Periode (`SCR-DNK-B03`)
-  11. `dinkes-laporan` — Laporan & Ekspor Resmi (PDF/Excel) (`SCR-DNK-F05`)
-  12. `ai-scenario-lab` — Simulasi Skenario Kebijakan Anggaran CKG (`SCR-AI-03`)
-  13. `stratifikasi` — Kategori Risiko Kemenkes (`SCR-PKM-C03`)
-  14. `wilayah` — Profil Kecamatan & Desa (`SCR-DNK-F01`)
-  15. `faskes` — Fasilitas Kesehatan & Jejaring Rujukan (`SCR-PKM-E04`)
+- **Menu yang Dapat Diakses (13 Menu Terstruktur)**:
+  - **Group 1: KONTROL EKSEKUTIF & COMMAND CENTER**
+    1. `dashboard` — Dashboard Eksekutif Kadinkes (`SCR-DNK-A02`)
+    2. `dinkes-ringkasan` — Ringkasan Capaian Kabupaten (`SCR-DNK-A02`)
+    3. `dinkes-impact-index` — CKG Impact Index Level 1-3 (`SCR-DNK-B01`)
+    4. `dinkes-kaskade` — Kaskade & Kontinuitas Layanan (`SCR-DNK-B02`)
+  - **Group 2: EVALUASI WILAYAH & 8 PUSKESMAS**
+    5. `dinkes-wilayah` — Peta Risiko & Sebaran Wilayah (`SCR-DNK-C01`)
+    6. `dinkes-gap` — Kesenjangan & Disparitas Akses (`SCR-DNK-C02`)
+    7. `dinkes-kinerja-pkm` — Rapor Kinerja 8 Puskesmas (`SCR-DNK-D01`)
+    8. `dinkes-penyebab-kendala` — Kendala & Hambatan Maritim CMP-07 (`SCR-DNK-D02`)
+  - **Group 3: TREN STRATEGIS & PELAPORAN RESMI**
+    9. `dinkes-perbandingan-periode` — Perbandingan Tren Periode (`SCR-DNK-B03`)
+    10. `dinkes-laporan` — Laporan Resmi & Ekspor (PDF/Excel) (`SCR-DNK-F05`)
+  - **Group 4: DATA REFERENSI & JEJARING FASKES**
+    11. `stratifikasi` — Kategori Risiko Kemenkes (`SCR-PKM-C03`)
+    12. `wilayah` — Profil 8 Kecamatan & Desa (`SCR-DNK-F01`)
+    13. `faskes` — Jejaring Puskesmas, Pustu & RS (`SCR-PKM-E04`)
 - **Contoh Akun Bawaan**:
   - Nama: `Nurbintang Talaohu, S.KM., M.Kes`
   - Username: `kadis.taliabu`
@@ -235,13 +241,40 @@ Aplikasi CKG Smart Care mendefinisikan **14 Peran Pengguna** yang terbagi dalam 
 - **Default Landing**: `dashboard` (Beranda Puskesmas)
 - **Karakteristik Tampilan**:
   - Menu administrasi teknis global (kelola server, katalog layanan, konfigurasi admin) disembunyikan agar fokus pada kepemimpinan faskes.
-- **Menu yang Dapat Diakses** (Total 28 Menu):
-  - **Overview**: `dashboard`, `dinkes-ringkasan`
-  - **Tindak Lanjut & Pendampingan**: `prioritas-harian`, `care-task`, `clinical-followup`, `outreach`, `penugasan-lapangan`, `jadwal-kuota`, `kandidat-putus`, `beban-kerja`
-  - **AI Intelligence**: `ai-prediksi-dropout`, `ai-digital-twin`, `ai-proyeksi-beban`, `ai-kepatuhan-obat`, `ai-prioritas-pencegahan`, `ai-nudge-budaya`, `ai-rute-maritim`
-  - **Pemantauan Kesehatan**: `pemantauan-aktif`, `kontrol-harian`, `menunggu-evaluasi`, `integritas-monitoring`, `kepatuhan-kendala`, `kohort-kondisi`, `tren-outcome`, `risiko-putus`
-  - **Data Warga & Penilaian**: `registry`, `stratifikasi`
-  - **Faskes & Logistik**: `future-facility` (Kesiapan Obat, Laboratorium & Petugas)
+- **Menu yang Dapat Diakses** (Total 28 Menu Terorganisir dalam 5 Klaster Manajerial):
+  - **1. KONTROL EKSEKUTIF PUSKESMAS**:
+    - `dashboard` — Beranda Puskesmas (`SCR-PKM-A02`)
+    - `dinkes-ringkasan` — Benchmark Capaian Kabupaten (`SCR-DNK-A02`)
+  - **2. TATA KELOLA OPERASIONAL & SUMBER DAYA**:
+    - `future-facility` — Kesiapan Faskes, Obat & Nakes (`SCR-PKM-E05`)
+    - `beban-kerja` — Pemerataan Beban Nakes & Kader (`SCR-PKM-G02`)
+    - `jadwal-kuota` — Jadwal & Kuota Pelayanan (`SCR-PKM-G01`)
+    - `penugasan-lapangan` — Tugas Kunjungan Kader (`SCR-PKM-B02`)
+  - **3. SUPERVISI PASIEN & MUTU LAYANAN**:
+    - `prioritas-harian` — Tugas Prioritas Hari Ini (`SCR-PKM-B01`)
+    - `kandidat-putus` — Deteksi Pasien Belum Kontrol (`SCR-PKM-B04`)
+    - `outreach` — Catatan Kunjungan Lapangan (`SCR-PKM-B03`)
+    - `integritas-monitoring` — Audit Kepatuhan Puskesmas (`SCR-PKM-G06`)
+    - `risiko-putus` — Cegah Putus Berobat (`SCR-PKM-B04`)
+    - `clinical-followup` — Pemeriksaan Dokter di Poli (`SCR-PKM-D01`)
+    - `care-task` — Jadwal & Batas Waktu Pelayanan (`SCR-PKM-B05`)
+  - **4. KOHORT & DATA KESEHATAN POPULASI**:
+    - `registry` — Data Warga & Sasaran CKG (`SCR-PKM-C01`)
+    - `kohort-kondisi` — Kelompok Kohort (HT & DM) (`SCR-PKM-F06`)
+    - `tren-outcome` — Perkembangan Hasil Terapi (`SCR-PKM-F07`)
+    - `stratifikasi` — Kategori Risiko Kemenkes (`SCR-PKM-C03`)
+    - `pemantauan-aktif` — Siklus Pemantauan Pasien (`SCR-PKM-F01`)
+    - `kontrol-harian` — Jadwal Pasien Kontrol Hari Ini (`SCR-PKM-F02`)
+    - `menunggu-evaluasi` — Evaluasi Status Kesehatan (`SCR-PKM-F04`)
+    - `kepatuhan-kendala` — Kepatuhan & Kendala Obat (`SCR-PKM-F03`)
+  - **5. AI INTELLIGENCE & PERENCANAAN**:
+    - `ai-proyeksi-beban` — Proyeksi Kebutuhan Obat Faskes (`SCR-DNK-E03`)
+    - `ai-rute-maritim` — Optimasi Rute Pusling Maritim (`SCR-AI-09`)
+    - `ai-prediksi-dropout` — Prediksi Putus Berobat (`SCR-AI-01`)
+    - `ai-prioritas-pencegahan` — Prioritas Intervensi Faskes (`SCR-AI-06`)
+    - `ai-kepatuhan-obat` — Efektivitas & Kepatuhan Terapi (`SCR-AI-05`)
+    - `ai-nudge-budaya` — Edukasi Budaya & Nudge Warga (`SCR-AI-08`)
+    - `ai-digital-twin` — Digital Twin Kardiometabolik (`SCR-AI-02`)
 - **Contoh Akun Bawaan**:
   - Nama: `Anriyanti, A.Md.Kep.`
   - Username: `kapus.bobong`

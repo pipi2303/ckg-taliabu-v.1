@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   LayoutDashboard,
   MapPin,
@@ -6,7 +6,7 @@ import {
   Stethoscope,
   Users,
   ShieldCheck,
-  Map,
+  Map as MapIcon,
   FileCheck2,
   GitBranch,
   History,
@@ -15,6 +15,7 @@ import {
   Settings,
   HeartHandshake,
   ChevronRight,
+  ChevronDown,
   ClipboardList,
   AlertCircle,
   FileText,
@@ -179,7 +180,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { id: 'pengguna', label: 'Petugas & Kader', icon: <Users className="w-4 h-4" />, badge: 'SCR-PKM-G03', docSpec: 'Daftar Akun Tenaga Kesehatan & Kader Posyandu', badgeColor: 'bg-teal-950/90 text-teal-300 border-teal-700/60' },
         { id: 'peran', label: 'Peran Pengguna', icon: <ShieldCheck className="w-4 h-4" />, badge: 'SCR-ADM-02', docSpec: 'Pengaturan Izin Akses (Dokter, Bidan, Kader, dll)', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
-        { id: 'cakupan', label: 'Wilayah Tugas', icon: <Map className="w-4 h-4" />, badge: 'SCR-DNK-A01', docSpec: 'Penugasan Lokasi Kerja Masing-Masing Petugas', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
+        { id: 'cakupan', label: 'Wilayah Tugas', icon: <MapIcon className="w-4 h-4" />, badge: 'SCR-DNK-A01', docSpec: 'Penugasan Lokasi Kerja Masing-Masing Petugas', badgeColor: 'bg-emerald-950/90 text-emerald-300 border-emerald-700/60' },
       ],
     },
     {
@@ -212,8 +213,140 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
   ];
 
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
+
+  const toggleSection = (title: string) => {
+    setCollapsedSections((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+
+  // Map of all items for quick role-specific regrouping
+  const allItemsMap = useMemo(() => {
+    const map = new globalThis.Map<string, NavItem>();
+    navigationSections.forEach((sec) => {
+      sec.items.forEach((item) => {
+        map.set(item.id, item);
+      });
+    });
+    return map;
+  }, [navigationSections]);
+
   // Filter sections and items based on role access
   const filteredSections = useMemo(() => {
+    const getCustomItem = (id: string, customLabel?: string, customDocSpec?: string): NavItem | null => {
+      const base = allItemsMap.get(id);
+      if (!base || !permissionService.isNavAllowed(roleId, id)) return null;
+      return {
+        ...base,
+        label: customLabel || base.label,
+        docSpec: customDocSpec || base.docSpec,
+      };
+    };
+
+    // Struktur Khusus Kepala Dinas Kesehatan: 4 Group Menu Eksekutif & Pengambilan Kebijakan
+    if (roleId === 'KEPALA_DINAS') {
+      const kadisSections: NavSection[] = [
+        {
+          title: '1. KONTROL EKSEKUTIF & COMMAND CENTER',
+          items: [
+            getCustomItem('dashboard', 'Dashboard Eksekutif Kadinkes', 'Command Center Dinas Kesehatan · Indikator Strategis & KPI Utama Kabupaten'),
+            getCustomItem('dinkes-ringkasan', 'Ringkasan Capaian Kabupaten', 'Ringkasan Eksekutif & Status Kesehatan Masyarakat Pulau Taliabu'),
+            getCustomItem('dinkes-impact-index', 'CKG Impact Index (Level 1-3)', 'Evaluasi Dampak Skrining, Kontinuitas & Pengendalian Klinis PTM'),
+            getCustomItem('dinkes-kaskade', 'Kaskade & Kontinuitas Layanan', 'Rel Kaskade & Analisis Drop-off Alur Pasien Antar-Faskes'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '2. EVALUASI WILAYAH & 8 PUSKESMAS',
+          items: [
+            getCustomItem('dinkes-wilayah', 'Peta Risiko & Sebaran Wilayah', 'Analisis Spasial Sebaran Risiko di 8 Kecamatan & 71 Desa'),
+            getCustomItem('dinkes-gap', 'Kesenjangan & Disparitas Akses', 'Deteksi Disparitas Tindak Lanjut & Kesenjangan Pelayanan Antar-Wilayah'),
+            getCustomItem('dinkes-kinerja-pkm', 'Rapor Kinerja 8 Puskesmas', 'Evaluasi Capaian Skrining & Tindak Lanjut Tiap Puskesmas'),
+            getCustomItem('dinkes-penyebab-kendala', 'Kendala & Hambatan Maritim', 'Analisis Akar Masalah Hambatan Geografis, Logistik & Penolakan Warga (CMP-07)'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '3. TREN STRATEGIS & PELAPORAN RESMI',
+          items: [
+            getCustomItem('dinkes-perbandingan-periode', 'Perbandingan Tren Periode', 'Evaluasi Tren Kinerja & Efektivitas Intervensi dari Waktu ke Waktu'),
+            getCustomItem('dinkes-laporan', 'Laporan Resmi & Ekspor', 'Penerbitan Laporan Eksekutif Resmi Bupati & Kemenkes (PDF/Excel)'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '4. DATA REFERENSI & JEJARING FASKES',
+          items: [
+            getCustomItem('stratifikasi', 'Kategori Risiko Kemenkes', 'Pedoman & Standar Kategori Risiko Pasien (Hijau, Kuning, Merah)'),
+            getCustomItem('wilayah', 'Profil 8 Kecamatan & Desa', 'Data Wilayah Geografis, Desa Terisolir & Aksesibilitas Maritim'),
+            getCustomItem('faskes', 'Jejaring Puskesmas, Pustu & RS', 'Peta Faskes, Pustu, Posyandu & Jejaring Rujukan RSUD'),
+          ].filter(Boolean) as NavItem[],
+        },
+      ];
+
+      return kadisSections.filter((sec) => sec.items.length > 0);
+    }
+
+    // Struktur Khusus Kepala Puskesmas: 5 Section Manajerial & Supervisi
+    if (roleId === 'KEPALA_PUSKESMAS') {
+      const kapusSections: NavSection[] = [
+        {
+          title: '1. KONTROL EKSEKUTIF PUSKESMAS',
+          items: [
+            getCustomItem('dashboard', 'Beranda Puskesmas', 'Indikator Kinerja Utama & Ringkasan Pelayanan Faskes'),
+            getCustomItem('dinkes-ringkasan', 'Benchmark Capaian Kabupaten', 'Perbandingan Capaian Skrining & Pengendalian PTM vs Puskesmas Lain'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '2. TATA KELOLA OPERASIONAL & SUMBER DAYA',
+          items: [
+            getCustomItem('future-facility', 'Kesiapan Faskes, Obat & Nakes', 'Monitoring Kapasitas Tempat Tidur, Stok Obat PTM & Buffer Faskes'),
+            getCustomItem('beban-kerja', 'Pemerataan Beban Nakes & Kader', 'Distribusi Beban Pelayanan Dokter, Perawat, dan Kader Lapangan'),
+            getCustomItem('jadwal-kuota', 'Jadwal & Kuota Pelayanan', 'Pengaturan Jadwal Layanan & Kuota Harian Pasien Faskes'),
+            getCustomItem('penugasan-lapangan', 'Tugas Kunjungan Kader', 'Distribusi & Penugasan Kunjungan Rumah Kader Desa Binaan'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '3. SUPERVISI PASIEN & MUTU LAYANAN',
+          items: [
+            getCustomItem('prioritas-harian', 'Tugas Prioritas Hari Ini', 'Daftar Pasien Kategori Merah & Kritis yang Memerlukan Atensi Segera'),
+            getCustomItem('kandidat-putus', 'Deteksi Pasien Belum Kontrol', 'Peringatan Dini Pasien Kronis yang Menunggak Kontrol Ulang'),
+            getCustomItem('outreach', 'Catatan Kunjungan Lapangan', 'Laporan Hasil Kontak, Hambatan & Eskalasi Outreach Kader'),
+            getCustomItem('integritas-monitoring', 'Audit Kepatuhan Puskesmas', 'Audit Standar Pelayanan & Integritas Rekam Medis CMP-09'),
+            getCustomItem('risiko-putus', 'Cegah Putus Berobat', 'Intervensi Dini Pasien Berisiko Drop-out Terapi Kronis'),
+            getCustomItem('clinical-followup', 'Pemeriksaan Dokter di Poli', 'Monitoring Hasil Konsultasi & Resep Medis Dokter FKTP'),
+            getCustomItem('care-task', 'Jadwal & Batas Waktu', 'Timeline Batas Waktu Tindak Lanjut Pasien & Rujukan'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '4. KOHORT & DATA KESEHATAN POPULASI',
+          items: [
+            getCustomItem('registry', 'Data Warga & Sasaran CKG', 'Master Registry Penduduk & Hasil Skrining Wilayah Puskesmas'),
+            getCustomItem('kohort-kondisi', 'Kelompok Kohort (HT & DM)', 'Pemantauan Kohort Pasien Hipertensi & Diabetes Melitus'),
+            getCustomItem('tren-outcome', 'Perkembangan Hasil Terapi', 'Evaluasi Penurunan Tekanan Darah & Gula Darah Pasien'),
+            getCustomItem('stratifikasi', 'Kategori Risiko Kemenkes', 'Kriteria Penilaian Tingkat Risiko Hijau, Kuning, Merah'),
+            getCustomItem('pemantauan-aktif', 'Siklus Pemantauan Pasien', 'Pelacakan Status Kontrol Rutin Pasien Berjalan'),
+            getCustomItem('kontrol-harian', 'Jadwal Pasien Kontrol Hari Ini', 'Daftar Pasien Terjadwal Kontrol ke Faskes Hari Ini'),
+            getCustomItem('menunggu-evaluasi', 'Evaluasi Status Kesehatan', 'Penetapan Pasien Terkendali vs Butuh Eskalasi Rujukan'),
+            getCustomItem('kepatuhan-kendala', 'Kepatuhan & Kendala Obat', 'Laporan Efek Samping & Hambatan Minum Obat Pasien'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '5. AI INTELLIGENCE & PERENCANAAN',
+          items: [
+            getCustomItem('ai-proyeksi-beban', 'Proyeksi Kebutuhan Obat Faskes', 'Perencanaan Beban Penyakit & Kebutuhan Obat Jangka Menengah'),
+            getCustomItem('ai-rute-maritim', 'Optimasi Rute Pusling Maritim', 'Efisiensi Rute Pelayanan Keliling Maritim & Perahu'),
+            getCustomItem('ai-prediksi-dropout', 'Prediksi Putus Berobat', 'Model Prediksi Machine Learning Risiko Mangkir Terapi'),
+            getCustomItem('ai-prioritas-pencegahan', 'Prioritas Intervensi Faskes', 'Prioritisasi Intervensi Pencegahan Primer & Sekunder'),
+            getCustomItem('ai-kepatuhan-obat', 'Efektivitas & Kepatuhan Terapi', 'Analisis Kepatuhan Minum Obat Pasien PTM Faskes'),
+            getCustomItem('ai-nudge-budaya', 'Edukasi Budaya & Nudge Warga', 'Materi Edukasi Kesehatan Berkonteks Budaya Lokal Taliabu'),
+            getCustomItem('ai-digital-twin', 'Digital Twin Kardiometabolik', 'Simulasi Profil Risiko Kardiometabolik Pasien'),
+          ].filter(Boolean) as NavItem[],
+        },
+      ];
+
+      return kapusSections.filter((sec) => sec.items.length > 0);
+    }
+
     const sections = navigationSections
       .map((section) => ({
         ...section,
@@ -221,25 +354,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       }))
       .filter((section) => section.items.length > 0);
 
-    // Untuk Kepala Dinas Kesehatan, posisikan group DINKES COMMAND CENTER tepat di urutan ke-2 (setelah OVERVIEW)
-    // serta pastikan group KEAMANAN & ATURAN tersembunyi
-    if (roleId === 'KEPALA_DINAS') {
-      const dinkesIndex = sections.findIndex((s) => s.title === 'DINKES COMMAND CENTER');
-      if (dinkesIndex > 1) {
-        const [dinkesSection] = sections.splice(dinkesIndex, 1);
-        sections.splice(1, 0, dinkesSection);
-      }
-      return sections.filter((s) => s.title !== 'KEAMANAN & ATURAN');
-    }
-
-    // Untuk Kepala Puskesmas, sembunyikan group AKUN & HAK AKSES, KEAMANAN & ATURAN, dan SISTEM & KONEKSI
-    if (roleId === 'KEPALA_PUSKESMAS') {
-      const hiddenGroups = ['AKUN & HAK AKSES', 'KEAMANAN & ATURAN', 'KEAMANAN & HAK AKSES', 'SISTEM & KONEKSI', 'SISTEM & KOREKSI'];
-      return sections.filter((s) => !hiddenGroups.includes(s.title));
-    }
-
     return sections;
-  }, [roleId]);
+  }, [roleId, allItemsMap]);
 
   const handleItemClick = (item: NavItem) => {
     onNavigate(item.id);
@@ -277,60 +393,80 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Navigation Links Scrollable Area */}
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
-        {filteredSections.map((section) => (
-          <div key={section.title} className="space-y-1">
-            <h2 className="px-3 text-[10px] font-bold tracking-wider text-slate-400/80 uppercase">
-              {section.title}
-            </h2>
-            <div className="space-y-0.5 pt-1">
-              {section.items.map((item) => {
-                const isActive = activeNav === item.id;
-                const tooltipText = item.badge
-                  ? `[${item.badge}] ${item.label}${item.docSpec ? `\nSpesifikasi: ${item.docSpec}` : ''}`
-                  : item.docSpec
-                  ? `${item.label}\nSpesifikasi: ${item.docSpec}`
-                  : item.label;
+      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
+        {filteredSections.map((section) => {
+          const hasActiveItem = section.items.some((item) => item.id === activeNav);
+          const isCollapsed = !!collapsedSections[section.title] && !hasActiveItem;
 
-                return (
-                  <button
-                    key={item.id}
-                    data-tour={`nav-${item.id}`}
-                    onClick={() => handleItemClick(item)}
-                    title={tooltipText}
-                    className={`w-full flex items-center justify-between px-2.5 py-2 text-xs font-medium rounded-lg transition-all group cursor-pointer relative ${
-                      isActive
-                        ? 'bg-[#2E7D5B] text-white shadow-xs'
-                        : 'text-slate-300 hover:text-white hover:bg-[#002D27]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 min-w-0 pr-1 truncate">
-                      <span className={`shrink-0 ${isActive ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
-                        {item.icon}
-                      </span>
-                      <span className="truncate">{item.label}</span>
-                    </div>
+          return (
+            <div key={section.title} className="space-y-1">
+              <button
+                type="button"
+                onClick={() => toggleSection(section.title)}
+                className="w-full flex items-center justify-between px-2.5 py-1 text-[10px] font-bold tracking-wider text-slate-400/85 hover:text-emerald-300 uppercase transition-colors group cursor-pointer text-left"
+                title="Klik untuk buka / tutup section"
+              >
+                <span className="truncate">{section.title}</span>
+                <span className="text-slate-500 group-hover:text-emerald-300 shrink-0 ml-1.5">
+                  {isCollapsed ? (
+                    <ChevronRight className="w-3 h-3" />
+                  ) : (
+                    <ChevronDown className="w-3 h-3" />
+                  )}
+                </span>
+              </button>
 
-                    {item.badge ? (
-                      <span
+              {!isCollapsed && (
+                <div className="space-y-0.5 pt-0.5">
+                  {section.items.map((item) => {
+                    const isActive = activeNav === item.id;
+                    const tooltipText = item.badge
+                      ? `[${item.badge}] ${item.label}${item.docSpec ? `\nSpesifikasi: ${item.docSpec}` : ''}`
+                      : item.docSpec
+                      ? `${item.label}\nSpesifikasi: ${item.docSpec}`
+                      : item.label;
+
+                    return (
+                      <button
+                        key={item.id}
+                        data-tour={`nav-${item.id}`}
+                        onClick={() => handleItemClick(item)}
                         title={tooltipText}
-                        className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded border shrink-0 font-mono tracking-tight transition-transform ${
+                        className={`w-full flex items-center justify-between px-2.5 py-2 text-xs font-medium rounded-lg transition-all group cursor-pointer relative ${
                           isActive
-                            ? 'bg-white/20 text-white border-white/30'
-                            : item.badgeColor || 'bg-[#001714] text-emerald-300 border-[#003B33]'
+                            ? 'bg-[#2E7D5B] text-white shadow-xs'
+                            : 'text-slate-300 hover:text-white hover:bg-[#002D27]'
                         }`}
                       >
-                        {item.badge}
-                      </span>
-                    ) : isActive ? (
-                      <ChevronRight className="w-3.5 h-3.5 text-white shrink-0" />
-                    ) : null}
-                  </button>
-                );
-              })}
+                        <div className="flex items-center gap-2 min-w-0 pr-1 truncate">
+                          <span className={`shrink-0 ${isActive ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                            {item.icon}
+                          </span>
+                          <span className="truncate">{item.label}</span>
+                        </div>
+
+                        {item.badge ? (
+                          <span
+                            title={tooltipText}
+                            className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded border shrink-0 font-mono tracking-tight transition-transform ${
+                              isActive
+                                ? 'bg-white/20 text-white border-white/30'
+                                : item.badgeColor || 'bg-[#001714] text-emerald-300 border-[#003B33]'
+                            }`}
+                          >
+                            {item.badge}
+                          </span>
+                        ) : isActive ? (
+                          <ChevronRight className="w-3.5 h-3.5 text-white shrink-0" />
+                        ) : null}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Sidebar Footer: Kabupaten Pulau Taliabu info */}
