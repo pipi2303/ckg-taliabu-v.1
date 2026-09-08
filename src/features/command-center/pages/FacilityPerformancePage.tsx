@@ -152,49 +152,49 @@ export const FacilityPerformancePage: React.FC = () => {
           return (
             <div
               key={fac.facilityId}
-              className={`p-5 rounded-2xl bg-slate-900/90 border transition shadow-lg space-y-4 ${
+              className={`p-5 rounded-2xl bg-[#FAF9F6] border transition shadow-sm space-y-4 ${
                 isNotReporting
-                  ? 'border-amber-500/30 bg-amber-500/5'
+                  ? 'border-amber-300 bg-amber-50/60'
                   : isStale
-                  ? 'border-amber-500/40'
-                  : 'border-slate-800 hover:border-slate-700'
+                  ? 'border-amber-300/80 bg-amber-50/40'
+                  : 'border-[#D8E5E2] hover:border-teal-600/40'
               }`}
             >
               {/* Header Row */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                  <div className="p-3 rounded-xl bg-teal-50 text-teal-700 border border-teal-200">
                     <Building2 className="w-5 h-5" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-base font-bold text-white">{fac.facilityName}</h3>
-                      <span className="text-xs text-slate-400 font-medium">({fac.kecamatanName})</span>
+                      <h3 className="text-base font-bold text-slate-900">{fac.facilityName}</h3>
+                      <span className="text-xs text-slate-500 font-medium">({fac.kecamatanName})</span>
                       {fac.isRemoteIsland && (
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-sky-300 border border-slate-700 flex items-center gap-1">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-sky-50 text-sky-800 border border-sky-200 flex items-center gap-1">
                           <Ship className="w-3 h-3" />
                           Pesisir / Kepulauan
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-slate-400 mt-1">{fac.accessibilityContext}</p>
+                    <p className="text-xs text-slate-600 mt-1">{fac.accessibilityContext}</p>
                   </div>
                 </div>
 
                 {/* Status Badge & Actions */}
                 <div className="flex items-center gap-2 self-end md:self-center flex-wrap">
                   {isNotReporting ? (
-                    <span className="text-xs px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold flex items-center gap-1.5">
+                    <span className="text-xs px-3 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 font-semibold flex items-center gap-1.5">
                       <WifiOff className="w-3.5 h-3.5" />
                       Belum Melapor Bulan Ini
                     </span>
                   ) : isStale ? (
-                    <span className="text-xs px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold flex items-center gap-1.5">
+                    <span className="text-xs px-3 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 font-semibold flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5" />
                       Data Terlambat (Stale)
                     </span>
                   ) : (
-                    <span className="text-xs px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold flex items-center gap-1.5">
+                    <span className="text-xs px-3 py-1 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-300 font-semibold flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Pelaporan Lengkap
                     </span>
@@ -206,10 +206,10 @@ export const FacilityPerformancePage: React.FC = () => {
                     onClick={() =>
                       setExpandedFacilityTrendId(isTrendExpanded ? null : fac.facilityId)
                     }
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition flex items-center gap-1.5 cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition flex items-center gap-1.5 cursor-pointer shadow-2xs ${
                       isTrendExpanded
-                        ? 'bg-teal-600 text-white border-teal-500 shadow-xs'
-                        : 'bg-slate-800 hover:bg-slate-700 text-teal-300 border-slate-700'
+                        ? 'bg-teal-700 text-white border-teal-600 shadow-xs'
+                        : 'bg-white hover:bg-slate-50 text-teal-800 border-slate-200'
                     }`}
                     title="Buka / Tutup Tren Bulanan"
                   >
@@ -229,7 +229,7 @@ export const FacilityPerformancePage: React.FC = () => {
                       setModalFacilityId(fac.facilityId);
                       setIsTrendModalOpen(true);
                     }}
-                    className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition cursor-pointer"
+                    className="p-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 transition cursor-pointer shadow-2xs"
                     title="Buka Modal Analisis Lengkap"
                   >
                     <Maximize2 className="w-3.5 h-3.5" />
@@ -238,38 +238,38 @@ export const FacilityPerformancePage: React.FC = () => {
               </div>
 
               {/* Metrics Row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-slate-800/80">
-                <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-800">
-                  <div className="text-[11px] text-slate-400 mb-1">Skrining Selesai</div>
-                  <div className="text-lg font-bold text-white">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-[#D8E5E2]">
+                <div className="p-3 rounded-xl bg-white border border-[#E2ECE9] shadow-2xs">
+                  <div className="text-[11px] text-slate-500 mb-1">Skrining Selesai</div>
+                  <div className="text-lg font-bold text-slate-900">
                     {isNotReporting ? '—' : fac.screenedCount.toLocaleString('id-ID')}
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-800">
-                  <div className="text-[11px] text-slate-400 mb-1">Temuan Berisiko (Eligible)</div>
-                  <div className="text-lg font-bold text-white">
+                <div className="p-3 rounded-xl bg-white border border-[#E2ECE9] shadow-2xs">
+                  <div className="text-[11px] text-slate-500 mb-1">Temuan Berisiko (Eligible)</div>
+                  <div className="text-lg font-bold text-slate-900">
                     {isNotReporting ? '—' : fac.eligibleFollowUpCount.toLocaleString('id-ID')}
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-800">
-                  <div className="text-[11px] text-slate-400 mb-1">Hadir Tindak Lanjut</div>
-                  <div className="text-lg font-bold text-emerald-400">
+                <div className="p-3 rounded-xl bg-white border border-[#E2ECE9] shadow-2xs">
+                  <div className="text-[11px] text-slate-500 mb-1">Hadir Tindak Lanjut</div>
+                  <div className="text-lg font-bold text-emerald-700">
                     {isNotReporting ? '—' : `${fac.attendedFollowUpCount} (${fac.continuityRate}%)`}
                   </div>
                 </div>
 
                 <div
-                  className={`p-3 rounded-xl border ${
+                  className={`p-3 rounded-xl border shadow-2xs ${
                     isHighManual
-                      ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
-                      : 'bg-slate-800/50 border-slate-800 text-slate-300'
+                      ? 'bg-rose-50 border-rose-200 text-rose-900'
+                      : 'bg-white border-[#E2ECE9] text-slate-900'
                   }`}
                 >
-                  <div className="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
+                  <div className="text-[11px] text-slate-500 mb-1 flex items-center gap-1">
                     <span>Penutupan Tugas Manual</span>
-                    {isHighManual && <AlertTriangle className="w-3 h-3 text-rose-400" />}
+                    {isHighManual && <AlertTriangle className="w-3 h-3 text-rose-600" />}
                   </div>
                   <div className="text-lg font-bold">
                     {isNotReporting ? '—' : `${fac.manualClosureRatio}% (${fac.manualClosureCount} kasus)`}
@@ -293,8 +293,8 @@ export const FacilityPerformancePage: React.FC = () => {
               {fac.notes.length > 0 && (
                 <div className="pt-2 text-xs space-y-1">
                   {fac.notes.map((n, i) => (
-                    <div key={i} className="flex items-center gap-2 text-slate-400">
-                      <span className="text-teal-400">•</span>
+                    <div key={i} className="flex items-center gap-2 text-slate-600">
+                      <span className="text-teal-600">•</span>
                       <span>{n}</span>
                     </div>
                   ))}
@@ -303,8 +303,8 @@ export const FacilityPerformancePage: React.FC = () => {
 
               {/* 18 Pending Offline Syncs Highlight */}
               {fac.pendingKaderSyncCount > 0 && (
-                <div className="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20 text-xs text-sky-200 flex items-center gap-2">
-                  <Info className="w-4 h-4 text-sky-400 shrink-0" />
+                <div className="p-2.5 rounded-xl bg-sky-50 border border-sky-200 text-xs text-sky-900 flex items-center gap-2">
+                  <Info className="w-4 h-4 text-sky-700 shrink-0" />
                   <span>
                     Terdapat <strong>{fac.pendingKaderSyncCount} catatan kunjungan kader</strong> tersimpan di HP/tablet kader desa terpencil yang belum terunggah ke server (tidak dihitung sebagai kasus mangkir).
                   </span>

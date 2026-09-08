@@ -186,14 +186,14 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
 
       {/* 3. Cascade Funnel Overview & Largest Drop Point */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
+        <div className="lg:col-span-2 p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-black flex items-center gap-2">
+              <h3 className="text-sm font-bold text-[#00201C] dark:text-white flex items-center gap-2">
                 <Layers className="w-4 h-4 text-sky-700" />
                 Ringkasan Tindak Lanjut
               </h3>
-              <p className="text-xs text-stone-600 mt-0.5">Perjalanan warga dari temuan awal hingga tata laksana</p>
+              <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">Perjalanan warga dari temuan awal hingga tata laksana</p>
             </div>
             <button
               onClick={() => onNavigate?.('dinkes-kaskade')}
@@ -214,13 +214,13 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
               return (
                 <div key={stg.stageId} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-stone-700">{stg.label}</span>
+                    <span className="font-semibold text-[#102521] dark:text-slate-200">{stg.label}</span>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-black">{stg.count.toLocaleString('id-ID')}</span>
-                      <span className="text-[11px] text-stone-500">({pctOfFirst}%)</span>
+                      <span className="font-bold text-[#102521] dark:text-white">{stg.count.toLocaleString('id-ID')}</span>
+                      <span className="text-[11px] text-[#60716D] dark:text-slate-400">({pctOfFirst}%)</span>
                     </div>
                   </div>
-                  <div className="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-[#D8E5E2] dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${
                         stg.isLargestDrop ? 'bg-rose-500' : 'bg-teal-600'
@@ -234,16 +234,16 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
           </div>
 
           {/* Awaiting & Exits Badge */}
-          <div className="pt-3 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3 text-xs text-stone-600">
+          <div className="pt-3 border-t border-[#D8E5E2] dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-[#60716D] dark:text-slate-400">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-md bg-amber-50 text-amber-800 border border-amber-200 font-semibold">
                 {cascade.awaitingConfirmationCount} Menunggu Konfirmasi Klinis
               </span>
-              <span className="px-2.5 py-1 rounded-md bg-stone-100 text-stone-700 border border-stone-200 font-medium">
+              <span className="px-2.5 py-1 rounded-md bg-[#F0F5F4] dark:bg-slate-800 text-[#102521] dark:text-slate-300 border border-[#D8E5E2] dark:border-slate-700 font-medium">
                 {cascade.exits.totalExits} Kasus Keluar (LTFU/Refused)
               </span>
             </div>
-            <div className="text-[11px] text-stone-600 font-medium">
+            <div className="text-[11px] text-[#60716D] dark:text-slate-400 font-medium">
               Sinyal Penutupan Manual: <strong className="text-amber-800">{cascade.manualTaskClosureRatio}%</strong>
             </div>
           </div>
@@ -253,15 +253,15 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
         <div className="space-y-4">
           {/* Largest Drop Card */}
           {largestDropStage && (
-            <div className="p-5 rounded-2xl bg-rose-50/80 border border-rose-200 text-rose-900 shadow-xs space-y-3">
-              <div className="flex items-center gap-2 text-rose-700 font-bold text-xs uppercase tracking-wider">
+            <div className="p-5 rounded-xl bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-900 dark:text-rose-200 shadow-2xs space-y-3">
+              <div className="flex items-center gap-2 text-rose-700 dark:text-rose-300 font-bold text-xs uppercase tracking-wider">
                 <TrendingDown className="w-4 h-4" />
                 Titik Penyusutan Terbesar (Drop-Off)
               </div>
               <div>
-                <h4 className="text-base font-bold text-black">{largestDropStage.label}</h4>
-                <p className="text-xs text-stone-700 mt-1 leading-relaxed">
-                  Terjadi penyusutan sebanyak <strong className="text-black font-bold">{largestDropStage.shrinkageCount?.toLocaleString('id-ID')} warga</strong> ({largestDropStage.shrinkagePercentage}% drop dari tahap sebelumnya).
+                <h4 className="text-base font-bold text-[#102521] dark:text-white">{largestDropStage.label}</h4>
+                <p className="text-xs text-[#60716D] dark:text-slate-300 mt-1 leading-relaxed">
+                  Terjadi penyusutan sebanyak <strong className="text-[#102521] dark:text-white font-bold">{largestDropStage.shrinkageCount?.toLocaleString('id-ID')} warga</strong> ({largestDropStage.shrinkagePercentage}% drop dari tahap sebelumnya).
                 </p>
               </div>
               <button
@@ -275,9 +275,9 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
           )}
 
           {/* Top Reported Barrier */}
-          <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-3">
+          <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <div className="text-xs font-bold text-stone-800 flex items-center gap-1.5">
+              <div className="text-xs font-bold text-[#00201C] dark:text-white flex items-center gap-1.5">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
                 Pola Kendala Utama
               </div>
@@ -291,9 +291,9 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
 
             <div className="space-y-2">
               {barriers.slice(0, 3).map((b) => (
-                <div key={b.causeCode} className="p-2.5 rounded-xl bg-white border border-stone-200 flex items-center justify-between text-xs">
-                  <span className="text-stone-800 font-medium truncate max-w-[170px]">{b.causeLabel}</span>
-                  <span className="font-bold text-stone-900 px-2 py-0.5 rounded-md bg-stone-100 border border-stone-200 text-[11px]">
+                <div key={b.causeCode} className="p-2.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 flex items-center justify-between text-xs">
+                  <span className="text-[#102521] dark:text-slate-200 font-medium truncate max-w-[170px]">{b.causeLabel}</span>
+                  <span className="font-bold text-[#102521] dark:text-white px-2 py-0.5 rounded-md bg-[#F0F5F4] dark:bg-slate-700 border border-[#D8E5E2] dark:border-slate-600 text-[11px]">
                     {b.reportedCount} lap ({b.percentage}%)
                   </span>
                 </div>
@@ -307,60 +307,60 @@ export const CountySummaryPage: React.FC<CountySummaryPageProps> = ({ onNavigate
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <button
           onClick={() => onNavigate?.('ai-proyeksi-beban')}
-          className="p-4 rounded-xl bg-[#faf9f6] border border-teal-300 hover:border-teal-600 text-left transition group shadow-xs cursor-pointer"
+          className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 hover:border-teal-600 text-left transition group shadow-2xs cursor-pointer"
         >
           <div className="p-2 rounded-lg bg-teal-100 text-teal-800 w-fit mb-3 group-hover:scale-105 transition">
             <Sparkles className="w-4 h-4" />
           </div>
-          <h4 className="text-xs font-bold text-black group-hover:text-teal-800 transition flex items-center gap-1">
+          <h4 className="text-xs font-bold text-[#00201C] dark:text-white group-hover:text-teal-800 transition flex items-center gap-1">
             Proyeksi AI 6-Bulan
             <span className="px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 text-[9px] font-bold">AI</span>
           </h4>
-          <p className="text-[11px] text-stone-600 mt-1">Forecasting kebutuhan obat kronis & risiko drop-out cuaca laut.</p>
+          <p className="text-[11px] text-[#60716D] dark:text-slate-400 mt-1">Forecasting kebutuhan obat kronis & risiko drop-out cuaca laut.</p>
         </button>
 
         <button
           onClick={() => onNavigate?.('dinkes-wilayah')}
-          className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200 hover:border-teal-600 text-left transition group shadow-xs cursor-pointer"
+          className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 hover:border-teal-600 text-left transition group shadow-2xs cursor-pointer"
         >
           <div className="p-2 rounded-lg bg-teal-50 text-teal-700 w-fit mb-3 group-hover:scale-105 transition">
             <MapPin className="w-4 h-4" />
           </div>
-          <h4 className="text-xs font-bold text-black group-hover:text-teal-800 transition">Analisis Wilayah</h4>
-          <p className="text-[11px] text-stone-600 mt-1">Peta & matriks sebaran kecamatan dengan proteksi sel kecil.</p>
+          <h4 className="text-xs font-bold text-[#00201C] dark:text-white group-hover:text-teal-800 transition">Analisis Wilayah</h4>
+          <p className="text-[11px] text-[#60716D] dark:text-slate-400 mt-1">Peta & matriks sebaran kecamatan dengan proteksi sel kecil.</p>
         </button>
 
         <button
           onClick={() => onNavigate?.('dinkes-kinerja-pkm')}
-          className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200 hover:border-sky-600 text-left transition group shadow-xs cursor-pointer"
+          className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 hover:border-sky-600 text-left transition group shadow-2xs cursor-pointer"
         >
           <div className="p-2 rounded-lg bg-sky-50 text-sky-700 w-fit mb-3 group-hover:scale-105 transition">
             <Activity className="w-4 h-4" />
           </div>
-          <h4 className="text-xs font-bold text-black group-hover:text-sky-800 transition">Kinerja Puskesmas</h4>
-          <p className="text-[11px] text-stone-600 mt-1">Perbandingan kontekstual berbobot kondisi geografis tanpa peringkat tunggal.</p>
+          <h4 className="text-xs font-bold text-[#00201C] dark:text-white group-hover:text-sky-800 transition">Kinerja Puskesmas</h4>
+          <p className="text-[11px] text-[#60716D] dark:text-slate-400 mt-1">Perbandingan kontekstual berbobot kondisi geografis tanpa peringkat tunggal.</p>
         </button>
 
         <button
           onClick={() => onNavigate?.('dinkes-intervensi-populasi')}
-          className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200 hover:border-emerald-600 text-left transition group shadow-xs cursor-pointer"
+          className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 hover:border-emerald-600 text-left transition group shadow-2xs cursor-pointer"
         >
           <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700 w-fit mb-3 group-hover:scale-105 transition">
             <Sparkles className="w-4 h-4" />
           </div>
-          <h4 className="text-xs font-bold text-black group-hover:text-emerald-800 transition">Intervensi Populasi</h4>
-          <p className="text-[11px] text-stone-600 mt-1">Kelola program intervensi berbasis metrik masalah di lapangan.</p>
+          <h4 className="text-xs font-bold text-[#00201C] dark:text-white group-hover:text-emerald-800 transition">Intervensi Populasi</h4>
+          <p className="text-[11px] text-[#60716D] dark:text-slate-400 mt-1">Kelola program intervensi berbasis metrik masalah di lapangan.</p>
         </button>
 
         <button
           onClick={() => onNavigate?.('dinkes-kualitas-data')}
-          className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200 hover:border-indigo-600 text-left transition group shadow-xs cursor-pointer"
+          className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 hover:border-indigo-600 text-left transition group shadow-2xs cursor-pointer"
         >
           <div className="p-2 rounded-lg bg-indigo-50 text-indigo-700 w-fit mb-3 group-hover:scale-105 transition">
             <Clock className="w-4 h-4" />
           </div>
-          <h4 className="text-xs font-bold text-black group-hover:text-indigo-800 transition">Kualitas & Integrasi</h4>
-          <p className="text-[11px] text-stone-600 mt-1">Status watermark faskes, antrean sync offline kader, dan audit data.</p>
+          <h4 className="text-xs font-bold text-[#00201C] dark:text-white group-hover:text-indigo-800 transition">Kualitas & Integrasi</h4>
+          <p className="text-[11px] text-[#60716D] dark:text-slate-400 mt-1">Status watermark faskes, antrean sync offline kader, dan audit data.</p>
         </button>
       </div>
     </div>

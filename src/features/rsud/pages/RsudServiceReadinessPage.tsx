@@ -151,8 +151,8 @@ export const RsudServiceReadinessPage: React.FC = () => {
       {activeTab === 'critical' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {readiness.map((s) => (
-            <div key={s.id} className="p-5 bg-[#faf9f6] border border-stone-200 rounded-2xl text-stone-800 space-y-2 shadow-2xs">
-              <p className="text-sm font-bold text-black">{s.serviceName}</p>
+            <div key={s.id} className="p-5 bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl text-[#102521] dark:text-slate-200 space-y-2 shadow-2xs">
+              <p className="text-sm font-bold text-[#102521] dark:text-white">{s.serviceName}</p>
               <Badge variant={CAPABILITY_VARIANT[s.capabilityStatus]}>{CAPABILITY_LABEL[s.capabilityStatus]}</Badge>
               <p className="text-[11px] text-stone-600 leading-relaxed">
                 Readiness mempertimbangkan: ruang, staf, alat, obat, diagnostik, dan SOP — bukan sekadar kapasitas jadwal.

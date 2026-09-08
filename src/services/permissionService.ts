@@ -78,7 +78,6 @@ export const PUSTU_ROLE_NAME = 'Petugas Pustu (Puskesmas Pembantu)';
 
 export const PUSTU_NAVIGATION_PERMISSIONS: readonly string[] = [
   'dashboard',
-  'dinkes-ringkasan',
   'prioritas-harian',
   'care-task',
   'clinical-followup',
@@ -138,7 +137,7 @@ export function normalizeRoleId(roleId: string | RoleId): RoleId {
   if (clean === 'KEPALA_PUSKESMAS' || clean === 'KAPUS' || clean === 'KAPUS_BOBONG') {
     return 'KEPALA_PUSKESMAS';
   }
-  if (clean === 'DOCTOR' || clean === 'DOKTER') {
+  if (clean === 'DOCTOR' || clean === 'DOKTER' || clean === 'DOKTER_PUSKESMAS' || clean === 'DOKTER_FKTP') {
     return 'DOCTOR';
   }
   if (clean === 'NURSE_MIDWIFE' || clean === 'BIDAN' || clean === 'PERAWAT') {
@@ -318,9 +317,10 @@ export const permissionService = {
         ];
 
       case 'DOCTOR':
+        // Scoped to Dokter Puskesmas point-of-care, clinical encounters, longitudinal cohorts, dropout interventions, and clinical AI copilot.
+        // Irrelevant county aggregate (dinkes-ringkasan) is eliminated.
         return [
           'dashboard',
-          'dinkes-ringkasan',
           'prioritas-harian', 'care-task', 'clinical-followup', 'jadwal-kuota', 'kandidat-putus',
           'ai-prediksi-dropout', 'ai-digital-twin', 'ai-kepatuhan-obat', 'ai-prioritas-pencegahan', 'ai-clinical-copilot', 'ai-nudge-budaya',
           'pemantauan-aktif', 'kontrol-harian', 'menunggu-evaluasi', 'kepatuhan-kendala', 'kohort-kondisi', 'tren-outcome', 'risiko-putus',

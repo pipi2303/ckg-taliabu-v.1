@@ -77,12 +77,17 @@ export interface PuskesmasKPIBarData {
   isMeetingTarget: boolean;
 }
 
+export type DinkesGlobalPeriod = 'MINGGUAN' | 'BULANAN' | 'KUARTALAN';
+
 interface ExecutiveKPIRechartsSectionProps {
   onNavigate?: (navId: string) => void;
   theme?: 'light' | 'dark';
   title?: string;
   subtitle?: string;
   docBadgeCode?: string;
+  globalPeriod?: DinkesGlobalPeriod;
+  onPeriodChange?: (period: DinkesGlobalPeriod) => void;
+  subPeriodLabel?: string;
 }
 
 export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionProps> = ({
@@ -91,6 +96,9 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
   title,
   subtitle,
   docBadgeCode,
+  globalPeriod = 'BULANAN',
+  onPeriodChange,
+  subPeriodLabel,
 }) => {
   const isDark = theme === 'dark';
 
@@ -134,14 +142,14 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
 
   useEffect(() => {
     loadData();
-  }, [storageTick]);
+  }, [storageTick, globalPeriod]);
 
   const loadData = async () => {
     setIsLoading(true);
     try {
       const [facSummaries, cascadeData, impactData] = await Promise.all([
-        facilityPerformanceService.getFacilitySummaries(),
-        populationCascadeService.getCascadeAggregation(),
+        facilityPerformanceService.getFacilitySummaries(globalPeriod),
+        populationCascadeService.getCascadeAggregation({ period: globalPeriod }),
         impactIndexService.getImpactIndex(),
       ]);
       setFacilities(facSummaries);
@@ -286,15 +294,32 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
       },
     ];
 
+    const periodMultiplier = globalPeriod === 'MINGGUAN' ? 0.25 : globalPeriod === 'KUARTALAN' ? 3.0 : 1.0;
+
     if (facilities.length === 0) {
-      return defaultFacs;
+      return defaultFacs.map((df) => ({
+        ...df,
+        totalScreened: Math.round(df.totalScreened * periodMultiplier),
+        totalHandled: Math.round(df.totalHandled * periodMultiplier),
+        referralGap: Math.round(df.referralGap * periodMultiplier),
+        targetScreening: Math.round(df.targetScreening * periodMultiplier),
+      }));
     }
 
     return defaultFacs.map((df) => {
       const live = facilities.find((f) => f.facilityId === df.facilityId);
-      if (!live) return df;
+      const scaledTarget = Math.round(df.targetScreening * periodMultiplier);
+      if (!live) {
+        return {
+          ...df,
+          totalScreened: Math.round(df.totalScreened * periodMultiplier),
+          totalHandled: Math.round(df.totalHandled * periodMultiplier),
+          referralGap: Math.round(df.referralGap * periodMultiplier),
+          targetScreening: scaledTarget,
+        };
+      }
 
-      const scr = live.screenedCount > 0 ? live.screenedCount : df.totalScreened;
+      const scr = live.screenedCount > 0 ? live.screenedCount : Math.round(df.totalScreened * periodMultiplier);
       const attended = live.attendedFollowUpCount > 0 ? live.attendedFollowUpCount : Math.round(scr * 0.65);
       const gap = Math.max(0, scr - attended);
       const contRate = live.continuityRate > 0 ? live.continuityRate : df.continuityRate;
@@ -308,10 +333,11 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         totalHandled: attended,
         referralGap: gap,
         continuityRate: contRate,
-        isMeetingTarget: contRate >= 50 && scr >= df.targetScreening * 0.9,
+        targetScreening: scaledTarget,
+        isMeetingTarget: contRate >= 50 && scr >= scaledTarget * 0.9,
       };
     });
-  }, [facilities]);
+  }, [facilities, globalPeriod]);
 
   // Filtered Puskesmas Data based on Region selection
   const filteredPuskesmasData = useMemo(() => {
@@ -508,18 +534,199 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
     },
   ];
 
+  // Longitudinal Weekly Area Chart Dataset (6 Weeks)
+  const fullWeeklyData: MonthlyExecutiveKPIData[] = [
+    {
+      monthKey: '2026-W31',
+      monthLabel: 'Mgg 31',
+      totalScreened: 195,
+      totalHandled: 128,
+      controlledHealthCount: 95,
+      referralGapCount: 67,
+      riskReductionRate: 17.8,
+      controlledHealthRate: 74.2,
+      facilitiesMeetingTarget: 5,
+      lowRiskCount: 110,
+      moderateRiskCount: 52,
+      highRiskCount: 26,
+      criticalRiskCount: 7,
+    },
+    {
+      monthKey: '2026-W32',
+      monthLabel: 'Mgg 32',
+      totalScreened: 208,
+      totalHandled: 136,
+      controlledHealthCount: 102,
+      referralGapCount: 72,
+      riskReductionRate: 18.0,
+      controlledHealthRate: 75.0,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 118,
+      moderateRiskCount: 56,
+      highRiskCount: 27,
+      criticalRiskCount: 7,
+    },
+    {
+      monthKey: '2026-W33',
+      monthLabel: 'Mgg 33',
+      totalScreened: 215,
+      totalHandled: 142,
+      controlledHealthCount: 108,
+      referralGapCount: 73,
+      riskReductionRate: 18.2,
+      controlledHealthRate: 76.0,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 122,
+      moderateRiskCount: 58,
+      highRiskCount: 28,
+      criticalRiskCount: 7,
+    },
+    {
+      monthKey: '2026-W34',
+      monthLabel: 'Mgg 34',
+      totalScreened: 224,
+      totalHandled: 148,
+      controlledHealthCount: 112,
+      referralGapCount: 76,
+      riskReductionRate: 18.3,
+      controlledHealthRate: 75.6,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 128,
+      moderateRiskCount: 60,
+      highRiskCount: 29,
+      criticalRiskCount: 7,
+    },
+    {
+      monthKey: '2026-W35',
+      monthLabel: 'Mgg 35',
+      totalScreened: 230,
+      totalHandled: 152,
+      controlledHealthCount: 115,
+      referralGapCount: 78,
+      riskReductionRate: 18.4,
+      controlledHealthRate: 75.7,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 132,
+      moderateRiskCount: 61,
+      highRiskCount: 30,
+      criticalRiskCount: 7,
+    },
+    {
+      monthKey: '2026-W36',
+      monthLabel: 'Mgg 36',
+      totalScreened: 237,
+      totalHandled: 155,
+      controlledHealthCount: 118,
+      referralGapCount: 82,
+      riskReductionRate: 18.6,
+      controlledHealthRate: 76.1,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 136,
+      moderateRiskCount: 63,
+      highRiskCount: 31,
+      criticalRiskCount: 7,
+    },
+  ];
+
+  // Longitudinal Quarterly Area Chart Dataset (5 Quarters)
+  const fullQuarterlyData: MonthlyExecutiveKPIData[] = [
+    {
+      monthKey: '2025-Q3',
+      monthLabel: 'Q3 2025',
+      totalScreened: 1340,
+      totalHandled: 750,
+      controlledHealthCount: 520,
+      referralGapCount: 590,
+      riskReductionRate: 11.5,
+      controlledHealthRate: 69.3,
+      facilitiesMeetingTarget: 4,
+      lowRiskCount: 685,
+      moderateRiskCount: 385,
+      highRiskCount: 216,
+      criticalRiskCount: 54,
+    },
+    {
+      monthKey: '2025-Q4',
+      monthLabel: 'Q4 2025',
+      totalScreened: 1870,
+      totalHandled: 1120,
+      controlledHealthCount: 820,
+      referralGapCount: 750,
+      riskReductionRate: 14.8,
+      controlledHealthRate: 73.2,
+      facilitiesMeetingTarget: 5,
+      lowRiskCount: 905,
+      moderateRiskCount: 490,
+      highRiskCount: 369,
+      criticalRiskCount: 106,
+    },
+    {
+      monthKey: '2026-Q1',
+      monthLabel: 'Q1 2026',
+      totalScreened: 2802,
+      totalHandled: 1795,
+      controlledHealthCount: 1305,
+      referralGapCount: 1007,
+      riskReductionRate: 17.5,
+      controlledHealthRate: 72.7,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 1560,
+      moderateRiskCount: 775,
+      highRiskCount: 381,
+      criticalRiskCount: 86,
+    },
+    {
+      monthKey: '2026-Q2',
+      monthLabel: 'Q2 2026',
+      totalScreened: 3415,
+      totalHandled: 2255,
+      controlledHealthCount: 1663,
+      referralGapCount: 1160,
+      riskReductionRate: 18.3,
+      controlledHealthRate: 73.7,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 1960,
+      moderateRiskCount: 921,
+      highRiskCount: 441,
+      criticalRiskCount: 93,
+    },
+    {
+      monthKey: '2026-Q3',
+      monthLabel: 'Q3 2026',
+      totalScreened: 2826,
+      totalHandled: 1884,
+      controlledHealthCount: 1404,
+      referralGapCount: 942,
+      riskReductionRate: 19.2,
+      controlledHealthRate: 74.5,
+      facilitiesMeetingTarget: 6,
+      lowRiskCount: 1640,
+      moderateRiskCount: 740,
+      highRiskCount: 360,
+      criticalRiskCount: 86,
+    },
+  ];
+
   const filteredMonthlyData = useMemo(() => {
+    if (globalPeriod === 'MINGGUAN') {
+      const slice = timeRange === '3M' ? 3 : timeRange === '6M' ? 6 : 6;
+      return fullWeeklyData.slice(-slice);
+    }
+    if (globalPeriod === 'KUARTALAN') {
+      const slice = timeRange === '3M' ? 3 : timeRange === '6M' ? 4 : 5;
+      return fullQuarterlyData.slice(-slice);
+    }
     const sliceCount = timeRange === '3M' ? 3 : timeRange === '6M' ? 6 : 12;
     return fullMonthlyData.slice(-sliceCount);
-  }, [timeRange]);
+  }, [globalPeriod, timeRange]);
 
   // Overall Aggregates for the 6 KPIs
   const currentTotalScreened = puskesmasBarData.reduce((acc, curr) => acc + curr.totalScreened, 0);
   const currentTotalHandled = puskesmasBarData.reduce((acc, curr) => acc + curr.totalHandled, 0);
   const currentTotalGap = puskesmasBarData.reduce((acc, curr) => acc + curr.referralGap, 0);
-  const currentRiskReduction = -18.4;
+  const currentRiskReduction = globalPeriod === 'MINGGUAN' ? -18.6 : globalPeriod === 'KUARTALAN' ? -19.2 : -18.4;
   const currentMeetingTarget = puskesmasBarData.filter((p) => p.isMeetingTarget).length;
-  const currentControlledRate = 72.4;
+  const currentControlledRate = globalPeriod === 'MINGGUAN' ? 76.1 : 74.5;
 
   // Custom Chart Tooltips with Luxury High Contrast Design
   const renderBarTooltip = ({ active, payload, label }: any) => {
@@ -672,16 +879,16 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
 
   return (
     <div
-      className={`p-5 rounded-2xl border shadow-xs space-y-5 transition-colors ${
+      className={`p-5 rounded-xl border shadow-xs space-y-5 transition-colors ${
         isDark
           ? 'bg-slate-900/90 border-slate-800 text-white'
-          : 'bg-[#faf9f6] border-stone-200/90 text-black'
+          : 'bg-white border-[#D8E5E2] text-[#102521]'
       }`}
     >
       {/* 1. Header with Mode Selectors & Filters */}
       <div
         className={`flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b ${
-          isDark ? 'border-slate-800' : 'border-stone-200'
+          isDark ? 'border-slate-800' : 'border-[#E8EFEB]'
         }`}
       >
         <div className="space-y-1">
@@ -696,6 +903,62 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
 
         {/* Global Controls & Action */}
         <div className="flex flex-wrap items-center gap-2">
+          {/* Active Global Period Indicator */}
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold ${
+            isDark ? 'bg-slate-800/90 border-slate-700 text-teal-300' : 'bg-teal-50 border-teal-200 text-teal-900'
+          }`}>
+            <Calendar className={`w-3.5 h-3.5 ${isDark ? 'text-teal-400' : 'text-teal-700'}`} />
+            <span>
+              Periode:{' '}
+              <strong className={isDark ? 'text-teal-200' : 'text-teal-950'}>
+                {globalPeriod === 'MINGGUAN' ? 'Mingguan' : globalPeriod === 'KUARTALAN' ? 'Kuartalan' : 'Bulanan'}
+              </strong>
+            </span>
+            {subPeriodLabel && (
+              <span className={`text-[11px] font-normal hidden sm:inline ${isDark ? 'text-slate-400' : 'text-teal-700'}`}>
+                ({subPeriodLabel})
+              </span>
+            )}
+          </div>
+
+          {onPeriodChange && (
+            <div className={`flex rounded-lg p-0.5 text-xs font-semibold ${isDark ? 'bg-slate-800 border border-slate-700' : 'bg-gray-100'}`}>
+              <button
+                type="button"
+                onClick={() => onPeriodChange('MINGGUAN')}
+                className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                  globalPeriod === 'MINGGUAN'
+                    ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white shadow-2xs'
+                    : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                }`}
+              >
+                Mingguan
+              </button>
+              <button
+                type="button"
+                onClick={() => onPeriodChange('BULANAN')}
+                className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                  globalPeriod === 'BULANAN'
+                    ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white shadow-2xs'
+                    : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                }`}
+              >
+                Bulanan
+              </button>
+              <button
+                type="button"
+                onClick={() => onPeriodChange('KUARTALAN')}
+                className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                  globalPeriod === 'KUARTALAN'
+                    ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white shadow-2xs'
+                    : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                }`}
+              >
+                Kuartalan
+              </button>
+            </div>
+          )}
+
           <ActionIconButton
             variant="outline"
             size="sm"
@@ -885,8 +1148,8 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         {/* A. GRAFIK BATANG (BAR CHART RECHARTS) — KOMPARASI 8 PUSKESMAS & TARGET   */}
         {/* ========================================================================= */}
         <div
-          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-xs flex flex-col justify-between space-y-4 ${
-            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-stone-200/90'
+          className={`p-4 sm:p-5 md:p-6 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 ${
+            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-[#D8E5E2]'
           }`}
         >
             {/* Bar Chart Header Controls */}
@@ -1120,8 +1383,8 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
         {/* B. GRAFIK AREA (AREA CHART RECHARTS) — TREN LONGITUDINAL 6 BULAN (6 KPI) */}
         {/* ========================================================================= */}
         <div
-          className={`p-4 sm:p-5 md:p-6 rounded-2xl border shadow-xs flex flex-col justify-between space-y-4 ${
-            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-stone-200/90'
+          className={`p-4 sm:p-5 md:p-6 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 ${
+            isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-[#D8E5E2]'
           }`}
         >
             {/* Area Chart Header Controls */}
@@ -1172,51 +1435,93 @@ export const ExecutiveKPIRechartsSection: React.FC<ExecutiveKPIRechartsSectionPr
 
                 {/* Time Range Selector */}
                 <div className={`flex rounded-lg p-0.5 text-xs font-semibold ${isDark ? 'bg-slate-800 border border-slate-700' : 'bg-gray-100'}`}>
-                  <button
-                    type="button"
-                    onClick={() => setTimeRange('3M')}
-                    className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
-                      timeRange === '3M'
-                        ? isDark
-                          ? 'bg-teal-600 text-white'
-                          : 'bg-slate-900 text-white'
-                        : isDark
-                        ? 'text-slate-400 hover:text-white'
-                        : 'text-gray-600 hover:text-black'
-                    }`}
-                  >
-                    3 Bln
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setTimeRange('6M')}
-                    className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
-                      timeRange === '6M'
-                        ? isDark
-                          ? 'bg-teal-600 text-white'
-                          : 'bg-slate-900 text-white'
-                        : isDark
-                        ? 'text-slate-400 hover:text-white'
-                        : 'text-gray-600 hover:text-black'
-                    }`}
-                  >
-                    6 Bln
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setTimeRange('12M')}
-                    className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
-                      timeRange === '12M'
-                        ? isDark
-                          ? 'bg-teal-600 text-white'
-                          : 'bg-slate-900 text-white'
-                        : isDark
-                        ? 'text-slate-400 hover:text-white'
-                        : 'text-gray-600 hover:text-black'
-                    }`}
-                  >
-                    1 Thn
-                  </button>
+                  {globalPeriod === 'MINGGUAN' ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setTimeRange('3M')}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          timeRange === '3M'
+                            ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white'
+                            : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        3 Mgg
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTimeRange('6M')}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          timeRange !== '3M'
+                            ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white'
+                            : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        6 Mgg
+                      </button>
+                    </>
+                  ) : globalPeriod === 'KUARTALAN' ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setTimeRange('3M')}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          timeRange === '3M'
+                            ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white'
+                            : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        3 Kuartal
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTimeRange('6M')}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          timeRange !== '3M'
+                            ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white'
+                            : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        Semua Q (5 Q)
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setTimeRange('3M')}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          timeRange === '3M'
+                            ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white'
+                            : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        3 Bln
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTimeRange('6M')}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          timeRange === '6M'
+                            ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white'
+                            : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        6 Bln
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTimeRange('12M')}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          timeRange === '12M'
+                            ? isDark ? 'bg-teal-600 text-white' : 'bg-[#00201C] text-white'
+                            : isDark ? 'text-slate-400 hover:text-white' : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        1 Thn
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

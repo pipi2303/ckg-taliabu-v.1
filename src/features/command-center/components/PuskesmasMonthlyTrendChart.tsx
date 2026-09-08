@@ -163,7 +163,7 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
   return (
     <div
       id={`trend-chart-${facilityId}`}
-      className={`rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs overflow-hidden ${
+      className={`rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs overflow-hidden ${
         compact ? 'p-3 sm:p-4' : 'p-4 sm:p-5 md:p-6'
       } space-y-4`}
     >
@@ -337,7 +337,7 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
               <select
                 value={metricFocus}
                 onChange={(e) => setMetricFocus(e.target.value as TrendMetricFocus)}
-                className="bg-[#faf9f6] border border-stone-300 text-stone-800 rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
+                className="bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 text-[#102521] dark:text-white rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
               >
                 <option value="CONTINUITY_SPM">Capaian % vs Target SPM (50%)</option>
                 <option value="WORKLOAD_VS_ATTENDED">Beban Skrining vs Realisasi Ditangani</option>
@@ -352,7 +352,7 @@ export const PuskesmasMonthlyTrendChart: React.FC<PuskesmasMonthlyTrendChartProp
               <select
                 value={rangeFilter}
                 onChange={(e) => setRangeFilter(e.target.value as MonthRangeFilter)}
-                className="bg-[#faf9f6] border border-stone-300 text-stone-800 rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
+                className="bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 text-[#102521] dark:text-white rounded-lg px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500 outline-hidden cursor-pointer"
               >
                 <option value="ALL_YTD">Tahun 2026 Berjalan (8 Bulan)</option>
                 <option value="LAST_6M">6 Bulan Terakhir</option>

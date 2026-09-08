@@ -30,28 +30,28 @@ export const DigitalTwinPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header Banner */}
-      <div className="bg-[#faf9f6] text-black p-6 rounded-2xl border border-stone-200/90 shadow-xs relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 text-[#102521] dark:text-white p-6 rounded-xl border border-[#D8E5E2] dark:border-slate-800 shadow-2xs relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-teal-800 uppercase tracking-wider mb-1">
-              <Layers className="w-4 h-4 text-teal-700" />
+            <div className="flex items-center gap-2 text-xs font-bold text-[#00201C] dark:text-teal-400 uppercase tracking-wider mb-1">
+              <Layers className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
               CKG DIGITAL TWIN & LONGITUDINAL HEALTH PROFILE
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-black">
+            <h1 className="text-2xl font-bold tracking-tight text-[#102521] dark:text-white">
               Profil Kesehatan Longitudinal Warga (Digital Twin)
             </h1>
-            <p className="text-xs text-stone-600 mt-1 max-w-3xl leading-relaxed">
+            <p className="text-xs text-[#60716D] dark:text-slate-400 mt-1 max-w-3xl leading-relaxed">
               Agregasi dinamis data lintas faskes, kader desa, dan pemantauan mandiri. Memisahkan secara tegas
               antara data hasil observasi klinis nyata, status deterministik CRS, dan sinyal prediktif kecerdasan buatan.
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-stone-600 font-medium">Pilih Warga:</span>
+            <span className="text-xs text-[#60716D] dark:text-slate-400 font-medium">Pilih Warga:</span>
             <select
               value={selectedCitizenId}
               onChange={(e) => setSelectedCitizenId(e.target.value)}
-              className="px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs font-bold text-teal-800 focus:outline-none focus:border-teal-700 cursor-pointer"
+              className="px-3 py-2 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl text-xs font-bold text-[#00201C] dark:text-teal-400 focus:outline-none focus:border-teal-700 cursor-pointer"
             >
               {allTwins.map((t) => (
                 <option key={t.citizenId} value={t.citizenId}>
@@ -64,7 +64,7 @@ export const DigitalTwinPage: React.FC = () => {
       </div>
 
       {/* Citizen Snapshot Identity Card */}
-      <div className="bg-[#faf9f6] border border-stone-200/90 shadow-xs rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs rounded-xl p-5 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 flex items-center justify-center font-bold text-lg">
             <User className="w-6 h-6" />
@@ -142,131 +142,131 @@ export const DigitalTwinPage: React.FC = () => {
           {/* 4 Quadrants of the Governed Digital Twin */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* QUADRANT 1: # OBSERVED STATE */}
-            <div className="bg-[#faf9f6] border border-emerald-300 rounded-2xl p-5 space-y-3 shadow-xs">
-              <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-emerald-900 uppercase tracking-wider">
-                  <Activity className="w-4 h-4 text-emerald-700" />
+            <div className="bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-800 rounded-xl p-5 space-y-3 shadow-2xs">
+              <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-emerald-900 dark:text-emerald-400 uppercase tracking-wider">
+                  <Activity className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                   1. OBSERVED DATA (Pemeriksaan Nyata Klinisi & Kader)
                 </div>
-                <span className="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-800 rounded font-mono border border-emerald-200 font-bold">
+                <span className="text-[10px] px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 rounded font-mono border border-emerald-200 dark:border-emerald-800 font-bold">
                   REAL EVIDENCE
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3 bg-white border border-stone-200 rounded-xl shadow-2xs">
-                  <div className="text-stone-500 text-[11px]">Tekanan Darah Terakhir:</div>
-                  <div className="text-base font-bold text-black mt-0.5">
+                <div className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+                  <div className="text-[#60716D] dark:text-slate-400 text-[11px]">Tekanan Darah Terakhir:</div>
+                  <div className="text-base font-bold text-[#102521] dark:text-white mt-0.5">
                     {twin.observedState.lastSystolic} / {twin.observedState.lastDiastolic} mmHg
                   </div>
-                  <div className="text-[10px] text-stone-500 mt-0.5">
+                  <div className="text-[10px] text-[#60716D] dark:text-slate-400 mt-0.5">
                     Gula Darah: {twin.observedState.lastBloodSugar || '-'} mg/dL
                   </div>
                 </div>
-                <div className="p-3 bg-white border border-stone-200 rounded-xl shadow-2xs">
-                  <div className="text-stone-500 text-[11px]">Jumlah Skrining:</div>
-                  <div className="text-base font-bold text-black mt-0.5">
+                <div className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+                  <div className="text-[#60716D] dark:text-slate-400 text-[11px]">Jumlah Skrining:</div>
+                  <div className="text-base font-bold text-[#102521] dark:text-white mt-0.5">
                     {twin.observedState.screeningCount} Kali Skrining
                   </div>
-                  <div className="text-[10px] text-stone-500 mt-0.5">
+                  <div className="text-[10px] text-[#60716D] dark:text-slate-400 mt-0.5">
                     Penebusan Obat: {twin.observedState.medicationDispensesCount}x
                   </div>
                 </div>
               </div>
-              <div className="p-3 bg-white border border-stone-200 rounded-xl text-xs space-y-1 shadow-2xs">
-                <div className="text-stone-500 text-[11px] font-semibold">Diagnosis Terkonfirmasi Dokter:</div>
-                <div className="font-semibold text-emerald-900">
+              <div className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl text-xs space-y-1 shadow-2xs">
+                <div className="text-[#60716D] dark:text-slate-400 text-[11px] font-semibold">Diagnosis Terkonfirmasi Dokter:</div>
+                <div className="font-semibold text-emerald-900 dark:text-emerald-400">
                   {twin.observedState.confirmedDiagnoses.join(', ') || 'Belum Ada Diagnosis Definitif'}
                 </div>
               </div>
             </div>
 
             {/* QUADRANT 2: # DERIVED DETERMINISTIC STATE */}
-            <div className="bg-[#faf9f6] border border-blue-300 rounded-2xl p-5 space-y-3 shadow-xs">
-              <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-blue-900 uppercase tracking-wider">
-                  <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <div className="bg-white dark:bg-slate-900 border border-blue-300 dark:border-blue-800 rounded-xl p-5 space-y-3 shadow-2xs">
+              <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-blue-900 dark:text-blue-400 uppercase tracking-wider">
+                  <ShieldCheck className="w-4 h-4 text-blue-700 dark:text-blue-400" />
                   2. DERIVED DETERMINISTIC (Klasifikasi Protokol CRS Kemenkes)
                 </div>
-                <span className="text-[10px] px-2 py-0.5 bg-blue-50 text-blue-800 rounded font-mono border border-blue-200 font-bold">
+                <span className="text-[10px] px-2 py-0.5 bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 rounded font-mono border border-blue-200 dark:border-blue-800 font-bold">
                   DETERMINISTIC
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3 bg-white border border-stone-200 rounded-xl shadow-2xs">
-                  <div className="text-stone-500 text-[11px]">Kategori CRS CKG:</div>
-                  <div className="text-base font-bold text-amber-800 mt-0.5">
+                <div className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+                  <div className="text-[#60716D] dark:text-slate-400 text-[11px]">Kategori CRS CKG:</div>
+                  <div className="text-base font-bold text-amber-800 dark:text-amber-400 mt-0.5">
                     {twin.careState.crsCategory} (RISIKO TINGGI)
                   </div>
-                  <div className="text-[10px] text-stone-500 mt-0.5">Siklus: #{twin.careState.monitoringCycleNumber}</div>
+                  <div className="text-[10px] text-[#60716D] dark:text-slate-400 mt-0.5">Siklus: #{twin.careState.monitoringCycleNumber}</div>
                 </div>
-                <div className="p-3 bg-white border border-stone-200 rounded-xl shadow-2xs">
-                  <div className="text-stone-500 text-[11px]">Tugas Aktif Faskes:</div>
-                  <div className="text-base font-bold text-black mt-0.5">
+                <div className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+                  <div className="text-[#60716D] dark:text-slate-400 text-[11px]">Tugas Aktif Faskes:</div>
+                  <div className="text-base font-bold text-[#102521] dark:text-white mt-0.5">
                     {twin.careState.activeCareTasksCount} CareTask
                   </div>
-                  <div className="text-[10px] text-stone-500 mt-0.5">Jadwal: {twin.careState.nextFollowUpDue}</div>
+                  <div className="text-[10px] text-[#60716D] dark:text-slate-400 mt-0.5">Jadwal: {twin.careState.nextFollowUpDue}</div>
                 </div>
               </div>
-              <div className="p-3 bg-white border border-stone-200 rounded-xl text-xs space-y-1 shadow-2xs">
-                <div className="text-stone-500 text-[11px] font-semibold">Tahap Kaskade Outreach:</div>
-                <div className="font-semibold text-blue-900">
+              <div className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl text-xs space-y-1 shadow-2xs">
+                <div className="text-[#60716D] dark:text-slate-400 text-[11px] font-semibold">Tahap Kaskade Outreach:</div>
+                <div className="font-semibold text-blue-900 dark:text-blue-400">
                   {twin.careState.lastOutreachStage || 'RUTIN'}
                 </div>
               </div>
             </div>
 
             {/* QUADRANT 3: # PREDICTED STATE */}
-            <div className="bg-[#faf9f6] border border-purple-300 rounded-2xl p-5 space-y-3 shadow-xs">
-              <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-purple-900 uppercase tracking-wider">
-                  <Sparkles className="w-4 h-4 text-purple-700" />
+            <div className="bg-white dark:bg-slate-900 border border-purple-300 dark:border-purple-800 rounded-xl p-5 space-y-3 shadow-2xs">
+              <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-purple-900 dark:text-purple-400 uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-purple-700 dark:text-purple-400" />
                   3. PREDICTED SIGNALS (Estimasi Model AI Teruji)
                 </div>
-                <span className="text-[10px] px-2 py-0.5 bg-purple-50 text-purple-800 rounded font-mono border border-purple-200 font-bold">
+                <span className="text-[10px] px-2 py-0.5 bg-purple-50 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 rounded font-mono border border-purple-200 dark:border-purple-800 font-bold">
                   PREDICTIVE
                 </span>
               </div>
               <div className="space-y-2 text-xs">
                 {twin.predictiveSignals.map((sig, idx) => (
-                  <div key={idx} className="p-3 bg-white border border-stone-200 rounded-xl space-y-1 shadow-2xs">
+                  <div key={idx} className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl space-y-1 shadow-2xs">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-black">{sig.type}</span>
+                      <span className="font-bold text-[#102521] dark:text-white">{sig.type}</span>
                       <span
                         className={`text-[10px] px-2 py-0.5 rounded font-bold ${
                           sig.level === 'HIGH'
-                            ? 'bg-rose-50 text-rose-800 border border-rose-200'
-                            : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                            ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800'
+                            : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
                         }`}
                       >
                         {sig.level}
                       </span>
                     </div>
-                    <p className="text-[11px] text-stone-600">{sig.keyFactor}</p>
+                    <p className="text-[11px] text-[#60716D] dark:text-slate-400">{sig.keyFactor}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* QUADRANT 4: # SIMULATED SCENARIO STATE */}
-            <div className="bg-[#faf9f6] border border-amber-300 rounded-2xl p-5 space-y-3 shadow-xs">
-              <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-900 uppercase tracking-wider">
-                  <Sliders className="w-4 h-4 text-amber-700" />
+            <div className="bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-800 rounded-xl p-5 space-y-3 shadow-2xs">
+              <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-900 dark:text-amber-400 uppercase tracking-wider">
+                  <Sliders className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                   4. SIMULATED TRAJECTORY (Skenario Hipotetis)
                 </div>
-                <span className="text-[10px] px-2 py-0.5 bg-amber-50 text-amber-800 rounded font-mono border border-amber-200 font-bold">
+                <span className="text-[10px] px-2 py-0.5 bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 rounded font-mono border border-amber-200 dark:border-amber-800 font-bold">
                   WHAT-IF LAB
                 </span>
               </div>
-              <div className="p-3 bg-white border border-stone-200 rounded-xl text-xs space-y-2 shadow-2xs">
-                <div className="font-semibold text-black">
+              <div className="p-3 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl text-xs space-y-2 shadow-2xs">
+                <div className="font-semibold text-[#102521] dark:text-white">
                   Skenario A: Penyerahan Titipan Obat 3 Bulan di Pustu Pesisir
                 </div>
-                <p className="text-[11px] text-stone-600 leading-relaxed">
+                <p className="text-[11px] text-[#60716D] dark:text-slate-400 leading-relaxed">
                   Jika pasien diberikan perbekalan obat antihipertensi 90 hari menjelang musim gelombang barat,
                   estimasi probabilitas kepatuhan kontrol meningkat dari 48% ke 82%.
                 </p>
-                <div className="text-[10px] text-amber-800 italic">
+                <div className="text-[10px] text-amber-800 dark:text-amber-400 italic">
                   *Bukan jaminan klinis individual; digunakan untuk perencanaan dukungan logistik faskes.
                 </div>
               </div>
@@ -276,7 +276,7 @@ export const DigitalTwinPage: React.FC = () => {
       )}
 
       {activeTab === 'TIMELINE' && (
-        <div className="bg-[#faf9f6] border border-stone-200/90 shadow-xs rounded-2xl p-6 space-y-6">
+        <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs rounded-xl p-6 space-y-6">
           <div className="flex items-center justify-between border-b border-stone-200 pb-3">
             <h3 className="text-sm font-bold text-black flex items-center gap-2">
               <Calendar className="w-4 h-4 text-teal-700" />

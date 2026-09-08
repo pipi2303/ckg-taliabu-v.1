@@ -107,25 +107,25 @@ export const AIGovernanceAuditPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header Banner */}
-      <div className="bg-[#faf9f6] text-black p-6 rounded-2xl border border-stone-200/90 shadow-xs relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 text-[#102521] dark:text-white p-6 rounded-xl border border-[#D8E5E2] dark:border-slate-800 shadow-2xs relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-teal-800 uppercase tracking-wider mb-1">
-              <Shield className="w-4 h-4 text-teal-700" />
+            <div className="flex items-center gap-2 text-xs font-bold text-[#00201C] dark:text-teal-400 uppercase tracking-wider mb-1">
+              <Shield className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
               AI SAFETY, MODEL REGISTRY & ETHICAL GOVERNANCE
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-black">
+            <h1 className="text-2xl font-bold tracking-tight text-[#102521] dark:text-white">
               Tata Kelola, Model Registry & Sakelar Keamanan (Kill-Switch)
             </h1>
-            <p className="text-xs text-stone-600 mt-1 max-w-3xl leading-relaxed">
+            <p className="text-xs text-[#60716D] dark:text-slate-400 mt-1 max-w-3xl leading-relaxed">
               Pusat kendali etika AI Dinas Kesehatan Kabupaten Pulau Taliabu: Pengawasan siklus hidup model, Model Card resmi,
               kebijakan Human-in-the-Loop, dan sakelar penonaktifan darurat model tanpa downtime aplikasi.
             </p>
           </div>
 
           <div className="flex flex-col items-end gap-2 shrink-0">
-            <span className="text-xs text-stone-600 font-medium">Mode Sistem Global:</span>
-            <div className="flex items-center bg-white p-1 rounded-xl border border-stone-200 shadow-xs">
+            <span className="text-xs text-[#60716D] dark:text-slate-400 font-medium">Mode Sistem Global:</span>
+            <div className="flex items-center bg-[#F8FBFA] dark:bg-slate-800 p-1 rounded-xl border border-[#D8E5E2] dark:border-slate-700 shadow-2xs">
               <button
                 onClick={() => handleChangeGlobalMode('OFF')}
                 className={`px-3 py-1 text-xs font-bold rounded-lg transition cursor-pointer ${
@@ -145,7 +145,7 @@ export const AIGovernanceAuditPage: React.FC = () => {
               <button
                 onClick={() => handleChangeGlobalMode('GOVERNED_ACTIVE')}
                 className={`px-3 py-1 text-xs font-bold rounded-lg transition cursor-pointer ${
-                  globalMode === 'GOVERNED_ACTIVE' ? 'bg-emerald-700 text-white shadow-xs' : 'text-stone-500 hover:text-black'
+                  globalMode === 'GOVERNED_ACTIVE' ? 'bg-[#00201C] text-white shadow-xs' : 'text-stone-500 hover:text-black'
                 }`}
               >
                 GOVERNED ACTIVE
@@ -164,43 +164,43 @@ export const AIGovernanceAuditPage: React.FC = () => {
 
       {/* 4 Metric KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-1">
-          <div className="text-[11px] text-stone-600 uppercase tracking-wider font-semibold flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-1">
+          <div className="text-[11px] text-[#60716D] dark:text-slate-400 uppercase tracking-wider font-semibold flex items-center gap-1.5">
             <Activity className="w-3.5 h-3.5 text-teal-700" /> Clinician Agreement Rate
           </div>
-          <div className="text-2xl font-bold text-black">{metrics.clinicianAgreementRate}%</div>
-          <div className="text-[10px] text-emerald-800 font-semibold">Kesesuaian dengan Telaah Dokter</div>
+          <div className="text-2xl font-bold text-[#102521] dark:text-white">{metrics.clinicianAgreementRate}%</div>
+          <div className="text-[10px] text-emerald-800 dark:text-emerald-400 font-semibold">Kesesuaian dengan Telaah Dokter</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-1">
-          <div className="text-[11px] text-stone-600 uppercase tracking-wider font-semibold flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-1">
+          <div className="text-[11px] text-[#60716D] dark:text-slate-400 uppercase tracking-wider font-semibold flex items-center gap-1.5">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" /> Total Model Terdaftar
           </div>
-          <div className="text-2xl font-bold text-emerald-800">{models.length} Model</div>
-          <div className="text-[10px] text-stone-500">5 Inti Governed Model</div>
+          <div className="text-2xl font-bold text-emerald-800 dark:text-emerald-400">{models.length} Model</div>
+          <div className="text-[10px] text-[#60716D] dark:text-slate-400">5 Inti Governed Model</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-1">
-          <div className="text-[11px] text-stone-600 uppercase tracking-wider font-semibold flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-1">
+          <div className="text-[11px] text-[#60716D] dark:text-slate-400 uppercase tracking-wider font-semibold flex items-center gap-1.5">
             <FileCheck className="w-3.5 h-3.5 text-amber-700" /> Model Aktif / Shadow
           </div>
-          <div className="text-2xl font-bold text-amber-800">
+          <div className="text-2xl font-bold text-amber-800 dark:text-amber-400">
             {models.filter((m) => m.lifecycleStatus === 'ACTIVE' || m.lifecycleStatus === 'SHADOW').length} Aktif
           </div>
-          <div className="text-[10px] text-stone-500">Operasional Berizin</div>
+          <div className="text-[10px] text-[#60716D] dark:text-slate-400">Operasional Berizin</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-1">
-          <div className="text-[11px] text-stone-600 uppercase tracking-wider font-semibold flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-1">
+          <div className="text-[11px] text-[#60716D] dark:text-slate-400 uppercase tracking-wider font-semibold flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-teal-700" /> Guardrail Level
           </div>
-          <div className="text-base font-bold text-black">STRICT HUMAN-IN-LOOP</div>
-          <div className="text-[10px] text-teal-800 font-semibold">Wajib Telaah Klinisi</div>
+          <div className="text-base font-bold text-[#102521] dark:text-white">STRICT HUMAN-IN-LOOP</div>
+          <div className="text-[10px] text-[#00201C] dark:text-teal-400 font-semibold">Wajib Telaah Klinisi</div>
         </div>
       </div>
 
       {/* Model Registry Table */}
-      <div className="bg-[#faf9f6] border border-stone-200/90 shadow-xs rounded-2xl p-6 space-y-4">
+      <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs rounded-xl p-6 space-y-4">
         <div className="flex items-center justify-between border-b border-stone-200 pb-3">
           <div>
             <h3 className="text-sm font-bold text-black flex items-center gap-2">
@@ -283,9 +283,9 @@ export const AIGovernanceAuditPage: React.FC = () => {
 
       {/* Generative Copilot & Guardrail Settings */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-[#faf9f6] border border-stone-200/90 shadow-xs rounded-2xl p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-            <h4 className="text-sm font-bold text-black flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs rounded-xl p-5 space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+            <h4 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-700" />
               Generative Insight Copilot (Draf Non-Klinis)
             </h4>
@@ -293,27 +293,27 @@ export const AIGovernanceAuditPage: React.FC = () => {
               onClick={handleToggleCopilot}
               className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
                 copilotEnabled
-                  ? 'bg-emerald-700 text-white shadow-xs'
+                  ? 'bg-[#00201C] text-white shadow-xs'
                   : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
               }`}
             >
               {copilotEnabled ? 'AKTIF (DRAF)' : 'NONAKTIF (LOCKED)'}
             </button>
           </div>
-          <p className="text-xs text-stone-600 leading-relaxed">
+          <p className="text-xs text-[#60716D] dark:text-slate-400 leading-relaxed">
             Hanya membuat draf narasi manajemen dan ringkasan eksekutif berdasarkan metrik resmi agregat CKG.
             <strong> Dilarang keras</strong> memberikan instruksi diagnosis klinis, resep obat, atau mengubah dosis.
           </p>
         </div>
 
-        <div className="bg-[#faf9f6] border border-stone-200/90 shadow-xs rounded-2xl p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-            <h4 className="text-sm font-bold text-black flex items-center gap-2">
-              <Lock className="w-4 h-4 text-teal-700" />
+        <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs rounded-xl p-5 space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+            <h4 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+              <Lock className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
               Prinsip Penjelasan Dinkes (Non-Technical Summary)
             </h4>
           </div>
-          <p className="text-xs text-stone-600 leading-relaxed">
+          <p className="text-xs text-[#60716D] dark:text-slate-400 leading-relaxed">
             Semua output AI pada sistem CKG Smart Care disajikan dalam bahasa Indonesia yang lugas, tidak mengandung istilah probabilitas membingungkan,
             dan secara transparan menyajikan 3 faktor penjelas utama serta arah kontribusinya.
           </p>

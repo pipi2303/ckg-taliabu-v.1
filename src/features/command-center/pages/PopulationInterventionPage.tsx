@@ -161,8 +161,8 @@ export const PopulationInterventionPage: React.FC = () => {
           return (
             <div
               key={item.id}
-              className={`p-6 rounded-2xl bg-[#faf9f6] border transition shadow-xs space-y-4 ${
-                isCompleted ? 'border-emerald-300' : 'border-stone-200'
+              className={`p-6 rounded-xl bg-white dark:bg-slate-900 border transition shadow-2xs space-y-4 ${
+                isCompleted ? 'border-emerald-300 dark:border-emerald-800' : 'border-[#D8E5E2] dark:border-slate-800'
               }`}
             >
               {/* Top Row */}
@@ -268,10 +268,10 @@ export const PopulationInterventionPage: React.FC = () => {
       {/* New Intervention Modal */}
       {isNewOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-[#faf9f6] border border-stone-300 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-              <h3 className="text-base font-bold text-black">Rancang Intervensi Populasi Baru</h3>
-              <button onClick={() => setIsNewOpen(false)} className="text-stone-400 hover:text-stone-700">
+          <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
+              <h3 className="text-base font-bold text-[#102521] dark:text-white">Rancang Intervensi Populasi Baru</h3>
+              <button onClick={() => setIsNewOpen(false)} className="text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -362,10 +362,10 @@ export const PopulationInterventionPage: React.FC = () => {
       {/* Add Note Modal */}
       {isNoteOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-[#faf9f6] border border-stone-300 rounded-2xl w-full max-w-md p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-              <h3 className="text-sm font-bold text-black">Tambah Catatan Lapangan</h3>
-              <button onClick={() => setIsNoteOpen(false)} className="text-stone-400 hover:text-stone-700">
+          <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl w-full max-w-md p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
+              <h3 className="text-sm font-bold text-[#102521] dark:text-white">Tambah Catatan Lapangan</h3>
+              <button onClick={() => setIsNoteOpen(false)} className="text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>

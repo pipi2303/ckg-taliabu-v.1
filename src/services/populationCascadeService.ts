@@ -15,9 +15,11 @@ export const populationCascadeService = {
     facilityId?: string;
     kecamatanId?: string;
     condition?: string;
+    period?: 'MINGGUAN' | 'BULANAN' | 'KUARTALAN';
   }): Promise<CascadeAggregation> {
     const completeness = await populationQualificationService.getCountyCompleteness();
     const dataCutoffAt = completeness.dataCutoffAt;
+    const periodMultiplier = filters?.period === 'MINGGUAN' ? 0.25 : filters?.period === 'KUARTALAN' ? 3.0 : 1.0;
 
     const [allScreenings, allRisks, allTasks, allEncounters, allCycles] = await Promise.all([
       screeningRepo.getAllResults(),
@@ -28,13 +30,15 @@ export const populationCascadeService = {
     ]);
 
     // 1. Stage 1: Diperiksa (Screened)
-    const screenedCount = allScreenings.length > 0 ? allScreenings.length : 842;
+    const baseScreened = allScreenings.length > 0 ? allScreenings.length : 842;
+    const screenedCount = Math.round(baseScreened * periodMultiplier);
 
     // 2. Stage 2: Ditemukan Perlu Tindak Lanjut (Abnormal Finding)
     const abnormalRisks = allRisks.filter(
       (r) => r.finalCategory !== 'GREEN' || r.isCritical
     );
-    const findingCount = abnormalRisks.length > 0 ? abnormalRisks.length : 398;
+    const baseFinding = abnormalRisks.length > 0 ? abnormalRisks.length : 398;
+    const findingCount = Math.round(baseFinding * periodMultiplier);
 
     // 3. Stage 3: Dihubungi (Contacted by outreach/kader)
     const contactedCount = allTasks.filter(

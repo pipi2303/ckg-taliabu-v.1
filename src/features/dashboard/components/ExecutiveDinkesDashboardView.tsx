@@ -10,6 +10,8 @@ import {
   AlertTriangle,
   FileText,
   Clock,
+  Calendar,
+  RefreshCw,
   Download,
   FileSpreadsheet,
   CheckCircle2,
@@ -64,6 +66,61 @@ import { ruleVersionService } from '../../../services/ruleVersionService';
 import { ExecutiveKPIRechartsSection } from './ExecutiveKPIRechartsSection';
 import { FacilityPerformanceSummary, CascadeAggregation } from '../../../types';
 
+export type DinkesTimePeriod = 'MINGGUAN' | 'BULANAN' | 'KUARTALAN';
+
+export interface SubPeriodOption {
+  id: string;
+  label: string;
+  dateRange: string;
+}
+
+export const PERIOD_CONFIG: Record<
+  DinkesTimePeriod,
+  {
+    label: string;
+    description: string;
+    badgeText: string;
+    subPeriods: SubPeriodOption[];
+  }
+> = {
+  MINGGUAN: {
+    label: 'Mingguan',
+    description: 'Pemantauan laju skrining & kesinambungan rujukan faskes per minggu',
+    badgeText: 'Resolusi Mingguan (W31 - W36)',
+    subPeriods: [
+      { id: 'W36', label: 'Minggu Ke-36 (1 - 7 Sep 2026)', dateRange: '1 – 7 September 2026' },
+      { id: 'W35', label: 'Minggu Ke-35 (25 - 31 Agt 2026)', dateRange: '25 – 31 Agustus 2026' },
+      { id: 'W34', label: 'Minggu Ke-34 (18 - 24 Agt 2026)', dateRange: '18 – 24 Agustus 2026' },
+      { id: 'W33', label: 'Minggu Ke-33 (11 - 17 Agt 2026)', dateRange: '11 – 17 Agustus 2026' },
+      { id: 'AVG_4W', label: 'Rata-rata 4 Minggu Terakhir', dateRange: '11 Agt – 7 Sep 2026' },
+    ],
+  },
+  BULANAN: {
+    label: 'Bulanan',
+    description: 'Evaluasi capaian bulanan standar SPM 8 Puskesmas',
+    badgeText: 'Resolusi Bulanan (Jan - Sep 2026)',
+    subPeriods: [
+      { id: 'M_SEP', label: 'September 2026 (Bulan Berjalan)', dateRange: '1 – 30 September 2026' },
+      { id: 'M_AUG', label: 'Agustus 2026 (Bulan Lalu)', dateRange: '1 – 31 Agustus 2026' },
+      { id: 'M_JUL', label: 'Juli 2026', dateRange: '1 – 31 Juli 2026' },
+      { id: 'M_JUN', label: 'Juni 2026', dateRange: '1 – 30 Juni 2026' },
+      { id: 'AVG_6M', label: 'Rata-rata Semester I / 6 Bulan', dateRange: 'Maret – Agustus 2026' },
+    ],
+  },
+  KUARTALAN: {
+    label: 'Kuartalan',
+    description: 'Evaluasi strategis triwulanan & perencanaan alokasi anggaran Pemda',
+    badgeText: 'Resolusi Kuartalan (Q1 2025 - Q3 2026)',
+    subPeriods: [
+      { id: 'Q3_2026', label: 'Kuartal III / Q3 2026 (Berjalan)', dateRange: '1 Juli – 30 September 2026' },
+      { id: 'Q2_2026', label: 'Kuartal II / Q2 2026', dateRange: '1 April – 30 Juni 2026' },
+      { id: 'Q1_2026', label: 'Kuartal I / Q1 2026', dateRange: '1 Januari – 31 Maret 2026' },
+      { id: 'Q4_2025', label: 'Kuartal IV / Q4 2025', dateRange: '1 Oktober – 31 Desember 2025' },
+      { id: 'YTD_2026', label: 'Kumulatif YTD 2026 (Jan - Sep)', dateRange: '1 Januari – 30 September 2026' },
+    ],
+  },
+};
+
 interface ExecutiveDinkesDashboardViewProps {
   onNavigate: (navId: string) => void;
 }
@@ -73,6 +130,9 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
 }) => {
   const { currentUser } = useAuth();
   const { addToast } = useToast();
+
+  const [globalPeriod, setGlobalPeriod] = useState<DinkesTimePeriod>('BULANAN');
+  const [selectedSubPeriodId, setSelectedSubPeriodId] = useState<string>('M_SEP');
 
   const [facilities, setFacilities] = useState<FacilityPerformanceSummary[]>([]);
   const [impact, setImpact] = useState<ImpactIndexSummary | null>(null);
@@ -85,16 +145,16 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
   const [isExportingExcel, setIsExportingExcel] = useState<boolean>(false);
 
   useEffect(() => {
-    loadExecutiveData();
+    loadExecutiveData(globalPeriod);
   }, []);
 
-  const loadExecutiveData = async () => {
+  const loadExecutiveData = async (period: DinkesTimePeriod = globalPeriod) => {
     setIsLoading(true);
     try {
       const [facSummaries, impactData, cascadeData] = await Promise.all([
-        facilityPerformanceService.getFacilitySummaries(),
+        facilityPerformanceService.getFacilitySummaries(period),
         impactIndexService.getImpactIndex(),
-        populationCascadeService.getCascadeAggregation(),
+        populationCascadeService.getCascadeAggregation({ period }),
       ]);
       setFacilities(facSummaries);
       setImpact(impactData);
@@ -106,12 +166,38 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
     }
   };
 
+  const handlePeriodChange = (newPeriod: DinkesTimePeriod) => {
+    setGlobalPeriod(newPeriod);
+    const defaultSub = PERIOD_CONFIG[newPeriod].subPeriods[0];
+    setSelectedSubPeriodId(defaultSub.id);
+    loadExecutiveData(newPeriod);
+    addToast(
+      `Filter periode global diubah ke ${PERIOD_CONFIG[newPeriod].label}: seluruh widget diperbarui`,
+      'info'
+    );
+  };
+
+  const handleSubPeriodChange = (subId: string) => {
+    setSelectedSubPeriodId(subId);
+    const found = PERIOD_CONFIG[globalPeriod].subPeriods.find((s) => s.id === subId);
+    if (found) {
+      addToast(`Sub-periode aktif: ${found.label} (${found.dateRange})`, 'info');
+    }
+  };
+
+  const activeSubPeriod = useMemo(() => {
+    return (
+      PERIOD_CONFIG[globalPeriod].subPeriods.find((s) => s.id === selectedSubPeriodId) ||
+      PERIOD_CONFIG[globalPeriod].subPeriods[0]
+    );
+  }, [globalPeriod, selectedSubPeriodId]);
+
   const handleExportPDF = async () => {
     if (!currentUser) return;
     setIsExportingPDF(true);
     try {
-      await commandCenterExportService.exportExecutivePDF(currentUser);
-      addToast('Laporan Eksekutif Resmi Kadinkes (.pdf) berhasil diunduh', 'success');
+      await commandCenterExportService.exportExecutivePDF(currentUser, { period: globalPeriod });
+      addToast(`Laporan Eksekutif Resmi Kadinkes (.pdf) [${PERIOD_CONFIG[globalPeriod].label}] berhasil diunduh`, 'success');
     } catch (err) {
       console.error('PDF export error:', err);
       addToast('Gagal membuat berkas PDF eksekutif', 'error');
@@ -124,8 +210,8 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
     if (!currentUser) return;
     setIsExportingExcel(true);
     try {
-      await commandCenterExportService.exportCommandCenterExcel(currentUser);
-      addToast('Workbook Rekapitulasi Eksekutif (.xlsx) berhasil diunduh', 'success');
+      await commandCenterExportService.exportCommandCenterExcel(currentUser, { period: globalPeriod });
+      addToast(`Workbook Rekapitulasi Eksekutif (.xlsx) [${PERIOD_CONFIG[globalPeriod].label}] berhasil diunduh`, 'success');
     } catch (err) {
       console.error('Excel export error:', err);
       addToast('Gagal membuat berkas Excel eksekutif', 'error');
@@ -223,19 +309,29 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
       </div>
 
       {/* 2. Executive KPI Recharts Analytics (6 KPI Strategis) */}
-      <ExecutiveKPIRechartsSection onNavigate={onNavigate} />
+      <ExecutiveKPIRechartsSection
+        onNavigate={onNavigate}
+        globalPeriod={globalPeriod}
+        onPeriodChange={handlePeriodChange}
+        subPeriodLabel={activeSubPeriod?.dateRange}
+      />
 
       {/* 3. Strategic Performance Matrix: Evaluasi & Grafik 8 Puskesmas Se-Kabupaten */}
       <div className="bg-white p-5 rounded-2xl border border-[#D8E5E2] shadow-xs space-y-5">
         {/* Header & Controls */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-[#D8E5E2]">
           <div>
-            <h3 className="text-sm font-bold text-black flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-[#2E7D5B]" />
-              Matriks Kinerja & Kesiapan 8 Puskesmas Se-Kabupaten Pulau Taliabu
-            </h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-bold text-black flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-[#2E7D5B]" />
+                Matriks Kinerja & Kesiapan 8 Puskesmas Se-Kabupaten Pulau Taliabu
+              </h3>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                {PERIOD_CONFIG[globalPeriod].label}
+              </span>
+            </div>
             <p className="text-xs text-[#60716D] mt-0.5">
-              Evaluasi kontinuitas pelayanan, beban sasaran skrining CKG, dan mitigasi kendala operasional faskes.
+              Evaluasi kontinuitas pelayanan, beban sasaran skrining CKG, dan mitigasi kendala operasional faskes rentang waktu {activeSubPeriod?.dateRange}.
             </p>
           </div>
 
@@ -390,7 +486,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
               <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200/80">
                 <span className="text-[10px] font-semibold text-rose-800 uppercase tracking-wider block">Faskes Butuh Bantuan</span>
                 <p className="text-base sm:text-lg font-bold text-rose-950 font-mono mt-0.5">
-                  {pkmChartData.filter((d) => d.continuityRate < 50 || d.gap > 20).length} <span className="text-xs font-normal text-rose-700">Puskesmas</span>
+                  {pkmChartData.filter((d) => d.continuityRate < 50 || d.gap > (globalPeriod === 'MINGGUAN' ? 8 : globalPeriod === 'KUARTALAN' ? 60 : 20)).length} <span className="text-xs font-normal text-rose-700">Puskesmas</span>
                 </p>
               </div>
             </div>
@@ -793,7 +889,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
                 {pkmChartData
-                  .filter((f) => f.continuityRate < 50 || f.gap > 20)
+                  .filter((f) => f.continuityRate < 50 || f.gap > (globalPeriod === 'MINGGUAN' ? 8 : globalPeriod === 'KUARTALAN' ? 60 : 20))
                   .slice(0, 3)
                   .map((f) => (
                     <div key={f.name} className="p-2 rounded-lg bg-white border border-amber-200/80 shadow-2xs space-y-1">
@@ -870,7 +966,7 @@ export const ExecutiveDinkesDashboardView: React.FC<ExecutiveDinkesDashboardView
                     <td className="p-3 text-center">
                       <Badge
                         variant={
-                          isOptimal ? 'success' : isWarning ? 'warning' : 'danger'
+                          isOptimal ? 'active' : isWarning ? 'warning' : 'failed'
                         }
                         size="sm"
                       >

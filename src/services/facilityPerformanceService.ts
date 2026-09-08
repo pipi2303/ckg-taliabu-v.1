@@ -3,11 +3,13 @@ import { facilityRepo } from '../repositories/facilityRepo';
 import { populationQualificationService } from './populationQualificationService';
 
 export const facilityPerformanceService = {
-  async getFacilitySummaries(): Promise<FacilityPerformanceSummary[]> {
+  async getFacilitySummaries(period: 'MINGGUAN' | 'BULANAN' | 'KUARTALAN' = 'BULANAN'): Promise<FacilityPerformanceSummary[]> {
     const [facilities, completenessList] = await Promise.all([
       facilityRepo.getAll(),
       populationQualificationService.getAllFacilityCompleteness(),
     ]);
+
+    const periodMultiplier = period === 'MINGGUAN' ? 0.25 : period === 'KUARTALAN' ? 3.0 : 1.0;
 
     const completenessMap = new Map(completenessList.map((c) => [c.facilityId, c]));
 
@@ -159,17 +161,22 @@ export const facilityPerformanceService = {
           ? 'STALE'
           : 'PARTIAL';
 
+      const rawScreened = prof.screenedCount || 0;
+      const rawEligible = prof.eligibleFollowUpCount || 0;
+      const rawAttended = prof.attendedFollowUpCount || 0;
+      const rawClosure = prof.manualClosureCount || 0;
+
       return {
         facilityId: pkm.id,
         facilityName: pkm.name,
         kecamatanName: pkm.kecamatanName,
         isRemoteIsland: prof.isRemoteIsland ?? false,
         accessibilityContext: prof.accessibilityContext || '',
-        screenedCount: prof.screenedCount || 0,
-        eligibleFollowUpCount: prof.eligibleFollowUpCount || 0,
-        attendedFollowUpCount: prof.attendedFollowUpCount || 0,
+        screenedCount: Math.round(rawScreened * periodMultiplier),
+        eligibleFollowUpCount: Math.round(rawEligible * periodMultiplier),
+        attendedFollowUpCount: Math.round(rawAttended * periodMultiplier),
         continuityRate: prof.continuityRate || 0,
-        manualClosureCount: prof.manualClosureCount || 0,
+        manualClosureCount: Math.round(rawClosure * periodMultiplier),
         manualClosureRatio: prof.manualClosureRatio || 0,
         dataCompleteness,
         pendingKaderSyncCount: comp?.pendingKaderSyncCount || 0,

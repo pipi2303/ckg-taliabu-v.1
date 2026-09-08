@@ -241,9 +241,9 @@ export const RsudExecutivePage: React.FC = () => {
       )}
 
       {activeTab === 'perbandingan' && (
-        <div className="p-6 bg-[#faf9f6] border border-stone-200 rounded-2xl text-stone-700 text-sm space-y-2">
-          <p className="font-semibold text-black">Perbandingan Antar-Periode — Belum Dapat Dinilai</p>
-          <p className="text-xs leading-relaxed text-stone-600">
+        <div className="p-6 bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl text-[#102521] dark:text-slate-200 text-sm space-y-2 shadow-2xs">
+          <p className="font-semibold text-[#102521] dark:text-white">Perbandingan Antar-Periode — Belum Dapat Dinilai</p>
+          <p className="text-xs leading-relaxed text-[#60716D] dark:text-slate-400">
             Perbandingan longitudinal antar-periode memerlukan riwayat data multi-periode yang belum tersedia pada pilot ini
             (data historis rujukan baru dicatat sejak Agustus 2026). Fitur ini akan aktif otomatis setelah tersedia ≥2 periode
             penuh, tanpa menampilkan angka perbandingan yang belum bisa dipertanggungjawabkan.

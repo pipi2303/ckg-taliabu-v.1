@@ -1072,25 +1072,25 @@ export const AdminRiskOutcomeComparisonChart: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#faf9f6] p-5 rounded-2xl border border-stone-200/90 shadow-2xs space-y-4">
+    <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
       {/* Header & Controls Toolbar */}
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3.5 border-b border-gray-100 pb-3.5">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3.5 border-b border-[#E8EFEB] dark:border-slate-800 pb-3.5">
         <div>
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-teal-50 text-teal-800 border border-teal-200">
+            <div className="p-1.5 rounded-lg bg-[#EBF7F2] dark:bg-emerald-950/60 text-[#2E7D5B] dark:text-emerald-400 border border-[#D8E5E2] dark:border-emerald-800/40">
               <TrendingUp className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-sm font-extrabold text-black tracking-tight flex items-center gap-2">
+                <h3 className="text-sm font-extrabold text-[#00201C] dark:text-white tracking-tight flex items-center gap-2">
                   Korelasi Capaian: Hasil Pemeriksaan & Tingkat Risiko vs Target Kunjungan Kader
                 </h3>
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EBF7F2] dark:bg-emerald-950/60 text-[#2E7D5B] dark:text-emerald-400 border border-[#BBE5D4] dark:border-emerald-800/40 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
                   Real-time Sync ({lastSyncTime})
                 </span>
               </div>
-              <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">
                 Perbandingan bulanan efektivitas intervensi kader terhadap deteksi dini risiko dan kestabilan outcome warga
               </p>
             </div>
@@ -1100,13 +1100,13 @@ export const AdminRiskOutcomeComparisonChart: React.FC = () => {
         {/* Action Filters: Time Range Dropdown + Facility + Metric Focus */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Time Range Dropdown Filter */}
-          <div className="flex items-center gap-1.5 bg-gray-50 px-2.5 py-1 rounded-xl border border-gray-200 text-xs">
-            <Calendar className="w-3.5 h-3.5 text-teal-700" />
-            <span className="text-[11px] font-semibold text-gray-500">Rentang:</span>
+          <div className="flex items-center gap-1.5 bg-[#F0F5F4] dark:bg-slate-800 px-2.5 py-1 rounded-xl border border-[#D8E5E2] dark:border-slate-700 text-xs">
+            <Calendar className="w-3.5 h-3.5 text-[#2E7D5B]" />
+            <span className="text-[11px] font-semibold text-[#60716D] dark:text-slate-400">Rentang:</span>
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value as '3M' | '6M' | '1Y')}
-              className="bg-transparent border-0 font-bold text-gray-800 text-xs focus:ring-0 cursor-pointer pr-1"
+              className="bg-transparent border-0 font-bold text-slate-800 dark:text-slate-200 text-xs focus:ring-0 cursor-pointer pr-1"
             >
               <option value="3M">3 Bulan Terakhir</option>
               <option value="6M">6 Bulan Terakhir</option>
@@ -1115,12 +1115,12 @@ export const AdminRiskOutcomeComparisonChart: React.FC = () => {
           </div>
 
           {/* Facility Selector Dropdown */}
-          <div className="flex items-center gap-1.5 bg-gray-50 px-2.5 py-1 rounded-xl border border-gray-200 text-xs">
-            <Building2 className="w-3.5 h-3.5 text-gray-500" />
+          <div className="flex items-center gap-1.5 bg-[#F0F5F4] dark:bg-slate-800 px-2.5 py-1 rounded-xl border border-[#D8E5E2] dark:border-slate-700 text-xs">
+            <Building2 className="w-3.5 h-3.5 text-[#60716D] dark:text-slate-400" />
             <select
               value={selectedFacility}
               onChange={(e) => setSelectedFacility(e.target.value)}
-              className="bg-transparent border-0 font-bold text-gray-700 text-xs focus:ring-0 cursor-pointer pr-1 max-w-[190px] truncate"
+              className="bg-transparent border-0 font-bold text-slate-800 dark:text-slate-200 text-xs focus:ring-0 cursor-pointer pr-1 max-w-[190px] truncate"
             >
               {PUSKESMAS_OPTIONS.map((opt) => (
                 <option key={opt.id} value={opt.id}>
@@ -1131,15 +1131,15 @@ export const AdminRiskOutcomeComparisonChart: React.FC = () => {
           </div>
 
           {/* Metric View Mode Toggle */}
-          <div className="flex rounded-lg bg-gray-100 p-0.5 text-xs font-bold">
+          <div className="flex rounded-lg bg-[#F0F5F4] dark:bg-slate-800 p-0.5 border border-[#D8E5E2] dark:border-slate-700 text-xs font-bold">
             <UiTooltip content="Tampilkan semua indikator: Deteksi risiko, kunjungan kader, dan outcome terkontrol" position="bottom">
               <button
                 type="button"
                 onClick={() => setMetricFocus('ALL')}
                 className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
                   metricFocus === 'ALL'
-                    ? 'bg-slate-900 text-white shadow-2xs'
-                    : 'text-gray-600 hover:text-black'
+                    ? 'bg-[#00201C] text-white shadow-2xs'
+                    : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                 }`}
               >
                 Semua Metrik

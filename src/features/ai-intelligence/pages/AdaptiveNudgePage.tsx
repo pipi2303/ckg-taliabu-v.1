@@ -87,8 +87,8 @@ export const AdaptiveNudgePage: React.FC = () => {
       {/* Two Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Generator Form (5 Cols) */}
-        <div className="lg:col-span-5 p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
-          <div className="flex items-center gap-2 text-sm font-bold text-black border-b border-stone-200 pb-2">
+        <div className="lg:col-span-5 p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="flex items-center gap-2 text-sm font-bold text-[#102521] dark:text-white border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
             <Sparkles className="w-4 h-4 text-teal-700" />
             Generate Pesan Kultural Baru
           </div>
@@ -173,7 +173,7 @@ export const AdaptiveNudgePage: React.FC = () => {
             {nudges.map((nudge) => (
               <div
                 key={nudge.id}
-                className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200/90 shadow-xs hover:border-stone-300 transition space-y-2.5"
+                className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs hover:border-[#2E7D5B] dark:hover:border-slate-700 transition space-y-2.5"
               >
                 <div className="flex items-center justify-between text-xs border-b border-stone-200 pb-2">
                   <div className="flex items-center gap-2">

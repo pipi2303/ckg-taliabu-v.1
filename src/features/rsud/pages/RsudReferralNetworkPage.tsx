@@ -216,8 +216,8 @@ export const RsudReferralNetworkPage: React.FC = () => {
       {activeTab === 'sla' && sla && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[sla.responseSla, sla.replySlaRoutine, sla.replySlaHighPriority].map((bucket) => (
-            <div key={bucket.slaCode} className="p-5 bg-[#faf9f6] border border-stone-200 rounded-2xl text-stone-800 space-y-2 shadow-2xs">
-              <p className="text-xs font-bold text-teal-800 uppercase tracking-wider">{bucket.label}</p>
+            <div key={bucket.slaCode} className="p-5 bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl text-[#102521] dark:text-slate-200 space-y-2 shadow-2xs">
+              <p className="text-xs font-bold text-[#2E7D5B] dark:text-emerald-400 uppercase tracking-wider">{bucket.label}</p>
               <p className="text-[11px] text-stone-500">Target: {bucket.targetHours} jam</p>
               <div className="grid grid-cols-3 gap-2 pt-2 text-center">
                 <div className="p-2 rounded-xl bg-white border border-stone-200">

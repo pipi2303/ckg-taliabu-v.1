@@ -172,10 +172,10 @@ export const AreaAnalysisPage: React.FC = () => {
           return (
             <div
               key={kec.id}
-              className={`p-5 rounded-2xl bg-slate-900/90 border transition shadow-lg flex flex-col justify-between ${
+              className={`p-5 rounded-2xl bg-[#FAF9F6] border transition shadow-sm flex flex-col justify-between ${
                 kec.isMissing
-                  ? 'border-amber-500/30 bg-amber-500/5'
-                  : 'border-slate-800 hover:border-slate-700'
+                  ? 'border-amber-300 bg-amber-50/60'
+                  : 'border-[#D8E5E2] hover:border-teal-600/40'
               }`}
             >
               <div>
@@ -183,15 +183,15 @@ export const AreaAnalysisPage: React.FC = () => {
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-base font-bold text-white">{kec.name}</h3>
+                      <h3 className="text-base font-bold text-slate-900">{kec.name}</h3>
                       {kec.isRemote && (
-                        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300">
                           Pesisir Terpencil
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
-                      <Building2 className="w-3.5 h-3.5 text-teal-400" />
+                    <p className="text-xs text-slate-600 mt-0.5 flex items-center gap-1.5">
+                      <Building2 className="w-3.5 h-3.5 text-teal-600" />
                       <span>{kec.pkmName}</span>
                       <span>•</span>
                       <span>Pop: {kec.population.toLocaleString('id-ID')} jiwa</span>
@@ -199,19 +199,19 @@ export const AreaAnalysisPage: React.FC = () => {
                   </div>
 
                   {kec.isMissing ? (
-                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-300">
                       Belum Melapor
                     </span>
                   ) : (
                     <div className="text-right">
-                      <div className="text-lg font-black text-white">
+                      <div className="text-lg font-black text-slate-900">
                         {viewMode === 'COVERAGE'
                           ? `${kec.coverageRate}%`
                           : viewMode === 'GAP'
                           ? `${kec.gapCount} kasus`
                           : `${kec.burdenCount} kasus`}
                       </div>
-                      <div className="text-[10px] text-slate-400">
+                      <div className="text-[10px] text-slate-500 font-medium">
                         {viewMode === 'COVERAGE'
                           ? `${kec.screened} warga diperiksa`
                           : viewMode === 'GAP'
@@ -223,10 +223,10 @@ export const AreaAnalysisPage: React.FC = () => {
                 </div>
 
                 {/* Village-Level Breakdown with Small-Cell Suppression */}
-                <div className="mt-4 pt-3 border-t border-slate-800 space-y-2">
-                  <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                <div className="mt-4 pt-3 border-t border-[#D8E5E2] space-y-2">
+                  <div className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider flex items-center justify-between">
                     <span>Sebaran Desa ({kec.villages.length} Desa Binaan)</span>
-                    <span className="text-[10px] text-slate-500">Proteksi Privasi DS-OI-06</span>
+                    <span className="text-[10px] text-slate-400">Proteksi Privasi DS-OI-06</span>
                   </div>
 
                   <div className="space-y-1.5">
@@ -236,12 +236,12 @@ export const AreaAnalysisPage: React.FC = () => {
                         onClick={() => !kec.isMissing && handleVillageDrilldown(v, kec.name)}
                         className={`p-2.5 rounded-xl border flex items-center justify-between text-xs transition cursor-pointer ${
                           v.suppressed
-                            ? 'bg-slate-800/20 border-slate-800/80 hover:border-slate-700'
-                            : 'bg-slate-800/50 border-slate-800 hover:border-teal-500/40'
+                            ? 'bg-slate-100/70 border-slate-200 hover:border-slate-300'
+                            : 'bg-white border-[#E2ECE9] hover:border-teal-500/50 shadow-2xs'
                         }`}
                       >
                         <div className="flex items-center gap-2">
-                          <span className="text-slate-300 font-medium">{v.name}</span>
+                          <span className="text-slate-800 font-medium">{v.name}</span>
                           <span className="text-[10px] text-slate-500">
                             (Pop: {v.population})
                           </span>
@@ -249,15 +249,15 @@ export const AreaAnalysisPage: React.FC = () => {
 
                         <div className="flex items-center gap-2">
                           {v.suppressed ? (
-                            <span className="text-[11px] text-slate-400 italic flex items-center gap-1">
-                              <Lock className="w-3 h-3 text-amber-400" />
+                            <span className="text-[11px] text-amber-800 italic flex items-center gap-1">
+                              <Lock className="w-3 h-3 text-amber-600" />
                               &lt; 5 (Disembunyikan)
                             </span>
                           ) : kec.isMissing ? (
-                            <span className="text-slate-500 italic text-[11px]">Tidak ada data</span>
+                            <span className="text-slate-400 italic text-[11px]">Tidak ada data</span>
                           ) : (
                             <div className="text-right">
-                              <span className="font-semibold text-white">
+                              <span className="font-semibold text-slate-900">
                                 {viewMode === 'COVERAGE'
                                   ? `${v.screened} diperiksa`
                                   : viewMode === 'GAP'
@@ -268,7 +268,7 @@ export const AreaAnalysisPage: React.FC = () => {
                           )}
 
                           {!kec.isMissing && user?.roleId !== 'BUPATI' && (
-                            <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
                           )}
                         </div>
                       </div>
@@ -279,8 +279,8 @@ export const AreaAnalysisPage: React.FC = () => {
 
               {/* Special Indicators for Remote & Offline */}
               {kec.hasPendingOffline && (
-                <div className="mt-3 p-2.5 rounded-xl bg-slate-800/60 border border-slate-700 text-[11px] text-sky-300 flex items-center gap-2">
-                  <Info className="w-3.5 h-3.5 shrink-0" />
+                <div className="mt-3 p-2.5 rounded-xl bg-sky-50 border border-sky-200 text-[11px] text-sky-900 flex items-center gap-2">
+                  <Info className="w-3.5 h-3.5 text-sky-700 shrink-0" />
                   <span>18 catatan skrining/kader tersimpan aman di perangkat offline kader desa terisolir.</span>
                 </div>
               )}

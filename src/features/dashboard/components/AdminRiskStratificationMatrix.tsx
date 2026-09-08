@@ -97,19 +97,19 @@ export const AdminRiskStratificationMatrix: React.FC = () => {
   const totalCitizens = RISK_STRATA.reduce((sum, s) => sum + s.count, 0);
 
   return (
-    <div className="bg-[#faf9f6] p-5 rounded-2xl border border-stone-200/90 shadow-2xs space-y-4">
+    <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-3.5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E8EFEB] dark:border-slate-800 pb-3.5">
         <div>
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-rose-50 text-rose-800 border border-rose-200">
+            <div className="p-1.5 rounded-lg bg-[#EBF7F2] dark:bg-emerald-950/60 text-[#2E7D5B] dark:text-emerald-400 border border-[#D8E5E2] dark:border-emerald-800/40">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-extrabold text-black tracking-tight">
+              <h3 className="text-sm font-extrabold text-[#00201C] dark:text-white tracking-tight">
                 Distribusi Stratifikasi Risiko & Matriks Komorbiditas Klinis (CRS)
               </h3>
-              <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">
                 Pemetaan proporsi risiko populasi warga berdasarkan standar protokol Kemenkes RI 2026
               </p>
             </div>
@@ -117,7 +117,7 @@ export const AdminRiskStratificationMatrix: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs bg-slate-100 px-2.5 py-1 rounded-full font-mono font-bold text-slate-700">
+          <span className="text-xs bg-[#F0F5F4] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 px-2.5 py-1 rounded-full font-mono font-bold text-[#102521] dark:text-white">
             Total {totalCitizens} Hasil Skrining
           </span>
         </div>

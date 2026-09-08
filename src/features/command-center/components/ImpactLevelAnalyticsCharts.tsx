@@ -402,35 +402,32 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
   return (
     <div className="space-y-6 pt-2">
-      {/* Top Header Card - Bone White Theme */}
-      <div
-        className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
-        style={{ backgroundColor: '#faf9f6' }}
-      >
+      {/* Top Header Card */}
+      <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-teal-100 text-teal-800 border border-teal-200">
+              <span className="p-1.5 rounded-lg bg-[#EBF7F2] dark:bg-teal-950/50 text-[#00201C] dark:text-teal-400 border border-[#D8E5E2] dark:border-teal-800">
                 <BarChart3 className="w-4 h-4" />
               </span>
-              <h3 className="text-base font-bold text-stone-900 tracking-tight">
+              <h3 className="text-base font-bold text-[#102521] dark:text-white tracking-tight">
                 Analisis Interaktif CKG Impact Index
               </h3>
               <DocBadge code="SCR-DNK-B01" size="sm" />
             </div>
-            <p className="text-xs text-stone-600">
+            <p className="text-xs text-[#60716D] dark:text-slate-400">
               Analisis komprehensif <strong>Level 1 (Cakupan Skrining)</strong>, <strong>Level 2 (Kontinuitas Layanan)</strong>, dan <strong>Level 3 (Kesiapan Evaluasi Pengendalian Klinis)</strong> di 8 wilayah Puskesmas.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
             {/* Geo Filter Toggle */}
-            <div className="flex items-center bg-[#f0eee6] rounded-xl p-1 border border-stone-300/80 text-xs">
+            <div className="flex items-center bg-[#F0F5F4] dark:bg-slate-800 rounded-xl p-1 border border-[#D8E5E2] dark:border-slate-700 text-xs">
               <button
                 type="button"
                 onClick={() => setGeoFilter('ALL')}
                 className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer ${
-                  geoFilter === 'ALL' ? 'bg-teal-700 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+                  geoFilter === 'ALL' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                 }`}
               >
                 Semua Wilayah (8)
@@ -439,7 +436,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 type="button"
                 onClick={() => setGeoFilter('MAINLAND')}
                 className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer ${
-                  geoFilter === 'MAINLAND' ? 'bg-teal-700 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+                  geoFilter === 'MAINLAND' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                 }`}
               >
                 Daratan (4)
@@ -448,7 +445,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 type="button"
                 onClick={() => setGeoFilter('REMOTE')}
                 className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer ${
-                  geoFilter === 'REMOTE' ? 'bg-teal-700 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+                  geoFilter === 'REMOTE' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                 }`}
               >
                 Pesisir/Pulau (4)
@@ -459,24 +456,24 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             <button
               type="button"
               onClick={handleExportCSV}
-              className="px-3 py-1.5 rounded-xl bg-[#faf9f6] hover:bg-[#f0eee6] text-stone-800 border border-stone-300 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs"
+              className="px-3 py-1.5 rounded-xl bg-[#F8FBFA] hover:bg-[#E8EFEB] dark:bg-slate-800 dark:hover:bg-slate-700 text-[#102521] dark:text-white border border-[#D8E5E2] dark:border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
               title="Unduh Data Ringkasan Level 1, 2, 3 ke CSV"
             >
-              <Download className="w-3.5 h-3.5 text-stone-600" />
+              <Download className="w-3.5 h-3.5 text-[#60716D] dark:text-slate-400" />
               <span className="hidden sm:inline">Unduh Data</span>
             </button>
           </div>
         </div>
 
         {/* Tab Navigation Controls */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-2 border-t border-stone-200">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-2 border-t border-[#E8EFEB] dark:border-slate-800">
           <button
             type="button"
             onClick={() => setActiveTab('ALL')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'ALL'
-                ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
+                ? 'bg-[#00201C] text-white font-bold shadow-2xs'
+                : 'bg-[#F0F5F4] dark:bg-slate-800 text-[#60716D] dark:text-slate-400 hover:bg-[#E8EFEB] hover:text-[#102521] dark:hover:text-white'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -488,8 +485,8 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             onClick={() => setActiveTab('BAR')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'BAR'
-                ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
+                ? 'bg-[#00201C] text-white font-bold shadow-2xs'
+                : 'bg-[#F0F5F4] dark:bg-slate-800 text-[#60716D] dark:text-slate-400 hover:bg-[#E8EFEB] hover:text-[#102521] dark:hover:text-white'
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
@@ -501,8 +498,8 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             onClick={() => setActiveTab('AREA')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'AREA'
-                ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
+                ? 'bg-[#00201C] text-white font-bold shadow-2xs'
+                : 'bg-[#F0F5F4] dark:bg-slate-800 text-[#60716D] dark:text-slate-400 hover:bg-[#E8EFEB] hover:text-[#102521] dark:hover:text-white'
             }`}
           >
             <AreaChartIcon className="w-3.5 h-3.5" />
@@ -514,8 +511,8 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             onClick={() => setActiveTab('COMPOSED')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'COMPOSED'
-                ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
+                ? 'bg-[#00201C] text-white font-bold shadow-2xs'
+                : 'bg-[#F0F5F4] dark:bg-slate-800 text-[#60716D] dark:text-slate-400 hover:bg-[#E8EFEB] hover:text-[#102521] dark:hover:text-white'
             }`}
           >
             <TrendingUp className="w-3.5 h-3.5" />
@@ -527,8 +524,8 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             onClick={() => setActiveTab('COHORT')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'COHORT'
-                ? 'bg-teal-700 text-white font-bold shadow-xs'
-                : 'bg-[#f0eee6] text-stone-700 hover:bg-[#e7e4d8] hover:text-stone-900'
+                ? 'bg-[#00201C] text-white font-bold shadow-2xs'
+                : 'bg-[#F0F5F4] dark:bg-slate-800 text-[#60716D] dark:text-slate-400 hover:bg-[#E8EFEB] hover:text-[#102521] dark:hover:text-white'
             }`}
           >
             <PieChartIcon className="w-3.5 h-3.5" />
@@ -539,28 +536,25 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 1. GRAFIK BATANG SECTION (Bar Chart) */}
       {(activeTab === 'ALL' || activeTab === 'BAR') && (
-        <div
-          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
-          style={{ backgroundColor: '#faf9f6' }}
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
+        <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
             <div>
-              <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-teal-700" />
+              <h4 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
                 Komparasi Capaian Level 1 & Level 2 per Puskesmas
               </h4>
-              <p className="text-xs text-stone-600 mt-0.5">
+              <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">
                 Membandingkan volume sasaran, skrining selesai (L1), tindak lanjut faskes (L2), dan kesenjangan kasus di tiap Puskesmas.
               </p>
             </div>
 
             <div className="flex items-center gap-2 self-start sm:self-center">
-              <div className="flex items-center bg-[#f0eee6] rounded-xl p-1 border border-stone-300/80 text-xs">
+              <div className="flex items-center bg-[#F0F5F4] dark:bg-slate-800 rounded-xl p-1 border border-[#D8E5E2] dark:border-slate-700 text-xs">
                 <button
                   type="button"
                   onClick={() => setBarSubMode('VOLUME')}
                   className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer ${
-                    barSubMode === 'VOLUME' ? 'bg-teal-700 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+                    barSubMode === 'VOLUME' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                   }`}
                 >
                   Beban & Gap Warga
@@ -569,7 +563,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                   type="button"
                   onClick={() => setBarSubMode('RISK_STACK')}
                   className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer ${
-                    barSubMode === 'RISK_STACK' ? 'bg-teal-700 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+                    barSubMode === 'RISK_STACK' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                   }`}
                 >
                   Stratifikasi Risiko L1
@@ -579,32 +573,29 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           {/* Bar Chart Container */}
-          <div
-            className="bone-white-bg h-80 w-full pt-2 rounded-xl bg-[#faf9f6]"
-            style={{ backgroundColor: '#faf9f6' }}
-          >
+          <div className="h-80 w-full pt-2 rounded-xl bg-transparent">
             <ResponsiveContainer width="100%" height="100%">
               {barSubMode === 'VOLUME' ? (
                 <BarChart data={filteredFacilities} margin={{ top: 10, right: 20, left: 0, bottom: 25 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.8} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                   <XAxis
                     dataKey="shortName"
-                    stroke="#475569"
+                    stroke="#64748b"
                     fontSize={11}
                     tickLine={false}
                     interval={0}
                     angle={-15}
                     textAnchor="end"
                   />
-                  <YAxis stroke="#475569" fontSize={11} tickLine={false} unit=" jiwa" />
+                  <YAxis stroke="#64748b" fontSize={11} tickLine={false} unit=" jiwa" />
                   <RechartsTooltip
                     contentStyle={{
-                      backgroundColor: '#faf9f6',
-                      borderColor: '#cbd5e1',
+                      backgroundColor: '#ffffff',
+                      borderColor: '#D8E5E2',
                       borderRadius: '0.75rem',
                       color: '#0f172a',
                       fontSize: '12px',
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
                     }}
                     formatter={(val: number, name: string) => [
                       `${val.toLocaleString('id-ID')} jiwa`,
@@ -614,7 +605,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                   <Legend
                     verticalAlign="top"
                     height={36}
-                    wrapperStyle={{ fontSize: '11px', color: '#334155' }}
+                    wrapperStyle={{ fontSize: '11px', color: '#64748b' }}
                   />
                   <Bar dataKey="targetPopulation" name="Sasaran Registrasi (Populasi)" fill="#64748b" radius={[4, 4, 0, 0]} />
                   <Bar dataKey="screenedL1" name="Level 1: Skrining Selesai" fill="#0d9488" radius={[4, 4, 0, 0]} />
@@ -623,25 +614,25 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 </BarChart>
               ) : (
                 <BarChart data={filteredFacilities} margin={{ top: 10, right: 20, left: 0, bottom: 25 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.8} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                   <XAxis
                     dataKey="shortName"
-                    stroke="#475569"
+                    stroke="#64748b"
                     fontSize={11}
                     tickLine={false}
                     interval={0}
                     angle={-15}
                     textAnchor="end"
                   />
-                  <YAxis stroke="#475569" fontSize={11} tickLine={false} unit=" jiwa" />
+                  <YAxis stroke="#64748b" fontSize={11} tickLine={false} unit=" jiwa" />
                   <RechartsTooltip
                     contentStyle={{
-                      backgroundColor: '#faf9f6',
-                      borderColor: '#cbd5e1',
+                      backgroundColor: '#ffffff',
+                      borderColor: '#D8E5E2',
                       borderRadius: '0.75rem',
                       color: '#0f172a',
                       fontSize: '12px',
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
                     }}
                     formatter={(val: number, name: string) => [
                       `${val.toLocaleString('id-ID')} warga`,
@@ -651,7 +642,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                   <Legend
                     verticalAlign="top"
                     height={36}
-                    wrapperStyle={{ fontSize: '11px', color: '#334155' }}
+                    wrapperStyle={{ fontSize: '11px', color: '#64748b' }}
                   />
                   <Bar dataKey="greenRisk" stackId="a" name="Risiko Ringan (Hijau)" fill="#10b981" />
                   <Bar dataKey="yellowRisk" stackId="a" name="Risiko Sedang (Kuning)" fill="#f59e0b" />
@@ -662,12 +653,9 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             </ResponsiveContainer>
           </div>
 
-          <div
-            className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 text-xs text-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs"
-            style={{ backgroundColor: '#faf9f6' }}
-          >
+          <div className="p-3.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800/80 border border-[#D8E5E2] dark:border-slate-700 text-xs text-[#102521] dark:text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
             <div className="flex items-center gap-2">
-              <Info className="w-4 h-4 text-teal-700 shrink-0" />
+              <Info className="w-4 h-4 text-[#00201C] dark:text-teal-400 shrink-0" />
               <span>
                 <strong>Insight Level 1 vs 2:</strong> Puskesmas Samuya mencatat kontinuitas tertinggi (70.0%), sedangkan Puskesmas Pancado di wilayah pesisir utara membutuhkan intervensi logistik maritim untuk mengatasi gap (47.1%).
               </span>
@@ -675,7 +663,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
             <button
               type="button"
               onClick={() => onNavigate?.('dinkes-kinerja-pkm')}
-              className="text-teal-700 hover:text-teal-800 font-bold text-xs transition flex items-center gap-1 shrink-0 cursor-pointer"
+              className="text-[#00201C] dark:text-teal-400 hover:text-emerald-700 font-bold text-xs transition flex items-center gap-1 shrink-0 cursor-pointer"
             >
               <span>Detail Kinerja Faskes</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -686,28 +674,25 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 2. AREA SECTION (Area Chart) */}
       {(activeTab === 'ALL' || activeTab === 'AREA') && (
-        <div
-          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
-          style={{ backgroundColor: '#faf9f6' }}
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
+        <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
             <div>
-              <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
-                <AreaChartIcon className="w-4 h-4 text-sky-700" />
+              <h4 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+                <AreaChartIcon className="w-4 h-4 text-sky-700 dark:text-sky-400" />
                 Pertumbuhan Longitudinal & Jalur Kaskade Level 1 s.d 3
               </h4>
-              <p className="text-xs text-stone-600 mt-0.5">
+              <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">
                 Mengamati akselerasi kumulatif skrining sasaran (L1), rujukan tertangani (L2), dan kohort pemantauan kendali (L3).
               </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="flex items-center bg-[#f0eee6] rounded-xl p-1 border border-stone-300/80 text-xs">
+              <div className="flex items-center bg-[#F0F5F4] dark:bg-slate-800 rounded-xl p-1 border border-[#D8E5E2] dark:border-slate-700 text-xs">
                 <button
                   type="button"
                   onClick={() => setAreaSubMode('CUMULATIVE')}
                   className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer ${
-                    areaSubMode === 'CUMULATIVE' ? 'bg-sky-700 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+                    areaSubMode === 'CUMULATIVE' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                   }`}
                 >
                   Kumulatif Jan-Agu 2026
@@ -716,7 +701,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                   type="button"
                   onClick={() => setAreaSubMode('CASCADE')}
                   className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer ${
-                    areaSubMode === 'CASCADE' ? 'bg-sky-700 text-white shadow-xs' : 'text-stone-700 hover:text-stone-900'
+                    areaSubMode === 'CASCADE' ? 'bg-[#00201C] text-white shadow-2xs' : 'text-[#60716D] dark:text-slate-400 hover:text-black dark:hover:text-white'
                   }`}
                 >
                   Transisi Kaskade Warga
@@ -726,10 +711,7 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           {/* Area Chart Container */}
-          <div
-            className="bone-white-bg h-80 w-full pt-2 rounded-xl bg-[#faf9f6]"
-            style={{ backgroundColor: '#faf9f6' }}
-          >
+          <div className="h-80 w-full pt-2 rounded-xl bg-transparent">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={MONTHLY_TREND_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                 <defs>
@@ -750,21 +732,21 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                     <stop offset="95%" stopColor="#d97706" stopOpacity={0.08} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.8} />
-                <XAxis dataKey="month" stroke="#475569" fontSize={11} tickLine={false} />
-                <YAxis stroke="#475569" fontSize={11} tickLine={false} unit=" jiwa" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+                <XAxis dataKey="month" stroke="#64748b" fontSize={11} tickLine={false} />
+                <YAxis stroke="#64748b" fontSize={11} tickLine={false} unit=" jiwa" />
                 <RechartsTooltip
                   contentStyle={{
-                    backgroundColor: '#faf9f6',
-                    borderColor: '#cbd5e1',
+                    backgroundColor: '#ffffff',
+                    borderColor: '#D8E5E2',
                     borderRadius: '0.75rem',
                     color: '#0f172a',
                     fontSize: '12px',
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
                   }}
                   formatter={(val: number, name: string) => [`${val.toLocaleString('id-ID')} jiwa`, name]}
                 />
-                <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '11px', color: '#334155' }} />
+                <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '11px', color: '#64748b' }} />
                 <Area
                   type="monotone"
                   dataKey="screenedL1Cumulative"
@@ -809,29 +791,20 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div
-              className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs"
-              style={{ backgroundColor: '#faf9f6' }}
-            >
-              <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Akselerasi Skrining (L1)</span>
-              <p className="font-bold text-teal-800 text-sm">+768 warga diskrining sejak Jan 2026</p>
-              <p className="text-[11px] text-stone-600">Rata-rata 109 warga/bulan terlayani</p>
+            <div className="p-3.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800/80 border border-[#D8E5E2] dark:border-slate-700 space-y-1 shadow-2xs">
+              <span className="text-[10px] text-[#60716D] dark:text-slate-400 uppercase font-bold tracking-wider">Akselerasi Skrining (L1)</span>
+              <p className="font-bold text-[#2E7D5B] dark:text-emerald-400 text-sm">+768 warga diskrining sejak Jan 2026</p>
+              <p className="text-[11px] text-[#60716D] dark:text-slate-400">Rata-rata 109 warga/bulan terlayani</p>
             </div>
-            <div
-              className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs"
-              style={{ backgroundColor: '#faf9f6' }}
-            >
-              <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Tindak Lanjut Faskes (L2)</span>
-              <p className="font-bold text-sky-800 text-sm">268 pasien berisiko telah tertata laksana</p>
-              <p className="text-[11px] text-stone-600">61.3% tingkat kontinuitas kabupaten</p>
+            <div className="p-3.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800/80 border border-[#D8E5E2] dark:border-slate-700 space-y-1 shadow-2xs">
+              <span className="text-[10px] text-[#60716D] dark:text-slate-400 uppercase font-bold tracking-wider">Tindak Lanjut Faskes (L2)</span>
+              <p className="font-bold text-sky-800 dark:text-sky-400 text-sm">268 pasien berisiko telah tertata laksana</p>
+              <p className="text-[11px] text-[#60716D] dark:text-slate-400">61.3% tingkat kontinuitas kabupaten</p>
             </div>
-            <div
-              className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200 space-y-1 shadow-xs"
-              style={{ backgroundColor: '#faf9f6' }}
-            >
-              <span className="text-[10px] text-stone-600 uppercase font-bold tracking-wider">Jalur Outcome Terkendali (L3)</span>
-              <p className="font-bold text-amber-800 text-sm">290 pasien dalam kohort 90-hari</p>
-              <p className="text-[11px] text-stone-600">Menunggu audit validasi CR-OC (OI-08)</p>
+            <div className="p-3.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800/80 border border-[#D8E5E2] dark:border-slate-700 space-y-1 shadow-2xs">
+              <span className="text-[10px] text-[#60716D] dark:text-slate-400 uppercase font-bold tracking-wider">Jalur Outcome Terkendali (L3)</span>
+              <p className="font-bold text-amber-800 dark:text-amber-400 text-sm">290 pasien dalam kohort 90-hari</p>
+              <p className="text-[11px] text-[#60716D] dark:text-slate-400">Menunggu audit validasi CR-OC (OI-08)</p>
             </div>
           </div>
         </div>
@@ -839,53 +812,47 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 3. KOMPOSISI DUAL AXIS SECTION (Composed Chart) */}
       {(activeTab === 'ALL' || activeTab === 'COMPOSED') && (
-        <div
-          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
-          style={{ backgroundColor: '#faf9f6' }}
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
+        <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
             <div>
-              <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-emerald-700" />
+              <h4 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                 Volume vs Persentase Kontinuitas SPM
               </h4>
-              <p className="text-xs text-stone-600 mt-0.5">
+              <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">
                 Mengevaluasi apakah lonjakan volume skrining berbanding lurus dengan kepatuhan standar SPM (Standar Kemenkes ≥50% & Target Prima ≥80%).
               </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-[10px] px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold">
+              <span className="text-[10px] px-2.5 py-0.5 rounded-md bg-[#EBF7F2] dark:bg-emerald-950/50 text-[#2E7D5B] dark:text-emerald-300 border border-[#BBE5D4] dark:border-emerald-800 font-bold">
                 Dual Axis: Jiwa & %
               </span>
             </div>
           </div>
 
-          <div
-            className="bone-white-bg h-80 w-full pt-2 rounded-xl bg-[#faf9f6]"
-            style={{ backgroundColor: '#faf9f6' }}
-          >
+          <div className="h-80 w-full pt-2 rounded-xl bg-transparent">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={MONTHLY_TREND_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.8} />
-                <XAxis dataKey="month" stroke="#475569" fontSize={11} tickLine={false} />
-                <YAxis yAxisId="left" stroke="#475569" fontSize={11} tickLine={false} unit=" jiwa" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+                <XAxis dataKey="month" stroke="#64748b" fontSize={11} tickLine={false} />
+                <YAxis yAxisId="left" stroke="#64748b" fontSize={11} tickLine={false} unit=" jiwa" />
                 <YAxis yAxisId="right" orientation="right" stroke="#059669" fontSize={11} tickLine={false} domain={[0, 100]} unit="%" />
                 <RechartsTooltip
                   contentStyle={{
-                    backgroundColor: '#faf9f6',
-                    borderColor: '#cbd5e1',
+                    backgroundColor: '#ffffff',
+                    borderColor: '#D8E5E2',
                     borderRadius: '0.75rem',
                     color: '#0f172a',
                     fontSize: '12px',
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
                   }}
                   formatter={(val: number, name: string) => [
                     name.includes('%') ? `${val}%` : `${val.toLocaleString('id-ID')} jiwa`,
                     name,
                   ]}
                 />
-                <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '11px', color: '#334155' }} />
+                <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '11px', color: '#64748b' }} />
                 <ReferenceLine yAxisId="right" y={50} stroke="#d97706" strokeDasharray="4 4" label={{ value: 'Target SPM Kemenkes (50%)', fill: '#b45309', fontSize: 10, position: 'insideTopRight' }} />
                 <ReferenceLine yAxisId="right" y={80} stroke="#059669" strokeDasharray="4 4" label={{ value: 'Target Layanan Prima (80%)', fill: '#047857', fontSize: 10, position: 'insideTopRight' }} />
                 <Bar yAxisId="left" dataKey="screenedMonthly" name="Volume Skrining Bulanan (L1)" fill="#0d9488" radius={[4, 4, 0, 0]} />
@@ -917,30 +884,24 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
 
       {/* 4. DONUT COHORT LEVEL 3 SECTION */}
       {(activeTab === 'ALL' || activeTab === 'COHORT') && (
-        <div
-          className="bone-white-bg p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-sm space-y-4"
-          style={{ backgroundColor: '#faf9f6' }}
-        >
-          <div className="border-b border-stone-200 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="border-b border-[#E8EFEB] dark:border-slate-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
-                <PieChartIcon className="w-4 h-4 text-amber-700" />
+              <h4 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+                <PieChartIcon className="w-4 h-4 text-amber-600" />
                 Distribusi Pasien Kohort Pemantauan Level 3
               </h4>
-              <p className="text-xs text-stone-600 mt-0.5">
+              <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">
                 Sebaran 290 pasien dalam siklus evaluasi 90-hari menuju verifikasi terkendali CR-OC.
               </p>
             </div>
-            <span className="text-xs px-3 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 font-bold self-start sm:self-center shadow-xs">
+            <span className="text-xs px-3 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-bold self-start sm:self-center shadow-2xs">
               Total 290 Jiwa Aktif
             </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div
-              className="bone-white-bg lg:col-span-7 h-72 w-full pt-1 rounded-xl bg-[#faf9f6]"
-              style={{ backgroundColor: '#faf9f6' }}
-            >
+            <div className="lg:col-span-7 h-72 w-full pt-1 rounded-xl bg-transparent">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -953,24 +914,24 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                     dataKey="value"
                   >
                     {LEVEL3_COHORT_DATA.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} stroke="#faf9f6" strokeWidth={2} />
+                      <Cell key={`cell-${index}`} fill={entry.color} stroke="#ffffff" strokeWidth={2} />
                     ))}
                   </Pie>
                   <RechartsTooltip
                     contentStyle={{
-                      backgroundColor: '#faf9f6',
-                      borderColor: '#cbd5e1',
+                      backgroundColor: '#ffffff',
+                      borderColor: '#D8E5E2',
                       borderRadius: '0.75rem',
                       fontSize: '11px',
                       color: '#0f172a',
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08)',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
                     }}
                     formatter={(val: number, name: string) => [
                       `${val} warga (${Math.round((val / 290) * 100)}%)`,
                       name,
                     ]}
                   />
-                  <Legend wrapperStyle={{ fontSize: '11px', color: '#334155' }} />
+                  <Legend wrapperStyle={{ fontSize: '11px', color: '#64748b' }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -980,27 +941,23 @@ export const ImpactLevelAnalyticsCharts: React.FC<ImpactLevelAnalyticsChartsProp
                 {LEVEL3_COHORT_DATA.map((item, idx) => (
                   <div
                     key={idx}
-                    className="bone-white-bg p-2.5 rounded-xl bg-[#faf9f6] border border-stone-200 flex items-center justify-between text-xs shadow-xs"
-                    style={{ backgroundColor: '#faf9f6' }}
+                    className="p-2.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800/80 border border-[#D8E5E2] dark:border-slate-700 flex items-center justify-between text-xs shadow-2xs"
                   >
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                      <span className="text-stone-800 text-[11px] font-medium">{item.name}</span>
+                      <span className="text-[#102521] dark:text-slate-200 text-[11px] font-medium">{item.name}</span>
                     </div>
-                    <span className="text-stone-900 font-bold shrink-0 ml-2">{item.value} jiwa</span>
+                    <span className="text-[#102521] dark:text-white font-bold shrink-0 ml-2">{item.value} jiwa</span>
                   </div>
                 ))}
               </div>
 
-              <div
-                className="bone-white-bg p-3.5 rounded-xl bg-[#faf9f6] border border-amber-300/80 text-xs text-amber-900 space-y-1 shadow-xs"
-                style={{ backgroundColor: '#faf9f6' }}
-              >
-                <div className="flex items-center gap-1.5 font-bold text-amber-900">
-                  <ShieldCheck className="w-4 h-4 text-amber-700" />
+              <div className="p-3.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-300 space-y-1 shadow-2xs">
+                <div className="flex items-center gap-1.5 font-bold text-amber-900 dark:text-amber-300">
+                  <ShieldCheck className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                   <span>Tata Kelola Data Klinis (OI-08):</span>
                 </div>
-                <p className="text-[11px] leading-relaxed text-amber-800">
+                <p className="text-[11px] leading-relaxed text-amber-800 dark:text-amber-300">
                   Level 3 tetap berstatus <em>NOT_ASSESSABLE</em> sampai seluruh kohort menyelesaikan siklus 90-hari dan disahkan oleh komite medis demi mencegah estimasi angka fiktif.
                 </p>
               </div>

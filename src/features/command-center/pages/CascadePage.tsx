@@ -179,15 +179,15 @@ export const CascadePage: React.FC = () => {
       <CompletenessBanner completeness={completeness} onRefresh={loadData} />
 
       {/* Main Cascade Visualization */}
-      <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div className="p-6 rounded-2xl bg-[#FAF9F6] border border-[#D8E5E2] shadow-sm space-y-6">
+        <div className="flex items-center justify-between border-b border-[#D8E5E2] pb-4">
           <div>
-            <h3 className="text-sm font-semibold text-white">Funnel Tindak Lanjut CKG</h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <h3 className="text-base font-bold text-slate-900">Funnel Tindak Lanjut CKG</h3>
+            <p className="text-xs text-slate-600 mt-0.5">
               Setiap baris menampilkan jumlah absolut, persentase terhadap skrining awal, dan tingkat penyusutan (drop-off).
             </p>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Cutoff: {cascade.dataCutoffAt.slice(0, 10)}</span>
+          <span className="text-xs text-slate-500 font-mono">Cutoff: {cascade.dataCutoffAt.slice(0, 10)}</span>
         </div>
 
         {/* Cascade Rows */}
@@ -201,10 +201,10 @@ export const CascadePage: React.FC = () => {
                 key={stage.stageId}
                 className={`p-4 rounded-xl border transition-all ${
                   stage.isLargestDrop
-                    ? 'bg-rose-500/10 border-rose-500/40 hover:border-rose-500'
+                    ? 'bg-rose-50/80 border-rose-200 hover:border-rose-400 shadow-2xs'
                     : isOutcome
-                    ? 'bg-amber-500/10 border-amber-500/20'
-                    : 'bg-slate-800/40 border-slate-800 hover:border-slate-700'
+                    ? 'bg-amber-50/80 border-amber-200 shadow-2xs'
+                    : 'bg-white border-[#E2ECE9] hover:border-teal-500/40 shadow-2xs'
                 }`}
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-2">
@@ -212,46 +212,46 @@ export const CascadePage: React.FC = () => {
                     <span className="text-xs font-bold text-slate-400 font-mono w-5">0{idx + 1}</span>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-white">{stage.label}</span>
+                        <span className="text-sm font-bold text-slate-900">{stage.label}</span>
                         {stage.isLargestDrop && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center gap-1 uppercase tracking-wider">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1 uppercase tracking-wider">
                             <TrendingDown className="w-3 h-3" />
                             Titik Penyusutan Terbesar
                           </span>
                         )}
                         {isOutcome && (
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1">
                             <Lock className="w-3 h-3" />
                             Lock OI-08
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-slate-400 mt-0.5">{stage.description}</p>
+                      <p className="text-xs text-slate-600 mt-0.5">{stage.description}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-6 self-end md:self-center">
                     {/* Absolute count */}
                     <div className="text-right">
-                      <div className="text-lg font-black text-white tracking-tight">
+                      <div className="text-lg font-black text-slate-900 tracking-tight">
                         {isOutcome ? '—' : stage.count.toLocaleString('id-ID')}
                       </div>
-                      <div className="text-[11px] text-slate-400">
+                      <div className="text-[11px] text-slate-500 font-medium">
                         {isOutcome ? 'Belum dinilai' : `${stage.percentage}% dari total skrining`}
                       </div>
                     </div>
 
                     {/* Drop-off / Shrinkage metrics */}
                     {!isFirst && !isOutcome && (
-                      <div className="text-right pl-4 border-l border-slate-800">
+                      <div className="text-right pl-4 border-l border-slate-200">
                         <div
                           className={`text-xs font-bold ${
-                            stage.isLargestDrop ? 'text-rose-400' : 'text-slate-300'
+                            stage.isLargestDrop ? 'text-rose-600' : 'text-slate-700'
                           }`}
                         >
                           - {stage.shrinkageCount?.toLocaleString('id-ID')} kasus
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-[11px] text-slate-500 font-medium">
                           ({stage.shrinkagePercentage}% drop)
                         </div>
                       </div>
@@ -262,7 +262,7 @@ export const CascadePage: React.FC = () => {
                       <button
                         onClick={() => handleStageDrilldown(stage)}
                         title="Telusuri Kasus Tahap Ini"
-                        className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-teal-400 hover:text-teal-300 border border-slate-700 transition"
+                        className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 text-teal-700 hover:text-teal-800 border border-slate-200 transition cursor-pointer"
                       >
                         <FileSearch className="w-4 h-4" />
                       </button>
@@ -272,14 +272,14 @@ export const CascadePage: React.FC = () => {
 
                 {/* Progress bar */}
                 {!isOutcome && (
-                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden mt-3">
+                  <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden mt-3 border border-slate-200/60">
                     <div
                       className={`h-full rounded-full transition-all ${
                         stage.isLargestDrop
                           ? 'bg-rose-500'
                           : idx >= 4
                           ? 'bg-emerald-500'
-                          : 'bg-teal-500'
+                          : 'bg-teal-600'
                       }`}
                       style={{ width: `${Math.max(4, stage.percentage || 0)}%` }}
                     />
@@ -294,7 +294,7 @@ export const CascadePage: React.FC = () => {
       {/* Side Partitions: Awaiting Confirmation, Exits, and Quality Signal */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Awaiting Confirmation */}
-        <div className="p-5 rounded-2xl bg-amber-50 border border-amber-300 text-stone-900 shadow-lg space-y-3">
+        <div className="p-5 rounded-2xl bg-amber-50 border border-amber-300 text-stone-900 shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wider">
             <Clock className="w-4 h-4 text-amber-800" />
             Menunggu Konfirmasi Klinis
@@ -309,48 +309,48 @@ export const CascadePage: React.FC = () => {
         </div>
 
         {/* Exits / Terminal Stages */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-3">
-          <div className="flex items-center gap-2 text-rose-400 font-semibold text-xs uppercase tracking-wider">
+        <div className="p-5 rounded-2xl bg-[#FAF9F6] border border-[#D8E5E2] shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-rose-700 font-bold text-xs uppercase tracking-wider">
             <UserX className="w-4 h-4" />
             Kasus Keluar Jalur Kaskade (Exits)
           </div>
-          <div className="text-3xl font-black text-white">
+          <div className="text-3xl font-black text-slate-900">
             {cascade.exits.totalExits}{' '}
-            <span className="text-xs font-normal text-slate-400">kasus keluar</span>
+            <span className="text-xs font-normal text-slate-500">kasus keluar</span>
           </div>
-          <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 pt-1">
-            <div className="p-2 rounded-lg bg-slate-800/60">
-              <span className="text-slate-400">Putus Kontak (LTFU):</span>{' '}
-              <strong className="text-white">{cascade.exits.lostToFollowUp}</strong>
+          <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 pt-1">
+            <div className="p-2.5 rounded-xl bg-white border border-[#E2ECE9] shadow-2xs">
+              <span className="text-slate-500">Putus Kontak (LTFU):</span>{' '}
+              <strong className="text-slate-900 ml-1">{cascade.exits.lostToFollowUp}</strong>
             </div>
-            <div className="p-2 rounded-lg bg-slate-800/60">
-              <span className="text-slate-400">Menolak Layanan:</span>{' '}
-              <strong className="text-white">{cascade.exits.refused}</strong>
+            <div className="p-2.5 rounded-xl bg-white border border-[#E2ECE9] shadow-2xs">
+              <span className="text-slate-500">Menolak Layanan:</span>{' '}
+              <strong className="text-slate-900 ml-1">{cascade.exits.refused}</strong>
             </div>
-            <div className="p-2 rounded-lg bg-slate-800/60">
-              <span className="text-slate-400">Pindah Domisili:</span>{' '}
-              <strong className="text-white">{cascade.exits.moved}</strong>
+            <div className="p-2.5 rounded-xl bg-white border border-[#E2ECE9] shadow-2xs">
+              <span className="text-slate-500">Pindah Domisili:</span>{' '}
+              <strong className="text-slate-900 ml-1">{cascade.exits.moved}</strong>
             </div>
-            <div className="p-2 rounded-lg bg-slate-800/60">
-              <span className="text-slate-400">Meninggal Dunia:</span>{' '}
-              <strong className="text-white">{cascade.exits.deceased}</strong>
+            <div className="p-2.5 rounded-xl bg-white border border-[#E2ECE9] shadow-2xs">
+              <span className="text-slate-500">Meninggal Dunia:</span>{' '}
+              <strong className="text-slate-900 ml-1">{cascade.exits.deceased}</strong>
             </div>
           </div>
         </div>
 
         {/* Quality Signal: Manual Task Closure */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-lg space-y-3">
-          <div className="flex items-center gap-2 text-sky-400 font-semibold text-xs uppercase tracking-wider">
-            <AlertTriangle className="w-4 h-4" />
+        <div className="p-5 rounded-2xl bg-[#FAF9F6] border border-[#D8E5E2] shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-sky-800 font-bold text-xs uppercase tracking-wider">
+            <AlertTriangle className="w-4 h-4 text-sky-700" />
             Sinyal Penutupan Manual Tugas
           </div>
-          <div className="text-3xl font-black text-white">
+          <div className="text-3xl font-black text-slate-900">
             {cascade.manualTaskClosureRatio}%{' '}
-            <span className="text-xs font-normal text-slate-400">
+            <span className="text-xs font-normal text-slate-500">
               ({cascade.manualTaskClosureCount} tugas ditutup manual)
             </span>
           </div>
-          <p className="text-xs text-slate-300 leading-relaxed">
+          <p className="text-xs text-slate-600 leading-relaxed">
             Proporsi tugas tindak lanjut yang ditutup tanpa encounter data langsung. Angka di atas 25% menjadi sinyal supervisi kualitas pencatatan faskes.
           </p>
         </div>

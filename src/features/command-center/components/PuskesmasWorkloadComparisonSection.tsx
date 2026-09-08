@@ -166,12 +166,12 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
   return (
     <div
       id="puskesmas-comparison-section"
-      className="p-4 sm:p-5 md:p-6 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4"
+      className="p-4 sm:p-5 md:p-6 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4"
     >
       {/* Header & Title */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-stone-200">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#E8EFEB] dark:border-slate-800">
         <div className="flex items-start gap-3">
-          <div className="p-2.5 rounded-xl bg-teal-50 text-teal-800 border border-teal-200 shadow-2xs">
+          <div className="p-2.5 rounded-xl bg-[#EBF7F2] dark:bg-teal-950/50 text-[#00201C] dark:text-teal-300 border border-[#D8E5E2] dark:border-teal-800 shadow-2xs">
             <Building2 className="w-5 h-5" />
           </div>
           <div>
@@ -584,7 +584,7 @@ export const PuskesmasWorkloadComparisonSection: React.FC<PuskesmasWorkloadCompa
                   name="Capaian %"
                   stroke="#0f766e"
                   strokeWidth={2.5}
-                  dot={{ r: 3.5, fill: '#0f766e', strokeWidth: 1.5, stroke: '#faf9f6' }}
+                  dot={{ r: 3.5, fill: '#0f766e', strokeWidth: 1.5, stroke: '#ffffff' }}
                   activeDot={{ r: 6, fill: '#115e59' }}
                 />
               )}

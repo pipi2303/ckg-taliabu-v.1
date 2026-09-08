@@ -85,12 +85,12 @@ export const PopulationForecastPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs text-teal-800 font-bold uppercase tracking-wider mb-1">
-            <TrendingUp className="w-4 h-4 text-teal-700" />
+          <div className="flex items-center gap-2 text-xs text-[#00201C] dark:text-teal-400 font-bold uppercase tracking-wider mb-1">
+            <TrendingUp className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
             POPULATION HEALTH BURDEN & MEDICATION DEMAND (PA-08)
           </div>
-          <h1 className="text-2xl font-bold text-black tracking-tight">Proyeksi Beban Kesehatan & Kebutuhan Obat 6-Bulan</h1>
-          <p className="text-xs text-stone-600 mt-1">
+          <h1 className="text-2xl font-bold text-[#102521] dark:text-white tracking-tight">Proyeksi Beban Kesehatan & Kebutuhan Obat 6-Bulan</h1>
+          <p className="text-xs text-[#60716D] dark:text-slate-400 mt-1">
             Forecasting beban penyakit kronis, kebutuhan stok obat antihipertensi/diabetes, dan risiko drop-out akibat faktor cuaca laut Kepulauan Taliabu.
           </p>
         </div>
@@ -98,7 +98,7 @@ export const PopulationForecastPage: React.FC = () => {
         <button
           onClick={handleRefreshForecast}
           disabled={isRefreshing}
-          className="flex items-center gap-2 px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white rounded-xl text-xs font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 bg-[#00201C] hover:bg-[#00332D] text-white rounded-xl text-xs font-semibold shadow-2xs transition disabled:opacity-50 cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
           Segarkan Prediksi Model AI
@@ -107,54 +107,54 @@ export const PopulationForecastPage: React.FC = () => {
 
       {/* Strict Visual Distinction: # DATA AKTUAL vs # PROYEKSI AI */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 bg-[#faf9f6] border border-stone-200/90 rounded-xl space-y-2 text-xs shadow-xs">
-          <div className="flex items-center gap-2 font-bold text-emerald-900 uppercase tracking-wider">
-            <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+        <div className="p-4 bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl space-y-2 text-xs shadow-2xs">
+          <div className="flex items-center gap-2 font-bold text-emerald-800 dark:text-emerald-400 uppercase tracking-wider">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             # 1. DATA AKTUAL HISTORIS (6 BULAN SEBELUMNYA)
           </div>
           <div className="grid grid-cols-3 gap-2 text-center pt-1">
-            <div className="p-2 bg-white border border-stone-200 rounded-lg shadow-2xs">
-              <div className="text-[10px] text-stone-500 uppercase font-semibold">Skrining Selesai</div>
-              <div className="text-base font-bold text-black">3.420</div>
+            <div className="p-2 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+              <div className="text-[10px] text-[#60716D] dark:text-slate-400 uppercase font-semibold">Skrining Selesai</div>
+              <div className="text-base font-bold text-[#102521] dark:text-white">3.420</div>
             </div>
-            <div className="p-2 bg-white border border-stone-200 rounded-lg shadow-2xs">
-              <div className="text-[10px] text-stone-500 uppercase font-semibold">Konsumsi Amlodipine</div>
-              <div className="text-base font-bold text-teal-800">18.400 tab</div>
+            <div className="p-2 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+              <div className="text-[10px] text-[#60716D] dark:text-slate-400 uppercase font-semibold">Konsumsi Amlodipine</div>
+              <div className="text-base font-bold text-[#00201C] dark:text-teal-300">18.400 tab</div>
             </div>
-            <div className="p-2 bg-white border border-stone-200 rounded-lg shadow-2xs">
-              <div className="text-[10px] text-stone-500 uppercase font-semibold">Rasio Drop-off Riil</div>
-              <div className="text-base font-bold text-amber-800">23.6%</div>
+            <div className="p-2 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+              <div className="text-[10px] text-[#60716D] dark:text-slate-400 uppercase font-semibold">Rasio Drop-off Riil</div>
+              <div className="text-base font-bold text-amber-700 dark:text-amber-400">23.6%</div>
             </div>
           </div>
         </div>
 
-        <div className="p-4 bg-[#faf9f6] border border-teal-200 rounded-xl space-y-2 text-xs shadow-xs">
-          <div className="flex items-center gap-2 font-bold text-teal-900 uppercase tracking-wider">
-            <Sparkles className="w-4 h-4 text-teal-700" />
+        <div className="p-4 bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl space-y-2 text-xs shadow-2xs">
+          <div className="flex items-center gap-2 font-bold text-[#00201C] dark:text-teal-400 uppercase tracking-wider">
+            <Sparkles className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
             # 2. PROYEKSI AI MODEL PA-08 (6 BULAN KE DEPAN)
           </div>
           <div className="grid grid-cols-3 gap-2 text-center pt-1">
-            <div className="p-2 bg-white border border-teal-200 rounded-lg shadow-2xs">
-              <div className="text-[10px] text-teal-800 uppercase font-semibold">Estimasi Skrining</div>
-              <div className="text-base font-bold text-black">6.170</div>
+            <div className="p-2 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+              <div className="text-[10px] text-[#00201C] dark:text-teal-400 uppercase font-semibold">Estimasi Skrining</div>
+              <div className="text-base font-bold text-[#102521] dark:text-white">6.170</div>
             </div>
-            <div className="p-2 bg-white border border-teal-200 rounded-lg shadow-2xs">
-              <div className="text-[10px] text-teal-800 uppercase font-semibold">Proyeksi Amlodipine</div>
-              <div className="text-base font-bold text-teal-800">19.500 tab</div>
+            <div className="p-2 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+              <div className="text-[10px] text-[#00201C] dark:text-teal-400 uppercase font-semibold">Proyeksi Amlodipine</div>
+              <div className="text-base font-bold text-[#00201C] dark:text-teal-300">19.500 tab</div>
             </div>
-            <div className="p-2 bg-white border border-teal-200 rounded-lg shadow-2xs">
-              <div className="text-[10px] text-teal-800 uppercase font-semibold">Rentang Ketidakpastian</div>
-              <div className="text-base font-bold text-amber-800">± 12%</div>
+            <div className="p-2 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-xl shadow-2xs">
+              <div className="text-[10px] text-[#00201C] dark:text-teal-400 uppercase font-semibold">Rentang Ketidakpastian</div>
+              <div className="text-base font-bold text-amber-700 dark:text-amber-400">± 12%</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Governance Disclaimer */}
-      <div className="p-3.5 bg-[#faf9f6] border border-stone-200/90 rounded-xl text-xs text-stone-600 flex items-start gap-2 shadow-xs">
-        <Info className="w-4 h-4 text-teal-700 shrink-0 mt-0.5" />
+      <div className="p-3.5 bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl text-xs text-[#60716D] dark:text-slate-400 flex items-start gap-2 shadow-2xs">
+        <Info className="w-4 h-4 text-[#00201C] dark:text-teal-400 shrink-0 mt-0.5" />
         <div>
-          <strong className="text-stone-800">Prinsip Tata Kelola (Forecast ≠ Target):</strong> Angka proyeksi ini adalah estimasi kapasitas logistik dan
+          <strong className="text-[#102521] dark:text-white">Prinsip Tata Kelola (Forecast ≠ Target):</strong> Angka proyeksi ini adalah estimasi kapasitas logistik dan
           perencanaan kebutuhan obat Dinas Kesehatan, <strong>BUKAN</strong> target capaian kinerja individu tenaga kesehatan dan
           tidak boleh digunakan sebagai alasan pemotongan anggaran atau penutupan layanan faskes.
         </div>
@@ -165,50 +165,50 @@ export const PopulationForecastPage: React.FC = () => {
         {forecast.forecastMonths.map((m, idx) => (
           <div
             key={idx}
-            className="p-4 rounded-xl bg-[#faf9f6] border border-stone-200/90 shadow-xs flex flex-col justify-between hover:border-stone-300 transition"
+            className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs flex flex-col justify-between hover:border-[#BBE5D4] transition"
           >
             <div>
-              <div className="flex items-center justify-between text-xs font-bold text-black border-b border-stone-200 pb-1.5 mb-2">
+              <div className="flex items-center justify-between text-xs font-bold text-[#102521] dark:text-white border-b border-[#E8EFEB] dark:border-slate-800 pb-1.5 mb-2">
                 <span className="flex items-center gap-1">
-                  <Calendar className="w-3 h-3 text-teal-700" />
+                  <Calendar className="w-3 h-3 text-[#00201C] dark:text-teal-400" />
                   {m.monthLabel}
                 </span>
                 {m.maritimeRiskFactor >= 0.6 ? (
-                  <span className="px-1.5 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200 text-[10px] font-bold flex items-center gap-0.5">
+                  <span className="px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 text-[10px] font-bold flex items-center gap-0.5">
                     <Ship className="w-2.5 h-2.5" /> Ombak Tinggi
                   </span>
                 ) : (
-                  <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold flex items-center gap-0.5">
+                  <span className="px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold flex items-center gap-0.5">
                     <Compass className="w-2.5 h-2.5" /> Laut Tenang
                   </span>
                 )}
               </div>
 
               <div className="space-y-1.5 text-xs">
-                <div className="flex justify-between text-stone-700">
-                  <span className="text-stone-500">Sasaran CKG:</span>
-                  <span className="font-bold text-black">{m.screenedProjected}</span>
+                <div className="flex justify-between text-[#60716D] dark:text-slate-400">
+                  <span>Sasaran CKG:</span>
+                  <span className="font-bold text-[#102521] dark:text-white">{m.screenedProjected}</span>
                 </div>
-                <div className="flex justify-between text-stone-700">
-                  <span className="text-stone-500">Temuan Berisiko:</span>
-                  <span className="font-bold text-amber-800">{m.abnormalRiskProjected}</span>
+                <div className="flex justify-between text-[#60716D] dark:text-slate-400">
+                  <span>Temuan Berisiko:</span>
+                  <span className="font-bold text-amber-700 dark:text-amber-400">{m.abnormalRiskProjected}</span>
                 </div>
-                <div className="flex justify-between text-stone-700">
-                  <span className="text-stone-500">Potensi Drop-off:</span>
-                  <span className="font-bold text-rose-800">{m.dropoutEstimated} jiwa</span>
+                <div className="flex justify-between text-[#60716D] dark:text-slate-400">
+                  <span>Potensi Drop-off:</span>
+                  <span className="font-bold text-rose-700 dark:text-rose-400">{m.dropoutEstimated} jiwa</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-3 pt-2 border-t border-stone-200 text-[11px] text-stone-600 space-y-1">
-              <div className="font-bold text-stone-800 flex items-center gap-1">
-                <Pill className="w-3 h-3 text-teal-700" /> Kebutuhan Obat:
+            <div className="mt-3 pt-2 border-t border-[#E8EFEB] dark:border-slate-800 text-[11px] text-[#60716D] dark:text-slate-400 space-y-1">
+              <div className="font-bold text-[#102521] dark:text-white flex items-center gap-1">
+                <Pill className="w-3 h-3 text-[#00201C] dark:text-teal-400" /> Kebutuhan Obat:
               </div>
-              <div className="text-[10px] text-stone-600">
-                • Amlodipine: <strong className="text-black">{m.medicationDemand.amlodipine10mgUnits} tab</strong>
+              <div className="text-[10px] text-[#60716D] dark:text-slate-400">
+                • Amlodipine: <strong className="text-[#102521] dark:text-white">{m.medicationDemand.amlodipine10mgUnits} tab</strong>
               </div>
-              <div className="text-[10px] text-stone-600">
-                • Metformin: <strong className="text-black">{m.medicationDemand.metformin500mgUnits} tab</strong>
+              <div className="text-[10px] text-[#60716D] dark:text-slate-400">
+                • Metformin: <strong className="text-[#102521] dark:text-white">{m.medicationDemand.metformin500mgUnits} tab</strong>
               </div>
             </div>
           </div>
@@ -217,12 +217,12 @@ export const PopulationForecastPage: React.FC = () => {
 
       {/* Strategic Insights & Logistics Recommendations */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-3">
-          <div className="flex items-center gap-2 text-sm font-bold text-black border-b border-stone-200 pb-2">
-            <AlertTriangle className="w-4 h-4 text-amber-700" />
+        <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-3">
+          <div className="flex items-center gap-2 text-sm font-bold text-[#102521] dark:text-white border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+            <AlertTriangle className="w-4 h-4 text-amber-600" />
             Faktor Pendorong Risiko & Analisis Musiman (Pulau Taliabu)
           </div>
-          <ul className="space-y-2.5 text-xs text-stone-700">
+          <ul className="space-y-2.5 text-xs text-[#60716D] dark:text-slate-300">
             {forecast.keyRiskDrivers.map((driver, idx) => (
               <li key={idx} className="flex items-start gap-2 leading-relaxed">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-600 mt-1.5 shrink-0" />
@@ -232,15 +232,15 @@ export const PopulationForecastPage: React.FC = () => {
           </ul>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-3">
-          <div className="flex items-center gap-2 text-sm font-bold text-black border-b border-stone-200 pb-2">
-            <ShieldCheck className="w-4 h-4 text-teal-700" />
+        <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-3">
+          <div className="flex items-center gap-2 text-sm font-bold text-[#102521] dark:text-white border-b border-[#E8EFEB] dark:border-slate-800 pb-2">
+            <ShieldCheck className="w-4 h-4 text-[#2E7D5B] dark:text-teal-400" />
             Rekomendasi Strategis Manajemen Logistik & Pelayanan
           </div>
-          <ul className="space-y-2.5 text-xs text-stone-700">
+          <ul className="space-y-2.5 text-xs text-[#60716D] dark:text-slate-300">
             {forecast.recommendedStockActions.map((action, idx) => (
               <li key={idx} className="flex items-start gap-2 leading-relaxed">
-                <span className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] dark:text-teal-400 mt-1.5 shrink-0" />
                 <span>{action}</span>
               </li>
             ))}
@@ -249,24 +249,24 @@ export const PopulationForecastPage: React.FC = () => {
       </div>
 
       {/* Predictive Dropout Risk Classifier Table */}
-      <div className="p-5 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-stone-200 pb-3">
+      <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
           <div>
-            <h3 className="text-sm font-bold text-black flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-teal-700" />
+            <h3 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
               Sistem Peringatan Dini Pasien Berisiko Putus Berobat (Dropout Early Warning)
             </h3>
-            <p className="text-xs text-stone-600 mt-0.5">
+            <p className="text-xs text-[#60716D] dark:text-slate-400 mt-0.5">
               Identifikasi otomatis pasien kronis dengan probabilitas tinggi melewatkan siklus kontrol berdasarkan pola kepatuhan dan hambatan akses.
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-stone-600 font-medium">Filter Minimal Skor:</span>
+            <span className="text-xs text-[#60716D] dark:text-slate-400 font-medium">Filter Minimal Skor:</span>
             <select
               value={filterMinRisk}
               onChange={(e) => setFilterMinRisk(Number(e.target.value))}
-              className="px-2.5 py-1 rounded-lg bg-white border border-stone-300 text-xs text-black font-semibold cursor-pointer"
+              className="px-2.5 py-1 rounded-xl bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 text-xs text-[#102521] dark:text-white font-semibold cursor-pointer"
             >
               <option value={0}>Semua Pasien Terpantau</option>
               <option value={50}>Risiko Sedang & Tinggi (≥ 50%)</option>
@@ -275,9 +275,9 @@ export const PopulationForecastPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="border border-stone-200 rounded-xl overflow-hidden shadow-2xs">
-          <table className="w-full text-left text-xs text-stone-700">
-            <thead className="bg-stone-100 text-stone-600 text-[11px] uppercase border-b border-stone-200 font-bold">
+        <div className="border border-[#D8E5E2] dark:border-slate-800 rounded-xl overflow-hidden shadow-2xs">
+          <table className="w-full text-left text-xs text-[#102521] dark:text-slate-200">
+            <thead className="bg-[#F8FBFA] dark:bg-slate-800 text-[#60716D] dark:text-slate-400 text-[11px] uppercase border-b border-[#D8E5E2] dark:border-slate-800 font-bold">
               <tr>
                 <th className="py-2.5 px-3">Nama Pasien & Faskes</th>
                 <th className="py-2.5 px-3">Tingkat Risiko Prediksi</th>
@@ -285,17 +285,17 @@ export const PopulationForecastPage: React.FC = () => {
                 <th className="py-2.5 px-3">Tindakan Pencegahan yang Disarankan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-200 bg-white">
+            <tbody className="divide-y divide-[#E8EFEB] dark:divide-slate-800 bg-white dark:bg-slate-900">
               {dropoutPredictions.map((dp) => (
-                <tr key={dp.citizenId} className="hover:bg-stone-50/60 transition">
+                <tr key={dp.citizenId} className="hover:bg-[#F8FBFA] dark:hover:bg-slate-800/60 transition">
                   <td className="py-3 px-3">
-                    <div className="font-bold text-black">{dp.citizenName}</div>
-                    <div className="text-[11px] text-stone-500 font-mono">{dp.nikMasked}</div>
-                    <div className="text-[11px] text-teal-800 font-medium">{dp.facilityName} - {dp.desaName}</div>
+                    <div className="font-bold text-[#102521] dark:text-white">{dp.citizenName}</div>
+                    <div className="text-[11px] text-[#60716D] dark:text-slate-400 font-mono">{dp.nikMasked}</div>
+                    <div className="text-[11px] text-[#00201C] dark:text-teal-300 font-medium">{dp.facilityName} - {dp.desaName}</div>
                   </td>
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-16 bg-stone-200 rounded-full h-2 overflow-hidden">
+                      <div className="w-16 bg-[#E8EFEB] dark:bg-slate-700 rounded-full h-2 overflow-hidden">
                         <div
                           className={`h-full ${
                             dp.riskScorePercent >= 70 ? 'bg-rose-600' : 'bg-amber-600'
@@ -303,7 +303,7 @@ export const PopulationForecastPage: React.FC = () => {
                           style={{ width: `${dp.riskScorePercent}%` }}
                         />
                       </div>
-                      <span className="font-bold text-black font-mono">{dp.riskScorePercent}%</span>
+                      <span className="font-bold text-[#102521] dark:text-white font-mono">{dp.riskScorePercent}%</span>
                     </div>
                     <span
                       className={`inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold ${
@@ -317,7 +317,7 @@ export const PopulationForecastPage: React.FC = () => {
                   </td>
                   <td className="py-3 px-3 max-w-xs space-y-1">
                     {dp.topPredictiveFactors.map((f, idx) => (
-                      <div key={idx} className="text-[11px] text-stone-700 flex items-start gap-1">
+                      <div key={idx} className="text-[11px] text-[#60716D] dark:text-slate-300 flex items-start gap-1">
                         <span className="text-amber-700 font-bold">•</span>
                         <span>{f.factor}</span>
                       </div>
@@ -325,8 +325,8 @@ export const PopulationForecastPage: React.FC = () => {
                   </td>
                   <td className="py-3 px-3 max-w-sm space-y-1">
                     {dp.recommendedPreventiveActions.map((act, idx) => (
-                      <div key={idx} className="text-[11px] text-teal-800 font-medium flex items-start gap-1">
-                        <span className="text-teal-700 font-bold">✓</span>
+                      <div key={idx} className="text-[11px] text-[#00201C] dark:text-teal-300 font-medium flex items-start gap-1">
+                        <span className="text-[#2E7D5B] dark:text-teal-400 font-bold">✓</span>
                         <span>{act}</span>
                       </div>
                     ))}

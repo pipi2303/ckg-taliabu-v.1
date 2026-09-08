@@ -245,40 +245,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
       };
     };
 
-    // Struktur Khusus Kepala Dinas Kesehatan: 4 Group Menu Eksekutif & Pengambilan Kebijakan
+    // Struktur Khusus Kepala Dinas Kesehatan: 4 Group Menu Eksekutif & Pengambilan Kebijakan (Hasil Konsolidasi/Merger)
     if (roleId === 'KEPALA_DINAS') {
       const kadisSections: NavSection[] = [
         {
-          title: '1. KONTROL EKSEKUTIF & COMMAND CENTER',
+          title: '1. PUSAT KOMANDO EKSEKUTIF',
           items: [
-            getCustomItem('dashboard', 'Dashboard Eksekutif Kadinkes', 'Command Center Dinas Kesehatan · Indikator Strategis & KPI Utama Kabupaten'),
-            getCustomItem('dinkes-ringkasan', 'Ringkasan Capaian Kabupaten', 'Ringkasan Eksekutif & Status Kesehatan Masyarakat Pulau Taliabu'),
-            getCustomItem('dinkes-impact-index', 'CKG Impact Index (Level 1-3)', 'Evaluasi Dampak Skrining, Kontinuitas & Pengendalian Klinis PTM'),
-            getCustomItem('dinkes-kaskade', 'Kaskade & Kontinuitas Layanan', 'Rel Kaskade & Analisis Drop-off Alur Pasien Antar-Faskes'),
+            getCustomItem('dashboard', 'Dashboard Eksekutif Kadinkes', 'Command Center Utama · 6 KPI Strategis & Komparasi 8 Puskesmas'),
+            getCustomItem('dinkes-kaskade', 'Kaskade & Indeks Dampak CKG', 'Rel Kaskade Drop-off & Evaluasi Skor Dampak Klinis Level 1-3'),
           ].filter(Boolean) as NavItem[],
         },
         {
           title: '2. EVALUASI WILAYAH & 8 PUSKESMAS',
           items: [
-            getCustomItem('dinkes-wilayah', 'Peta Risiko & Sebaran Wilayah', 'Analisis Spasial Sebaran Risiko di 8 Kecamatan & 71 Desa'),
-            getCustomItem('dinkes-gap', 'Kesenjangan & Disparitas Akses', 'Deteksi Disparitas Tindak Lanjut & Kesenjangan Pelayanan Antar-Wilayah'),
-            getCustomItem('dinkes-kinerja-pkm', 'Rapor Kinerja 8 Puskesmas', 'Evaluasi Capaian Skrining & Tindak Lanjut Tiap Puskesmas'),
-            getCustomItem('dinkes-penyebab-kendala', 'Kendala & Hambatan Maritim', 'Analisis Akar Masalah Hambatan Geografis, Logistik & Penolakan Warga (CMP-07)'),
+            getCustomItem('dinkes-wilayah', 'Analisis Wilayah & Disparitas', 'Peta Risiko Spasial Kecamatan/Desa & Deteksi Kesenjangan Akses Maritim'),
+            getCustomItem('dinkes-kinerja-pkm', 'Kinerja & Kendala 8 Puskesmas', 'Rapor Capaian SPM 8 Puskesmas & Analisis Hambatan Operasional CMP-07'),
           ].filter(Boolean) as NavItem[],
         },
         {
           title: '3. TREN STRATEGIS & PELAPORAN RESMI',
           items: [
-            getCustomItem('dinkes-perbandingan-periode', 'Perbandingan Tren Periode', 'Evaluasi Tren Kinerja & Efektivitas Intervensi dari Waktu ke Waktu'),
-            getCustomItem('dinkes-laporan', 'Laporan Resmi & Ekspor', 'Penerbitan Laporan Eksekutif Resmi Bupati & Kemenkes (PDF/Excel)'),
+            getCustomItem('dinkes-laporan', 'Tren & Pelaporan Eksekutif', 'Komparasi Metrik Antar-Periode & Penerbitan Laporan Resmi Bupati/Kemenkes (PDF/Excel)'),
           ].filter(Boolean) as NavItem[],
         },
         {
           title: '4. DATA REFERENSI & JEJARING FASKES',
           items: [
-            getCustomItem('stratifikasi', 'Kategori Risiko Kemenkes', 'Pedoman & Standar Kategori Risiko Pasien (Hijau, Kuning, Merah)'),
-            getCustomItem('wilayah', 'Profil 8 Kecamatan & Desa', 'Data Wilayah Geografis, Desa Terisolir & Aksesibilitas Maritim'),
-            getCustomItem('faskes', 'Jejaring Puskesmas, Pustu & RS', 'Peta Faskes, Pustu, Posyandu & Jejaring Rujukan RSUD'),
+            getCustomItem('faskes', 'Direktori Wilayah & Jejaring Faskes', 'Data Jejaring Puskesmas/Pustu/RSUD, Profil Kecamatan & Standar Risiko Kemenkes'),
           ].filter(Boolean) as NavItem[],
         },
       ];
@@ -286,65 +279,193 @@ export const Sidebar: React.FC<SidebarProps> = ({
       return kadisSections.filter((sec) => sec.items.length > 0);
     }
 
-    // Struktur Khusus Kepala Puskesmas: 5 Section Manajerial & Supervisi
+    // Struktur Khusus Kepala Puskesmas: 4 Group Menu Terpadu (Hasil Konsolidasi/Merger)
     if (roleId === 'KEPALA_PUSKESMAS') {
       const kapusSections: NavSection[] = [
         {
-          title: '1. KONTROL EKSEKUTIF PUSKESMAS',
+          title: '1. PUSAT KOMANDO PUSKESMAS',
           items: [
-            getCustomItem('dashboard', 'Beranda Puskesmas', 'Indikator Kinerja Utama & Ringkasan Pelayanan Faskes'),
-            getCustomItem('dinkes-ringkasan', 'Benchmark Capaian Kabupaten', 'Perbandingan Capaian Skrining & Pengendalian PTM vs Puskesmas Lain'),
+            getCustomItem('dashboard', 'Beranda & Benchmark SPM', 'Kinerja Harian Puskesmas & Benchmark Capaian SPM Antar-Faskes Kabupaten'),
+            getCustomItem('integritas-monitoring', 'Audit Mutu & Kepatuhan Layanan', 'Audit Standar Pelayanan, Integritas Rekam Medis & SOP CMP-09'),
           ].filter(Boolean) as NavItem[],
         },
         {
-          title: '2. TATA KELOLA OPERASIONAL & SUMBER DAYA',
+          title: '2. OPERASIONAL & SUMBER DAYA',
           items: [
-            getCustomItem('future-facility', 'Kesiapan Faskes, Obat & Nakes', 'Monitoring Kapasitas Tempat Tidur, Stok Obat PTM & Buffer Faskes'),
-            getCustomItem('beban-kerja', 'Pemerataan Beban Nakes & Kader', 'Distribusi Beban Pelayanan Dokter, Perawat, dan Kader Lapangan'),
-            getCustomItem('jadwal-kuota', 'Jadwal & Kuota Pelayanan', 'Pengaturan Jadwal Layanan & Kuota Harian Pasien Faskes'),
-            getCustomItem('penugasan-lapangan', 'Tugas Kunjungan Kader', 'Distribusi & Penugasan Kunjungan Rumah Kader Desa Binaan'),
+            getCustomItem('future-facility', 'Kesiapan Faskes & Logistik Obat', 'Monitoring Kapasitas Tempat Tidur, Buffer Stok Obat PTM & Kesiapan Lab'),
+            getCustomItem('beban-kerja', 'Manajemen Nakes & Lapangan Kader', 'Pemerataan Beban Dokter/Nakes, Penugasan Kunjungan Kader & Kuota Layanan'),
           ].filter(Boolean) as NavItem[],
         },
         {
-          title: '3. SUPERVISI PASIEN & MUTU LAYANAN',
+          title: '3. SUPERVISI PASIEN & KOHORT PTM',
           items: [
-            getCustomItem('prioritas-harian', 'Tugas Prioritas Hari Ini', 'Daftar Pasien Kategori Merah & Kritis yang Memerlukan Atensi Segera'),
-            getCustomItem('kandidat-putus', 'Deteksi Pasien Belum Kontrol', 'Peringatan Dini Pasien Kronis yang Menunggak Kontrol Ulang'),
-            getCustomItem('outreach', 'Catatan Kunjungan Lapangan', 'Laporan Hasil Kontak, Hambatan & Eskalasi Outreach Kader'),
-            getCustomItem('integritas-monitoring', 'Audit Kepatuhan Puskesmas', 'Audit Standar Pelayanan & Integritas Rekam Medis CMP-09'),
-            getCustomItem('risiko-putus', 'Cegah Putus Berobat', 'Intervensi Dini Pasien Berisiko Drop-out Terapi Kronis'),
-            getCustomItem('clinical-followup', 'Pemeriksaan Dokter di Poli', 'Monitoring Hasil Konsultasi & Resep Medis Dokter FKTP'),
-            getCustomItem('care-task', 'Jadwal & Batas Waktu', 'Timeline Batas Waktu Tindak Lanjut Pasien & Rujukan'),
+            getCustomItem('prioritas-harian', 'Kendali Harian & Pelayanan Poli', 'Kasus Kategori Merah Hari Ini, Jadwal Kontrol Rutin, Care Task SLA & Pelayanan Poli'),
+            getCustomItem('registry', 'Registri Warga & Kohort Terapi', 'Master Basis Data Sasaran CKG, Kelompok Kohort HT & DM, Stratifikasi & Tren Klinis'),
+            getCustomItem('kandidat-putus', 'Intervensi & Pencegah Drop-out', 'Deteksi Pasien Menunggak Kontrol, Monitoring Risiko Putus & Hambatan Minum Obat'),
           ].filter(Boolean) as NavItem[],
         },
         {
-          title: '4. KOHORT & DATA KESEHATAN POPULASI',
+          title: '4. AI PREDICTIVE & PERENCANAAN FASKES',
           items: [
-            getCustomItem('registry', 'Data Warga & Sasaran CKG', 'Master Registry Penduduk & Hasil Skrining Wilayah Puskesmas'),
-            getCustomItem('kohort-kondisi', 'Kelompok Kohort (HT & DM)', 'Pemantauan Kohort Pasien Hipertensi & Diabetes Melitus'),
-            getCustomItem('tren-outcome', 'Perkembangan Hasil Terapi', 'Evaluasi Penurunan Tekanan Darah & Gula Darah Pasien'),
-            getCustomItem('stratifikasi', 'Kategori Risiko Kemenkes', 'Kriteria Penilaian Tingkat Risiko Hijau, Kuning, Merah'),
-            getCustomItem('pemantauan-aktif', 'Siklus Pemantauan Pasien', 'Pelacakan Status Kontrol Rutin Pasien Berjalan'),
-            getCustomItem('kontrol-harian', 'Jadwal Pasien Kontrol Hari Ini', 'Daftar Pasien Terjadwal Kontrol ke Faskes Hari Ini'),
-            getCustomItem('menunggu-evaluasi', 'Evaluasi Status Kesehatan', 'Penetapan Pasien Terkendali vs Butuh Eskalasi Rujukan'),
-            getCustomItem('kepatuhan-kendala', 'Kepatuhan & Kendala Obat', 'Laporan Efek Samping & Hambatan Minum Obat Pasien'),
-          ].filter(Boolean) as NavItem[],
-        },
-        {
-          title: '5. AI INTELLIGENCE & PERENCANAAN',
-          items: [
-            getCustomItem('ai-proyeksi-beban', 'Proyeksi Kebutuhan Obat Faskes', 'Perencanaan Beban Penyakit & Kebutuhan Obat Jangka Menengah'),
-            getCustomItem('ai-rute-maritim', 'Optimasi Rute Pusling Maritim', 'Efisiensi Rute Pelayanan Keliling Maritim & Perahu'),
-            getCustomItem('ai-prediksi-dropout', 'Prediksi Putus Berobat', 'Model Prediksi Machine Learning Risiko Mangkir Terapi'),
-            getCustomItem('ai-prioritas-pencegahan', 'Prioritas Intervensi Faskes', 'Prioritisasi Intervensi Pencegahan Primer & Sekunder'),
-            getCustomItem('ai-kepatuhan-obat', 'Efektivitas & Kepatuhan Terapi', 'Analisis Kepatuhan Minum Obat Pasien PTM Faskes'),
-            getCustomItem('ai-nudge-budaya', 'Edukasi Budaya & Nudge Warga', 'Materi Edukasi Kesehatan Berkonteks Budaya Lokal Taliabu'),
-            getCustomItem('ai-digital-twin', 'Digital Twin Kardiometabolik', 'Simulasi Profil Risiko Kardiometabolik Pasien'),
+            getCustomItem('ai-proyeksi-beban', 'AI Logistik & Operasi Maritim', 'Prediksi Kebutuhan Obat PTM Jangka Menengah & Optimasi Rute Pusling Laut'),
+            getCustomItem('ai-prediksi-dropout', 'AI Presisi Klinis & Nudge Budaya', 'Prediksi Mangkir Obat, Digital Twin Kardiometabolik & Komunikasi Budaya Lokal'),
           ].filter(Boolean) as NavItem[],
         },
       ];
 
       return kapusSections.filter((sec) => sec.items.length > 0);
+    }
+
+    // Struktur Khusus Dokter Puskesmas: 4 Group Menu Klinis Terpadu (Hasil Konsolidasi / Merger)
+    if (roleId === 'DOCTOR' || normalizeRoleId(roleId) === 'DOCTOR') {
+      const doctorSections: NavSection[] = [
+        {
+          title: '1. PELAYANAN POLI HARIAN',
+          items: [
+            getCustomItem(
+              'prioritas-harian',
+              'Antrean & Pemeriksaan Pasien Hari Ini',
+              'Pusat Pelayanan Poli: Pemeriksaan Rekam Medis Dokter, Antrean Prioritas Merah & Care Task SLA'
+            ),
+            getCustomItem(
+              'jadwal-kuota',
+              'Jadwal & Kuota Layanan Poli',
+              'Jadwal Konsultasi Dokter, Jam Buka Poli & Batas Kuota Harian Pelayanan Puskesmas'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '2. REKAM JEJAK KOHORT & KONTROL',
+          items: [
+            getCustomItem(
+              'registry',
+              'Registri Pasien & Kohort PTM',
+              'Basis Data Terpadu Warga CKG, Kelompok Kohort Penyakit Kronis HT/DM & Stratifikasi Risiko'
+            ),
+            getCustomItem(
+              'kontrol-harian',
+              'Siklus Pemantauan & Evaluasi Terapi',
+              'Jadwal Kontrol Hari Ini, Siklus Pemantauan Pasien Berjalan, Evaluasi Terkendali & Tren Hasil Terapi'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '3. EARLY WARNING & PASIEN MANGKIR',
+          items: [
+            getCustomItem(
+              'kandidat-putus',
+              'Pencegahan Pasien Mangkir & Drop-Out',
+              'Deteksi Warga Belum Kontrol, Peringatan Dini Putus Obat, Prediksi Mangkir AI & Hambatan Obat'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '4. ASISTENSI KLINIS CERDAS',
+          items: [
+            getCustomItem(
+              'ai-clinical-copilot',
+              'Clinical Copilot & Digital Twin',
+              'Pedoman Praktik Klinis (PPK) Kemenkes, Profil Digital Twin Kardiometabolik & Kepatuhan Farmakologi'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '5. SISTEM & SINKRONISASI',
+          items: [
+            getCustomItem(
+              'sinkronisasi',
+              'Kirim Data (Sinkron Offline)',
+              'Kirim Data dari HP/Laptop Saat Ada Sinyal · Puskesmas Kepulauan Taliabu'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+      ];
+
+      return doctorSections.filter((sec) => sec.items.length > 0);
+    }
+
+    // Struktur Khusus Petugas Pustu (Puskesmas Pembantu): 5 Klaster Desa Terpadu (Hasil Konsolidasi/Merger)
+    if (roleId === 'PUSTU' || normalizeRoleId(roleId) === 'PUSTU') {
+      const pustuSections: NavSection[] = [
+        {
+          title: 'BERANDA',
+          items: [
+            getCustomItem('dashboard', 'Beranda & Dasbor Pustu', 'Ringkasan Aktivitas Pelayanan Kesehatan Pustu Desa'),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '1. PELAYANAN HARIAN PUSTU',
+          items: [
+            getCustomItem(
+              'prioritas-harian',
+              'Antrean & Tugas Harian Pustu',
+              'Layanan Meja Pustu: Antrean Prioritas Kasus Merah, Care Task & Batas Waktu Tindakan Pasien Desa'
+            ),
+            getCustomItem(
+              'jadwal-kuota',
+              'Jadwal & Kuota Layanan',
+              'Jadwal Buka Layanan Pustu & Kuota Rujukan Puskesmas Induk'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '2. KADER & KUNJUNGAN RUMAH',
+          items: [
+            getCustomItem(
+              'penugasan-lapangan',
+              'Koordinasi Kader & Kunjungan Lapangan',
+              'Penugasan Kunjungan Rumah Kader Posyandu Dusun & Catatan Kontak Warga Desa'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '3. KONTROL KRONIS & CEGAH MANGKIR',
+          items: [
+            getCustomItem(
+              'kontrol-harian',
+              'Siklus Kontrol & Evaluasi Pasien',
+              'Jadwal Kontrol Hari Ini, Siklus Pemantauan 30/90 Hari, Evaluasi Status Terkendali & Tren Hasil Terapi'
+            ),
+            getCustomItem(
+              'kandidat-putus',
+              'Pencegahan Pasien Mangkir & Kendala Obat',
+              'Deteksi Warga Belum Kontrol Ulang, Peringatan Dini Putus Terapi & Analisis Hambatan Obat'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '4. DATA WARGA & WILAYAH DESA',
+          items: [
+            getCustomItem(
+              'registry',
+              'Registri Warga & Kohort Desa',
+              'Master Data NIK Warga CKG Desa Binaan, Kelompok Penyakit Kronis HT/DM & Kategori Risiko Kemenkes'
+            ),
+            getCustomItem(
+              'wilayah',
+              'Wilayah Binaan & Jejaring Faskes',
+              'Daftar Kecamatan/Desa Binaan & Direktori Faskes Rujukan Puskesmas/RSUD'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+        {
+          title: '5. DUKUNGAN LAPANGAN & SISTEM',
+          items: [
+            getCustomItem(
+              'ai-nudge-budaya',
+              'Panduan Lapangan & Budaya Lokal',
+              'Panduan Komunikasi Edukasi Bahasa Daerah Taliabu & Optimasi Rute Perjalanan Pesisir/Maritim'
+            ),
+            getCustomItem(
+              'sinkronisasi',
+              'Kirim Data (Sinkron Offline)',
+              'Kirim Data dari Laptop/Tablet Pustu Saat Ada Sinyal · Kepulauan Taliabu'
+            ),
+          ].filter(Boolean) as NavItem[],
+        },
+      ];
+
+      return pustuSections.filter((sec) => sec.items.length > 0);
     }
 
     const sections = navigationSections
@@ -420,9 +541,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="space-y-0.5 pt-0.5">
                   {section.items.map((item) => {
                     const isActive = activeNav === item.id;
-                    const tooltipText = item.badge
-                      ? `[${item.badge}] ${item.label}${item.docSpec ? `\nSpesifikasi: ${item.docSpec}` : ''}`
-                      : item.docSpec
+                    const tooltipText = item.docSpec
                       ? `${item.label}\nSpesifikasi: ${item.docSpec}`
                       : item.label;
 
@@ -445,20 +564,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           <span className="truncate">{item.label}</span>
                         </div>
 
-                        {item.badge ? (
-                          <span
-                            title={tooltipText}
-                            className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded border shrink-0 font-mono tracking-tight transition-transform ${
-                              isActive
-                                ? 'bg-white/20 text-white border-white/30'
-                                : item.badgeColor || 'bg-[#001714] text-emerald-300 border-[#003B33]'
-                            }`}
-                          >
-                            {item.badge}
-                          </span>
-                        ) : isActive ? (
-                          <ChevronRight className="w-3.5 h-3.5 text-white shrink-0" />
-                        ) : null}
+                        {isActive && (
+                          <ChevronRight className="w-3.5 h-3.5 text-white shrink-0 ml-1.5" />
+                        )}
                       </button>
                     );
                   })}

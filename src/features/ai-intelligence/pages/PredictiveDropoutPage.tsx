@@ -121,38 +121,38 @@ export const PredictiveDropoutPage: React.FC = () => {
       )}
 
       {/* Safety & Anti-Slop Principle Callout */}
-      <div className="p-4 bg-[#faf9f6] border border-stone-200/90 rounded-xl text-xs space-y-2 shadow-xs">
-        <div className="flex items-center gap-2 font-bold text-teal-900">
-          <Info className="w-4 h-4 text-teal-700" />
+      <div className="p-4 bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl text-xs space-y-2 shadow-2xs">
+        <div className="flex items-center gap-2 font-bold text-[#00201C] dark:text-teal-300">
+          <Info className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
           Prinsip Keselamatan & Etika AI (Governance Guardrail PA-01)
         </div>
-        <p className="text-stone-600 leading-relaxed">
-          1. <strong>Tanpa Degradasi Layanan:</strong> Prediksi risiko rendah (<span className="text-emerald-800 font-bold">LOW</span>) memberikan kontribusi prioritas +0 (tidak pernah mengurangi kontak wajib penjangkauan atau menutup CareTask).<br />
+        <p className="text-[#60716D] dark:text-slate-400 leading-relaxed">
+          1. <strong>Tanpa Degradasi Layanan:</strong> Prediksi risiko rendah (<span className="text-emerald-800 dark:text-emerald-400 font-bold">LOW</span>) memberikan kontribusi prioritas +0 (tidak pernah mengurangi kontak wajib penjangkauan atau menutup CareTask).<br />
           2. <strong>Koreksi Faktor Manusia:</strong> Dokter atau Tenaga Faskes dapat menandai ketidaksesuaian prediksi tanpa mengubah rekam medis riil warga.<br />
           3. <strong>Bukan Diagnosis:</strong> Skor ini semata-mata estimasi kesinambungan operasional faskes terhadap jadwal kontrol.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#faf9f6] p-3.5 rounded-xl border border-stone-200/90 shadow-xs">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-[#D8E5E2] dark:border-slate-800 shadow-2xs">
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 absolute left-3 top-2.5 text-stone-400" />
+          <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#60716D] dark:text-slate-400" />
           <input
             type="text"
             placeholder="Cari ID Warga / No Prediksi..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs text-black placeholder-stone-400 focus:outline-none focus:border-teal-700 font-medium"
+            className="w-full pl-9 pr-3 py-1.5 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-lg text-xs text-[#102521] dark:text-white placeholder-[#60716D] dark:placeholder-slate-400 focus:outline-none focus:border-[#00201C] font-medium"
           />
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Filter className="w-3.5 h-3.5 text-stone-500" />
-          <span className="text-xs text-stone-600 font-medium">Tingkat Risiko:</span>
+          <Filter className="w-3.5 h-3.5 text-[#60716D] dark:text-slate-400" />
+          <span className="text-xs text-[#60716D] dark:text-slate-400 font-medium">Tingkat Risiko:</span>
           <select
             value={levelFilter}
             onChange={(e) => setLevelFilter(e.target.value)}
-            className="px-2.5 py-1.5 bg-white border border-stone-300 rounded-lg text-xs text-black font-semibold focus:outline-none focus:border-teal-700 cursor-pointer"
+            className="px-2.5 py-1.5 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-lg text-xs text-[#102521] dark:text-white font-semibold focus:outline-none focus:border-[#00201C] cursor-pointer"
           >
             <option value="ALL">Semua Tingkat</option>
             <option value="HIGH">Risiko Tinggi (HIGH)</option>
@@ -174,16 +174,16 @@ export const PredictiveDropoutPage: React.FC = () => {
           return (
             <div
               key={pred.id}
-              className="bg-[#faf9f6] border border-stone-200/90 rounded-2xl p-5 space-y-4 shadow-xs hover:border-stone-300 transition"
+              className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl p-5 space-y-4 shadow-2xs hover:border-[#BBE5D4] transition"
             >
-              <div className="flex items-start justify-between gap-3 border-b border-stone-200 pb-3">
+              <div className="flex items-start justify-between gap-3 border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-black">{pred.citizenId}</span>
-                    <span className="text-[10px] text-stone-500 font-medium">({pred.id})</span>
+                    <span className="font-mono text-xs font-bold text-[#102521] dark:text-white">{pred.citizenId}</span>
+                    <span className="text-[10px] text-[#60716D] dark:text-slate-400 font-medium">({pred.id})</span>
                   </div>
-                  <div className="text-[11px] text-stone-500 mt-0.5 flex items-center gap-1.5 font-medium">
-                    <Clock className="w-3 h-3 text-stone-400" />
+                  <div className="text-[11px] text-[#60716D] dark:text-slate-400 mt-0.5 flex items-center gap-1.5 font-medium">
+                    <Clock className="w-3 h-3 text-[#60716D]" />
                     Model: {pred.modelVersion} • Snapshot: {pred.featureSnapshotId}
                   </div>
                 </div>
@@ -202,13 +202,13 @@ export const PredictiveDropoutPage: React.FC = () => {
                     </span>
                   )}
                   {isLow && (
-                    <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
+                    <span className="px-2.5 py-1 rounded-lg bg-[#EBF7F2] border border-[#BBE5D4] text-[#2E7D5B] text-xs font-bold flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
                       LOW RISK
                     </span>
                   )}
                   {isUnpredictable && (
-                    <span className="px-2.5 py-1 rounded-lg bg-stone-100 border border-stone-200 text-stone-600 text-xs font-medium flex items-center gap-1.5">
+                    <span className="px-2.5 py-1 rounded-lg bg-[#F0F5F4] border border-[#D8E5E2] text-[#60716D] text-xs font-medium flex items-center gap-1.5">
                       <HelpCircle className="w-3.5 h-3.5" />
                       NOT PREDICTABLE
                     </span>
@@ -218,16 +218,16 @@ export const PredictiveDropoutPage: React.FC = () => {
 
               {/* Explainable Factors (Top 3) */}
               <div className="space-y-2">
-                <div className="text-[11px] font-bold text-stone-800 uppercase tracking-wider">
+                <div className="text-[11px] font-bold text-[#00201C] dark:text-white uppercase tracking-wider">
                   Faktor Penjelas Utama (Explainability Engine)
                 </div>
                 <div className="space-y-1.5">
                   {pred.topFactors.map((factor, idx) => (
                     <div
                       key={idx}
-                      className="p-2.5 rounded-xl bg-white border border-stone-200 text-xs space-y-1 shadow-2xs"
+                      className="p-2.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 text-xs space-y-1 shadow-2xs"
                     >
-                      <div className="flex items-center justify-between text-stone-800 font-bold">
+                      <div className="flex items-center justify-between text-[#102521] dark:text-white font-bold">
                         <span>{factor.displayLabel}</span>
                         <span
                           className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold ${
@@ -235,7 +235,7 @@ export const PredictiveDropoutPage: React.FC = () => {
                               ? 'bg-rose-50 text-rose-800 border border-rose-200'
                               : factor.contributionDirection === 'DECREASES'
                               ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                              : 'bg-stone-100 text-stone-700 border border-stone-200'
+                              : 'bg-[#F0F5F4] text-[#102521] border border-[#D8E5E2]'
                           }`}
                         >
                           {factor.contributionDirection === 'INCREASES'
@@ -245,7 +245,7 @@ export const PredictiveDropoutPage: React.FC = () => {
                             : '• Netral'}
                         </span>
                       </div>
-                      <p className="text-[11px] text-stone-600 leading-relaxed">{factor.explanationText}</p>
+                      <p className="text-[11px] text-[#60716D] dark:text-slate-400 leading-relaxed">{factor.explanationText}</p>
                     </div>
                   ))}
                 </div>
@@ -253,19 +253,19 @@ export const PredictiveDropoutPage: React.FC = () => {
 
               {/* Uncertainty Interval & Model Mode */}
               {pred.uncertainty && (
-                <div className="flex items-center justify-between text-[11px] text-stone-600 bg-white px-3 py-1.5 rounded-lg border border-stone-200 shadow-2xs">
-                  <span>Rentang Keyakinan: <strong className="text-black font-bold">{pred.uncertainty.confidenceInterval}</strong></span>
-                  <span>Entropy Skor: <strong className="text-black font-bold">{pred.uncertainty.entropyScore}</strong></span>
+                <div className="flex items-center justify-between text-[11px] text-[#60716D] dark:text-slate-400 bg-[#F8FBFA] dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-[#D8E5E2] dark:border-slate-700 shadow-2xs">
+                  <span>Rentang Keyakinan: <strong className="text-[#102521] dark:text-white font-bold">{pred.uncertainty.confidenceInterval}</strong></span>
+                  <span>Entropy Skor: <strong className="text-[#102521] dark:text-white font-bold">{pred.uncertainty.entropyScore}</strong></span>
                 </div>
               )}
 
               {/* Actions */}
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-stone-200">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E8EFEB] dark:border-slate-800">
                 <button
                   onClick={() => handleOpenFeedback(pred)}
-                  className="px-3 py-1.5 bg-white hover:bg-stone-50 text-stone-800 text-xs font-bold rounded-lg flex items-center gap-1.5 transition cursor-pointer border border-stone-300 shadow-2xs"
+                  className="px-3 py-1.5 bg-white dark:bg-slate-800 hover:bg-[#F8FBFA] text-[#102521] dark:text-white text-xs font-bold rounded-lg flex items-center gap-1.5 transition cursor-pointer border border-[#D8E5E2] dark:border-slate-700 shadow-2xs"
                 >
-                  <MessageSquare className="w-3.5 h-3.5 text-teal-700" />
+                  <MessageSquare className="w-3.5 h-3.5 text-[#00201C] dark:text-teal-400" />
                   Beri Umpan Balik Lapangan
                 </button>
               </div>
@@ -277,28 +277,28 @@ export const PredictiveDropoutPage: React.FC = () => {
       {/* Staff Feedback Modal */}
       {showFeedbackModal && selectedPrediction && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#faf9f6] border border-stone-200 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
-            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-              <div className="flex items-center gap-2 text-sm font-bold text-black">
-                <MessageSquare className="w-4 h-4 text-teal-700" />
+          <div className="bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 rounded-xl max-w-lg w-full p-6 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#00201C] dark:text-white">
+                <MessageSquare className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
                 Umpan Balik Tenaga Faskes (PA-09 Loop)
               </div>
               <button
                 onClick={() => setShowFeedbackModal(false)}
-                className="text-stone-400 hover:text-black text-xs font-bold cursor-pointer"
+                className="text-[#60716D] hover:text-black dark:hover:text-white text-xs font-bold cursor-pointer"
               >
                 Tutup
               </button>
             </div>
 
             <form onSubmit={handleSubmitFeedback} className="space-y-4 text-xs">
-              <div className="p-3 rounded-xl bg-white border border-stone-200 space-y-1 shadow-2xs">
-                <div className="text-stone-600 font-medium">ID Warga: <strong className="text-black font-mono">{selectedPrediction.citizenId}</strong></div>
-                <div className="text-stone-600 font-medium">Prediksi Model Saat Ini: <strong className="text-teal-800 font-bold">{selectedPrediction.predictionLevel}</strong></div>
+              <div className="p-3 rounded-xl bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 space-y-1 shadow-2xs">
+                <div className="text-[#60716D] dark:text-slate-400 font-medium">ID Warga: <strong className="text-[#102521] dark:text-white font-mono">{selectedPrediction.citizenId}</strong></div>
+                <div className="text-[#60716D] dark:text-slate-400 font-medium">Prediksi Model Saat Ini: <strong className="text-[#00201C] dark:text-teal-300 font-bold">{selectedPrediction.predictionLevel}</strong></div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-stone-800 font-bold">Penilaian Klinisi / Petugas:</label>
+                <label className="text-[#00201C] dark:text-white font-bold">Penilaian Klinisi / Petugas:</label>
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
@@ -306,7 +306,7 @@ export const PredictiveDropoutPage: React.FC = () => {
                     className={`py-2 px-3 rounded-lg border text-center font-bold cursor-pointer transition ${
                       feedbackType === 'AGREE'
                         ? 'bg-emerald-50 border-emerald-500 text-emerald-900'
-                        : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-50'
+                        : 'bg-white dark:bg-slate-800 border-[#D8E5E2] dark:border-slate-700 text-[#102521] dark:text-slate-200 hover:bg-[#F8FBFA]'
                     }`}
                   >
                     Sesuai Lapangan
@@ -317,7 +317,7 @@ export const PredictiveDropoutPage: React.FC = () => {
                     className={`py-2 px-3 rounded-lg border text-center font-bold cursor-pointer transition ${
                       feedbackType === 'DISAGREE'
                         ? 'bg-rose-50 border-rose-500 text-rose-900'
-                        : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-50'
+                        : 'bg-white dark:bg-slate-800 border-[#D8E5E2] dark:border-slate-700 text-[#102521] dark:text-slate-200 hover:bg-[#F8FBFA]'
                     }`}
                   >
                     Tidak Sesuai
@@ -328,7 +328,7 @@ export const PredictiveDropoutPage: React.FC = () => {
                     className={`py-2 px-3 rounded-lg border text-center font-bold cursor-pointer transition ${
                       feedbackType === 'UNCERTAIN'
                         ? 'bg-amber-50 border-amber-500 text-amber-900'
-                        : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-50'
+                        : 'bg-white dark:bg-slate-800 border-[#D8E5E2] dark:border-slate-700 text-[#102521] dark:text-slate-200 hover:bg-[#F8FBFA]'
                     }`}
                   >
                     Perlu Verifikasi
@@ -337,18 +337,18 @@ export const PredictiveDropoutPage: React.FC = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-stone-800 font-bold">Alasan Kontekstual Lapangan (misal: kendala perahu, pindah ke kebun, stok obat kosong):</label>
+                <label className="text-[#00201C] dark:text-white font-bold">Alasan Kontekstual Lapangan (misal: kendala perahu, pindah ke kebun, stok obat kosong):</label>
                 <textarea
                   required
                   rows={3}
                   value={feedbackReason}
                   onChange={(e) => setFeedbackReason(e.target.value)}
                   placeholder="Jelaskan kondisi riil warga yang diamati kader/faskes..."
-                  className="w-full p-2.5 bg-white border border-stone-300 rounded-lg text-black placeholder-stone-400 focus:outline-none focus:border-teal-700 text-xs font-medium"
+                  className="w-full p-2.5 bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700 rounded-lg text-[#102521] dark:text-white placeholder-[#60716D] focus:outline-none focus:border-[#00201C] text-xs font-medium"
                 />
               </div>
 
-              <div className="p-3 bg-teal-50 border border-teal-200 rounded-xl text-[11px] text-teal-900 shadow-2xs">
+              <div className="p-3 bg-[#E1F5FE] border border-[#BDE3F5] rounded-xl text-[11px] text-[#00201C] shadow-2xs">
                 <strong>Catatan Tata Kelola:</strong> Umpan balik ini masuk ke antrean audit evaluasi drift model dan tidak mengubah status rekam medis warga secara sepihak.
               </div>
 
@@ -356,13 +356,13 @@ export const PredictiveDropoutPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowFeedbackModal(false)}
-                  className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg cursor-pointer font-bold border border-stone-300"
+                  className="px-4 py-2 bg-[#F0F5F4] hover:bg-[#E8EFEB] text-[#102521] rounded-lg cursor-pointer font-bold border border-[#D8E5E2]"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white rounded-lg cursor-pointer font-bold shadow-xs"
+                  className="px-4 py-2 bg-[#00201C] hover:bg-[#00332D] text-white rounded-lg cursor-pointer font-bold shadow-xs"
                 >
                   Kirim Umpan Balik
                 </button>

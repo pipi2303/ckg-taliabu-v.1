@@ -11,6 +11,7 @@ import { populationBarrierService } from './populationBarrierService';
 export interface ExportOptions {
   title?: string;
   notes?: string[];
+  period?: 'MINGGUAN' | 'BULANAN' | 'KUARTALAN';
 }
 
 export const commandCenterExportService = {
@@ -18,11 +19,12 @@ export const commandCenterExportService = {
    * Generates and downloads an official Executive PDF Report
    */
   async exportExecutivePDF(user?: User | null, _options?: ExportOptions): Promise<void> {
+    const period = _options?.period || 'BULANAN';
     const snapshot = await populationReportService.generateSnapshot(user);
     const [cascade, barrierData, facilities] = await Promise.all([
-      populationCascadeService.getCascadeAggregation(),
+      populationCascadeService.getCascadeAggregation({ period }),
       populationBarrierService.getBarrierSummary(),
-      facilityPerformanceService.getFacilitySummaries(),
+      facilityPerformanceService.getFacilitySummaries(period),
     ]);
 
     const doc = new jsPDF({
@@ -360,11 +362,12 @@ export const commandCenterExportService = {
    * Generates and downloads a multi-tab Excel (.xlsx) Workbook
    */
   async exportCommandCenterExcel(user?: User | null, _options?: ExportOptions): Promise<void> {
+    const period = _options?.period || 'BULANAN';
     const snapshot = await populationReportService.generateSnapshot(user);
     const [cascade, barrierData, facilities] = await Promise.all([
-      populationCascadeService.getCascadeAggregation(),
+      populationCascadeService.getCascadeAggregation({ period }),
       populationBarrierService.getBarrierSummary(),
-      facilityPerformanceService.getFacilitySummaries(),
+      facilityPerformanceService.getFacilitySummaries(period),
     ]);
 
     const wb = XLSX.utils.book_new();

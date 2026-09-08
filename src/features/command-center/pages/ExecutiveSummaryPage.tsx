@@ -103,17 +103,17 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header */}
-      <div className="p-6 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs text-amber-800 font-bold uppercase tracking-wider mb-1">
-            <Shield className="w-4 h-4 text-amber-700" />
+          <div className="flex items-center gap-2 text-xs text-amber-800 dark:text-amber-400 font-bold uppercase tracking-wider mb-1">
+            <Shield className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             RINGKASAN EKSEKUTIF PEMERINTAH DAERAH
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl font-black text-black tracking-tight">Status Kesehatan Populasi CKG</h1>
+            <h1 className="text-2xl font-black text-[#102521] dark:text-white tracking-tight">Status Kesehatan Populasi CKG</h1>
             <DocBadge code="SCR-DNK-B08" size="sm" />
           </div>
-          <p className="text-xs text-stone-600 mt-1 max-w-2xl">
+          <p className="text-xs text-[#60716D] dark:text-slate-400 mt-1 max-w-2xl">
             Tampilan agregat berintegritas tinggi untuk pengambilan keputusan strategis, alokasi anggaran operasional faskes, dan subsidi bantuan warga kepulauan.
           </p>
         </div>
@@ -122,7 +122,7 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
           <button
             onClick={handleExportPDF}
             disabled={isExportingPDF}
-            className="px-4 py-2.5 text-xs font-bold rounded-xl bg-amber-700 hover:bg-amber-800 text-white shadow-xs transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2.5 text-xs font-bold rounded-xl bg-amber-700 hover:bg-amber-800 text-white shadow-2xs transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
             title="Unduh Laporan Eksekutif dalam Format PDF"
           >
             {isExportingPDF ? (
@@ -147,23 +147,23 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
           </button>
           <button
             onClick={() => onNavigate?.('dinkes-laporan')}
-            className="px-3.5 py-2.5 text-xs font-medium rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 transition flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2.5 text-xs font-medium rounded-xl bg-white dark:bg-slate-800 hover:bg-stone-100 dark:hover:bg-slate-700 text-[#102521] dark:text-white border border-[#D8E5E2] dark:border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
           >
-            <FileText className="w-3.5 h-3.5 text-teal-700" />
+            <FileText className="w-3.5 h-3.5 text-[#00201C] dark:text-teal-400" />
             <span>Pusat Laporan</span>
           </button>
         </div>
       </div>
 
       {/* Strict Privacy Boundary Notice */}
-      <div className="p-3.5 rounded-xl bg-[#faf9f6] border border-stone-200/90 text-stone-700 text-xs flex items-center justify-between shadow-xs">
+      <div className="p-3.5 rounded-xl bg-[#F8FBFA] dark:bg-slate-800/80 border border-[#D8E5E2] dark:border-slate-700 text-[#102521] dark:text-slate-300 text-xs flex items-center justify-between shadow-2xs">
         <div className="flex items-center gap-2">
-          <Lock className="w-4 h-4 text-teal-700" />
+          <Lock className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
           <span>
             Mode Privasi S0 Aktif: Tampilan ini secara ketat <strong>hanya menyajikan data agregat terstandarisasi</strong> tanpa memuat data identitas individual/NIK warga.
           </span>
         </div>
-        <span className="text-[11px] font-mono text-stone-500 font-semibold">ISO-27701 Governed</span>
+        <span className="text-[11px] font-mono text-[#60716D] dark:text-slate-400 font-semibold">ISO-27701 Governed</span>
       </div>
 
       <CompletenessBanner completeness={completeness} onRefresh={loadData} />
@@ -171,34 +171,34 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
       {/* Key Executive Insights Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Cascade Funnel Summary */}
-        <div className="p-6 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-            <h3 className="text-sm font-bold text-black flex items-center gap-2">
-              <Activity className="w-4 h-4 text-sky-700" />
+        <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
+            <h3 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+              <Activity className="w-4 h-4 text-sky-700 dark:text-sky-400" />
               Perjalanan Warga dalam Program CKG
             </h3>
-            <span className="text-xs text-stone-600 font-medium">Total: {cascade.stages[0]?.count} Warga Diperiksa</span>
+            <span className="text-xs text-[#60716D] dark:text-slate-400 font-medium">Total: {cascade.stages[0]?.count} Warga Diperiksa</span>
           </div>
 
           <div className="space-y-3 text-xs">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-stone-200">
-              <span className="text-stone-700 font-medium">Warga Terdeteksi Berisiko (Kuning/Merah/Kritis):</span>
-              <span className="font-bold text-amber-800 text-sm">{cascade.stages[1]?.count} orang</span>
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700">
+              <span className="text-[#102521] dark:text-slate-300 font-medium">Warga Terdeteksi Berisiko (Kuning/Merah/Kritis):</span>
+              <span className="font-bold text-amber-800 dark:text-amber-400 text-sm">{cascade.stages[1]?.count} orang</span>
             </div>
 
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-stone-200">
-              <span className="text-stone-700 font-medium">Warga Berhasil Hadir Kontrol di Puskesmas:</span>
-              <span className="font-bold text-emerald-800 text-sm">{cascade.stages[3]?.count} orang</span>
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700">
+              <span className="text-[#102521] dark:text-slate-300 font-medium">Warga Berhasil Hadir Kontrol di Puskesmas:</span>
+              <span className="font-bold text-emerald-800 dark:text-emerald-400 text-sm">{cascade.stages[3]?.count} orang</span>
             </div>
 
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-stone-200">
-              <span className="text-stone-700 font-medium">Warga Aktif Minum Obat & Pemantauan Rutin:</span>
-              <span className="font-bold text-teal-800 text-sm">{cascade.stages[5]?.count} orang</span>
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[#F8FBFA] dark:bg-slate-800 border border-[#D8E5E2] dark:border-slate-700">
+              <span className="text-[#102521] dark:text-slate-300 font-medium">Warga Aktif Minum Obat & Pemantauan Rutin:</span>
+              <span className="font-bold text-[#00201C] dark:text-teal-400 text-sm">{cascade.stages[5]?.count} orang</span>
             </div>
 
-            <div className="flex items-center justify-between p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 font-medium">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-900 dark:text-rose-300 font-medium">
               <span>Warga Tertahan / Butuh Bantuan Transportasi:</span>
-              <span className="font-bold text-rose-700 text-sm">
+              <span className="font-bold text-rose-700 dark:text-rose-400 text-sm">
                 {(cascade.stages[1]?.count || 0) - (cascade.stages[3]?.count || 0)} orang
               </span>
             </div>
@@ -206,13 +206,13 @@ export const ExecutiveSummaryPage: React.FC<ExecutiveSummaryPageProps> = ({ onNa
         </div>
 
         {/* Priority Strategic Action Areas */}
-        <div className="p-6 rounded-2xl bg-[#faf9f6] border border-stone-200/90 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-            <h3 className="text-sm font-bold text-black flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-teal-700" />
+        <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-[#D8E5E2] dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E8EFEB] dark:border-slate-800 pb-3">
+            <h3 className="text-sm font-bold text-[#102521] dark:text-white flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-[#00201C] dark:text-teal-400" />
               Rekomendasi Kebijakan Daerah Prioritas
             </h3>
-            <span className="text-xs text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">Tindakan Strategis</span>
+            <span className="text-xs text-amber-800 dark:text-amber-400 font-bold bg-amber-50 dark:bg-amber-950/50 px-2 py-0.5 rounded-md border border-amber-200 dark:border-amber-800">Tindakan Strategis</span>
           </div>
 
           <div className="space-y-3 text-xs">
